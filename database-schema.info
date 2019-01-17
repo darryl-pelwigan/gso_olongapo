@@ -1,0 +1,106 @@
+inventory_info >>>
+	id
+	control_no
+	purchase_order_no
+	invoice_no
+	recieved_from_id
+	received_by_id
+	
+inventory_rcved_from_info >>>
+	id
+	f_name
+	l_name
+	m_name
+	e_name
+	position
+	date_received
+	
+inventory_rcved_by_info >>>
+	id
+	f_name
+	l_name
+	m_name
+	e_name
+	position
+	date_received
+
+	
+inventory_items >>>
+	id
+	inventory_info_id
+	item_desc
+	item_unit
+	item_qty
+	gso_property_code_category
+	gso_property_code_subcategory
+	gso_property_code_list
+	life_span
+	date_acquired
+	unit_value
+	total_value
+	accountable_id
+	remarks
+	
+employee
+	id
+	fname
+	lname
+	mname
+	ename
+	mobile_number
+	department_id
+	position_id
+	
+department
+	id
+	dept_id
+	desc
+	year
+
+position
+	id
+	title
+	
+	
+	
+inventory_gsoproprty_code_category >>>
+	id
+	desc
+	
+	
+inventory_gso_property_code_subcategory >>>
+	id
+	ppe_cat_id
+	desc
+	no
+	code_family
+	
+inventory_gso_property_code_list >>>
+	id
+	ppe_cat_id
+	code_family_id
+	desc
+	code_no
+
+inventory_invoice_info
+		id
+		invoice_desc
+		invoice_supplier_id
+		date_invoice
+
+supplier_info
+	id
+	title
+	desc
+	address
+	mobile
+	landline
+	website
+	type
+	
+supplier_type
+	id
+	desc
+	
+	
+	

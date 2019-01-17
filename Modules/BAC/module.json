@@ -1,0 +1,16 @@
+{
+    "name": "BAC",
+    "alias": "bac",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\BAC\\Providers\\BACServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "start.php"
+    ],
+    "requires": []
+}

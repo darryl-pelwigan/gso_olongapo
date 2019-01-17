@@ -1,0 +1,5 @@
+.sidebar-menu, .main-sidebar .user-panel, .sidebar-menu>li.header{
+height: 60px;
+overflow:visible;
+
+}

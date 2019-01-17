@@ -1,0 +1,16 @@
+{
+    "name": "Abstrct",
+    "alias": "abstrct",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Abstrct\\Providers\\AbstrctServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "start.php"
+    ],
+    "requires": []
+}

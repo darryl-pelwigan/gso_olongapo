@@ -1,0 +1,25 @@
+.login-page, .register-page{
+ background: url(../img/bg.jpg) 80% 25% no-repeat fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+.login-box, .register-box{
+margin: 0 auto;
+}
+.logo-img{
+    margin: 0 auto;
+    }
+
+    .logo-text{
+    font-family: 'Ave Fedan PERSONAL USE ONLY';
+    color: #333399 !important;
+    font-size: 80px;
+    text-shadow: 2px 2px #e3edf7;
+    }
+
+    .checkbox input[type=checkbox]{
+             margin-left:0;
+             position: relative;;
+    }

@@ -1,0 +1,16 @@
+{
+    "name": "GSOassistant",
+    "alias": "gsoassistant",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\GSOassistant\\Providers\\GSOassistantServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "start.php"
+    ],
+    "requires": []
+}

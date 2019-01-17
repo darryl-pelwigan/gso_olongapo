@@ -1,0 +1,28 @@
+<?php
+
+Route::group(['middleware' => ['web','auth'], 'prefix' => 'purchaseorder', 'namespace' => 'Modules\PurchaseOrder\Http\Controllers'], function()
+{
+    Route::get('/', 'PurchaseOrderController@index')->name('po.index');
+
+    Route::get('/no_po', 'PurchaseOrderController@no_po')->name('pr.no-pono');
+
+    Route::post('/purchaseorder-no_pono_test', 'PurchaseOrderController@anyData')->name('pr.no_pono_test');
+
+     Route::post('/purchase-order-list', 'PurchaseOrderController@pr_list')->name('pr.order-list-with-po');
+
+    Route::post('/get-purchase-request-po', 'PurchaseOrderController@get_request_po')->name('pr.get-request-po');
+
+    Route::post('/check-pono', 'PurchaseOrderController@check_po_no')->name('po.check_po_no');
+
+    Route::post('/add-purchase-order', 'PurchaseOrderController@add_po_records')->name('po.add_po_records');
+
+    Route::post('/update-purchase-order', 'PurchaseOrderController@update_po_records')->name('po.update_po_records');
+
+    Route::post('/get-pr-supplier', 'PurchaseOrderController@get_pr')->name('po.get-pr-supplier');
+    Route::post('/get-po', 'PurchaseOrderController@get_po')->name('po.get-po');
+    Route::post('/po-pdf', 'PurchaseOrderController@po_pdf')->name('po.po_pdf');
+
+
+
+
+});
