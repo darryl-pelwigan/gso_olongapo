@@ -56,6 +56,7 @@
                 </div>
     @endif
      <br />
+
      <p style="text-align: center;">Approved by: </p>
          <?php
             $cc = 1;
@@ -65,25 +66,20 @@
 
           @for( $x = 0 ; $x< count($approved_by) ; $x++)
 
-            @if( $cc%2==1 )
-                    <?php $cx=1;  $cd = 1; ?>
+           
                  <div class="row">
-            @endif
-                
-                 <div class="col-xs-5 col-xs-offset-1" style="font-size: 12px;">
-                    <p class="text-center"><strong><u>{{strtoupper($approved_by[$x]->employee_name)}}</u></strong></p>
-                    <p class="text-center">{{$approved_by[$x]->title}}</p>
-                </div>
-
-            @if( $cc%2==0 && $cx==2 )
-                </div>
-                <?php  $cd++; ?>
-            @endif
+                    <div class="col-xs-4"></div>
+                    <div class="col-xs-8" style="font-size: 12px;">
+                        <p class="text-center"><strong><u>{{strtoupper($approved_by[$x]->employee_name)}}</u></strong></p>
+                        <p class="text-center">{{$approved_by[$x]->title}}</p>
+                    </div>
+                </div><br>
+          
 
                 <?php  $cc++; $cx++; ?>
         @endfor
     @if( $cd!=2 )
-        </div>
+        
     @endif
         <br>
         <p style="margin-left: 25px;">Attested by: </p>

@@ -25,7 +25,7 @@
             { data: 'olongapo_purchase_request_no.pr_purpose', name: 'olongapo_purchase_request_no.pr_purpose'},
             { data: 'olongapo_purchase_request_no.pr_no', name: 'olongapo_purchase_request_no.pr_no'},
             { data: 'olongapo_purchase_request_no.pr_date', name: 'olongapo_purchase_request_no.pr_date'},
-            { data: 'proc_type', name: 'olongapo_purchase_request_no.proc_type'},
+            { data: 'proc_type'},
             { data: 'olongapo_purchase_request_no.pr_date_dept', name: 'olongapo_purchase_request_no.pr_date_dept'},
             { data: null, name: 'olongapo_purchase_request_no.pr_date_dept',
                 render : function(data, type, row){

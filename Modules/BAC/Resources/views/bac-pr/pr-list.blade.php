@@ -267,7 +267,7 @@ $(function() {
               }
             },
             { data: 'dept_desc', name: 'olongapo_department.dept_desc' },
-            { data: 'subdept_desc', name: 'olongapo_subdepartment.subdept_desc' },
+            { data: 'subdept_desc' },
              { data: 'control_no', name: 'olongapo_absctrct.control_no'},
            {
               data: null,
@@ -298,7 +298,7 @@ $(function() {
         ],
         columnDefs: [
           {
-              orderable: false, targets: [0,-1]
+              orderable: false, targets: [0,-1, -2]
            }
         ],
         "order": [[ 0, 'asc' ]],
