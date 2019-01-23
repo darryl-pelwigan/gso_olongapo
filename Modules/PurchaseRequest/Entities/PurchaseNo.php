@@ -20,6 +20,21 @@ class PurchaseNo extends Model
         return $this->belongsTo('Modules\Administrator\Entities\DEPTsubcode', 'dept_id');
     }
 
+    public function monthly_report(){
+        return $this->hasOne('Modules\Inventory\Entities\PpeMnthlyReport', 'pono_id');
+    }
+
+    public function abstrct(){
+        return $this->hasOne('Modules\Abstrct\Entities\Abstrct', 'prno_id');
+    }
+
+    public function pr_orderno(){
+        return $this->hasOne('Modules\PurchaseOrder\Entities\PurchaseOrderNo', 'prno_id');
+    }
+
+    public function bac_info(){
+        return $this->hasOne('Modules\BAC\Entities\BacControlInfo', 'prno_id');
+    }
 
    public function pr_obr(){
         return $this->belongsTo('Modules\PurchaseRequest\Entities\OBR', 'obr_id');

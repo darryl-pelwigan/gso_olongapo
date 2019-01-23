@@ -13,7 +13,12 @@ class PpeMnthlyReportItems extends Model
         return $this->belongsTo('Modules\Inventory\Entities\PpeMnthlyReport', 'ppe_mnthly_id');
     }
 
-         public function tbl_name(){
+    public function pr_item_id(){
+        return $this->belongsTo('Modules\BAC\Entities\PurchaseItems', 'prno_item_id');
+    }
+
+
+    public function tbl_name(){
         return with(new static)->getTable();
     }
 

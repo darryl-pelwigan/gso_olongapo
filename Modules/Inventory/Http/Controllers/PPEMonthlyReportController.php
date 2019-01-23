@@ -15,6 +15,8 @@ use Modules\Inventory\Entities\PpeMnthlyReportItems;
 use Session;
 use Carbon\Carbon;
 
+
+
 class PPEMonthlyReportController extends Controller
 {
     protected $data;
@@ -55,6 +57,7 @@ class PPEMonthlyReportController extends Controller
                                         ;
                                                 $tbody = '';
         $dataArray = [];
+
                for($x=0;$x<count($get_ppe_mnthly);$x++){
                         $dataArray[$x] =   array(
                                                     $get_ppe_mnthly[$x]->date_log,
@@ -68,7 +71,8 @@ class PPEMonthlyReportController extends Controller
                                                     $get_ppe_mnthly[$x]->employee_name,
                                                     $get_ppe_mnthly[$x]->dept_desc,
                                                     $get_ppe_mnthly[$x]->title,
-                                                    $get_ppe_mnthly[$x]->invoice
+                                                    $get_ppe_mnthly[$x]->invoice,
+                                                    '<a class="btn btn-sm btn-info" href="'.route('inventory.set_ppe_pr',$get_ppe_mnthly[$x]->ppe_mnthly_id).'" >edit</a> '
                                                 );
 
         }

@@ -18,7 +18,8 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Employee  List</h3>
+              <h3 class="box-title">Purchase Order List</h3>
+               <button class="btn btn-success pull-right" data-toggle="modal" data-target="#new_employee_modal" data-backdrop="static" data-keyboard="false" ><i class="fa fa-plus"></i></button>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -39,7 +40,7 @@
                               <th>Middle Name</th>
                               <th>Department</th>
                               <th>Position</th>
-                              {{-- <th>Action</th> --}}
+                              <th>Action</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -184,67 +185,9 @@
 <script src="{{asset('adminlte')}}/plugins/datepicker/bootstrap-datepicker.js"></script>
 <script src="{{asset('adminlte')}}/plugins/datatables/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
- $('#employee_list').dataTable({
-        processing: true,
-        serverSide: true,
-        ajax:{
-          "type": 'POST',
-         "url" : '{!! route('gso.set_datatables') !!}',
-          data : {
-              "_token" : '{{csrf_token()}}',
-              dataTables : 'dept_userlist'
-          }
-        },
-        columns: [
-            { data: 'id', name: 'olongapo_employee_list.id',
-              render: function (data, type, row, meta) {
-                  return meta.row + meta.settings._iDisplayStart + 1;
-              }
-            },
-            { data: 'lname', name: 'olongapo_employee_list.lname'},
-            { data: 'fname', name: 'olongapo_employee_list.fname'},
-            { data: 'mname', name: 'olongapo_employee_list.mname'},
-            { data: 'dept_desc', name: 'olongapo_subdepartment.dept_desc'},
-            { data: 'title', name: 'olongapo_position.title'},
-           
-            // { data: null, name: 'olongapo_user_logging.logout_time',
-            //   "searchable": false,
-            //   render : function(data , type , row){
-            //     return '<button type="button" class="btn bg-light-blue btn-sm" data-toggle="modal" data-target="#new_employee_modal" data-backdrop="static" data-keyboard="false" onclick="$(this).showaccessLogs('+data.id+');" ><i class="fa fa-pencil"></i> Access logs </button> ';
-            //   }
-            // },
-            // {
-            //   data:null,
-            //   "searchable" : false,
-            //   render:function(data, type, row){
-            //     return '<input type="checkbox" name="emp_id[]" class="emp_ids" value="'+data.id+'"/> Delete';
-            //   },className : 'delete_column hide'
-            // }
-        ],
-        columnDefs: [
-            {
-              orderable: false, targets: [-1]
-            },
-        ],
-        "order": [[ 0, 'asc' ]],
-        'fnDrawCallback':function(){
-            $('#delete_checkbutton').click(function(){
-              if($(this).is(':checked')){
-                $('.delete_column').removeClass('hide');
-              }else{
-                $('.delete_column').addClass('hide');      
-              }
-            });
-
-            if($("#delete_checkbutton").is(':checked')){
-              $('.delete_column').removeClass('hide');
-            }else{
-              $('.delete_column').addClass('hide');      
-            }
-        }
-    }).dataTableSearch(500);
 
 
+$(function() {
 
   //Date picker
     $('#bdate').datepicker({
@@ -284,7 +227,7 @@ $.fn.loadPPEmnthly = function(){
 if ( $.fn.dataTable.isDataTable( '#job-request' ) ) {
     $('#job-request').dataTable().fnDestroy();
 }
-}
+
 
 $.fn.loadPPEmnthly();
 

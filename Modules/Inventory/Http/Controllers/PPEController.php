@@ -8,6 +8,9 @@ use Illuminate\Routing\Controller;
 use Modules\Setup\Init;
 use Illuminate\Support\Facades\Validator;
 
+use Modules\PurchaseRequest\Entities\PurchaseNo;
+use Modules\PurchaseOrder\Entities\PurchaseOrderNo;
+use Modules\PurchaseOrder\Entities\PurchaseOrderItems;
 
 class PPEController extends Controller
 {
@@ -25,13 +28,20 @@ class PPEController extends Controller
 
     public function index()
     {
-        return view('inventory::inventory.ppe',$this->setup());
+        $this->data['pos'] = PurchaseNo::all();
+
+        return view('inventory::inventory/ppe',$this->setup());
     }
-    
+
     public function wout_ppe()
     {
         return view('inventory::inventory.wout-ppe',$this->setup());
     }
 
- 
+    public function set_ppe_pr($id){
+        $this->data['po'] = PurchaseNo::find($id);
+        return view('inventory::ppe-mnthly.set_pr_ppe',$this->setup());
+    }
+
+
 }

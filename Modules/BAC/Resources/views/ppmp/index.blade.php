@@ -17,6 +17,7 @@
             <div class="box-header">
                   <h4>Project Procurement Management Plan (PPMP)</h4>
                   <h4>For the Year {{date('Y')}}</h4>
+                  <button class="btn btn-success pull-right" onclick="$(this).addPPMP();" data-backdrop="static" data-keyboard="false"><i class="fa fa-plus"></i></button>
             </div>
             <div class="box-body">
                 <table class="table table-bordered table-hover" id="tbl_ppmp">

@@ -103,7 +103,7 @@
                               </thead>
 
                               <tbody>
-                              @if(   count(old('item_desc')) == 0)
+                              @if(   !(old('item_desc')))
                                 <tr id="tr_1">
                                     <td><textarea   class="form-control" name="item_desc[]" ></textarea></td>
                                     <td><input type="text" class="form-control"  name="item_property_code[]" /></td>

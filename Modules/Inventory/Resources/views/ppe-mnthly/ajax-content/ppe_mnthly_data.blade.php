@@ -13,6 +13,7 @@
                               <td><input type="text" class="form-control" /></td>
                               <td><input type="text" class="form-control" /></td>
                               <td><input tyle="width:70px;"  type="text" class="form-control" /></td>
+                              <td></td>
                         </tr>
                         <tr>
                               <th>Date</th>
@@ -27,6 +28,7 @@
                               <th>DEPARTMENT</th>
                               <th>SUPPLIER</th>
                               <th>INVOICE</th>
+                              <th></th>
                         </tr>
                       </thead>
                       <tbody>
@@ -81,6 +83,9 @@ $.fn.loadAddedApplicants = function(){
                 ,
                 {
                   title: 'INVOICE',
+                },
+                {
+                  title: 'ACTION',
                 }
 
 
@@ -90,7 +95,8 @@ $.fn.loadAddedApplicants = function(){
                 0,
                 1,
                 9,
-                11
+                11,
+                12
               ],
   }).dataTableSearch(500);
 };

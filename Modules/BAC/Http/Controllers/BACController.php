@@ -58,7 +58,7 @@ class BACController extends Controller
                                                                 )
                                                             ->where('olongapo_bac_control_info.id' , '=',$this->data['bac'])
                                                             ->get();
-            $this->data['bac_list'] = $this->data['bac_que'][0];                                                  
+            $this->data['bac_list'] = $this->data['bac_que'][0];
             $this->data['bac_control_no'] = $this->data['bac_list']->bac_control_no;
             $amount = $this->_setnumberFormater($this->data['bac_list']->amount);
             // $amount = $this->data['bac_list']->amount;

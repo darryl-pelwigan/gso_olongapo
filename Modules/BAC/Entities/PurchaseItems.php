@@ -13,4 +13,12 @@ class PurchaseItems extends Model
     public function item_category(){
         return $this->hasMany('Modules\BAC\Entities\ItemCategory', 'category_id');
     }
+
+    public function inventory(){
+        return $this->hasOne('Modules\Inventory\Entities\PpeMnthlyReportItems', 'prno_item_id');
+    }
+
+    public function abstrct_approved(){
+        return $this->hasOne('Modules\Abstrct\Entities\AbstrctSupplierApprved', 'pr_item_id');
+    }
 }

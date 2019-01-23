@@ -24,42 +24,55 @@
             <!-- /.box-header -->
             <div class="box-body">
             <div class="table-responsive">
-                 <table id="employee_list" class="table table-bordered table-hover">
-                      <thead>
-                      <tr id="test">
-                              <td></td>
-                              <td><input type="text" class="form-control" /></td>
-                              <td><input type="text" class="form-control" /></td>
-                              <td><input type="text" class="form-control" /></td>
-                              <td><input type="text" class="form-control" /></td>
-                              <td><input type="text" class="form-control" /></td>
-                              <td><input type="text" class="form-control" /></td>
-                              <td><input type="text" class="form-control" /></td>
-                              <td><input type="text" class="form-control" /></td>
-                              <td><input type="text" class="form-control" /></td>
-                              <td><input type="text" class="form-control" /></td>
-                              <td><input type="text" class="form-control" /></td>
-                              <td><input type="text" class="form-control" /></td>
-                              <td><input type="text" class="form-control" /></td>
-                        </tr>
+                 <table id="pr_ppe_list" class="table table-bordered table-hover">
+                       <thead>
                         <tr>
-                              <th>No</th>
-                              <th>Date</th>
-                              <th>CONTROL #</th>
-                              <th>DESCRIPTION</th>
-                              <th>PROPERTY CODE</th>
-                              <th>PO#</th>
-                              <th>QTY</th>
-                              <th>UNIT VALUE</th>
-                              <th>TOTAL VALUE</th>
-                              <th>ACCOUNTABLE PERSON</th>
-                              <th>DEPARTMENT</th>
-                              <th>SUPPLIER</th>
-                              <th>INVOICE</th>
-                              <th>Action</th>
+                          <th>NO</th>
+                          <th>PO No</th>
+                          <th>DEPARTMENT</th>
+                          <th>SoF</th>
+                          <th>CATEGORY</th>
+                          <th>Supplier</th>
+                          <th>Action</th>
+
                         </tr>
+
                       </thead>
                       <tbody>
+                        @php
+                          $count = 1;
+                          $pr_ids = [];
+                        @endphp
+                          @foreach($pos as $po )
+                            @php
+                              // dd($po->pr_items);
+                            @endphp
+                            @if($po->pr_orderno)
+                                @foreach($po->pr_items as $item)
+                                  @php
+                                    // dd($item->inventory->id);
+                                  @endphp
+                                  @if( !isset($item->inventory->id) && !in_array( $po->id , $pr_ids) )
+                                    @php
+                                      $pr_ids[] = $po->id;
+                                    @endphp
+                                    <tr>
+                                        <td>{{ $count++ }} </td>
+                                        <td>{{ $po->pr_orderno->po_no }}</td>
+                                        <td>{{ $po->pr_dept->dept_desc }}</td>
+                                        <td>{{ $po->bac_info->sof->description }}</td>
+                                        <td>{{ $po->bac_info->ctgry->description }}</td>
+                                        <td>{{ $po->bac_info->pubbid()->first()->abstrct_supplier->supplier->title }}</td>
+                                        <td><a href="{{route('inventory.set_ppe_pr',[$po->id]) }}" class="btn btn-sm btn-success" >Set PPE</a> </td>
+
+
+                                    </tr>
+                                  @endif
+                                @endforeach
+                            @endif
+
+                          @endforeach
+
                       </tbody>
                 </table>
                 </div>
@@ -93,7 +106,7 @@
 <script src="{{asset('adminlte')}}/plugins/datatables/jquery.dataTables.min.js"></script>
 
 <script type="text/javascript">
-
+$('#pr_ppe_list').DataTable();
 </script>
 
 <script src="{{asset('adminlte')}}/plugins/datatables/table-header-search.js"></script>
