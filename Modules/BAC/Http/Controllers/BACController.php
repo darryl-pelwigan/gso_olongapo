@@ -79,6 +79,7 @@ class BACController extends Controller
                                                     'olongapo_bac_awards_committee_approved_by.employee_name'
                                                 ])
                                         ->where('olongapo_bac_awards_committee_approved_by.deleted_at','=',null)
+                                        ->orderBy('olongapo_bac_awards_committee_approved_by.employee_bacposition', 'asc')
                                         ->get();
 
         $this->data['attested_by'] = db::table('olongapo_bac_awards_committee_attested_by')
