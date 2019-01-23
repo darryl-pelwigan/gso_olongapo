@@ -98,7 +98,7 @@ $('#new_ppe_mnthlyx').bootstrapValidator({
 $.fn.submitPPEMnthly = function(){
    $.ajax({
             type: "POST",
-            url: "{{route('inv.set_ppe_mnthly_report')}}",
+            url: "<?php echo e(route('inv.set_ppe_mnthly_report')); ?>",
             data :$('#new_ppe_mnthly').serialize(),
             dataType: "html",
             error: function(){
@@ -121,7 +121,7 @@ $.fn.submitPPEMnthly = function(){
 $.fn.updatePPEMnthly = function(){
    $.ajax({
             type: "POST",
-            url: "{{route('inventory.update_ppe_pr')}}",
+            url: "<?php echo e(route('inventory.update_ppe_pr')); ?>",
             data :$('#new_ppe_mnthly').serialize(),
             dataType: "html",
             error: function(){
@@ -147,11 +147,11 @@ $('#date_log').datepicker({
     });
 
 $('#dept').autocomplete({
-        serviceUrl: '{{route("dept.get_subdeptcodes")}}',
+        serviceUrl: '<?php echo e(route("dept.get_subdeptcodes")); ?>',
         dataType: 'json',
         type: 'POST',
         params : {
-                  _token : '{{csrf_token()}}'
+                  _token : '<?php echo e(csrf_token()); ?>'
         },
         onSelect: function (suggestion) {
           $('#pr_sdept_id').val(suggestion.data);
@@ -160,11 +160,11 @@ $('#dept').autocomplete({
 
 $.fn.autoCompleteSupp = function(){
   $('.item_supplier').autocomplete({
-        serviceUrl: '{{route("inv.get_supplier")}}',
+        serviceUrl: '<?php echo e(route("inv.get_supplier")); ?>',
         dataType: 'json',
         type: 'POST',
         params : {
-                  _token : '{{csrf_token()}}'
+                  _token : '<?php echo e(csrf_token()); ?>'
         },
         onSelect: function (suggestion) {
             var index = $( ".item_supplier" ).index( this );
@@ -177,11 +177,11 @@ $.fn.autoCompleteSupp();
 
 $.fn.autoCompleteEmpp = function(){
   $('.item_accountable_person').autocomplete({
-        serviceUrl: '{{route("emp.get_employee_name")}}',
+        serviceUrl: '<?php echo e(route("emp.get_employee_name")); ?>',
         dataType: 'json',
         type: 'POST',
         params : {
-                  _token : '{{csrf_token()}}'
+                  _token : '<?php echo e(csrf_token()); ?>'
         },
         onSelect: function (suggestion) {
             var index = $( ".item_accountable_person" ).index( this );
@@ -251,9 +251,9 @@ $.fn.set_control_number = function(){
   if(date_log!='' && type_es !== '' && set_control_number_a != 0){
         $.ajax({
                 type: "POST",
-                url: "{{route('inv.set_ppe_mnthly_control_no')}}",
+                url: "<?php echo e(route('inv.set_ppe_mnthly_control_no')); ?>",
                 data : {
-                    _token : '{{csrf_token()}}',
+                    _token : '<?php echo e(csrf_token()); ?>',
                     type_es : type_es,
                     date_log : date_log
                 },

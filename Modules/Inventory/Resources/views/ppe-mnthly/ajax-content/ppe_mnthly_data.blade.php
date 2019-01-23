@@ -25,8 +25,8 @@
                               <th>UNIT VALUE</th>
                               <th>TOTAL VALUE</th>
                               <th>ACCOUNTABLE PERSON</th>
-                              <th>DEPARTMENT</th>
                               <th>SUPPLIER</th>
+                              <th>DEPARTMENT</th>
                               <th>INVOICE</th>
                               <th></th>
                         </tr>
@@ -74,16 +74,16 @@ $.fn.loadAddedApplicants = function(){
                 }
                 ,
                 {
+                  title: 'SUPPLIER',
+                },
+                {
+                  title: 'INVOICE',
+                }
+                ,
+                {
                   title: 'DEPARTMENT',
                 }
                 ,
-                {
-                  title: 'SUPPLIER',
-                }
-                ,
-                {
-                  title: 'INVOICE',
-                },
                 {
                   title: 'ACTION',
                 }
@@ -95,6 +95,7 @@ $.fn.loadAddedApplicants = function(){
                 0,
                 1,
                 9,
+                10,
                 11,
                 12
               ],

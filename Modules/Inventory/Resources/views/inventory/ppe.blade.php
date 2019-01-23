@@ -34,7 +34,6 @@
                           <th>CATEGORY</th>
                           <th>Supplier</th>
                           <th>Action</th>
-
                         </tr>
 
                       </thead>
@@ -45,7 +44,9 @@
                         @endphp
                           @foreach($pos as $po )
                             @php
-                              // dd($po->pr_items);
+                            if(!isset($po->bac_info->pubbid()->first()->abstrct_supplier))
+                              dd($po->bac_info);
+
                             @endphp
                             @if($po->pr_orderno)
                                 @foreach($po->pr_items as $item)
@@ -64,8 +65,6 @@
                                         <td>{{ $po->bac_info->ctgry->description }}</td>
                                         <td>{{ $po->bac_info->pubbid()->first()->abstrct_supplier->supplier->title }}</td>
                                         <td><a href="{{route('inventory.set_ppe_pr',[$po->id]) }}" class="btn btn-sm btn-success" >Set PPE</a> </td>
-
-
                                     </tr>
                                   @endif
                                 @endforeach
@@ -106,7 +105,7 @@
 <script src="{{asset('adminlte')}}/plugins/datatables/jquery.dataTables.min.js"></script>
 
 <script type="text/javascript">
-$('#pr_ppe_list').DataTable();
+  $('#pr_ppe_list').DataTable();
 </script>
 
 <script src="{{asset('adminlte')}}/plugins/datatables/table-header-search.js"></script>

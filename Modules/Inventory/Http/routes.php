@@ -13,6 +13,10 @@ Route::group(['middleware' => ['web','auth'], 'prefix' => 'inventory', 'namespac
 
     Route::get('/set-inventory-ppe/{id}', 'PPEController@set_ppe_pr')->name('inventory.set_ppe_pr');
 
+    Route::get('/edit-inventory-ppe/{id}', 'PPEController@edit_ppe_pr')->name('inventory.edit_ppe_pr');
+
+    Route::post('/edit-inventory-ppe', 'PPEMonthlyReportController@update_monthly_report_new')->name('inventory.update_ppe_pr');
+
     Route::get('/inventory-wout-ppe', 'PPEController@wout_ppe')->name('inventory.wout-ppe');
 
 

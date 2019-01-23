@@ -12,6 +12,8 @@ use Modules\PurchaseRequest\Entities\PurchaseNo;
 use Modules\PurchaseOrder\Entities\PurchaseOrderNo;
 use Modules\PurchaseOrder\Entities\PurchaseOrderItems;
 
+use Modules\Inventory\Entities\PpeMnthlyReport;
+
 class PPEController extends Controller
 {
    protected $data;
@@ -43,5 +45,10 @@ class PPEController extends Controller
         return view('inventory::ppe-mnthly.set_pr_ppe',$this->setup());
     }
 
+
+     public function edit_ppe_pr($id){
+        $this->data['pmi'] = PpeMnthlyReport::find($id);
+        return view('inventory::ppe-mnthly.edit_pr_ppe',$this->setup());
+    }
 
 }

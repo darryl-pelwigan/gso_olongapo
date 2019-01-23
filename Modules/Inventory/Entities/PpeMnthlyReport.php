@@ -13,8 +13,13 @@ class PpeMnthlyReport extends Model
         return $this->hasMany('Modules\Inventory\Entities\PpeMnthlyReportItems', 'ppe_mnthly_id');
     }
 
-       public function inv_dept(){
+    public function inv_dept(){
         return $this->belongsTo('Modules\Administrator\Entities\DEPTsubcode', 'department');
+    }
+
+
+    public function pr_no(){
+        return $this->belongsTo('Modules\PurchaseRequest\Entities\PurchaseNo', 'pono_id');
     }
 
 
