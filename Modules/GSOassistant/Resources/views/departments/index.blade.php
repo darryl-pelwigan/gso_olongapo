@@ -417,7 +417,7 @@ $(function() {
                 return '<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#new_employee_modal" data-backdrop="static" data-keyboard="false" onclick="$(this).editEmployee('+data.id+');" ><i class="fa fa-lock"></i> Edit Employee </button>';
               }
             },
-            { data: null, name: 'olongapo_user_logging.logout_time',
+            { data: null,
               "searchable": false,
               render : function(data , type , row){
                 return '<button type="button" class="btn bg-light-blue btn-sm" data-toggle="modal" data-target="#new_employee_modal" data-backdrop="static" data-keyboard="false" onclick="$(this).showaccessLogs('+data.id+');" ><i class="fa fa-pencil"></i> Access logs </button> ';
@@ -433,7 +433,7 @@ $(function() {
         ],
         columnDefs: [
             {
-              orderable: false, targets: [-1]
+              orderable: false, targets: [-1, -2]
             },
         ],
         "order": [[ 0, 'asc' ]],
