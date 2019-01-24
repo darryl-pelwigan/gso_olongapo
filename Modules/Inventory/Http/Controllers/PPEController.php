@@ -13,7 +13,7 @@ use Modules\PurchaseOrder\Entities\PurchaseOrderNo;
 use Modules\PurchaseOrder\Entities\PurchaseOrderItems;
 
 use Modules\Inventory\Entities\PpeMnthlyReport;
-
+use Modules\BAC\Entities\BacControlInfo;
 class PPEController extends Controller
 {
    protected $data;
@@ -30,7 +30,7 @@ class PPEController extends Controller
 
     public function index()
     {
-        $this->data['pos'] = PurchaseNo::all();
+        $this->data['bacs'] = BacControlInfo::all();
 
         return view('inventory::inventory/ppe',$this->setup());
     }
@@ -41,8 +41,8 @@ class PPEController extends Controller
     }
 
     public function set_ppe_pr($id){
-        $this->data['po'] = PurchaseNo::find($id);
-        return view('inventory::ppe-mnthly.set_pr_ppe',$this->setup());
+        $this->data['bac'] = BacControlInfo::find($id);
+        return view('inventory::ppe-mnthly/set_pr_ppe',$this->setup());
     }
 
 

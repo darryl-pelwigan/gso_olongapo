@@ -40,38 +40,26 @@
                       <tbody>
                         <?php 
                           $count = 1;
-                          $pr_ids = [];
+                          $bac_ids = [];
                          ?>
-                          <?php $__currentLoopData = $pos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $po): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <?php 
-                            if(!isset($po->bac_info->pubbid()->first()->abstrct_supplier))
-                              dd($po->bac_info);
-
-                             ?>
-                            <?php if($po->pr_orderno): ?>
-                                <?php $__currentLoopData = $po->pr_items; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                  <?php 
-                                    // dd($item->inventory->id);
-                                   ?>
-                                  <?php if( !isset($item->inventory->id) && !in_array( $po->id , $pr_ids) ): ?>
+                          <?php $__currentLoopData = $bacs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $bac): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php $__currentLoopData = $bac->abstrct_supplier->abstrct_supplier_approved; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                  <?php if( !isset($item->pr_item->inventory->id) && !in_array( $bac->id , $bac_ids) ): ?>
                                     <?php 
-                                      $pr_ids[] = $po->id;
+                                      $bac_ids[] = $bac->id;
                                      ?>
                                     <tr>
                                         <td><?php echo e($count++); ?> </td>
-                                        <td><?php echo e($po->pr_orderno->po_no); ?></td>
-                                        <td><?php echo e($po->pr_dept->dept_desc); ?></td>
-                                        <td><?php echo e($po->bac_info->sof->description); ?></td>
-                                        <td><?php echo e($po->bac_info->ctgry->description); ?></td>
-                                        <td><?php echo e($po->bac_info->pubbid()->first()->abstrct_supplier->supplier->title); ?></td>
-                                        <td><a href="<?php echo e(route('inventory.set_ppe_pr',[$po->id])); ?>" class="btn btn-sm btn-success" >Set PPE</a> </td>
+                                        <td><?php echo e($bac->pr->pr_orderno->po_no); ?></td>
+                                        <td><?php echo e($bac->pr->pr_dept->dept_desc); ?></td>
+                                        <td><?php echo e($bac->sof->description); ?></td>
+                                        <td><?php echo e($bac->ctgry->description); ?></td>
+                                        <td><?php echo e($bac->abstrct_supplier->supplier->title); ?></td>
+                                        <td><a href="<?php echo e(route('inventory.set_ppe_pr',[ $bac->id])); ?>" class="btn btn-sm btn-success" >Set PPE</a> </td>
                                     </tr>
                                   <?php endif; ?>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                            <?php endif; ?>
-
                           <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-
                       </tbody>
                 </table>
                 </div>

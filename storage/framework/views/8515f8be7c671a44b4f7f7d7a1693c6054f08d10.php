@@ -59,8 +59,8 @@
                     <div class="form-group">
                             <label for="payment_price" class="col-sm-3 control-label">Department</label>
                             <div class="col-sm-6">
-                              <input type="text" class="form-control" id="dept" name="dept" placeholder="Department" value="<?php echo e($po->pr_dept->dept_desc); ?>"  readonly>
-                              <input type="hidden" class="form-control" id="pr_sdept_id" name="pr_sdept_id"  value="<?php echo e($po->pr_dept->id); ?>" >
+                              <input type="text" class="form-control" id="dept" name="dept" placeholder="Department" value="<?php echo e($bac->pr->pr_dept->dept_desc); ?>"  readonly>
+                              <input type="hidden" class="form-control" id="pr_sdept_id" name="pr_sdept_id"  value="<?php echo e($bac->pr->pr_dept->id); ?>" >
                             </div>
                     </div>
 
@@ -74,14 +74,14 @@
                       <div class="form-group">
                         <label for="item_pono" class="col-sm-3 control-label">PO Number : </label>
                         <div class="col-sm-6">
-                          <input type="text" class="form-control " id="item_pono"   name="item_pono"   placeholder="PO Number" value="<?php echo e($po->pr_orderno->po_no); ?>" readonly/>
+                          <input type="text" class="form-control " id="item_pono"   name="item_pono"   placeholder="PO Number" value="<?php echo e($bac->pr->pr_orderno->po_no); ?>" readonly/>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="item_supplier" class="col-sm-3 control-label"> SUPPLIER: </label>
                         <div class="col-sm-6">
-                          <input type="text" class="form-control item_supplier"  name="item_supplier" value="<?php echo e($po->bac_info->pubbid()->first()->abstrct_supplier->supplier->title); ?>"   /><input type="hidden" class="form-control"  name="item_supplier_id"  value="<?php echo e($po->bac_info->pubbid()->first()->abstrct_supplier->supplier->id); ?>"  />
+                          <input type="text" class="form-control item_supplier"  name="item_supplier" value="<?php echo e($bac->abstrct_supplier->supplier->title); ?>"   /><input type="hidden" class="form-control"  name="item_supplier_id"  value="<?php echo e($bac->abstrct_supplier->supplier->id); ?>"  />
                         </div>
                     </div>
 
@@ -105,17 +105,18 @@
                               </thead>
 
                               <tbody>
-                                <?php $__currentLoopData = $po->pr_items; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $items): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php $__currentLoopData = $bac->abstrct_supplier->abstrct_supplier_approved; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $items): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                    <?php 
                                     // dd($items);
                                    ?>
                                          <tr id="tr_1">
-                                              <td><textarea   class="form-control" name="item_desc[]" readonly><?php echo e($items->description); ?></textarea></td>
+                                              <input type="hidden" class="form-control"  name="item_id[]" value="<?php echo e($items->pr_item->id); ?>" />
+                                              <td><textarea   class="form-control" name="item_desc[]" readonly><?php echo e($items->pr_item->description); ?></textarea></td>
                                               <td><input type="text" class="form-control"  name="item_property_code[]" value="" /></td>
-                                              <td><input type="text" class="form-control"  name="item_unit[]" value="<?php echo e($items->unit); ?>" readonly  /></td>
-                                              <td><input type="text" class="form-control item_qty"  name="item_qty[]" style="width: 60px;padding-right: 2px;" value="<?php echo e($items->qty); ?>" readonly /></td>
-                                              <td><input type="text" class="form-control item_unit_value"  name="item_unit_value[]" style="width: 100px;" value="<?php echo e($items->unit_price); ?>" readonly /></td>
-                                              <td><input type="text" class="form-control"  name="item_total_value[]" style="width: 100px;" disabled="" value="<?php echo e($items->unit_price * $items->qty); ?>" readonly /></td>
+                                              <td><input type="text" class="form-control"  name="item_unit[]" value="<?php echo e($items->pr_item->unit); ?>" readonly  /></td>
+                                              <td><input type="text" class="form-control item_qty"  name="item_qty[]" style="width: 60px;padding-right: 2px;" value="<?php echo e($items->pr_item->qty); ?>" readonly /></td>
+                                              <td><input type="text" class="form-control item_unit_value"  name="item_unit_value[]" style="width: 100px;" value="<?php echo e($items->pr_item->unit_price); ?>" readonly /></td>
+                                              <td><input type="text" class="form-control"  name="item_total_value[]" style="width: 100px;" disabled="" value="<?php echo e($items->pr_item->unit_price * $items->pr_item->qty); ?>" readonly /></td>
                                               <td><input type="text" class="form-control item_accountable_person"  name="item_accountable_person[]"  /> <input type="hidden" class="form-control"  name="item_accountable_person_id[]" /> </td>
                                               <td><input type="text" class="form-control"  name="item_invoice[]" value="" /></td>
                                           </tr>

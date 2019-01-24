@@ -39,7 +39,7 @@ class BACPRlistController extends Controller
         $this->data['holiday'] = $holiday;
         $this->data['procurement'] = Procmethod::all();
 
-        return view('bac::bac-pr.pr-list',$this->setup());
+        return view('bac::bac-pr/pr-list',$this->setup());
     }
 
     public function set_bac_control_no(Request $request){
@@ -89,7 +89,7 @@ class BACPRlistController extends Controller
             'total_amount.required'  => 'TOTAL AMOUNT IS REQUIRED',
             'sof_id.required'  => 'SOURCE OF FUND IS REQUIRED',
             'bac_categ_id.required'  => 'BAC CATEGORY IS REQUIRED',
-            'bac_reso_type.required'  => 'BAC RESOLUTION TYPE IS REQUIRED',        
+            'bac_reso_type.required'  => 'BAC RESOLUTION TYPE IS REQUIRED',
         ]);
 
         if($validator->fails()){
@@ -99,7 +99,7 @@ class BACPRlistController extends Controller
         }else{
 
             $controlno = $request->input('bac_control_no');
-            $prno_id = $request->input('prno_id'); 
+            $prno_id = $request->input('prno_id');
             $bac_date = $request->input('bac_date');
             $amount = $request->input('total_amount');
             $sourcefund = $request->input('sof_id');
@@ -107,13 +107,13 @@ class BACPRlistController extends Controller
             $apprved_abstract = $request->input('supplier_approved_id');
             $bac_type_id= $request->input('bac_reso_type');
             $remarks = $request->input('bac_remarks');
-            
+
             if($request->input('bac_control_id') > 0){
                 $controlinfo = BacControlInfo::find($request->input('bac_control_id'));
             }else{
                 $controlinfo = new BacControlInfo;
             }
-            
+
             $controlinfo->bac_control_no = $controlno;
             $controlinfo->prno_id = $prno_id;
             $controlinfo->bac_date = $bac_date;
@@ -131,13 +131,13 @@ class BACPRlistController extends Controller
         return $data;
 
     }
-    
+
     public function destroy(Request $request)
     {
         $data = DB::table('olongapo_bac_control_info')->where('id','=', $request->input('control_id'))->delete();
         return $data;
     }
 
-    
+
 
 }

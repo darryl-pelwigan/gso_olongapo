@@ -40,38 +40,26 @@
                       <tbody>
                         @php
                           $count = 1;
-                          $pr_ids = [];
+                          $bac_ids = [];
                         @endphp
-                          @foreach($pos as $po )
-                            @php
-                            if(!isset($po->bac_info->pubbid()->first()->abstrct_supplier))
-                              dd($po->bac_info);
-
-                            @endphp
-                            @if($po->pr_orderno)
-                                @foreach($po->pr_items as $item)
-                                  @php
-                                    // dd($item->inventory->id);
-                                  @endphp
-                                  @if( !isset($item->inventory->id) && !in_array( $po->id , $pr_ids) )
+                          @foreach($bacs as $bac )
+                                @foreach($bac->abstrct_supplier->abstrct_supplier_approved as $item)
+                                  @if( !isset($item->pr_item->inventory->id) && !in_array( $bac->id , $bac_ids) )
                                     @php
-                                      $pr_ids[] = $po->id;
+                                      $bac_ids[] = $bac->id;
                                     @endphp
                                     <tr>
                                         <td>{{ $count++ }} </td>
-                                        <td>{{ $po->pr_orderno->po_no }}</td>
-                                        <td>{{ $po->pr_dept->dept_desc }}</td>
-                                        <td>{{ $po->bac_info->sof->description }}</td>
-                                        <td>{{ $po->bac_info->ctgry->description }}</td>
-                                        <td>{{ $po->bac_info->pubbid()->first()->abstrct_supplier->supplier->title }}</td>
-                                        <td><a href="{{route('inventory.set_ppe_pr',[$po->id]) }}" class="btn btn-sm btn-success" >Set PPE</a> </td>
+                                        <td>{{ $bac->pr->pr_orderno->po_no }}</td>
+                                        <td>{{ $bac->pr->pr_dept->dept_desc }}</td>
+                                        <td>{{ $bac->sof->description }}</td>
+                                        <td>{{ $bac->ctgry->description }}</td>
+                                        <td>{{ $bac->abstrct_supplier->supplier->title }}</td>
+                                        <td><a href="{{route('inventory.set_ppe_pr',[ $bac->id]) }}" class="btn btn-sm btn-success" >Set PPE</a> </td>
                                     </tr>
                                   @endif
                                 @endforeach
-                            @endif
-
                           @endforeach
-
                       </tbody>
                 </table>
                 </div>

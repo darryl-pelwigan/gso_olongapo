@@ -191,6 +191,7 @@ class PPEMonthlyReportController extends Controller
                 for($c = 0 ; $c < count($request->input('item_desc')); $c++){
                     $datax[] = [
                                             'ppe_mnthly_id'                   => $PpeMnthlyReport->id,
+                                            'prno_item_id'                    =>  ($request->input('item_id.'.$c)) ? $request->input('item_id.'.$c) : null,
                                             'item_desc'                           =>  $request->input('item_desc.'.$c),
                                             'property_code'                  => $request->input('item_property_code.'.$c),
                                             'po_no'                                   =>  $request->input('item_pono'),
@@ -205,7 +206,7 @@ class PPEMonthlyReportController extends Controller
                                     ];
                 }
                 $PpeMnthlyReport->inv_items()->insert($datax);
-                 return back();
+                 return redirect()->route('inventory.ppe');
 
             }
 

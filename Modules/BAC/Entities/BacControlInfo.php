@@ -23,7 +23,34 @@ class BacControlInfo extends Model
         return $this->belongsTo('Modules\BAC\Entities\bacCategory', 'category_id');
     }
 
-    public function pubbid(){
-        return $this->hasMany('Modules\Abstrct\Entities\AbstrctSupplierApprved','pubbid', 'apprved_pubbid_id');
+    public function abstrct_supplier(){
+        return $this->belongsTo('Modules\Abstrct\Entities\AbstrctSupplier','apprved_pubbid_id');
+    }
+
+    public function approved(){
+        /**
+         * testing wrong data hehehe
+         */
+
+        return $this->hasManyThrough(
+                'Modules\Abstrct\Entities\AbstrctSupplierApprved',
+                'Modules\Abstrct\Entities\AbstrctSupplier',
+                'abstrct_id',
+                'pubbid',
+                'id'
+            );
+    }
+
+    public function supplier(){
+          /**
+         * testing wrong data hehehe
+         */
+        return $this->hasManyThrough(
+                'Modules\Abstrct\Entities\AbstrctSupplier',
+                'Modules\Abstrct\Entities\AbstrctSupplierApprved',
+                'pubbid',
+                'abstrct_id',
+                'id'
+            );
     }
 }
