@@ -287,10 +287,10 @@ $(function() {
               render : function(data , type , row){
                     var btn = "";
                     if(data.apprved_pubbid_id != null){
-                      btn = '<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#add_purchase_order_modal" onclick="$(this).addPOnumber('+data.apprved_pubbid_id+');" ><i class="fa fa-pencil"></i> Update</button>\
+                      btn = '<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#add_purchase_order_modal" onclick="$(this).addPOnumber('+data.abstrct_id+');" ><i class="fa fa-pencil"></i> Update</button>\
                       <button type="button" class="btn btn-danger btn-sm" onclick="$(this).deleteBacPONumber('+data.control_id+');" ><i class="fa fa-trash"></i> Delete</button>';
                     }else{
-                       btn = '<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#add_purchase_order_modal" onclick="$(this).addPOnumber('+data.apprved_pubbid_id+');" ><i class="fa fa-plus"></i> Process</button>';
+                       btn = '<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#add_purchase_order_modal" onclick="$(this).addPOnumber('+data.abstrct_id+');" ><i class="fa fa-plus"></i> Process</button>';
                     }
                     return btn;
                 }
@@ -307,13 +307,13 @@ $(function() {
 
 
   });
-<?php
+<?php 
   $dates = array();
   foreach($holiday as $d){
       array_push($dates, date('Y').'-'.$d->holiday);
   }
   $h = json_encode($dates);
-?>
+?>  
 
 //Date picker
     $('#bac_date').datepicker({
@@ -328,12 +328,12 @@ $(function() {
 function editDays(date) {
     var disabledDates = ['2017-10-20', '2017-10-21'];
         for (var i = 0; i < disabledDates.length; i++) {
-            if (new Date(disabledDates[i]).toString() == date.toString()) {
+            if (new Date(disabledDates[i]).toString() == date.toString()) {                  
                  return [false, "akljsdfl;jkaf"];
             }
         }
         return [true];
-  }
+  }   
 
     $.fn.setControllNumber = function(){
       var bac_date = $('#bac_date').val();
@@ -373,7 +373,7 @@ function editDays(date) {
             },
             success: function(data){
                 console.log(data);
-
+              
               if(data.info != null){
                 $('#pr_no').val(data.info.pr_no);
                 $('#pr_dept_desc').val(data.info.dept_desc);

@@ -238,8 +238,21 @@
                   </div>
                 @endif
 
-                <div class="form-group">
+                @if(Session::get('olongapo_user')->group_id == 9)
+                  <div class="form-group">
+                       <label for="pr_no" class="col-sm-2 control-label">DEPARTMENT : </label>
+                          <div class="col-sm-6">
+                          <select class="form-control" name="department" id="department">
+                              <option></option>
+                              @foreach($department as $dept)
+                                <option value={{$dept->id}}>{{$dept->dept_desc}}</option>
+                              @endforeach
+                          </select>
+                      </div>
+                  </div>
+                @endif
 
+                <div class="form-group">
                      <label for="pr_no" class="col-sm-2 control-label">PR DATE : </label>
                         <div class="col-sm-2">
                         <input type="text" class="form-control" id="pr_no_date" name="pr_no_date" placeholder="PR DATE" />

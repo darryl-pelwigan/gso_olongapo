@@ -28,7 +28,7 @@ class Item_datatable
                     ->join('olongapo_purchase_item_category_group', 'olongapo_purchase_item_category_group.id', '=', 'olongapo_purchase_item_category.group_id')
                     ->select([
                             'olongapo_purchase_item_category.id as category_id',
-                            'olongapo_purchase_item_category.code as code',
+                            'olongapo_purchase_item_category.code as code',                            
                             'olongapo_purchase_item_category.category as category',
                             'olongapo_purchase_item_category_group.group as group',
                         ])
@@ -45,7 +45,7 @@ class Item_datatable
                     ->join('olongapo_purchase_item_category_group', 'olongapo_purchase_item_category_group.id', '=', 'olongapo_purchase_item_category.group_id')
                     ->select([
                             'olongapo_purchase_items.id as item_id',
-                            'olongapo_purchase_items.item',
+                            'olongapo_purchase_items.item',                            
                             'olongapo_purchase_items.unit',
                             'olongapo_purchase_item_category.category',
                             'olongapo_purchase_item_category_group.group'
@@ -62,7 +62,7 @@ class Item_datatable
     }
 
     public function ppmp_upload($vars = null){
-
+        
         $data = DB::table('olongapo_subdepartment')->get();
         $records = [];
         $uploads = "";
@@ -72,11 +72,11 @@ class Item_datatable
                         ->where('olongapo_purchase_item_ppmp_upload.deleted_at', '=', null)
                         ->get();
 
-            $record =
+            $record = 
                 array(
                        'subdept_id' => $d->id,
                        'dept_desc'  => $d->dept_desc,
-                       'uploads'    => $uploads
+                       'uploads'    => $uploads          
                 );
             array_push($records, $record);
         }
@@ -84,7 +84,7 @@ class Item_datatable
 
 
     }
-
+  
 }
 
 

@@ -17,6 +17,7 @@ use Modules\BAC\Entities\BacControlInfo;
 use Modules\Abstrct\Entities\Abstrct;
 use Modules\PurchaseOrder\Entities\PurchaseOrderNo;
 
+use Modules\Administrator\Entities\DEPTsubcode;
 
 
 class DepartmentController extends Controller
@@ -78,6 +79,8 @@ class DepartmentController extends Controller
                 );
         }
         $this->data['status'] = $status;
+
+        $this->data['department'] = DEPTsubcode::all();
 
         return view('department::purchase_request.index',$this->setup());
     }
