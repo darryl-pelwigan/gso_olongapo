@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PurchaseNo extends Model
 {
+    /**
+     * test
+     */
     use SoftDeletes;
     protected $table = 'olongapo_purchase_request_no';
     protected $fillable = ['dept_id','pr_date','pr_count','obr_id'];
