@@ -18,7 +18,11 @@ class Dept_datatable
     /*BAC list */
 
     public function dept_pr_list($vars = null){
-        $PurchaseNo = PurchaseNo::where('dept_id', session::get('olongapo_emp_depts')->dept_id)->get();
+        if(Session::get('olongapo_user')->group_id == 9){
+          $PurchaseNo = PurchaseNo::all();
+        }else{
+          $PurchaseNo = PurchaseNo::where('dept_id', session::get('olongapo_emp_depts')->dept_id)->get();
+        }
         $records = [];
         if(!$PurchaseNo->isEmpty()) {
                  foreach($PurchaseNo as $pr) {

@@ -55,27 +55,54 @@ class PPEMonthlyReportController extends Controller
                                                 )
                                         ->get()
                                         ;
-                                                $tbody = '';
+
+            $get_ppe_mnthly = PpeMnthlyReport::all();
+
         $dataArray = [];
+        foreach ($get_ppe_mnthly as $key => $value) {
+           $po_no = $value->pono_id ? $value->pr_no->pr_orderno->po_no : '';
+           $employee_name = '';
+            foreach ($value->inv_items as $key => $inv_item) {
+                $employee_name = $inv_item->accountable_person ? $inv_item->accountable->lname.', '.$inv_item->accountable->fname : '';
+                $suplier = $inv_item->supplier ? $inv_item->supplier_info->title : "" ;
+                $dataArray[] =   array(
+                                        $value->date_log,
+                                        $value->inv_control_no,
+                                        $inv_item->item_desc,
+                                        $inv_item->property_code,
+                                        $po_no,
+                                        $inv_item->qty,
+                                        $inv_item->unit_value,
+                                        $inv_item->total_value,
+                                        $employee_name,
+                                        $suplier,
+                                        $inv_item->invoice,
+                                        $value->inv_dept->dept_desc,
+                                        '<a class="btn btn-sm btn-info" href="'.route('inventory.edit_ppe_pr',$value->id).'" >edit</a> '
+                                    );
 
-               for($x=0;$x<count($get_ppe_mnthly);$x++){
-                        $dataArray[$x] =   array(
-                                                    $get_ppe_mnthly[$x]->date_log,
-                                                    $get_ppe_mnthly[$x]->inv_control_no,
-                                                    $get_ppe_mnthly[$x]->item_desc,
-                                                    $get_ppe_mnthly[$x]->property_code,
-                                                    $get_ppe_mnthly[$x]->po_no,
-                                                    $get_ppe_mnthly[$x]->qty,
-                                                    $get_ppe_mnthly[$x]->unit_value,
-                                                    $get_ppe_mnthly[$x]->total_value,
-                                                    $get_ppe_mnthly[$x]->employee_name,
-                                                    $get_ppe_mnthly[$x]->dept_desc,
-                                                    $get_ppe_mnthly[$x]->title,
-                                                    $get_ppe_mnthly[$x]->invoice,
-                                                    '<a class="btn btn-sm btn-info" href="'.route('inventory.set_ppe_pr',$get_ppe_mnthly[$x]->ppe_mnthly_id).'" >edit</a> '
-                                                );
-
+            }
         }
+
+        // for($x=0;$x<count($get_ppe_mnthly);$x++){
+        //     $dataArray[$x] =   array(
+        //                                 $get_ppe_mnthly[$x]->date_log,
+        //                                 $get_ppe_mnthly[$x]->inv_control_no,
+        //                                 $get_ppe_mnthly[$x]->item_desc,
+        //                                 $get_ppe_mnthly[$x]->property_code,
+        //                                 $get_ppe_mnthly[$x]->po_no,
+        //                                 $get_ppe_mnthly[$x]->qty,
+        //                                 $get_ppe_mnthly[$x]->unit_value,
+        //                                 $get_ppe_mnthly[$x]->total_value,
+        //                                 $get_ppe_mnthly[$x]->employee_name,
+        //                                 $get_ppe_mnthly[$x]->title,
+        //                                 $get_ppe_mnthly[$x]->invoice,
+        //                                 $get_ppe_mnthly[$x]->dept_desc,
+        //                                 '<a class="btn btn-sm btn-info" href="'.route('inventory.edit_ppe_pr',$get_ppe_mnthly[$x]->ppe_mnthly_id).'" >edit</a> '
+        //                             );
+
+        // }
+
         $data['tbody'] =  $dataArray;
         return view('inventory::ppe-mnthly.ajax-content/ppe_mnthly_data',$data);
     }
@@ -164,20 +191,70 @@ class PPEMonthlyReportController extends Controller
                 for($c = 0 ; $c < count($request->input('item_desc')); $c++){
                     $datax[] = [
                                             'ppe_mnthly_id'                   => $PpeMnthlyReport->id,
+                                            'prno_item_id'                    =>  ($request->input('item_id.'.$c)) ? $request->input('item_id.'.$c) : null,
                                             'item_desc'                           =>  $request->input('item_desc.'.$c),
                                             'property_code'                  => $request->input('item_property_code.'.$c),
                                             'po_no'                                   =>  $request->input('item_pono'),
-                                             'unit'                                     => $request->input('item_unit.'.$c),
+                                            'unit'                                     => $request->input('item_unit.'.$c),
                                             'qty'                                       => $request->input('item_qty.'.$c),
                                             'unit_value'                          => $request->input('item_qty.'.$c),
                                             'total_value'                        =>  $request->input('item_qty.'.$c) * $request->input('item_qty.'.$c),
                                             'accountable_person'        => $request->input('item_accountable_person_id.'.$c),
-                                            'department'                      => $request->input('pr_sdept_id'),
                                             'supplier'                              =>  $request->input('item_supplier_id'),
+                                            'department'                      => $request->input('pr_sdept_id'),
                                             'invoice'                               => $request->input('item_invoice.'.$c),
                                     ];
                 }
                 $PpeMnthlyReport->inv_items()->insert($datax);
+                 return redirect()->route('inventory.ppe');
+
+            }
+
+    }
+
+
+    public function update_monthly_report_new(Request $request){
+            $validator = Validator::make($request->all(), [
+                    'date_log' => 'required|date',
+                    'pr_sdept_id' => 'required',
+                    'item_desc' => 'required',
+                    'control_no' => 'required',
+            ],[
+                   'date_log.required' => 'The DATE LOG is required.',
+                   'pr_sdept_id.required' => 'The Department is required.',
+                   'item_desc.required' => 'The Item Description is required.',
+                   'control_no.required' => 'Control Number is required.'
+            ]);
+        if($validator->fails()){
+                return back()->withErrors($validator)
+                ->withInput();
+
+
+            }else{
+                 Session::flash('info', ['PPE montly saved']);
+
+                $PpeMnthlyReport = PpeMnthlyReport::find($request->pmi_id);
+                $PpeMnthlyReport->date_log = $request->input('date_log');
+                $PpeMnthlyReport->inv_control_no  = $request->input('control_no');
+                $PpeMnthlyReport->type  = $request->input('type_es');
+                $PpeMnthlyReport->department  = $request->input('pr_sdept_id');
+                $PpeMnthlyReport->save();
+
+                foreach ($request['item_id'] as $key => $input_id) {
+
+                    $item = PpeMnthlyReportItems::find($input_id);
+
+                    $item->update(
+                            [
+                                 'item_desc'                           =>  $request->input('item_desc.'.$key),
+                                 'property_code'                  => $request->input('item_property_code.'.$key),
+                                 'accountable_person'        => $request->input('item_accountable_person_id.'.$key),
+                                 'invoice'        => $request->input('item_invoice.'.$key),
+                                 'po_no'                                   =>  $request->input('item_pono'),
+                            ]
+                    );
+
+                }
                  return back();
 
             }

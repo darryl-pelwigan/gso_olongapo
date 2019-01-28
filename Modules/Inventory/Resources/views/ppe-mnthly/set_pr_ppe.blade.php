@@ -61,8 +61,8 @@
                     <div class="form-group">
                             <label for="payment_price" class="col-sm-3 control-label">Department</label>
                             <div class="col-sm-6">
-                              <input type="text" class="form-control" id="dept" name="dept" placeholder="Department" value="{{ $po->pr_dept->dept_desc }}"  readonly>
-                              <input type="hidden" class="form-control" id="pr_sdept_id" name="pr_sdept_id"  value="{{ $po->pr_dept->id }}" >
+                              <input type="text" class="form-control" id="dept" name="dept" placeholder="Department" value="{{ $bac->pr->pr_dept->dept_desc }}"  readonly>
+                              <input type="hidden" class="form-control" id="pr_sdept_id" name="pr_sdept_id"  value="{{ $bac->pr->pr_dept->id }}" >
                             </div>
                     </div>
 
@@ -76,14 +76,14 @@
                       <div class="form-group">
                         <label for="item_pono" class="col-sm-3 control-label">PO Number : </label>
                         <div class="col-sm-6">
-                          <input type="text" class="form-control " id="item_pono"   name="item_pono"   placeholder="PO Number" value="{{ $po->pr_orderno->po_no }}" readonly/>
+                          <input type="text" class="form-control " id="item_pono"   name="item_pono"   placeholder="PO Number" value="{{ $bac->pr->pr_orderno->po_no }}" readonly/>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="item_supplier" class="col-sm-3 control-label"> SUPPLIER: </label>
                         <div class="col-sm-6">
-                          <input type="text" class="form-control item_supplier"  name="item_supplier" value="{{ $po->bac_info->pubbid()->first()->abstrct_supplier->supplier->title }}"   /><input type="hidden" class="form-control"  name="item_supplier_id"  value="{{ $po->bac_info->pubbid()->first()->abstrct_supplier->supplier->id }}"  />
+                          <input type="text" class="form-control item_supplier"  name="item_supplier" value="{{ $bac->abstrct_supplier->abstrct_supplier_approved->first()->supplier->title }}"   /><input type="hidden" class="form-control"  name="item_supplier_id"  value="{{ $bac->abstrct_supplier->abstrct_supplier_approved->first()->supplier->id }}"  />
                         </div>
                     </div>
 
@@ -107,20 +107,22 @@
                               </thead>
 
                               <tbody>
-                                @foreach($po->pr_items as $items)
-                                   @php
-                                    // dd($items);
-                                  @endphp
-                                         <tr id="tr_1">
-                                              <td><textarea   class="form-control" name="item_desc[]" readonly>{{ $items->description }}</textarea></td>
+                            
+                                @foreach( $bac->abstrct_supplier as $items)
+                                  <?php
+                                    var_dump($items);
+                                  ?>
+                                       {{--   <tr id="tr_1">
+                                              <input type="hidden" class="form-control"  name="item_id[]" value="{{ $items->pr_item->id }}" />
+                                              <td><textarea   class="form-control" name="item_desc[]" readonly>{{ $items->pr_item->description }}</textarea></td>
                                               <td><input type="text" class="form-control"  name="item_property_code[]" value="" /></td>
-                                              <td><input type="text" class="form-control"  name="item_unit[]" value="{{ $items->unit }}" readonly  /></td>
-                                              <td><input type="text" class="form-control item_qty"  name="item_qty[]" style="width: 60px;padding-right: 2px;" value="{{ $items->qty }}" readonly /></td>
-                                              <td><input type="text" class="form-control item_unit_value"  name="item_unit_value[]" style="width: 100px;" value="{{ $items->unit_price }}" readonly /></td>
-                                              <td><input type="text" class="form-control"  name="item_total_value[]" style="width: 100px;" disabled="" value="{{ $items->unit_price * $items->qty }}" readonly /></td>
+                                              <td><input type="text" class="form-control"  name="item_unit[]" value="{{ $items->pr_item->unit }}" readonly  /></td>
+                                              <td><input type="text" class="form-control item_qty"  name="item_qty[]" style="width: 60px;padding-right: 2px;" value="{{ $items->pr_item->qty }}" readonly /></td>
+                                              <td><input type="text" class="form-control item_unit_value"  name="item_unit_value[]" style="width: 100px;" value="{{ $items->pr_item->unit_price }}" readonly /></td>
+                                              <td><input type="text" class="form-control"  name="item_total_value[]" style="width: 100px;" disabled="" value="{{ $items->pr_item->unit_price * $items->pr_item->qty }}" readonly /></td>
                                               <td><input type="text" class="form-control item_accountable_person"  name="item_accountable_person[]"  /> <input type="hidden" class="form-control"  name="item_accountable_person_id[]" /> </td>
                                               <td><input type="text" class="form-control"  name="item_invoice[]" value="" /></td>
-                                          </tr>
+                                          </tr> --}}
                                 @endforeach
 
                               </tbody>

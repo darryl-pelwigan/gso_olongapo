@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\DB;
 use Modules\PurchaseRequest\Entities\PurchaseNo;
 use Modules\PurchaseOrder\Entities\PurchaseOrderNo;
 use Modules\PurchaseOrder\Entities\PurchaseOrderItems;
+use Modules\PurchaseOrder\Entities\PurchaseOrderRequisition;
+use Modules\PurchaseOrder\Entities\PurchaseOrderAcceptance;
 
 use PDF;
 
@@ -155,7 +157,7 @@ class PurchaseOrderController extends Controller
         return $data;
     }
 
-      public function update_po_records(Request $request){
+    public function update_po_records(Request $request){
 
         $validator = Validator::make($request->all(), [
                         'po_date' => 'required|date|unique:olongapo_purchase_order_no,po_no'
@@ -307,6 +309,8 @@ class PurchaseOrderController extends Controller
                     ->join('olongapo_absctrct' , 'olongapo_absctrct.prno_id','=','olongapo_bac_control_info.prno_id')
                     ->leftjoin('olongapo_purchase_order_items' , 'olongapo_purchase_order_items.pr_item_id','=','olongapo_absctrct_pubbid_apprved.pr_item_id')
                     ->leftjoin('olongapo_procurement_method' , 'olongapo_procurement_method.id','=','olongapo_purchase_request_no.proc_type')
+                    ->leftjoin('olongapo_purchase_order_requisition_number' , 'olongapo_purchase_order_requisition_number.pono_id','=','olongapo_purchase_order_no.id')
+                    ->leftjoin('olongapo_purchase_order_acceptance_issuance' , 'olongapo_purchase_order_acceptance_issuance.pono_id','=','olongapo_purchase_order_no.id')
                     ->select([
                                 'olongapo_subdepartment.dept_desc as dept_desc','olongapo_subdepartment.id as dept_id',
                                 'olongapo_purchase_request_no.id as prno_id','olongapo_purchase_request_no.pr_no','olongapo_purchase_request_no.pr_date',
@@ -329,7 +333,15 @@ class PurchaseOrderController extends Controller
                                 'olongapo_absctrct_pubbid.supplier_id',
                                 'olongapo_purchase_order_no.id as pono_id',
                                 'olongapo_purchase_order_no.po_no as po_no',
-                                'olongapo_purchase_order_no.po_date as po_date'
+                                'olongapo_purchase_order_no.po_date as po_date',
+                                'olongapo_purchase_order_acceptance_issuance.id as acceptance_id',
+                                'olongapo_purchase_order_acceptance_issuance.aai_no',
+                                'olongapo_purchase_order_acceptance_issuance.aai_date',
+                                'olongapo_purchase_order_acceptance_issuance.invoice_no',
+                                'olongapo_purchase_order_acceptance_issuance.invoice_date',
+                                'olongapo_purchase_order_requisition_number.id as requisition_id',
+                                'olongapo_purchase_order_requisition_number.ris_no',
+                                'olongapo_purchase_order_requisition_number.ris_date'
                             ])
                     ->where('olongapo_purchase_order_no.id', '=', $request->input('pono_id'))
                     ->get();
@@ -422,6 +434,224 @@ class PurchaseOrderController extends Controller
         return @$pdf->stream();
 
     }
+
+    public function requisition(){
+         return view('purchaseorder::requisition.index',$this->setup());
+    }
+
+    public function add_requisition(Request $request){
+        $validator = Validator::make($request->all(), [
+                        'po_date' => 'required|date|unique:olongapo_purchase_order_requisition_number,ris_no'
+                    ]);
+   
+        if($validator->fails()){
+            $data['status'] = 0;
+            $data['errors'] = $validator->messages();
+        }else{
+            $data['status'] = 1;
+            $data['errors'] = 'Successfull';
+
+            $ris_no = $request->input('ris_no');
+            $ris_date = $request->input('ris_date');
+            $po_id = $request->input('po_id');
+
+            // $requisition = new PurchaseOrderRequisition;
+            if($request->input('requisition_id')){
+                $requisition = PurchaseOrderRequisition::find($request->input('requisition_id'));
+            }else{
+                $requisition = new PurchaseOrderRequisition;
+            }
+            $requisition->pono_id = $po_id;
+            $requisition->ris_no = $ris_no;
+            $requisition->ris_date = $ris_date;
+            $requisition->save();
+              
+        }
+        return $data;
+    }
+
+    public function po_acceptance(){
+         return view('purchaseorder::acceptance.index',$this->setup());
+    }
+    
+
+    public function add_acceptance(Request $request){
+        $validator = Validator::make($request->all(), [
+                        'po_date' => 'required|date|unique:olongapo_purchase_order_acceptance_issuance,aai_no'
+                    ]);
+   
+        if($validator->fails()){
+            $data['status'] = 0;
+            $data['errors'] = $validator->messages();
+        }else{
+            $data['status'] = 1;
+            $data['errors'] = 'Successfull';
+
+      
+            $po_id = $request->input('po_id');
+            $acceptance_no = $request->input('aai_no');
+            $aai_date = $request->input('aai_date');
+            $invoice_no = $request->input('invoice_no');
+            $invoice_date = $request->input('invoice_date');
+
+            if($request->input('acceptance_id')){
+                $requisition = PurchaseOrderAcceptance::find($request->input('acceptance_id'));
+            }else{
+                $requisition = new PurchaseOrderAcceptance;
+            }
+
+            $requisition->pono_id = $po_id;
+            $requisition->aai_no = $acceptance_no;
+            $requisition->aai_date = $aai_date;
+            $requisition->invoice_no = $invoice_no;
+            $requisition->invoice_date  = $invoice_date;
+            $requisition->save();
+              
+        }
+        return $data;
+    }
+
+    public function requisition_pdf(Request $request){
+         $info = DB::table('olongapo_purchase_order_no')
+                    ->join('olongapo_purchase_order_requisition_number' ,'olongapo_purchase_order_requisition_number.pono_id','=', 'olongapo_purchase_order_no.id') 
+                    ->join('olongapo_bac_control_info' ,'olongapo_bac_control_info.id','=', 'olongapo_purchase_order_no.bac_control_id')
+                    ->join('olongapo_purchase_request_no' ,'olongapo_bac_control_info.prno_id','=', 'olongapo_purchase_request_no.id')
+                    ->leftjoin('olongapo_obr' , 'olongapo_obr.id','=','olongapo_purchase_request_no.obr_id')
+                    ->join('olongapo_subdepartment','olongapo_subdepartment.id','=','olongapo_purchase_request_no.dept_id')
+                    ->join('olongapo_department','olongapo_department.id','=','olongapo_subdepartment.dept_id')
+                    ->leftjoin('olongapo_bac_source_fund','olongapo_bac_source_fund.id','=','olongapo_bac_control_info.sourcefund_id')
+                    ->join('olongapo_absctrct_pubbid_apprved','olongapo_absctrct_pubbid_apprved.id','=','olongapo_bac_control_info.apprved_pubbid_id')
+                    ->join('olongapo_absctrct_pubbid','olongapo_absctrct_pubbid.id','=','olongapo_absctrct_pubbid_apprved.pubbid')
+                    ->join('supplier_info','supplier_info.id','=','olongapo_absctrct_pubbid.supplier_id')
+                    ->leftjoin('olongapo_bac_category','olongapo_bac_category.id','=','olongapo_bac_control_info.category_id')
+                    ->join('olongapo_absctrct' , 'olongapo_absctrct.prno_id','=','olongapo_bac_control_info.prno_id')
+                    ->leftjoin('olongapo_purchase_order_items' , 'olongapo_purchase_order_items.pr_item_id','=','olongapo_absctrct_pubbid_apprved.pr_item_id')
+                    ->leftjoin('olongapo_procurement_method' , 'olongapo_procurement_method.id','=','olongapo_purchase_request_no.proc_type')
+                    ->leftjoin('supplier_address' , 'supplier_address.supplier_id','=','supplier_info.id')
+                    ->select([
+                                'olongapo_subdepartment.dept_desc as dept_desc',
+                                'olongapo_department.dept_desc as _main_dept_desc',
+                                'olongapo_subdepartment.id as dept_id',
+                                'olongapo_purchase_request_no.id as prno_id','olongapo_purchase_request_no.pr_no','olongapo_purchase_request_no.pr_date',
+                                'olongapo_obr.obr_no','olongapo_obr.obr_date',
+                                'olongapo_absctrct.control_no',
+                                'olongapo_absctrct.abstrct_date',
+                                'olongapo_purchase_request_no.proc_type',
+                                'olongapo_purchase_request_no.sai_no',
+                                'olongapo_purchase_request_no.pr_purpose',
+                                'olongapo_purchase_request_no.sai_date',
+                                'olongapo_bac_category.description as bac_categ',
+                                'supplier_info.title as suppl_title',
+                                'supplier_address.details',
+                                'olongapo_bac_control_info.id as control_id',
+                                'olongapo_bac_source_fund.description as sourcefund',
+                                'olongapo_procurement_method.proc_title as bac_mode',
+                                'olongapo_absctrct_pubbid.supplier_id',
+                                'olongapo_purchase_order_no.id as pono_id',
+                                'olongapo_purchase_order_no.po_no as po_no',
+                                'olongapo_purchase_order_no.po_date as po_date',
+                                'olongapo_purchase_order_requisition_number.ris_no',
+                                'olongapo_purchase_order_requisition_number.ris_date',
+                            ])
+                    ->where('olongapo_purchase_order_requisition_number.id', '=', $request->input('requisition_id'))
+                    ->first();
+
+        $items_bac = DB::table('olongapo_purchase_order_items as po')
+                    ->join('olongapo_purchase_request_items as items','items.id','=','po.pr_item_id')
+                    ->select([
+                        'po.id as po_item_id',
+                        'po.po_amount',
+                        'po.po_total',
+                        'po.po_brand',
+                        'items.description as description',
+                        'items.unit as unit',
+                        'items.qty as qty',
+                        'items.remarks as remarks',
+                        'items.unit_price as unit_price',
+                        'items.total_price as total_price'
+                    ])
+                    ->where('po.pono_id','=',$info->pono_id)
+                    ->get();
+
+
+
+        $this->data['po_items'] = $items_bac;
+        $this->data['info']  = $info;
+        
+        $pdf = PDF::loadView('purchaseorder::requisition.pdf',$this->setup());
+        // $pdf->setPaper(215.9,330.2);
+        $pdf->setPaper('legal');
+        return @$pdf->stream();
+    }
+
+
+    public function acceptance_pdf(Request $request){
+         $info = DB::table('olongapo_purchase_order_no')
+                    ->join('olongapo_purchase_order_acceptance_issuance' ,'olongapo_purchase_order_acceptance_issuance.pono_id','=', 'olongapo_purchase_order_no.id') 
+                    ->join('olongapo_bac_control_info' ,'olongapo_bac_control_info.id','=', 'olongapo_purchase_order_no.bac_control_id')
+                    ->join('olongapo_purchase_request_no' ,'olongapo_bac_control_info.prno_id','=', 'olongapo_purchase_request_no.id')
+                    ->leftjoin('olongapo_obr' , 'olongapo_obr.id','=','olongapo_purchase_request_no.obr_id')
+                    ->join('olongapo_subdepartment','olongapo_subdepartment.id','=','olongapo_purchase_request_no.dept_id')
+                    ->join('olongapo_bac_source_fund','olongapo_bac_source_fund.id','=','olongapo_bac_control_info.sourcefund_id')
+                    ->join('olongapo_absctrct_pubbid_apprved','olongapo_absctrct_pubbid_apprved.id','=','olongapo_bac_control_info.apprved_pubbid_id')
+                    ->join('olongapo_absctrct_pubbid','olongapo_absctrct_pubbid.id','=','olongapo_absctrct_pubbid_apprved.pubbid')
+                    ->join('supplier_info','supplier_info.id','=','olongapo_absctrct_pubbid.supplier_id')
+                    ->leftjoin('olongapo_bac_category','olongapo_bac_category.id','=','olongapo_bac_control_info.category_id')
+                    ->join('olongapo_absctrct' , 'olongapo_absctrct.prno_id','=','olongapo_bac_control_info.prno_id')
+                    ->leftjoin('olongapo_purchase_order_items' , 'olongapo_purchase_order_items.pr_item_id','=','olongapo_absctrct_pubbid_apprved.pr_item_id')
+                    ->leftjoin('olongapo_procurement_method' , 'olongapo_procurement_method.id','=','olongapo_purchase_request_no.proc_type')
+                    ->leftjoin('supplier_address' , 'supplier_address.supplier_id','=','supplier_info.id')
+                    ->select([
+                                'olongapo_subdepartment.dept_desc as dept_desc','olongapo_subdepartment.subdept_code','olongapo_subdepartment.id as dept_id',
+                                'olongapo_purchase_request_no.id as prno_id','olongapo_purchase_request_no.pr_no','olongapo_purchase_request_no.pr_date',
+                                'olongapo_obr.obr_no','olongapo_obr.obr_date',
+                                'olongapo_absctrct.control_no',
+                                'olongapo_absctrct.abstrct_date',
+                                'olongapo_purchase_request_no.proc_type',
+                                'olongapo_bac_category.description as bac_categ',
+                                'supplier_info.title as suppl_title',
+                                'supplier_address.details',
+                                'olongapo_bac_control_info.id as control_id',
+                                'olongapo_bac_source_fund.description as sourcefund',
+                                'olongapo_procurement_method.proc_title as bac_mode',
+                                'olongapo_absctrct_pubbid.supplier_id',
+                                'olongapo_purchase_order_no.id as pono_id',
+                                'olongapo_purchase_order_no.po_no as po_no',
+                                'olongapo_purchase_order_no.po_date as po_date',
+                                'olongapo_purchase_order_acceptance_issuance.aai_no',
+                                'olongapo_purchase_order_acceptance_issuance.aai_date',
+                                'olongapo_purchase_order_acceptance_issuance.invoice_no',
+                                'olongapo_purchase_order_acceptance_issuance.invoice_date'
+                            ])
+                    ->where('olongapo_purchase_order_acceptance_issuance.id', '=', $request->input('acceptance_id'))
+                    ->first();
+
+        $items_bac = DB::table('olongapo_purchase_order_items as po')
+                    ->join('olongapo_purchase_request_items as items','items.id','=','po.pr_item_id')
+                    ->select([
+                        'po.id as po_item_id',
+                        'po.po_amount',
+                        'po.po_total',
+                        'po.po_brand',
+                        'items.description as description',
+                        'items.unit as unit',
+                        'items.qty as qty',
+                        'items.remarks as remarks',
+                        'items.unit_price as unit_price',
+                        'items.total_price as total_price'
+                    ])
+                    ->where('po.pono_id','=',$info->pono_id)
+                    ->get();
+
+        $this->data['po_items'] = $items_bac;
+        $this->data['info']  = $info;
+        
+        $pdf = PDF::loadView('purchaseorder::acceptance.pdf',$this->setup());
+        // $pdf->setPaper(215.9,330.2);
+        $pdf->setPaper('legal');
+        return @$pdf->stream();
+    }
+    
 
 
 

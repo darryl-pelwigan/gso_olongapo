@@ -55,6 +55,8 @@ class Bac_datatable
                 ->join('olongapo_bac_category','olongapo_bac_category.id','=','olongapo_bac_control_info.category_id')
                 ->leftjoin('olongapo_absctrct' , 'olongapo_absctrct.prno_id','=','olongapo_bac_control_info.prno_id')
                 ->leftjoin('olongapo_obr' , 'olongapo_obr.id','=','olongapo_purchase_request_no.obr_id')
+                ->leftjoin('olongapo_purchase_order_requisition_number' , 'olongapo_purchase_order_requisition_number.pono_id','=','olongapo_purchase_order_no.id')
+                ->leftjoin('olongapo_purchase_order_acceptance_issuance' , 'olongapo_purchase_order_acceptance_issuance.pono_id','=','olongapo_purchase_order_no.id')
                 ->select([
                             'olongapo_purchase_order_no.id as pono_id',
                             'olongapo_purchase_order_no.po_no',
@@ -68,7 +70,7 @@ class Bac_datatable
                             'olongapo_purchase_request_no.id as prno_id',
                             'olongapo_purchase_request_no.pr_no','olongapo_purchase_request_no.obr_id','olongapo_purchase_request_no.pr_date',
                             'olongapo_bac_control_info.id as bac_id' ,'olongapo_bac_control_info.bac_control_no as bac_cono' , 'olongapo_bac_control_info.amount' , 'olongapo_bac_control_info.bac_date' , 'olongapo_bac_control_info.sourcefund_id' , 'olongapo_bac_control_info.category_id', 'olongapo_bac_control_info.bac_type_id' , 'olongapo_bac_control_info.apprved_pubbid_id',
-                            'olongapo_obr.obr_no','olongapo_obr.obr_date'
+                            'olongapo_obr.obr_no','olongapo_obr.obr_date','olongapo_purchase_order_requisition_number.id as requisition_id','olongapo_purchase_order_acceptance_issuance.id as acceptance_id'
                 ])
                 ->groupBy('olongapo_purchase_order_no.id');
 

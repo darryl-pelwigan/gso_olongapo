@@ -121,7 +121,23 @@
 
     <li class="user-footer">
       <div class="pull-left">
-        <a href="#" class="btn btn-default btn-flat">Profile</a>
+        @if (Session::get('olongapo_user')->group_id == 3)
+          <a  target="_blank" href="{{asset('help')}}/POPR.pdf" class="btn btn-default btn-flat">Help</a>
+        @endif
+        @if (Session::get('olongapo_user')->group_id == 4)
+          <a target="_blank"  href="{{asset('help')}}/BAC.pdf" class="btn btn-default btn-flat">Help</a>
+        @endif
+        @if (Session::get('olongapo_user')->group_id == 5)
+          <a  target="_blank" href="{{asset('help')}}/ABSTRCT.pdf" class="btn btn-default btn-flat">Help</a>
+        @endif
+        @if (Session::get('olongapo_user')->group_id == 6)
+          <a  target="_blank" href="{{asset('help')}}/GSO_ASSISTANT.pdf" class="btn btn-default btn-flat">Help</a>
+        @endif
+        @if (Session::get('olongapo_user')->group_id == 7)
+          <a  target="_blank" href="{{asset('help')}}/DEPARTMENT.pdf" class="btn btn-default btn-flat">Help</a>
+        @endif
+          <a  target="_blank" href="{{asset('help')}}/GSO-PRPROCESS.pdf">PR DF</a>
+
       </div>
       <div class="pull-right">
         <a href="{{url('')}}/logout" class="btn btn-default btn-flat">Sign out</a>

@@ -14,5 +14,11 @@ class AbstrctSupplier extends Model
         return $this->belongsTo('Modules\Inventory\Entities\Supplier', 'supplier_id');
     }
 
+    public function abstrct_supplier_approved(){
+        return $this->hasMany('Modules\Abstrct\Entities\AbstrctSupplierApprved', 'pubbid');
+    }
+
+
+
 
 }
