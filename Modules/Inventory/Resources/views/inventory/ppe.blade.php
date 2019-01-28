@@ -48,17 +48,15 @@
                                     @php
                                       $bac_ids[] = $bac->id;
                                     @endphp
-                                    @if($bac->pr->pr_orderno)
                                     <tr>
                                         <td>{{ $count++ }} </td>
                                         <td>{{ $bac->pr->pr_orderno->po_no }}</td>
                                         <td>{{ $bac->pr->pr_dept->dept_desc }}</td>
                                         <td>{{ $bac->sof->description }}</td>
                                         <td>{{ $bac->ctgry->description }}</td>
-                                        <td>{{ $item->supplier->title ?? '' }}</td>
+                                        <td>{{ $bac->abstrct_supplier->supplier->title }}</td>
                                         <td><a href="{{route('inventory.set_ppe_pr',[ $bac->id]) }}" class="btn btn-sm btn-success" >Set PPE</a> </td>
                                     </tr>
-                                    @endif
                                   @endif
                                 @endforeach
                           @endforeach

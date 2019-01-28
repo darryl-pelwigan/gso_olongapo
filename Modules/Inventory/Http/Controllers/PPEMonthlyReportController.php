@@ -261,4 +261,53 @@ class PPEMonthlyReportController extends Controller
 
     }
 
+
+    public function update_monthly_report_new(Request $request){
+            $validator = Validator::make($request->all(), [
+                    'date_log' => 'required|date',
+                    'pr_sdept_id' => 'required',
+                    'item_desc' => 'required',
+                    'control_no' => 'required',
+            ],[
+                   'date_log.required' => 'The DATE LOG is required.',
+                   'pr_sdept_id.required' => 'The Department is required.',
+                   'item_desc.required' => 'The Item Description is required.',
+                   'control_no.required' => 'Control Number is required.'
+            ]);
+        if($validator->fails()){
+                return back()->withErrors($validator)
+                ->withInput();
+
+
+            }else{
+                 Session::flash('info', ['PPE montly saved']);
+
+                $PpeMnthlyReport = PpeMnthlyReport::find($request->pmi_id);
+                $PpeMnthlyReport->date_log = $request->input('date_log');
+                $PpeMnthlyReport->inv_control_no  = $request->input('control_no');
+                $PpeMnthlyReport->type  = $request->input('type_es');
+                $PpeMnthlyReport->department  = $request->input('pr_sdept_id');
+                $PpeMnthlyReport->save();
+
+                foreach ($request['item_id'] as $key => $input_id) {
+
+                    $item = PpeMnthlyReportItems::find($input_id);
+
+                    $item->update(
+                            [
+                                 'item_desc'                           =>  $request->input('item_desc.'.$key),
+                                 'property_code'                  => $request->input('item_property_code.'.$key),
+                                 'accountable_person'        => $request->input('item_accountable_person_id.'.$key),
+                                 'invoice'        => $request->input('item_invoice.'.$key),
+                                 'po_no'                                   =>  $request->input('item_pono'),
+                            ]
+                    );
+
+                }
+                 return back();
+
+            }
+
+    }
+
 }
