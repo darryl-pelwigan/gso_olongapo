@@ -121,7 +121,7 @@
                                               <td><input type="text" class="form-control"  name="item_total_value[]" style="width: 100px;" disabled="" value="{{ $items->pr_item->unit_price * $items->pr_item->qty }}" readonly /></td>
                                               <td><input type="text" class="form-control item_accountable_person"  name="item_accountable_person[]"  /> <input type="hidden" class="form-control"  name="item_accountable_person_id[]" /> </td>
                                               <td><input type="text" class="form-control"  name="item_invoice[]" value="" /></td>
-                                          </tr>
+                                          </tr> --}}
                                 @endforeach
 
                               </tbody>
