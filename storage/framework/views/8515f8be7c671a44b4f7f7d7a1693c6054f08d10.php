@@ -107,7 +107,7 @@
                               <tbody>
                                 <?php $__currentLoopData = $bac->abstrct_supplier->abstrct_supplier_approved; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $items): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                    <?php 
-                                    // dd($items);
+                                    // dd($items->prices->unit_price);
                                    ?>
                                          <tr id="tr_1">
                                               <input type="hidden" class="form-control"  name="item_id[]" value="<?php echo e($items->pr_item->id); ?>" />
@@ -115,11 +115,11 @@
                                               <td><input type="text" class="form-control"  name="item_property_code[]" value="" /></td>
                                               <td><input type="text" class="form-control"  name="item_unit[]" value="<?php echo e($items->pr_item->unit); ?>" readonly  /></td>
                                               <td><input type="text" class="form-control item_qty"  name="item_qty[]" style="width: 60px;padding-right: 2px;" value="<?php echo e($items->pr_item->qty); ?>" readonly /></td>
-                                              <td><input type="text" class="form-control item_unit_value"  name="item_unit_value[]" style="width: 100px;" value="<?php echo e($items->pr_item->unit_price); ?>" readonly /></td>
-                                              <td><input type="text" class="form-control"  name="item_total_value[]" style="width: 100px;" disabled="" value="<?php echo e($items->pr_item->unit_price * $items->pr_item->qty); ?>" readonly /></td>
+                                              <td><input type="text" class="form-control item_unit_value"  name="item_unit_value[]" style="width: 100px;" value="<?php echo e($items->prices->unit_price); ?>" readonly /></td>
+                                              <td><input type="text" class="form-control"  name="item_total_value[]" style="width: 100px;" disabled="" value="<?php echo e($items->prices->unit_price * $items->pr_item->qty); ?>" readonly /></td>
                                               <td><input type="text" class="form-control item_accountable_person"  name="item_accountable_person[]"  /> <input type="hidden" class="form-control"  name="item_accountable_person_id[]" /> </td>
                                               <td><input type="text" class="form-control"  name="item_invoice[]" value="" /></td>
-                                          </tr>
+                                          </tr> --}}
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                               </tbody>

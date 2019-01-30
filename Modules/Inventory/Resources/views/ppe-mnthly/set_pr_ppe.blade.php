@@ -109,7 +109,7 @@
                               <tbody>
                                 @foreach( $bac->abstrct_supplier->abstrct_supplier_approved as $items)
                                    @php
-                                    // dd($items);
+                                    // dd($items->prices->unit_price);
                                   @endphp
                                          <tr id="tr_1">
                                               <input type="hidden" class="form-control"  name="item_id[]" value="{{ $items->pr_item->id }}" />
@@ -117,8 +117,8 @@
                                               <td><input type="text" class="form-control"  name="item_property_code[]" value="" /></td>
                                               <td><input type="text" class="form-control"  name="item_unit[]" value="{{ $items->pr_item->unit }}" readonly  /></td>
                                               <td><input type="text" class="form-control item_qty"  name="item_qty[]" style="width: 60px;padding-right: 2px;" value="{{ $items->pr_item->qty }}" readonly /></td>
-                                              <td><input type="text" class="form-control item_unit_value"  name="item_unit_value[]" style="width: 100px;" value="{{ $items->pr_item->unit_price }}" readonly /></td>
-                                              <td><input type="text" class="form-control"  name="item_total_value[]" style="width: 100px;" disabled="" value="{{ $items->pr_item->unit_price * $items->pr_item->qty }}" readonly /></td>
+                                              <td><input type="text" class="form-control item_unit_value"  name="item_unit_value[]" style="width: 100px;" value="{{ $items->prices->unit_price }}" readonly /></td>
+                                              <td><input type="text" class="form-control"  name="item_total_value[]" style="width: 100px;" disabled="" value="{{ $items->prices->unit_price * $items->pr_item->qty }}" readonly /></td>
                                               <td><input type="text" class="form-control item_accountable_person"  name="item_accountable_person[]"  /> <input type="hidden" class="form-control"  name="item_accountable_person_id[]" /> </td>
                                               <td><input type="text" class="form-control"  name="item_invoice[]" value="" /></td>
                                           </tr> --}}

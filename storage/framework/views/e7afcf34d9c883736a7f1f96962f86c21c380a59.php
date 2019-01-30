@@ -122,7 +122,23 @@
 
     <li class="user-footer">
       <div class="pull-left">
-        <a href="#" class="btn btn-default btn-flat">Profile</a>
+        <?php if(Session::get('olongapo_user')->group_id == 3): ?>
+          <a  target="_blank" href="<?php echo e(asset('help')); ?>/POPR.pdf" class="btn btn-default btn-flat">Help</a>
+        <?php endif; ?>
+        <?php if(Session::get('olongapo_user')->group_id == 4): ?>
+          <a target="_blank"  href="<?php echo e(asset('help')); ?>/BAC.pdf" class="btn btn-default btn-flat">Help</a>
+        <?php endif; ?>
+        <?php if(Session::get('olongapo_user')->group_id == 5): ?>
+          <a  target="_blank" href="<?php echo e(asset('help')); ?>/ABSTRCT.pdf" class="btn btn-default btn-flat">Help</a>
+        <?php endif; ?>
+        <?php if(Session::get('olongapo_user')->group_id == 6): ?>
+          <a  target="_blank" href="<?php echo e(asset('help')); ?>/GSO_ASSISTANT.pdf" class="btn btn-default btn-flat">Help</a>
+        <?php endif; ?>
+        <?php if(Session::get('olongapo_user')->group_id == 7): ?>
+          <a  target="_blank" href="<?php echo e(asset('help')); ?>/DEPARTMENT.pdf" class="btn btn-default btn-flat">Help</a>
+        <?php endif; ?>
+          <a  target="_blank" href="<?php echo e(asset('help')); ?>/GSO-PRPROCESS.pdf">PR DF</a>
+
       </div>
       <div class="pull-right">
         <a href="<?php echo e(url('')); ?>/logout" class="btn btn-default btn-flat">Sign out</a>
