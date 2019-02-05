@@ -24,7 +24,7 @@ class BacControlInfo extends Model
     }
 
     public function abstrct_supplier(){
-        return $this->belongsTo('Modules\Abstrct\Entities\AbstrctSupplierApprved','apprved_pubbid_id');
+        return $this->belongsTo('Modules\Abstrct\Entities\AbstrctSupplier','apprved_pubbid_id');
     }
 
     public function approved(){

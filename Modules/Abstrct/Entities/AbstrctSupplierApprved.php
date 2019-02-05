@@ -17,4 +17,8 @@ class AbstrctSupplierApprved extends Model
     public function pr_item(){
         return $this->belongsTo('Modules\PurchaseRequest\Entities\PurchaseItems', 'pr_item_id');
     }
+
+    public function prices(){
+        return $this->belongsTo('Modules\Abstrct\Entities\AbstrctItems', 'suppbid');
+    }
 }

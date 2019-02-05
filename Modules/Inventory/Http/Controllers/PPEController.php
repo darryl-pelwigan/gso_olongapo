@@ -13,11 +13,7 @@ use Modules\PurchaseOrder\Entities\PurchaseOrderNo;
 use Modules\PurchaseOrder\Entities\PurchaseOrderItems;
 
 use Modules\Inventory\Entities\PpeMnthlyReport;
-<<<<<<< HEAD
 use Modules\BAC\Entities\BacControlInfo;
-=======
-
->>>>>>> 9b23fd748708f45bd6b6fed72448c52c3f066a76
 class PPEController extends Controller
 {
    protected $data;
