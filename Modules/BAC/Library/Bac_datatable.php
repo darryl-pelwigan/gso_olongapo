@@ -82,12 +82,12 @@ class Bac_datatable
                             ->leftjoin('olongapo_purchase_request_no' ,'olongapo_bac_control_info.prno_id','=', 'olongapo_purchase_request_no.id')
                             ->leftjoin('olongapo_subdepartment','olongapo_subdepartment.id','=','olongapo_purchase_request_no.dept_id')
                             ->leftjoin('olongapo_bac_source_fund','olongapo_bac_source_fund.id','=','olongapo_bac_control_info.sourcefund_id')
-                            ->leftjoin('olongapo_absctrct_pubbid_apprved','olongapo_absctrct_pubbid_apprved.id','=','olongapo_bac_control_info.apprved_pubbid_id')
-                            ->leftjoin('olongapo_absctrct_pubbid','olongapo_absctrct_pubbid.id','=','olongapo_absctrct_pubbid_apprved.pubbid')                            
+                            ->leftjoin('olongapo_absctrct_pubbid','olongapo_absctrct_pubbid.id','=','olongapo_bac_control_info.apprved_pubbid_id')    
+                            ->leftjoin('olongapo_absctrct_pubbid_apprved','olongapo_absctrct_pubbid_apprved.pubbid','=','olongapo_absctrct_pubbid.id')
                             ->leftjoin('supplier_info','supplier_info.id','=','olongapo_absctrct_pubbid.supplier_id')
                             ->leftjoin('olongapo_bac_category','olongapo_bac_category.id','=','olongapo_bac_control_info.category_id')
                             ->leftjoin('olongapo_absctrct' , 'olongapo_absctrct.prno_id','=','olongapo_bac_control_info.prno_id')
-                            ->leftjoin('olongapo_purchase_order_items' , 'olongapo_purchase_order_items.pr_item_id','=','olongapo_absctrct_pubbid_apprved.pr_item_id')
+                            ->leftjoin('olongapo_purchase_order_no' , 'olongapo_purchase_order_no.bac_control_id','=','olongapo_bac_control_info.id')
                             ->select([
                                         'supplier_info.title as sup_title',
                                         'olongapo_bac_category.description as categ_desc',
@@ -109,7 +109,8 @@ class Bac_datatable
                                         'olongapo_bac_control_info.bac_type_id',
                                         'olongapo_absctrct_pubbid.supplier_id'
                                     ])
-                            ->where('olongapo_purchase_order_items.pr_item_id','=',null);
+                            ->where('olongapo_purchase_order_no.bac_control_id','=',null)
+                            ->groupBy('olongapo_absctrct_pubbid_apprved.pubbid');
             return $items;
     }
 
@@ -191,7 +192,7 @@ class Bac_datatable
                     ->join('olongapo_department' , 'olongapo_department.id','=','olongapo_subdepartment.dept_id')
                     ->join('olongapo_absctrct_pubbid', 'olongapo_absctrct_pubbid.abstrct_id', '=', 'olongapo_absctrct.id')
                     ->join('olongapo_absctrct_pubbid_apprved', 'olongapo_absctrct_pubbid_apprved.pubbid', '=', 'olongapo_absctrct_pubbid.id')
-                    ->leftjoin('olongapo_bac_control_info' , 'olongapo_bac_control_info.apprved_pubbid_id','=','olongapo_absctrct_pubbid_apprved.id')
+                    ->leftjoin('olongapo_bac_control_info' , 'olongapo_bac_control_info.apprved_pubbid_id','=','olongapo_absctrct_pubbid.id')
                     ->leftjoin('supplier_info', 'supplier_info.id', '=', 'olongapo_absctrct_pubbid.supplier_id')
                     ->select([
                         'olongapo_absctrct.id',

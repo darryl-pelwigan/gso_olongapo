@@ -228,7 +228,7 @@ class BacAbstrctController extends Controller
                     ->leftjoin('olongapo_subdepartment' , 'olongapo_subdepartment.id','=','olongapo_purchase_request_no.dept_id')
                     ->leftjoin('olongapo_department' , 'olongapo_department.id','=','olongapo_subdepartment.dept_id')
                     ->leftjoin('olongapo_absctrct_pubbid_apprved' , 'olongapo_absctrct_pubbid.id','=','olongapo_absctrct_pubbid_apprved.pubbid')
-                    ->leftjoin('olongapo_bac_control_info' , 'olongapo_bac_control_info.apprved_pubbid_id','=','olongapo_absctrct_pubbid_apprved.id')
+                    ->leftjoin('olongapo_bac_control_info' , 'olongapo_bac_control_info.apprved_pubbid_id','=','olongapo_absctrct_pubbid.id')
                     ->leftjoin('olongapo_procurement_method' , 'olongapo_procurement_method.id','=','olongapo_purchase_request_no.proc_type')
                     ->leftjoin('olongapo_bac_category' , 'olongapo_bac_category.id','=','olongapo_bac_control_info.category_id')
                     ->leftjoin('supplier_info' , 'supplier_info.id','=','olongapo_absctrct_pubbid.supplier_id')
@@ -256,7 +256,7 @@ class BacAbstrctController extends Controller
                                 'olongapo_bac_control_info.id as control_id',
                                 'olongapo_bac_source_fund.description as sourcefund',
                                 'olongapo_procurement_method.proc_title as bac_mode',
-                                'olongapo_absctrct_pubbid_apprved.id as apprved_pubbid_id'
+                                'olongapo_absctrct_pubbid.id as apprved_pubbid_id'
                             ])
                     ->where('olongapo_absctrct_pubbid.id','=',$request->input('abstrct_id'))
                     ->groupby('olongapo_absctrct_pubbid.supplier_id')
