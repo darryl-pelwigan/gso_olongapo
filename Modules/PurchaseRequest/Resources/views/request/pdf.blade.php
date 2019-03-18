@@ -152,14 +152,14 @@ if($pr->proc_type != 0){
                         }
                         ?>
                         @endfor
-                         <?php if ($counter <= 30 && $counter > 21){
+                         <?php if ($count <= 30 && $count > 21){
                           echo "<style>";
                           echo "#tbl_items{";
                           echo "font-size: 9.5px;";
                           echo "}";
                           echo "</style>";
                         }
-                        else if ($counter <= 20 && $counter > 11){
+                        else if ($count <= 20 && $count > 11){
                           echo "<style>";
                           echo "#tbl_items{";
                           echo "font-size: 10.5px;";

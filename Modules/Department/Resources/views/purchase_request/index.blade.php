@@ -266,8 +266,10 @@
                     </div>
                 </div>
                 <div class="form-group">
-                  <input type="checkbox" name="pc" value=1> Purely Consumption</input>
+                  <label for="purpose" class="col-sm-2 control-label">Purely Consumption  </label>
                   <input type="hidden" name="pc" value=0> </input>
+                  <input type="checkbox" name="pc" value=1 style="margin-left:2px;"> </input>
+
                 </div>
 
                 <button type="button" class="btn btn-success btn-sm pull-right" id="add_items"><i class="fa fa-plus"></i></button>

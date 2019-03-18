@@ -59,11 +59,10 @@ class DetpPurchaseRequestController extends Controller
             $data['errors'] = 'Successfully Save PUrchase Request';
             $PurchaseNo =new PurchaseNo;
             $department = $request->input('department') ?? session::get('olongapo_emp_depts')->dept_id;
-
             $PurchaseNo->dept_id =  $department;
             $PurchaseNo->pr_date_dept =  $request->input('pr_no_date');
             $PurchaseNo->pr_purpose =  $request->input('purpose');
-             $PurchaseNo->pr_purelyconsumption =  $request->input('pc');
+            $PurchaseNo->pr_purelyconsumption =  $request->input('pc');
             $PurchaseNo->save();
             for($x = 0 ; $x< count($request->input('item_desc'));$x++){
                 $datax[] = [
