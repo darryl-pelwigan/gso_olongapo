@@ -77,7 +77,7 @@
                               PR CREATED
                           </li>
                           <?= $currentstatus = ""; ?>
-                          @if(count($status[$key]['ppmp']) > 0)                              
+                          @if(count($status[$key]['ppmp']) > 0)
                               @if($status[$key]['ppmp']->status == 1)
                                 <li class="completed">
                                 <span class="bubble"></span>
@@ -101,7 +101,7 @@
                           </li>
                           @endif
 
-                          
+
                           @if($data->pr_no != null)
                             <li class="completed">
                               <span class="bubble"></span>
@@ -114,8 +114,8 @@
                             </li>
                             <?php $currentstatus = "Pending Purchase Number."; ?>
                           @endif
-                          
-                          @if(count($status[$key]['abstract']) > 0)   
+
+                          @if(count($status[$key]['abstract']) > 0)
                             <li class="completed">
                               <span class="bubble"></span>
                               ABSTRACT
@@ -128,7 +128,7 @@
                             <?php $currentstatus = "Pending Abstract Number."; ?>
                           @endif
 
-                          @if(count($status[$key]['bac']) > 0)   
+                          @if(count($status[$key]['bac']) > 0)
                             <li class="completed">
                               <span class="bubble"></span>
                               BAC APPROVAL
@@ -140,8 +140,8 @@
                               <?php $currentstatus = "Pending BAC Control Number."; ?>
                             </li>
                           @endif
-                          
-                          @if(count($status[$key]['po_no']) > 0)   
+
+                          @if(count($status[$key]['po_no']) > 0)
                             <li class="completed">
                               <span class="bubble"></span>
                               PO Number
@@ -264,6 +264,10 @@
                       <div class="col-sm-6">
                         <textarea  class="form-control" id="purpose"  name="purpose"    placeholder="Purpose" > </textarea>
                     </div>
+                </div>
+                <div class="form-group">
+                  <input type="checkbox" name="pc" value=1> Purely Consumption</input>
+                  <input type="hidden" name="pc" value=0> </input>
                 </div>
 
                 <button type="button" class="btn btn-success btn-sm pull-right" id="add_items"><i class="fa fa-plus"></i></button>

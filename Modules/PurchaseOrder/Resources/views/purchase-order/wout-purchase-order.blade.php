@@ -195,7 +195,7 @@
               <!-- /.box-body -->
               <div class="box-footer">
                 <button type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>
-                <button type="button" class="btn btn-info pull-right" onclick="$(this).sentPurchaseOrder();">Submit</button>
+                <button type="button" class="btn btn-info pull-right"  onclick="this.disabled=true;$(this).sentPurchaseOrder();" >Submit</button>
               </div>
               <!-- /.box-footer -->
 

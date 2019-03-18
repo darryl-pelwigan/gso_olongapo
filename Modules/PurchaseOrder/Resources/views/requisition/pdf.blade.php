@@ -133,7 +133,7 @@
                         <tr>
                           <td width="13%" >Place of Delivery: </td>
                           <td width="30%" class="" >___________________________________</td>
-                        </tr> 
+                        </tr>
                         <tr>
                           <td>Date of Delivery: </td>
                           <td class="">___________________________________</td>
@@ -170,10 +170,20 @@
                       </tr>
                       <?php $count=1; $total_price=0; ?>
                         @foreach( $po_items as $data )
-                            <tr>
+                            <tr id="tbl_items">
                               <td>{{ $count }}</td>
                               <td>{{ $data->unit }}  </td>
-                              <td>{{ $data->description }}</td>
+                               <?php if(strlen($data->description)>85){
+                                echo"<td class='text-right2' style='word-wrap: break-word;font-size:7px' >";
+                                echo $data->description;
+                                echo"</td>";
+                                }
+                                else{
+                                echo"<td class='text-right2' style='word-wrap: break-word;' >";
+                                echo $data->description;
+                                echo"</td>";
+                                }
+                                ?>
                               <td>{{ $data->qty }} </td>
                               <td class="text-right2"></td>
                               <td class="text-right2"></td>
@@ -223,7 +233,7 @@
 
 
 <!--                                 <div style="padding: 15px;"><span>&nbsp; &nbsp; &nbsp;In case of failure to make the full delivery wihtin the time specified above, a penalty of one tenth(1/10) of one percent for every day of delay shall be imposed.</span></div>
-                         
+
                                     <table style="width: 100%;">
                                       <tr>
                                         <td style="padding-left: 15px" width="30px"></td>
@@ -261,7 +271,7 @@
                                         <td ></td>
                                       </tr>
                                     </table>
-                                 
+
                               </td> -->
                             <!-- </tr> -->
 
@@ -390,7 +400,7 @@
                             </tr>
                              --}}
                   </table>
-    
+
 
                 </div>
             <!-- /.box-body -->
@@ -407,6 +417,28 @@
    @stop
 
 
+ <?php if ($count <= 30 && $count > 21){
+                          echo "<style>";
+                          echo "#tbl_items{";
+                          echo "font-size: 9.5px;";
+                          echo "}";
+                          echo "</style>";
+                        }
+                        else if ($count <= 20 && $count > 11){
+                          echo "<style>";
+                          echo "#tbl_items{";
+                          echo "font-size: 10.5px;";
+                          echo "}";
+                          echo "</style>";
+                        }
+                        else {
+                          echo "<style>";
+                          echo "#tbl_items{";
+                          echo "font-size: 11.5px;";
+                          echo "}";
+                          echo "</style>";
+                        }
+?>
 
 
 

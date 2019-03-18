@@ -27,7 +27,7 @@ if($pr->proc_type != 0){
             <!-- /.box-header -->
            <div class="box-body">
 
-            <?php 
+            <?php
               $totalrows = count($pr->pr_items()->get());
               $rowsperpage = 30;
               $totalpages = $totalrows / 30;
@@ -104,7 +104,7 @@ if($pr->proc_type != 0){
                     </tr>
                   </table>
               </div>
-           
+
               <table class="table table-bordered" id="tbl_items">
                     <thead>
                       <tr>
@@ -119,8 +119,8 @@ if($pr->proc_type != 0){
                     <tbody>
                       <?php $count=1; $unit_price_total=0; $sum_price_total=0; ?>
 
-                        <?php 
-                          $xx = $rowsperpage * $i; 
+                        <?php
+                          $xx = $rowsperpage * $i;
                           $loops = $rowsperpage * ($i+1);
                           $prs = $pr->pr_items()->get();
                         ?>
@@ -128,7 +128,7 @@ if($pr->proc_type != 0){
                         @for ($x = $xx; $x < $loops; $x++)
                           <?php if(isset($prs[$x]['qty'] )){?>
                             <?php $total_price = $prs[$x]['unit_price'] * $prs[$x]['qty'];  ?>
-                              <tr>
+                              <tr id="tbl_items">
                                 <td class="text-right2">{{ ($x+1) }}</td>
                                 <td class="text-right2">{{ $prs[$x]['qty'] }}</td>
                                 <td class="text-right2">{{ $prs[$x]['unit'] }}</td>
@@ -152,12 +152,35 @@ if($pr->proc_type != 0){
                         }
                         ?>
                         @endfor
+                         <?php if ($counter <= 30 && $counter > 21){
+                          echo "<style>";
+                          echo "#tbl_items{";
+                          echo "font-size: 9.5px;";
+                          echo "}";
+                          echo "</style>";
+                        }
+                        else if ($counter <= 20 && $counter > 11){
+                          echo "<style>";
+                          echo "#tbl_items{";
+                          echo "font-size: 10.5px;";
+                          echo "}";
+                          echo "</style>";
+                        }
+                        else {
+                          echo "<style>";
+                          echo "#tbl_items{";
+                          echo "font-size: 11.5px;";
+                          echo "}";
+                          echo "</style>";
+                        }
+                        ?>
+
                         <?php $alltotal += $sum_price_total; ?>
                         <tr>
                          <td colspan="5" class="total">{{ ($i == round($pageloop) || round($pageloop) == 1 ? 'Total' : 'Subtotal') }} </td>
                          <td class="text-right2 total">{{ ($i == round($pageloop) || round($pageloop) == 1 ? number_format($alltotal,2) : number_format($sum_price_total,2))  }}</td>
                         </tr>
-                           
+
                     </tbody>
               </table>
               @if($i == round($pageloop) || $pageloop == 1)

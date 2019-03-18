@@ -105,12 +105,12 @@
                       </tr>
                       <?php $count=1; $total_price=0; ?>
                         @foreach( $po_items as $data )
-                            <tr>
+                            <tr id= "tbl_items">
                               <td>{{ $count }}</td>
                               <td>{{ $data->unit }}  </td>
                               <td>{{ $data->qty }} </td>
                               <td>{{ $data->description }}</td>
-                             
+
                             </tr>
                           <?php $count++; $total_price += $data->po_total; ?>
                         @endforeach
@@ -126,14 +126,14 @@
                               <td><br></td>
                               <td><br></td>
                               <td><br></td>
-                              
+
                             </tr>
                         <?php
                             }
                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
                         ?>
-                          
-                            
+
+
                   </table>
                    <div class="header_tbl">
                     <table class="table table-thnormal">
@@ -228,7 +228,28 @@
 
 @section('plugins-css')
 <style type="text/css">
+<?php if ($count <= 30 && $count > 21){
 
+                          echo "#tbl_items{";
+                          echo "font-size: 9.5px;";
+                          echo "}";
+
+                        }
+                        else if ($count <= 20 && $count > 11){
+
+                          echo "#tbl_items{";
+                          echo "font-size: 10.5px;";
+                          echo "}";
+
+                        }
+                        else {
+
+                          echo "#tbl_items{";
+                          echo "font-size: 11.5px;";
+                          echo "}";
+
+                        }
+?>
 html,body{
   margin: 5px 5px;
   font-size: 12px;

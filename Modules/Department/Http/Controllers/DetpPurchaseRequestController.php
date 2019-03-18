@@ -63,6 +63,7 @@ class DetpPurchaseRequestController extends Controller
             $PurchaseNo->dept_id =  $department;
             $PurchaseNo->pr_date_dept =  $request->input('pr_no_date');
             $PurchaseNo->pr_purpose =  $request->input('purpose');
+             $PurchaseNo->pr_purelyconsumption =  $request->input('pc');
             $PurchaseNo->save();
             for($x = 0 ; $x< count($request->input('item_desc'));$x++){
                 $datax[] = [
@@ -85,7 +86,7 @@ class DetpPurchaseRequestController extends Controller
     public function pr_edit( Request $request){
         $this->data['pr'] = PurchaseNo::find($request->input('pr_id'));
         $employee_id = Session::get('olongapo_user')->employee_id;
-        
+
         $query = DB::table('olongapo_employee_list')
                     ->select('olongapo_employee_list.dept_id')
                     ->where('id', '=', $employee_id)
@@ -96,8 +97,8 @@ class DetpPurchaseRequestController extends Controller
                         ->where('olongapo_purchase_item_ppmp_upload.subdept_id', '=', $dept_id)
                         ->where('olongapo_purchase_item_ppmp_upload.deleted_at', '=', null)
                         ->get();
-        $this->data['uploads'] = $uploads; 
-        
+        $this->data['uploads'] = $uploads;
+
         return view('department::purchase_request.edit',$this->setup());
     }
 
@@ -148,11 +149,6 @@ class DetpPurchaseRequestController extends Controller
                                         }
                                 }else{
                                     $Purchase = new PurchaseNo;
-                                    $Purchase->dept_id =  session::get('olongapo_emp_depts')->dept_id;
-                                    $Purchase->pr_date_dept =  $request->input('pr_no_date');
-                                    $Purchase->pr_purpose =  $request->input('purpose');
-                                    $Purchase->save();
-             
                                         $datax = [
                                                     'prno_id' => $request->input('pr_id'),
                                                     'description' => $request->input('item_desc.'.$x),
@@ -177,7 +173,7 @@ class DetpPurchaseRequestController extends Controller
     public function destroy(Request $request){
         $pr_id = $request->input('pr_id');
 
-        for ($i=0; $i < count($pr_id); $i++) { 
+        for ($i=0; $i < count($pr_id); $i++) {
             $pr_items = PurchaseItems::where('prno_id', $pr_id[$i])->delete();
             $prno = PurchaseNo::find($pr_id[$i]);
             $prno->delete();

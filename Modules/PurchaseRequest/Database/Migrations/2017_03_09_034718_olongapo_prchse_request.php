@@ -27,6 +27,7 @@ class OlongapoPrchseRequest extends Migration
             $table->integer('pr_count')->nullable();
             $table->text('remarks')->nullable();
             $table->text('pr_purpose');
+            $table->boolean('pr_purelyconsumption');
             $table->string('status')->nullable();
             $table->softDeletes();
             $table->timestamps();

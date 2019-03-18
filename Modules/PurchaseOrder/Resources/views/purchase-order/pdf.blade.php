@@ -83,7 +83,7 @@
                         <tr>
                           <td width="13%" >Place of Delivery: </td>
                           <td width="30%" class="" >___________________________________</td>
-                        </tr> 
+                        </tr>
                         <tr>
                           <td>Date of Delivery: </td>
                           <td class="">___________________________________</td>
@@ -117,12 +117,12 @@
                       <?php $count=1; $total_price=0; ?>
                         @foreach( $po_items as $data )
                             <tr>
-                              <td>{{ $count }}</td>
-                              <td>{{ $data->unit }}  </td>
-                              <td>{{ $data->qty }} </td>
-                              <td>{{ $data->description }}</td>
-                              <td class="text-right2">{{ number_format($data->po_amount,2) }} </td>
-                              <td class="text-right2">{{ number_format($data->po_total,2) }} </td>
+                              <td id="tbl_items">{{ $count }}</td>
+                              <td id="tbl_items">{{ $data->unit }}  </td>
+                              <td id="tbl_items">{{ $data->qty }} </td>
+                              <td id="tbl_items">{{ $data->description }}</td>
+                              <td id="tbl_items" class="text-right2">{{ number_format($data->po_amount,2) }} </td>
+                              <td id="tbl_items" class="text-right2">{{ number_format($data->po_total,2) }} </td>
                             </tr>
                           <?php $count++; $total_price += $data->po_total; ?>
                         @endforeach
@@ -152,7 +152,7 @@
                             <tr>
                               <td colspan="6">
                                 <div style="padding: 15px;"><span>&nbsp; &nbsp; &nbsp;In case of failure to make the full delivery wihtin the time specified above, a penalty of one tenth(1/10) of one percent for every day of delay shall be imposed.</span></div>
-                         
+
                                     <table style="width: 100%;">
                                       <tr>
                                         <td style="padding-left: 15px" width="30px"></td>
@@ -190,7 +190,7 @@
                                         <td ></td>
                                       </tr>
                                     </table>
-                                 
+
                               </td>
                             </tr>
                             <tr>
@@ -216,9 +216,9 @@
                                   </div>
                               </td>
                             </tr>
-                            
+
                   </table>
-    
+
 
                 </div>
             <!-- /.box-body -->
@@ -241,7 +241,28 @@
 
 @section('plugins-css')
 <style type="text/css">
+<?php if ($count <= 30 && $count > 21){
 
+                          echo "#tbl_items{";
+                          echo "font-size: 9.5px;";
+                          echo "}";
+
+                        }
+                        else if ($count <= 20 && $count > 11){
+
+                          echo "#tbl_items{";
+                          echo "font-size: 10.5px;";
+                          echo "}";
+
+                        }
+                        else {
+
+                          echo "#tbl_items{";
+                          echo "font-size: 11.5px;";
+                          echo "}";
+
+                        }
+?>
 html,body{
   margin: 5px 5px;
   font-size: 12px;

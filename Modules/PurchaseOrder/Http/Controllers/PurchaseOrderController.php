@@ -132,7 +132,7 @@ class PurchaseOrderController extends Controller
             $PurchaseOrderNo->po_date = $request->input('po_date');
             $PurchaseOrderNo->prno_id = $request->input('prno_id');
             $PurchaseOrderNo->bac_control_id = $request->input('bac_control_id');
-            
+
             $PurchaseOrderNo->date_logged = date('Y-m-d');
                 if($PurchaseOrderNo->save()){
                     foreach ($items_id as $key => $value) {
@@ -149,7 +149,7 @@ class PurchaseOrderController extends Controller
                     $data['status'] = 1;
                     $data['errors'] = 'Successfull';
                 }else{
-                     $data['status'] = 0;
+                    $data['status'] = 0;
                     $data['errors'] = 'Error please refresh and try again.,';
                 }
         }
@@ -164,7 +164,7 @@ class PurchaseOrderController extends Controller
                     ]);
 
         $check_unique = PurchaseOrderNo::find($request->input('po_id'));
-   
+
         if($validator->fails()){
             $data['status'] = 0;
             $data['errors'] = $validator->messages();
@@ -264,7 +264,7 @@ class PurchaseOrderController extends Controller
                     ->first();
 
         $pubbid = $info->pubbid;
-        
+
         $items_bac = DB::table('olongapo_absctrct_pubbid_apprved as approved')
                     ->join('olongapo_absctrct_pubbid_item_suppbid as suppbid','suppbid.id','=','approved.suppbid')
                     ->join('olongapo_purchase_request_items as items','items.id','=','approved.pr_item_id')
@@ -303,7 +303,7 @@ class PurchaseOrderController extends Controller
                     ->join('olongapo_bac_source_fund','olongapo_bac_source_fund.id','=','olongapo_bac_control_info.sourcefund_id')
                     // ->join('olongapo_absctrct_pubbid_apprved','olongapo_absctrct_pubbid_apprved.id','=','olongapo_bac_control_info.apprved_pubbid_id')
                     // ->join('olongapo_absctrct_pubbid','olongapo_absctrct_pubbid.id','=','olongapo_absctrct_pubbid_apprved.pubbid')
-                    ->join('olongapo_absctrct_pubbid','olongapo_absctrct_pubbid.id','=','olongapo_bac_control_info.apprved_pubbid_id')    
+                    ->join('olongapo_absctrct_pubbid','olongapo_absctrct_pubbid.id','=','olongapo_bac_control_info.apprved_pubbid_id')
                     ->join('olongapo_absctrct_pubbid_apprved','olongapo_absctrct_pubbid_apprved.pubbid','=','olongapo_absctrct_pubbid.id')
                     ->join('supplier_info','supplier_info.id','=','olongapo_absctrct_pubbid.supplier_id')
                     ->leftjoin('olongapo_bac_category','olongapo_bac_category.id','=','olongapo_bac_control_info.category_id')
@@ -428,7 +428,7 @@ class PurchaseOrderController extends Controller
 
         $this->data['po_items'] = $items_bac;
         $this->data['info']  = $info;
-        
+
         $pdf = PDF::loadView('purchaseorder::purchase-order.pdf',$this->setup());
         // $pdf->setPaper(215.9,330.2);
         $pdf->setPaper('legal');
@@ -444,7 +444,7 @@ class PurchaseOrderController extends Controller
         $validator = Validator::make($request->all(), [
                         'po_date' => 'required|date|unique:olongapo_purchase_order_requisition_number,ris_no'
                     ]);
-   
+
         if($validator->fails()){
             $data['status'] = 0;
             $data['errors'] = $validator->messages();
@@ -466,7 +466,7 @@ class PurchaseOrderController extends Controller
             $requisition->ris_no = $ris_no;
             $requisition->ris_date = $ris_date;
             $requisition->save();
-              
+
         }
         return $data;
     }
@@ -474,13 +474,13 @@ class PurchaseOrderController extends Controller
     public function po_acceptance(){
          return view('purchaseorder::acceptance.index',$this->setup());
     }
-    
+
 
     public function add_acceptance(Request $request){
         $validator = Validator::make($request->all(), [
                         'po_date' => 'required|date|unique:olongapo_purchase_order_acceptance_issuance,aai_no'
                     ]);
-   
+
         if($validator->fails()){
             $data['status'] = 0;
             $data['errors'] = $validator->messages();
@@ -488,7 +488,7 @@ class PurchaseOrderController extends Controller
             $data['status'] = 1;
             $data['errors'] = 'Successfull';
 
-      
+
             $po_id = $request->input('po_id');
             $acceptance_no = $request->input('aai_no');
             $aai_date = $request->input('aai_date');
@@ -507,14 +507,14 @@ class PurchaseOrderController extends Controller
             $requisition->invoice_no = $invoice_no;
             $requisition->invoice_date  = $invoice_date;
             $requisition->save();
-              
+
         }
         return $data;
     }
 
     public function requisition_pdf(Request $request){
          $info = DB::table('olongapo_purchase_order_no')
-                    ->join('olongapo_purchase_order_requisition_number' ,'olongapo_purchase_order_requisition_number.pono_id','=', 'olongapo_purchase_order_no.id') 
+                    ->join('olongapo_purchase_order_requisition_number' ,'olongapo_purchase_order_requisition_number.pono_id','=', 'olongapo_purchase_order_no.id')
                     ->join('olongapo_bac_control_info' ,'olongapo_bac_control_info.id','=', 'olongapo_purchase_order_no.bac_control_id')
                     ->join('olongapo_purchase_request_no' ,'olongapo_bac_control_info.prno_id','=', 'olongapo_purchase_request_no.id')
                     ->leftjoin('olongapo_obr' , 'olongapo_obr.id','=','olongapo_purchase_request_no.obr_id')
@@ -578,7 +578,7 @@ class PurchaseOrderController extends Controller
 
         $this->data['po_items'] = $items_bac;
         $this->data['info']  = $info;
-        
+
         $pdf = PDF::loadView('purchaseorder::requisition.pdf',$this->setup());
         // $pdf->setPaper(215.9,330.2);
         $pdf->setPaper('legal');
@@ -588,7 +588,7 @@ class PurchaseOrderController extends Controller
 
     public function acceptance_pdf(Request $request){
          $info = DB::table('olongapo_purchase_order_no')
-                    ->join('olongapo_purchase_order_acceptance_issuance' ,'olongapo_purchase_order_acceptance_issuance.pono_id','=', 'olongapo_purchase_order_no.id') 
+                    ->join('olongapo_purchase_order_acceptance_issuance' ,'olongapo_purchase_order_acceptance_issuance.pono_id','=', 'olongapo_purchase_order_no.id')
                     ->join('olongapo_bac_control_info' ,'olongapo_bac_control_info.id','=', 'olongapo_purchase_order_no.bac_control_id')
                     ->join('olongapo_purchase_request_no' ,'olongapo_bac_control_info.prno_id','=', 'olongapo_purchase_request_no.id')
                     ->leftjoin('olongapo_obr' , 'olongapo_obr.id','=','olongapo_purchase_request_no.obr_id')
@@ -646,13 +646,13 @@ class PurchaseOrderController extends Controller
 
         $this->data['po_items'] = $items_bac;
         $this->data['info']  = $info;
-        
+
         $pdf = PDF::loadView('purchaseorder::acceptance.pdf',$this->setup());
         // $pdf->setPaper(215.9,330.2);
         $pdf->setPaper('legal');
         return @$pdf->stream();
     }
-    
+
 
 
 
