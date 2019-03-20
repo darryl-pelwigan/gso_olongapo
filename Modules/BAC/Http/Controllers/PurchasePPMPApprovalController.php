@@ -56,7 +56,7 @@ class PurchasePPMPApprovalController extends Controller
         $req = PurchasePPMPApproval::where('request_no_id', '=', $pr_id)->first();
 
         if(count($req) == 0){
-            $approval = new PurchasePPMPApproval;;
+            $approval = new PurchasePPMPApproval;
             $approval->request_no_id = $pr_id;
             $approval->status = $approval_stat;
             $approval->remarks = $remarks;
@@ -95,7 +95,7 @@ class PurchasePPMPApprovalController extends Controller
         $this->data['ppmp'] = PurchasePPMPApproval::where('request_no_id', '=', $request->input('pr_id'))->first();
 
         return view('bac::request.edit',$this->setup());
-        
+
     }
 
     /**
@@ -122,6 +122,6 @@ class PurchasePPMPApprovalController extends Controller
      */
     public function destroy(Request $request)
     {
-    
+
     }
 }

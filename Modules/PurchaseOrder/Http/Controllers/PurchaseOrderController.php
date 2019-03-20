@@ -293,6 +293,49 @@ class PurchaseOrderController extends Controller
 
     }
 
+ public function get_pc(Request $request){
+
+        $info = DB::table('olongapo_purchase_request_no')
+                ->join('olongapo_purchase_request_ppmp_approval' , 'olongapo_purchase_request_no.id','=','olongapo_purchase_request_ppmp_approval.request_no_id')
+                ->join('olongapo_subdepartment','olongapo_subdepartment.id','=','olongapo_purchase_request_no.dept_id')
+                ->leftjoin('olongapo_purchase_order_requisition_number' , 'olongapo_purchase_order_requisition_number.pono_id','=','olongapo_purchase_request_no.id')
+                ->select([
+                            'olongapo_purchase_request_no.id as prno_id',
+                            'olongapo_subdepartment.dept_desc as dpt_desc',
+                            'olongapo_purchase_request_no.pr_date as pr_date'
+                ])
+                ->where('olongapo_purchase_request_no.pr_purelyconsumption','=','1')
+                ->where('olongapo_purchase_request_ppmp_approval.status','=','1')
+                ->groupBy('olongapo_purchase_request_no.id');
+
+
+
+
+        $items_bac = DB::table('olongapo_purchase_request_no')
+                    ->join('olongapo_purchase_request_ppmp_approval' , 'olongapo_purchase_request_no.id','=','olongapo_purchase_request_ppmp_approval.request_no_id')
+                     ->join('olongapo_purchase_request_items as items','items.prno_id','=','olongapo_purchase_request_no.id')
+                    ->select([
+                        'items.id as item_id',
+                        'items.prno_id as prno_id',
+                        'items.description as description',
+                        'items.unit as unit',
+                        'items.qty as qty',
+                        'items.remarks as remarks',
+                        'items.unit_price as unit_price',
+                        'items.total_price as total_price'
+                    ])
+                     ->where('olongapo_purchase_request_no.pr_purelyconsumption','=','1')
+                     ->where('olongapo_purchase_request_ppmp_approval.status','=','1')
+                    ->groupby('items.id')
+                    ->get();
+
+        $data['itemsx'] = $items_bac;
+        $data['info']  = $info;
+
+        return $data;
+
+
+    }
 
     public function get_po(Request $request){
         $info = DB::table('olongapo_purchase_order_no')

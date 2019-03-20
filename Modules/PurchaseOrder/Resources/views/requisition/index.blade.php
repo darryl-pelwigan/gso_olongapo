@@ -44,6 +44,27 @@
 
                 </table>
             </div>
+             <div class="box-header">
+              <h3 class="box-title">PURCHASE ORDER LIST (ADD REQUISITION AND ISSUE SLIP) PURELY CONSUMPTION</h3>
+            </div>
+             <div class="box-body">
+                 <table id ="purchase_request_list"class="table table-striped table-bordered table-hover">
+                      <thead>
+
+                        <tr>
+                          <th>No</th>
+                          <th>PR Dept</th>
+                          <th>PR Date.</th>
+                          <th></th>
+                        </tr>
+
+                      </thead>
+                      <tbody>
+
+                      </tbody>
+
+                </table>
+            </div>
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
@@ -223,6 +244,72 @@
   </div>
 </div>
 
+<div class="modal fade" id="add_requisition_pc_modal" tabindex="-1" role="dialog" aria-labelledby="add_purchase_order_modalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="add_purchase_order_modalLabel"> <span>Add Requisition and Issue Slip</span></h4>
+      </div>
+      <div class="modal-body">
+        <div id="status"></div>
+        <div id="contents-menu">
+            <form class="form-horizontal" id="add_requisition_number">
+              <div class="box-body">
+                <div id="statusC"></div>
+
+                <div class="form-group">
+                  <label for="obr_date" class="col-sm-2 control-label">RIS No : </label>
+                  <div class="col-sm-3">
+                    <input type="text" class="form-control" id="ris_no"  name="ris_no" placeholder="RIS NUMBER">
+                  </div>
+                   <label for="pr_no" class="col-sm-2 control-label">Date : </label>
+                        <div class="col-sm-4">
+                        <input type="text" class="form-control" id="ris_date" name="ris_date" placeholder="DATE" />
+                        <input type="hidden"  id="po_id" name="po_id" />
+                        <input type="hidden"  id="requisition_id" name="requisition_id" />
+
+                    </div>
+                </div>
+
+                </div>
+
+                </div>
+                <table class="table table-striped" id="items_list">
+                  <thead>
+                    <tr>
+                      <th>No</th>
+                      <th>Description</th>
+                      <th>Qty</th>
+                      <th>Unit</th>
+                      <th>Price</th>
+                      <th>Total Price</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                  </tbody>
+                </table>
+
+
+
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>
+                <button type="button" class="btn btn-info pull-right" onclick="$(this).sentRequisitionNo();">Submit</button>
+              </div>
+              <!-- /.box-footer -->
+
+              {{csrf_field()}}
+            </form>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
 
    @stop
 
@@ -306,6 +393,56 @@ $(function() {
 
   });
 
+$(function() {
+       $('#purchase_request_list').dataTable({
+        processing: true,
+        serverSide: true,
+        ajax:{
+          "type": 'POST',
+          "url" : '{!! route('bac.set_datatables') !!}',
+          data : {
+                   dataTables : 'bac_list_po_pc',
+                  "_token" : '{{csrf_token()}}'
+          }
+        },
+        columns: [
+            { data: 'item_id' , name: 'olongapo_purchase_request_items.id' ,
+              render: function (data, type, row, meta) {
+                  return meta.row + meta.settings._iDisplayStart + 1;
+              }
+            },
+            { data: 'dept_desc', name: 'olongapo_subdepartment.dept_desc' },
+            {
+            data: null,
+              name: 'olongapo_purchase_request_no.pr_date',
+              render: function(data, type, row){
+                var prno_date = moment(data.prno_date).format("YY-MM-DD");
+                  return prno_date;
+              }
+            },
+              { data: null, name: 'olongapo_bac_control_info.id' ,
+              render : function(data , type , row){
+                      if(data.requisition_id){
+                        return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add_requisition_pc_modal" onclick="$(this).updateRequisition_pc('+data.prno_id+');" >Update RIS</button>\
+                        <form method="post" action="{{route('po.po_requisition_pdf')}}">{{csrf_field()}}<input type="hidden" name="requisition_id" value="'+data.requisition_id+'" /><input type="submit" class="btn btn-sm btn-default" name="pdf" value="Pdf" /> </form>  ';
+                      }else{
+                         return '<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#add_requisition_pc_modal" onclick="$(this).addRequisition_pc('+data.prno_id+');" >Add RIS</button>\ ';
+                      }
+                }
+              },
+        ],
+        columnDefs: [
+          {
+              orderable: false, targets: [0,-1]
+           }
+        ],
+        "order": [[ 0, 'asc' ]],
+
+    });
+
+
+  });
+
 $.fn.addRequisition = function(pono_id){
    $("#add_requisition_number")[0].reset();
     $.ajax({
@@ -341,10 +478,10 @@ $.fn.addRequisition = function(pono_id){
 
                 $('#po_no').val(data['info'].po_no);
                 $('#po_date').val(data['info'].po_date);
-                $('#po_id').val(data['info'].pono_id); 
-                
+                $('#po_id').val(data['info'].pono_id);
 
-                 var total_amount = 0;
+
+                var total_amount = 0;
                 var count = 1;
                 var appvd_id = 0;
                 var fintotal = 0;
@@ -374,7 +511,7 @@ $.fn.addRequisition = function(pono_id){
 
             }
      });
-  
+
   };
 
   $.fn.updateRequisition = function(pono_id){
@@ -412,8 +549,133 @@ $.fn.addRequisition = function(pono_id){
 
                 $('#po_no').val(data['info'].po_no);
                 $('#po_date').val(data['info'].po_date);
-                $('#po_id').val(data['info'].pono_id); 
-                
+                $('#po_id').val(data['info'].pono_id);
+
+
+                 var total_amount = 0;
+                var count = 1;
+                var appvd_id = 0;
+                var fintotal = 0;
+                var tr = "";
+                console.log(data.itemsx);
+                 for(var x = 0; x<data.itemsx.length;x++){
+                  total_amount = total_amount + parseInt(data.itemsx[x].abs_total_price);
+                  tr +=  '   <tr>'+
+                            '     <td>'+count+'</td>'+
+                            '     <td>'+data.itemsx[x].description+'<input type="hidden" name="po_item_id[]" value="'+data.itemsx[x].po_item_id+'"/></td>'+
+                            '     <td>'+data.itemsx[x].qty+'</td>'+
+                            '     <td>'+data.itemsx[x].unit+'</td>'+
+                            '     <td>'+data.itemsx[x].po_amount+'</td>'+
+                            '     <td>'+data.itemsx[x].po_total+'</td>'+
+                            '   </tr>';
+                            count++;
+                  fintotal += parseFloat(data.itemsx[x].abs_total_price);
+                }
+
+                $('#ris_no').val(data['info'].ris_no);
+                $('#ris_date').val(data['info'].ris_date);
+                $('#requisition_id').val(data['info'].requisition_id);
+
+                $('#items_list tbody').html(tr);
+
+
+              $('#add_requisition_modal').modal({
+                      backdrop: 'static',
+                      keyboard: false
+              });
+
+            }
+     });
+  };
+
+$.fn.addRequisition_pc = function(prno_id){
+   $("#add_requisition_number")[0].reset();
+    $.ajax({
+            type: "POST",
+             url: "{{route('po.get-pc')}}",
+            data : {
+              pono_id : prno_id,
+              _token : '{{csrf_token()}}'
+            },
+            dataType: "json",
+            error: function(){
+              console.log('error');
+            },
+            success: function(data){
+
+                $('#pr_dept_desc').val(data['info'].dept_desc);
+                $('#prno_id').val(data['info'].prno_id);
+                $('#total_amt').val(data['info'].total_amt);
+
+                var total_amount = 0;
+                var count = 1;
+                var appvd_id = 0;
+                var fintotal = 0;
+                var tr = "";
+                console.log(data.itemsx);
+                 for(var x = 0; x<data.itemsx.length;x++){
+                  total_amount = total_amount + parseInt(data.itemsx[x].total_price);
+                  tr +=  '   <tr>'+
+                            '     <td>'+count+'</td>'+
+                            '     <td>'+data.itemsx[x].description+'<input type="hidden" name="po_item_id[]" value="'+data.itemsx[x].po_item_id+'"/></td>'+
+                            '     <td>'+data.itemsx[x].qty+'</td>'+
+                            '     <td>'+data.itemsx[x].unit+'</td>'+
+                            '     <td>'+data.itemsx[x].unit_price+'</td>'+
+                            '     <td>'+data.itemsx[x].total_price+'</td>'+
+                            '   </tr>';
+                            count++;
+                  fintotal += parseFloat(data.itemsx[x].total_price);
+                }
+
+                $('#items_list tbody').html(tr);
+
+              $('#add_requisition_pc_modal').modal({
+                      backdrop: 'static',
+                      keyboard: false
+              });
+
+            }
+     });
+
+  };
+
+  $.fn.updateRequisition_pc = function(prno_id){
+     $("#add_requisition_number")[0].reset();
+    $.ajax({
+            type: "POST",
+             url: "{{route('po.get-po')}}",
+            data : {
+              pono_id : pono_id,
+              _token : '{{csrf_token()}}'
+            },
+            dataType: "json",
+            error: function(){
+              console.log('error');
+            },
+            success: function(data){
+
+                $('#pr_dept_desc').val(data['info'].dept_desc);
+                $('#pr_dept_id').val(data['info'].dept_id);
+                $('#prno').val(data['info'].pr_no);
+                $('#prno_id').val(data['info'].prno_id);
+
+                $('#pr_no_date').val(data['info'].pr_date);
+                $('#bac_no').val(data['info'].bac_control_no);
+                $('#bac_date').val(data['info'].bac_date);
+                $('#bac_mode').val(data['info'].bac_mode);
+                $('#bac_category').val(data['info'].bac_categ);
+                $('#obr_no').val(data['info'].obr_no);
+                $('#obr_date').val(data['info'].obr_date);
+                $('#absctrct_no').val(data['info'].control_no);
+                $('#absctrct_date').val(data['info'].abstrct_date);
+                $('#supplier_desc').val(data['info'].suppl_title);
+                $('#total_amt').val(data['info'].total_amt);
+
+
+                $('#po_no').val(data['info'].po_no);
+                $('#po_date').val(data['info'].po_date);
+                $('#po_id').val(data['info'].pono_id);
+
 
                  var total_amount = 0;
                 var count = 1;
