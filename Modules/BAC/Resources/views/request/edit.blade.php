@@ -22,7 +22,7 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                  
+
                   <div class="form-group row">
                      <label for="pr_no" class="col-sm-2 control-label">REQUEST DATE: </label>
                         <div class="col-sm-2">
@@ -49,7 +49,7 @@
                 <div class="form-group row">
                      <label for="purpose" class="col-sm-2 control-label">STATUS : </label>
                       <div class="col-sm-10">
-                           Request is <b style="font-size:20px; {{($ppmp->status == 0 ? 'color:#d42813;' : 'color:#33ad01;')}}">{{($ppmp->status == 0 ? 'DECLINED' : 'APPROVED')}}</b>.     
+                           Request is <b style="font-size:20px; {{($ppmp->status == 0 ? 'color:#d42813;' : 'color:#33ad01;')}}">{{($ppmp->status == 0 ? 'DECLINED' : 'APPROVED')}}</b>.
                       </div>
                 </div>
 
@@ -93,7 +93,7 @@
                                 <?php $total_price = $prs->unit_price  * $prs->qty; ?>
                                         <tr>
                                               <td>{{ $count }}</td>
-                                              <td>{{ $prs->description }}</td>
+                                              <td style="word-wrap: break-word;">{{ $prs->description }}</td>
                                               <td>{{ $prs->qty }}  </td>
                                              <td> {{ $prs->unit }} </td>
                                              <td class="text-right"> {{ number_format($prs->unit_price,2) }} </td>
@@ -101,7 +101,7 @@
                                         </tr>
                                     <?php $count++;  $unit_price_total += $prs->unit_price ; $sum_price_total +=$total_price; ?>
                               @endforeach
-                            
+
 
                              <tr>
                                <td colspan="5">Total</td>
@@ -191,12 +191,12 @@
     $('#app_status').text((status == 0 ? 'DECLINE' : 'APPROVE'));
     if(status == 0){
       $('.ppmp_info').addClass('hide');
-      $('#ppmp_alert').removeClass('alert-success');      
+      $('#ppmp_alert').removeClass('alert-success');
       $('#ppmp_alert').addClass('alert-danger');
     }else{
       $('.ppmp_info').removeClass('hide');
-      $('#ppmp_alert').addClass('alert-success');   
-      $('#ppmp_alert').removeClass('alert-danger');         
+      $('#ppmp_alert').addClass('alert-success');
+      $('#ppmp_alert').removeClass('alert-danger');
     }
   };
 
@@ -213,7 +213,7 @@
         }
     });
   };
-  
+
 
 </script>
 @include('department::purchase_request.js.edit-js')

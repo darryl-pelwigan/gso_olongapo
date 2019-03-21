@@ -302,14 +302,14 @@ class PurchaseOrderController extends Controller
                 ->select([
                             'olongapo_purchase_request_no.id as prno_id',
                             'olongapo_subdepartment.dept_desc as dpt_desc',
-                            'olongapo_purchase_request_no.pr_date as pr_date'
+                            'olongapo_purchase_request_no.pr_date_dept as pr_date'
                 ])
                 ->where('olongapo_purchase_request_no.pr_purelyconsumption','=','1')
                 ->where('olongapo_purchase_request_ppmp_approval.status','=','1')
-                ->groupBy('olongapo_purchase_request_no.id');
+                ->where('olongapo_purchase_request_no.id', '=', $request->input('pono_id'))
+                ->first();
 
-
-
+        $record = DB::table('olongapo_purchase_order_requisition_number')->where('pono_id',$request->input('pono_id'))->first();
 
         $items_bac = DB::table('olongapo_purchase_request_no')
                     ->join('olongapo_purchase_request_ppmp_approval' , 'olongapo_purchase_request_no.id','=','olongapo_purchase_request_ppmp_approval.request_no_id')
@@ -326,15 +326,15 @@ class PurchaseOrderController extends Controller
                     ])
                      ->where('olongapo_purchase_request_no.pr_purelyconsumption','=','1')
                      ->where('olongapo_purchase_request_ppmp_approval.status','=','1')
+                     ->where('olongapo_purchase_request_no.id', '=', $request->input('pono_id'))
                     ->groupby('items.id')
                     ->get();
 
         $data['itemsx'] = $items_bac;
+        $data['record'] = $record;
         $data['info']  = $info;
 
         return $data;
-
-
     }
 
     public function get_po(Request $request){
@@ -451,6 +451,8 @@ class PurchaseOrderController extends Controller
                             ])
                     ->where('olongapo_purchase_order_no.id', '=', $request->input('pono_id'))
                     ->first();
+
+
 
         $items_bac = DB::table('olongapo_purchase_order_items as po')
                     ->join('olongapo_purchase_request_items as items','items.id','=','po.pr_item_id')
@@ -628,6 +630,53 @@ class PurchaseOrderController extends Controller
         return @$pdf->stream();
     }
 
+ public function requisition_pc_pdf(Request $request){
+         $info = DB::table('olongapo_purchase_request_no')
+                ->join('olongapo_purchase_order_requisition_number' ,'olongapo_purchase_order_requisition_number.pono_id','=', 'olongapo_purchase_request_no.id')
+                ->join('olongapo_purchase_request_ppmp_approval' , 'olongapo_purchase_request_no.id','=','olongapo_purchase_request_ppmp_approval.request_no_id')
+                ->join('olongapo_subdepartment','olongapo_subdepartment.id','=','olongapo_purchase_request_no.dept_id')
+                ->join('olongapo_department','olongapo_department.id','=','olongapo_subdepartment.dept_id')
+
+                    ->select([
+                                'olongapo_purchase_request_no.id as prno_id',
+                                'olongapo_department.dept_desc as _main_dept_desc',
+                                'olongapo_purchase_order_requisition_number.ris_no',
+                                'olongapo_purchase_order_requisition_number.ris_date',
+                            ])
+                ->where('olongapo_purchase_order_requisition_number.id', '=', $request->input('requisition_id'))
+                ->where('olongapo_purchase_request_no.pr_purelyconsumption','=','1')
+                ->where('olongapo_purchase_request_ppmp_approval.status','=','1')
+                ->first();
+
+        $items_bac = DB::table('olongapo_purchase_request_no')
+                    ->join('olongapo_purchase_request_ppmp_approval' , 'olongapo_purchase_request_no.id','=','olongapo_purchase_request_ppmp_approval.request_no_id')
+                     ->join('olongapo_purchase_request_items as items','items.prno_id','=','olongapo_purchase_request_no.id')
+                    ->select([
+                        'items.id as item_id',
+                        'items.prno_id as prno_id',
+                        'items.description as description',
+                        'items.unit as unit',
+                        'items.qty as qty',
+                        'items.remarks as remarks',
+                        'items.unit_price as unit_price',
+                        'items.total_price as total_price'
+                    ])
+                     ->where('olongapo_purchase_request_no.pr_purelyconsumption','=','1')
+                     ->where('olongapo_purchase_request_ppmp_approval.status','=','1')
+                     ->where('olongapo_purchase_request_no.id', '=',$info->prno_id)
+                    ->groupby('items.id')
+                    ->get();
+
+
+
+        $this->data['po_items'] = $items_bac;
+        $this->data['info']  = $info;
+
+        $pdf = PDF::loadView('purchaseorder::requisition.pdf2',$this->setup());
+        // $pdf->setPaper(215.9,330.2);
+        $pdf->setPaper('legal');
+        return @$pdf->stream();
+    }
 
     public function acceptance_pdf(Request $request){
          $info = DB::table('olongapo_purchase_order_no')

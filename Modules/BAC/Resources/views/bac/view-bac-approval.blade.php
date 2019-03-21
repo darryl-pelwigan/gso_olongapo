@@ -9,7 +9,7 @@
         <div class="col-xs-8 text-center" style="font-size: 12px;">
             <p class="coo" >Republic of the Philippines</p>
             <p class="coo" >City of Olongapo</p>
-            <h3 class="c_title"><strong>BIDS AND AWARDS COMMITTEE</strong></h3>
+            <h3 class="c_title" style="font-size:12px"><strong>BIDS AND AWARDS COMMITTEE</strong></h3>
             <img src="{{asset('adminlte-custom/img/line.png')}}" class="img-line" />
             <p class="coo" >General Services Office, 2/F Olongapo City Hall, Olongapo City</p>
             <p class="cntc web">web: www.olongapocity.gov.ph </p>
@@ -40,7 +40,7 @@
                     <?php $cx=1; $cd=1; ?>
                  <div class="row">
             @endif
-                 <div class="col-xs-4 col-xs-offset-1" style="font-size: 12px;">
+                 <div class="col-xs-4 col-xs-offset-1" style="font-size: 11px;">
                     <p class="text-center"><strong><u>{{ strtoupper($committee[$x]->employee_name) }}</u></strong></p>
                     <p class="text-center">{{$committee[$x]->title}}</p><br><br>
                 </div>
@@ -66,49 +66,22 @@
 
           @for( $x = 0 ; $x< count($approved_by) ; $x++)
 
-           
+
                  <div class="row">
                     <div class="col-xs-4"></div>
-                    <div class="col-xs-8" style="font-size: 12px;">
+                    <div class="col-xs-8" style="font-size: 11px;">
                         <p class="text-center"><strong><u>{{strtoupper($approved_by[$x]->employee_name)}}</u></strong></p>
                         <p class="text-center">{{$approved_by[$x]->title}}</p>
                     </div>
                 </div><br>
-          
+
 
                 <?php  $cc++; $cx++; ?>
         @endfor
     @if( $cd!=2 )
-        
+
     @endif
-        <br>
-        <p style="margin-left: 25px;">Attested by: </p>
-         <?php
-            $cc = 1;
-            $cx = 1;
-            $cd = 1;
-        ?>
-
-          @for( $x = 0 ; $x< count($attested_by) ; $x++)
-
-            @if( $cc%2==1 )
-                    <?php $cx=1; $cd = 1; ?>
-                 <div class="row">
-            @endif
-                 <div class="col-xs-4 col-xs-offset-1" >
-                    <p class="text-center"><strong><u>{{strtoupper($attested_by[$x]->employee_name)}}</u></strong></p>
-                    <p class="text-center">{{$attested_by[$x]->title}}</p>
-                </div>
-
-            @if( $cc%2==0 && $cx!=2 )
-                </div>
-                <?php $cd++; ?>
-            @endif
-                <?php  $cc++; $cx++; ?>
-        @endfor
-    @if( $cd!=2 )
-                </div>
-    @endif
+{{-- attested by code is placed on test.blade.php (start with the br afther the last div) --}}
 @stop
 
 <style type="text/css">
@@ -116,5 +89,5 @@
 
     font-size:12px;
   }
-  
+
 </style>

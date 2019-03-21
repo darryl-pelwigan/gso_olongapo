@@ -230,7 +230,7 @@
               <!-- /.box-body -->
               <div class="box-footer">
                 <button type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>
-                <button type="button" class="btn btn-info pull-right" onclick="$(this).sentRequisitionNo();">Submit</button>
+                <button type="button" class="btn btn-info pull-right" onclick="$(this).sentRequisitionNo(0);">Submit</button>
               </div>
               <!-- /.box-footer -->
 
@@ -254,24 +254,23 @@
       <div class="modal-body">
         <div id="status"></div>
         <div id="contents-menu">
-            <form class="form-horizontal" id="add_requisition_number">
+            <form class="form-horizontal" id="add_requisition_number_pc">
               <div class="box-body">
                 <div id="statusC"></div>
-
+                {{csrf_field()}}
                 <div class="form-group">
                   <label for="obr_date" class="col-sm-2 control-label">RIS No : </label>
-                  <div class="col-sm-3">
-                    <input type="text" class="form-control" id="ris_no"  name="ris_no" placeholder="RIS NUMBER">
-                  </div>
+                      <div class="col-sm-3">
+                        <input type="text" class="form-control" id="ris_no2"  name="ris_no" placeholder="RIS NUMBER">
+                      </div>
                    <label for="pr_no" class="col-sm-2 control-label">Date : </label>
                         <div class="col-sm-4">
-                        <input type="text" class="form-control" id="ris_date" name="ris_date" placeholder="DATE" />
-                        <input type="hidden"  id="po_id" name="po_id" />
-                        <input type="hidden"  id="requisition_id" name="requisition_id" />
+                        <input type="text" class="form-control" id="ris_date2" name="ris_date" placeholder="DATE" />
+                        <input type="hidden"  id="po_id1" name="po_id" />
+                        <input type="hidden"  id="po_date1" name="po_date" />
+                        <input type="hidden"  id="requisition_id1" name="requisition_id" />
 
                     </div>
-                </div>
-
                 </div>
 
                 </div>
@@ -297,7 +296,7 @@
               <!-- /.box-body -->
               <div class="box-footer">
                 <button type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>
-                <button type="button" class="btn btn-info pull-right" onclick="$(this).sentRequisitionNo();">Submit</button>
+                <button type="button" class="btn btn-info pull-right" onclick="$(this).sentRequisitionNo(1);">Submit</button>
               </div>
               <!-- /.box-footer -->
 
@@ -424,9 +423,9 @@ $(function() {
               render : function(data , type , row){
                       if(data.requisition_id){
                         return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add_requisition_pc_modal" onclick="$(this).updateRequisition_pc('+data.prno_id+');" >Update RIS</button>\
-                        <form method="post" action="{{route('po.po_requisition_pdf')}}">{{csrf_field()}}<input type="hidden" name="requisition_id" value="'+data.requisition_id+'" /><input type="submit" class="btn btn-sm btn-default" name="pdf" value="Pdf" /> </form>  ';
+                        <form method="post" action="{{route('po.po_requisition_pc_pdf')}}">{{csrf_field()}}<input type="hidden" name="requisition_id" value="'+data.requisition_id+'" /><input type="submit" class="btn btn-sm btn-default" name="pdf" value="Pdf" /> </form>  ';
                       }else{
-                         return '<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#add_requisition_pc_modal" onclick="$(this).addRequisition_pc('+data.prno_id+');" >Add RIS</button>\ ';
+                         return '<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#add_requisition_pc_modal" onclick="$(this).addRequisition_pc('+data.prno_id+');">Add RIS</button>\ ';
                       }
                 }
               },
@@ -589,7 +588,7 @@ $.fn.addRequisition = function(pono_id){
   };
 
 $.fn.addRequisition_pc = function(prno_id){
-   $("#add_requisition_number")[0].reset();
+   $("#add_requisition_number_pc")[0].reset();
     $.ajax({
             type: "POST",
              url: "{{route('po.get-pc')}}",
@@ -603,10 +602,66 @@ $.fn.addRequisition_pc = function(prno_id){
             },
             success: function(data){
 
-                $('#pr_dept_desc').val(data['info'].dept_desc);
-                $('#prno_id').val(data['info'].prno_id);
-                $('#total_amt').val(data['info'].total_amt);
+                $('#pr_dept_desc1').val(data['info'].dept_desc);
+                $('#prno_id1').val(data['info'].prno_id);
+                $('#po_id1').val(data['info'].prno_id);
+                $('#po_date1').val(data['info'].pr_date);
 
+                var total_amount = 0;
+                var count = 1;
+                var appvd_id = 0;
+                var fintotal = 0;
+                var tr = "";
+                 for(var x = 0; x<data.itemsx.length;x++){
+                  total_amount = total_amount + parseInt(data.itemsx[x].total_price);
+                  tr +=  '   <tr>'+
+                            '     <td>'+count+'</td>'+
+                            '     <td>'+data.itemsx[x].description+'<input type="hidden" name="po_item_id[]" value="'+data.itemsx[x].po_item_id+'"/></td>'+
+                            '     <td>'+data.itemsx[x].qty+'</td>'+
+                            '     <td>'+data.itemsx[x].unit+'</td>'+
+                            '     <td>'+data.itemsx[x].unit_price+'</td>'+
+                            '     <td>'+data.itemsx[x].total_price+'</td>'+
+                            '   </tr>';
+                            count++;
+                  fintotal += parseFloat(data.itemsx[x].total_price);
+                }
+
+                $('#items_list tbody').html(tr);
+
+              $('#add_requisition_pc_modal').modal({
+                      backdrop: 'static',
+                      keyboard: false
+              });
+
+            }
+     });
+
+  };
+
+  $.fn.updateRequisition_pc = function(prno_id){
+     $("#add_requisition_number_pc")[0].reset();
+    $.ajax({
+            type: "POST",
+             url: "{{route('po.get-pc')}}",
+            data : {
+              pono_id : prno_id,
+              _token : '{{csrf_token()}}'
+            },
+            dataType: "json",
+            error: function(){
+              console.log('error');
+            },
+            success: function(data){
+
+                $('#pr_dept_desc1').val(data['info'].dept_desc);
+                $('#prno_id1').val(data['info'].prno_id);
+                $('#po_id1').val(data['info'].prno_id);
+                $('#po_date1').val(data['info'].pr_date);
+
+                $('#ris_no2').val(data['record'].ris_no);
+                $('#ris_date2').val(data['record'].ris_date);
+                $('#requisition_id1').val(data['record'].id);
+                console.log(data['info']);
                 var total_amount = 0;
                 var count = 1;
                 var appvd_id = 0;
@@ -636,85 +691,14 @@ $.fn.addRequisition_pc = function(prno_id){
 
             }
      });
-
-  };
-
-  $.fn.updateRequisition_pc = function(prno_id){
-     $("#add_requisition_number")[0].reset();
-    $.ajax({
-            type: "POST",
-             url: "{{route('po.get-po')}}",
-            data : {
-              pono_id : pono_id,
-              _token : '{{csrf_token()}}'
-            },
-            dataType: "json",
-            error: function(){
-              console.log('error');
-            },
-            success: function(data){
-
-                $('#pr_dept_desc').val(data['info'].dept_desc);
-                $('#pr_dept_id').val(data['info'].dept_id);
-                $('#prno').val(data['info'].pr_no);
-                $('#prno_id').val(data['info'].prno_id);
-
-                $('#pr_no_date').val(data['info'].pr_date);
-                $('#bac_no').val(data['info'].bac_control_no);
-                $('#bac_date').val(data['info'].bac_date);
-                $('#bac_mode').val(data['info'].bac_mode);
-                $('#bac_category').val(data['info'].bac_categ);
-                $('#obr_no').val(data['info'].obr_no);
-                $('#obr_date').val(data['info'].obr_date);
-                $('#absctrct_no').val(data['info'].control_no);
-                $('#absctrct_date').val(data['info'].abstrct_date);
-                $('#supplier_desc').val(data['info'].suppl_title);
-                $('#total_amt').val(data['info'].total_amt);
-
-
-                $('#po_no').val(data['info'].po_no);
-                $('#po_date').val(data['info'].po_date);
-                $('#po_id').val(data['info'].pono_id);
-
-
-                 var total_amount = 0;
-                var count = 1;
-                var appvd_id = 0;
-                var fintotal = 0;
-                var tr = "";
-                console.log(data.itemsx);
-                 for(var x = 0; x<data.itemsx.length;x++){
-                  total_amount = total_amount + parseInt(data.itemsx[x].abs_total_price);
-                  tr +=  '   <tr>'+
-                            '     <td>'+count+'</td>'+
-                            '     <td>'+data.itemsx[x].description+'<input type="hidden" name="po_item_id[]" value="'+data.itemsx[x].po_item_id+'"/></td>'+
-                            '     <td>'+data.itemsx[x].qty+'</td>'+
-                            '     <td>'+data.itemsx[x].unit+'</td>'+
-                            '     <td>'+data.itemsx[x].po_amount+'</td>'+
-                            '     <td>'+data.itemsx[x].po_total+'</td>'+
-                            '   </tr>';
-                            count++;
-                  fintotal += parseFloat(data.itemsx[x].abs_total_price);
-                }
-
-                $('#ris_no').val(data['info'].ris_no);
-                $('#ris_date').val(data['info'].ris_date);
-                $('#requisition_id').val(data['info'].requisition_id);
-
-                $('#items_list tbody').html(tr);
-
-
-              $('#add_requisition_modal').modal({
-                      backdrop: 'static',
-                      keyboard: false
-              });
-
-            }
-     });
   };
 
   //Date picker
     $('#ris_date').datepicker({
+      autoclose: true,
+       format: 'yyyy-mm-dd',
+    });
+    $('#ris_date2').datepicker({
       autoclose: true,
        format: 'yyyy-mm-dd',
     });
@@ -740,8 +724,14 @@ $.fn.addRequisition_pc = function(prno_id){
 //      });
 // });
 
-  $.fn.sentRequisitionNo = function(){
+  $.fn.sentRequisitionNo = function(isCnsmp){
+    console.log(isCnsmp);
+    if(isCnsmp == 1){
+      var form = $('#add_requisition_number_pc').serialize();
+    }else{
       var form = $('#add_requisition_number').serialize();
+    }
+    console.log(form);
       $.ajax({
             type: "POST",
             url: "{{route('po.add_requisition')}}",

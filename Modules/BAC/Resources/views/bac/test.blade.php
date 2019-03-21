@@ -39,5 +39,32 @@
     </div>
         </section>
 </div>
+        <br>
+        <p style="margin-left: 25px;">Attested by: </p>
+         <?php
+            $cc = 1;
+            $cx = 1;
+            $cd = 1;
+        ?>
 
+          @for( $x = 0 ; $x< count($attested_by) ; $x++)
+
+            @if( $cc%2==1 )
+                    <?php $cx=1; $cd = 1; ?>
+                 <div class="row">
+            @endif
+                 <div class="col-xs-4 col-xs-offset-1" >
+                    <p class="text-center"><strong><u>{{strtoupper($attested_by[$x]->employee_name)}}</u></strong></p>
+                    <p class="text-center">{{$attested_by[$x]->title}}</p>
+                </div>
+
+            @if( $cc%2==0 && $cx!=2 )
+                </div>
+                <?php $cd++; ?>
+            @endif
+                <?php  $cc++; $cx++; ?>
+        @endfor
+    @if( $cd!=2 )
+                </div>
+    @endif
 @stop

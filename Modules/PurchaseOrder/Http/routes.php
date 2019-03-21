@@ -26,6 +26,7 @@ Route::group(['middleware' => ['web','auth'], 'prefix' => 'purchaseorder', 'name
     Route::get('/requisition-issue-slip', 'PurchaseOrderController@requisition')->name('po.requisition-issue-slip');
     Route::post('/add-purchase-requisition', 'PurchaseOrderController@add_requisition')->name('po.add_requisition');
     Route::post('/purchase-requisition-pdf', 'PurchaseOrderController@requisition_pdf')->name('po.po_requisition_pdf');
+    Route::post('/purchase-requisition-pc-pdf', 'PurchaseOrderController@requisition_pc_pdf')->name('po.po_requisition_pc_pdf');
 
     Route::get('/purchase-order-acceptance', 'PurchaseOrderController@po_acceptance')->name('po.po-acceptance');
     Route::post('/add-purchase-acceptance', 'PurchaseOrderController@add_acceptance')->name('po.add_acceptance');
