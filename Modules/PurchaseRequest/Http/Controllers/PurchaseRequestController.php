@@ -115,7 +115,7 @@ class PurchaseRequestController extends Controller
                                         ->first();
 
             $pdf = PDF::loadView('purchaserequest::request.pdf',$this->setup());
-            $pdf->setPaper(215.9,330.2, 'portrait');
+           $pdf->setPaper(array(0,0,612.00,936.0));
             return @$pdf->stream();
         }else{
             return view('purchaserequest::request.edit',$this->setup());
@@ -282,7 +282,7 @@ class PurchaseRequestController extends Controller
                                 'olongapo_bac_source_fund.description as sourcefund',
                                 'olongapo_procurement_method.proc_title as bac_mode',
                                 'olongapo_purchase_order_no.po_no',
-                                'olongapo_purchase_order_no.po_date', 
+                                'olongapo_purchase_order_no.po_date',
                                 'olongapo_purchase_order_no.id as po_id'
                             ])
                     ->where('olongapo_purchase_request_no.id','=',$request->input('prno_id'))

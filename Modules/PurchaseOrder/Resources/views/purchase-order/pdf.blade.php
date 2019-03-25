@@ -105,7 +105,7 @@
                   </tr>
                 </table>
                </div>
-                  <table class="table table-bordered page-break">
+                  <table class="table table-bordered page-break" id="tbl_items">
                       <tr>
                         <td width="5%" align="center"><b>Item <br /> No.</b></td>
                         <td width="10%" align="center"><b>UNIT</b></td>
@@ -116,11 +116,22 @@
                       </tr>
                       <?php $count=1; $total_price=0; ?>
                         @foreach( $po_items as $data )
-                            <tr>
+                            <tr id ="tbl_items">
                               <td id="tbl_items">{{ $count }}</td>
                               <td id="tbl_items">{{ $data->unit }}  </td>
                               <td id="tbl_items">{{ $data->qty }} </td>
-                              <td id="tbl_items">{{ $data->description }}</td>
+                               <?php
+                                  $desc =$data->description;
+
+                                  //if (strlen($desc) > 100) { --}}
+
+                                  if (strlen($desc) > 88) {
+                                    echo '<td class="text-right2" id="desc_style" style="word-wrap:break-word; font-size: 4px;">'.$desc.'</td>';
+                                  } else {
+                                      echo '<td class="text-right2">'.$desc.'</td>';
+                                  }
+                                ?>
+
                               <td id="tbl_items" class="text-right2">{{ number_format($data->po_amount,2) }} </td>
                               <td id="tbl_items" class="text-right2">{{ number_format($data->po_total,2) }} </td>
                             </tr>
@@ -146,7 +157,7 @@
                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
                         ?>
                             <tr>
-                             <td colspan="5" class="total">Total Amount in Words</td>
+                             <td colspan="5" class="total" style="font-size:13px">Total Amount in Words</td>
                              <td class="text-right2 total">{{ number_format($total_price,2) }}</td>
                             </tr>
                             <tr>
@@ -241,31 +252,52 @@
 
 @section('plugins-css')
 <style type="text/css">
-<?php if ($count <= 30 && $count > 21){
-
-                          echo "#tbl_items{";
-                          echo "font-size: 9.5px;";
-                          echo "}";
-
+< <?php if ($count <= 30 && $count > 26){
+                          echo "
+                                #tbl_items{
+                                font-size: 5px;
+                                }
+                              ";
                         }
-                        else if ($count <= 20 && $count > 11){
-
-                          echo "#tbl_items{";
-                          echo "font-size: 10.5px;";
-                          echo "}";
-
+                        else if ($count <= 25 && $count > 21){
+                          echo "
+                                #tbl_items{
+                                font-size: 6px;
+                                }
+                              ";
+                        }
+                        else if ($count <= 20 && $count > 16){
+                          echo "
+                                #tbl_items{
+                                font-size: 7px;
+                                }
+                              ";
+                        }
+                        else if ($count <= 15 && $count > 11){
+                          echo "
+                                #tbl_items{
+                                font-size: 8px;
+                                }
+                              ";
+                        }
+                        else if ($count <= 10 &&  $count > 6){
+                          echo "
+                                #tbl_items{
+                                font-size: 9px;
+                                }
+                              ";
                         }
                         else {
-
-                          echo "#tbl_items{";
-                          echo "font-size: 11.5px;";
-                          echo "}";
-
+                          echo "
+                                #tbl_items{
+                                font-size: 10px;
+                                }
+                              ";
                         }
-?>
+                        ?>
 html,body{
   margin: 5px 5px;
-  font-size: 12px;
+  font-size: 11px;
 }
 .table-thnormal>thead>tr>th{
   font-weight: normal;

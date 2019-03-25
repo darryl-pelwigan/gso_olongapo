@@ -96,7 +96,7 @@
                   </table>
                 </div>
 
-                  <table class="table table-bordered page-break">
+                  <table id = "tbl_items" class="table table-bordered page-break">
                       <tr>
                         <td width="5%" align="center"><b>Stock/ <br /> Property No.</b></td>
                         <td width="51%" align="center"><b>Description</b></td>
@@ -109,7 +109,17 @@
                               <td>{{ $count }}</td>
                               <td>{{ $data->unit }}  </td>
                               <td>{{ $data->qty }} </td>
-                              <td>{{ $data->description }}</td>
+                              <?php if(strlen($data->description)>85){
+                                echo"<td class='text-right2' style='word-wrap: break-word;font-size:5px' >";
+                                echo $data->description;
+                                echo"</td>";
+                                }
+                                else{
+                                echo"<td class='text-right2' style='word-wrap: break-word;' >";
+                                echo $data->description;
+                                echo"</td>";
+                                }
+                                ?>
 
                             </tr>
                           <?php $count++; $total_price += $data->po_total; ?>
@@ -228,28 +238,50 @@
 
 @section('plugins-css')
 <style type="text/css">
-<?php if ($count <= 30 && $count > 21){
-
-                          echo "#tbl_items{";
-                          echo "font-size: 9.5px;";
-                          echo "}";
-
+<?php if ($count <= 30 && $count > 26){
+                          echo "
+                                #tbl_items{
+                                font-size: 7px;
+                                }
+                              ";
                         }
-                        else if ($count <= 20 && $count > 11){
-
-                          echo "#tbl_items{";
-                          echo "font-size: 10.5px;";
-                          echo "}";
-
+                        else if ($count <= 25 && $count > 21){
+                          echo "
+                                #tbl_items{
+                                font-size: 8px;
+                                }
+                              ";
+                        }
+                        else if ($count <= 20 && $count > 16){
+                          echo "
+                                #tbl_items{
+                                font-size: 9px;
+                                }
+                              ";
+                        }
+                        else if ($count <= 15 && $count > 11){
+                          echo "
+                                #tbl_items{
+                                font-size: 11px;
+                                }
+                              ";
+                        }
+                        else if ($count <= 10 && $count > 6){
+                          echo "
+                                #tbl_items{
+                                font-size: 13px;
+                                }
+                              ";
                         }
                         else {
-
-                          echo "#tbl_items{";
-                          echo "font-size: 11.5px;";
-                          echo "}";
-
+                          echo "
+                                #tbl_items{
+                                font-size: 15px;
+                                }
+                              ";
                         }
-?>
+                        ?>
+
 html,body{
   margin: 5px 5px;
   font-size: 12px;

@@ -101,16 +101,16 @@
                             <tr id="tbl_items">
                               <td>{{ $count }}</td>
                               <td>{{ $data->unit }}  </td>
-                               <?php if(strlen($data->description)>85){
-                                echo"<td class='text-right2' style='word-wrap: break-word;font-size:7px' >";
-                                echo $data->description;
-                                echo"</td>";
-                                }
-                                else{
-                                echo"<td class='text-right2' style='word-wrap: break-word;' >";
-                                echo $data->description;
-                                echo"</td>";
-                                }
+                                 <?php
+                                  $desc =$data->description;
+
+                                  //if (strlen($desc) > 100) { --}}
+
+                                  if (strlen($desc) > 88) {
+                                    echo '<td class="text-right2" id="desc_style" style="word-wrap:break-word; font-size: 6px;">'.$desc.'</td>';
+                                  } else {
+                                      echo '<td class="text-right2">'.$desc.'</td>';
+                                  }
                                 ?>
                               <td>{{ $data->qty }} </td>
                               <td class="text-right2"></td>
@@ -213,28 +213,49 @@
    @stop
 
 
- <?php if ($count <= 30 && $count > 21){
-                          echo "<style>";
-                          echo "#tbl_items{";
-                          echo "font-size: 9.5px;";
-                          echo "}";
-                          echo "</style>";
+ <?php if ($count <= 30 && $count > 26){
+                          echo "<style>
+                                #tbl_items{
+                                font-size: 7px;
+                                }
+                              </style>";
                         }
-                        else if ($count <= 20 && $count > 11){
-                          echo "<style>";
-                          echo "#tbl_items{";
-                          echo "font-size: 10.5px;";
-                          echo "}";
-                          echo "</style>";
+                        else if ($count <= 25 && $count > 21){
+                          echo "<style>
+                                #tbl_items{
+                                font-size: 8px;
+                                }
+                              </style>";
+                        }
+                        else if ($count <= 20 && $count > 16){
+                          echo "<style>
+                                #tbl_items{
+                                font-size: 9px;
+                                }
+                              </style>";
+                        }
+                        else if ($count<= 15 && $count> 11){
+                          echo "<style>
+                                #tbl_items{
+                                font-size: 10px;
+                                }
+                              </style>";
+                        }
+                        else if ($count <= 10 && $count> 6){
+                          echo "<style>
+                                #tbl_items{
+                                font-size: 11px;
+                                }
+                              </style>";
                         }
                         else {
-                          echo "<style>";
-                          echo "#tbl_items{";
-                          echo "font-size: 11.5px;";
-                          echo "}";
-                          echo "</style>";
+                          echo "<style>
+                                #tbl_items{
+                                font-size: 12px;
+                                }
+                              </style>";
                         }
-?>
+                        ?>
 
 
 

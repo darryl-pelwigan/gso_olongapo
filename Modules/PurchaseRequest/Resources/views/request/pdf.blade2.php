@@ -33,7 +33,6 @@ if($pr->proc_type != 0){
               $totalpages = $totalrows / 30;
               $pageloop = ($totalpages < 1 ? 1 : $totalpages);
               $alltotal = 0;
-              $prs = $pr->pr_items()->get();
               for($i = 0; $i < $pageloop; $i++){
             ?>
             <div class="pages">
@@ -106,7 +105,7 @@ if($pr->proc_type != 0){
                   </table>
               </div>
 
-              <table class="table table-bordered" id="tbl_items" width="100%">
+              <table class="table table-bordered" id="tbl_items">
                     <thead>
                       <tr>
                         <th align="center" width="5%">Item <br /> No.</th>
@@ -116,7 +115,6 @@ if($pr->proc_type != 0){
                         <th align="center" width="10%">Estimated<br>Unit Cost</th>
                         <th align="center" width="10%">Estimated<br>Cost</th>
                       </tr>
-
                     </thead>
                     <tbody>
                       <?php $count=1; $unit_price_total=0; $sum_price_total=0; ?>
@@ -134,19 +132,7 @@ if($pr->proc_type != 0){
                                 <td class="text-right2">{{ ($x+1) }}</td>
                                 <td class="text-right2">{{ $prs[$x]['qty'] }}</td>
                                 <td class="text-right2">{{ $prs[$x]['unit'] }}</td>
-                                {{--td class="text-right2">{{ $prs[$x]['description'] }}</td>--}}
-                                <?php
-                                  $desc = $prs[$x]['description'];
-
-                                  //if (strlen($desc) > 100) { --}}
-
-                                  if (strlen($desc) > 88) {
-                                    echo '<td class="text-right2" id="desc_style" style="word-wrap:break-word; font-size: 6px;">'.$desc.'</td>';
-                                  } else {
-                                      echo '<td class="text-right2">'.$desc.'</td>';
-                                  }
-                                ?>
-
+                                <td class="text-right2">{{ $prs[$x]['description'] }}</td>
                                 <td class="text-right2">{{ number_format($prs[$x]['unit_price'],2) }} </td>
                                 <td class="text-right2">{{ number_format($prs[$x]['total_price'],2) }} </td>
                               </tr>
@@ -166,47 +152,26 @@ if($pr->proc_type != 0){
                         }
                         ?>
                         @endfor
-                         <?php if ($totalrows <= 30 && $totalrows > 26){
-                          echo "<style>
-                                #tbl_items{
-                                font-size: 7px;
-                                }
-                              </style>";
+                         <?php if ($count <= 30 && $count > 21){
+                          echo "<style>";
+                          echo "#tbl_items{";
+                          echo "font-size: 9.5px;";
+                          echo "}";
+                          echo "</style>";
                         }
-                        else if ($totalrows <= 25 && $totalrows > 21){
-                          echo "<style>
-                                #tbl_items{
-                                font-size: 8px;
-                                }
-                              </style>";
-                        }
-                        else if ($totalrows <= 20 && $totalrows > 16){
-                          echo "<style>
-                                #tbl_items{
-                                font-size: 9px;
-                                }
-                              </style>";
-                        }
-                        else if ($totalrows <= 15 && $totalrows > 11){
-                          echo "<style>
-                                #tbl_items{
-                                font-size: 11px;
-                                }
-                              </style>";
-                        }
-                        else if ($totalrows <= 10 && $totalrows > 6){
-                          echo "<style>
-                                #tbl_items{
-                                font-size: 13px;
-                                }
-                              </style>";
+                        else if ($count <= 20 && $count > 11){
+                          echo "<style>";
+                          echo "#tbl_items{";
+                          echo "font-size: 10.5px;";
+                          echo "}";
+                          echo "</style>";
                         }
                         else {
-                          echo "<style>
-                                #tbl_items{
-                                font-size: 14px;
-                                }
-                              </style>";
+                          echo "<style>";
+                          echo "#tbl_items{";
+                          echo "font-size: 11.5px;";
+                          echo "}";
+                          echo "</style>";
                         }
                         ?>
 
@@ -229,7 +194,7 @@ if($pr->proc_type != 0){
                   <tr>
                       <td width="15%"></td>
                       <td width="25%">Requested by:</td>
-                      <td width="23%">Appropriation Availability:</td>
+                      <td width="23%">Cash Availability:</td>
                       <td width="37%">Approved by:</td>
                   </tr>
                   <tr>
@@ -306,7 +271,7 @@ html,body{
   border: 1px;
 }
 .total{
-  font-size: 16px;
+  font-size: 17px;
   font-weight: bold;
 }
 

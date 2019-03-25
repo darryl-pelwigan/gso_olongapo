@@ -40,7 +40,7 @@ class GSOassistantController extends Controller
     }
 
     public function procurement_record_pdf(){
-        $pdf = PDF::loadView('gsoassistant::pdf.abs_procurement_record', $this->setup() )->setPaper( 'legal','landscape');
+        $pdf = PDF::loadView('gsoassistant::pdf.abs_procurement_record', $this->setup() )->setPaper(0,0,612.00,936.0),'landscape');
         return $pdf->stream();
     }
 

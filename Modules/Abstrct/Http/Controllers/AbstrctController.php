@@ -59,10 +59,10 @@ class AbstrctController extends Controller
                                         ->orderBy('olongapo_bac_awards_committee.id', 'desc')
                                         ->get();
 
-     
+
         $this->data['proc_methods'] = Procmethod::all();
 
-        // $this->data['pr_signee'] = Requestordersignee::()->get(); 
+        // $this->data['pr_signee'] = Requestordersignee::()->get();
 
         return view('abstrct::abstrct.pr-list',$this->setup());
     }
@@ -147,21 +147,21 @@ class AbstrctController extends Controller
                     ##abstract signee
                     // $result = AbstrctSignee::all();
                     // if(count($result) == 0){
-                    //     for ($i=0; $i < count($request->input('employee_id')); $i++) { 
+                    //     for ($i=0; $i < count($request->input('employee_id')); $i++) {
                     //         $abstract_sign = new AbstrctSignee;
                     //         $abstract_sign->employee_id = $request->input('employee_id')[$i];
                     //         $abstract_sign->rank = $request->input('rank')[$i];
                     //         $abstract_sign->save();
                     //     }
                     // }else{
-                    //     for ($i=0; $i < count($request->input('employee_id')); $i++) { 
+                    //     for ($i=0; $i < count($request->input('employee_id')); $i++) {
                     //         $abstract_sign = AbstrctSignee::where('rank', '=', $request->input('rank')[$i])->first();
                     //         $abstract_sign->employee_id = $request->input('employee_id')[$i];
                     //         $abstract_sign->rank = $request->input('rank')[$i];
                     //         $abstract_sign->save();
                     //     }
                     // }
-                    
+
                     $data['supplier_c'] = $supplier_c;
                     $data['test_x'] = $test_x;
                     $data['uprice_x'] = $uprice_x;
@@ -376,14 +376,14 @@ class AbstrctController extends Controller
                     ##abstract signee
                     // $result = AbstrctSignee::all();
                     // if(count($result) == 0){
-                    //     for ($i=0; $i < count($request->input('employee_id')); $i++) { 
+                    //     for ($i=0; $i < count($request->input('employee_id')); $i++) {
                     //         $abstract_sign = new AbstrctSignee;
                     //         $abstract_sign->employee_id = $request->input('employee_id')[$i];
                     //         $abstract_sign->rank = $request->input('rank')[$i];
                     //         $abstract_sign->save();
                     //     }
                     // }else{
-                    //     for ($i=0; $i < count($request->input('employee_id')); $i++) { 
+                    //     for ($i=0; $i < count($request->input('employee_id')); $i++) {
                     //         $count = AbstrctSignee::where('rank', '=', $request->input('rank')[$i])->first();
                     //         if(count($count) == 0){
                     //             $abstract_sign = new AbstrctSignee;
@@ -423,7 +423,7 @@ class AbstrctController extends Controller
                             if($AbstrctItems){
                                 $AbstrctItems->unit_price = $price;
                                 $AbstrctItems->total_price = ($price*$request['qty.'.$x]);
-                                $AbstrctItems->save();                               
+                                $AbstrctItems->save();
 
                             }else{
                                 $AbstrctItems = new AbstrctItems;
@@ -445,7 +445,7 @@ class AbstrctController extends Controller
                                                 ->where('olongapo_absctrct_pubbid_apprved.pr_no', '=', $request['pr_id_update'])
                                                 ->where('olongapo_absctrct_pubbid_apprved.pr_item_id', '=', $request['item_id.'.$x])
                                                 ->get();
-                             
+
                             if(count($abstract_supp) > 0){
                                 if($request['supplier_item.'.$x.'.'.$y] == 1){
                                     $AbstrctSupplierApprved = AbstrctSupplierApprved::where('pr_no', '=', $request['pr_id_update'])
@@ -470,7 +470,7 @@ class AbstrctController extends Controller
                     }
 
                     if(count($request['delete_id']) > 0){
-                        for ($a=0; $a < count($request['delete_id']); $a++) { 
+                        for ($a=0; $a < count($request['delete_id']); $a++) {
                             $AbstrctItems2 = AbstrctItems::where('pubbid_id','=',$request['delete_id'][$a])->delete();
                             // $AbstrctItems2->delete();
 
@@ -498,7 +498,7 @@ class AbstrctController extends Controller
 
     public function absctrct_list_pdf(Request $request)
     {
-        
+
         $itemsx = DB::table('olongapo_absctrct')
                                 ->where('olongapo_absctrct.id','=',$request->input('pr_no'))
                                 ->first();
@@ -515,7 +515,7 @@ class AbstrctController extends Controller
                             ->join('olongapo_absctrct_pubbid_apprved','olongapo_absctrct_pubbid_apprved.pr_item_id','=','olongapo_purchase_request_items.id')
                             ->join('olongapo_absctrct_pubbid','olongapo_absctrct_pubbid.id','=','olongapo_absctrct_pubbid_apprved.pubbid')
                             ->select([
-                                    'olongapo_purchase_request_items.id as item_id', 
+                                    'olongapo_purchase_request_items.id as item_id',
                                     'olongapo_purchase_request_items.description',
                                     'olongapo_purchase_request_items.remarks',
                                     'olongapo_purchase_request_items.unit',
@@ -538,7 +538,7 @@ class AbstrctController extends Controller
                             ->where('olongapo_purchase_request_items.deleted_at','=',NULL)
                             ->groupby('olongapo_purchase_request_items.id')
                             ->orderby('olongapo_absctrct_pubbid.supplier_id', 'asc')
-                            ->orderby('olongapo_purchase_request_items.id', 'asc')                            
+                            ->orderby('olongapo_purchase_request_items.id', 'asc')
                             ->get();
 
         $suppliers = DB::table('olongapo_absctrct')
@@ -609,9 +609,9 @@ class AbstrctController extends Controller
                     $total_pricex = ($listx[$s]->unit_price*$listx[$s]->qty);
                     $total_price = round($total_pricex,2);
                     $tdx .= '<td style="text-align: right;">'.number_format($listx[$s]->unit_price, 2).'</td><td style="text-align: right;">'.number_format($total_price, 2).'</td>';
-                } 
-                $td[$i] = $tdx;  
-            }   
+                }
+                $td[$i] = $tdx;
+            }
         }
 
         $data['suppliers'] = $th ;
@@ -622,7 +622,7 @@ class AbstrctController extends Controller
         $data['suppliersx'] = $suppliers ;
 
         $data['list'] = $td;
-  
+
         $data['list2'] = $list;
         $data['items'] = $items;
         $data['signee'] = $signee;
@@ -692,7 +692,7 @@ class AbstrctController extends Controller
         $data['awards_given'] = $awards_given;
 
         $pdf = PDF::loadView('abstrct::abstrct.absctrct_list_pdf',$data);
-        $pdf->setPaper('Legal', 'landscape');
+       $pdf->setPaper(array(0,0,612.00,936.0),'landscape');
         return @$pdf->stream();
     }
 

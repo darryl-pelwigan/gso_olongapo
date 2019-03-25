@@ -18,7 +18,7 @@
                    <tr>
                      <td width="25%"></td>
                      <td align="center" width="50%">
-                       <h3 class="pr_title" style="font-size: 20px;">REQUISITION AND ISSUE SLIP</h3>
+                       <h3 class="pr_title">REQUISITION AND ISSUE SLIP</h3>
                        <img src="{{asset('olongapo')}}/img/logo-100.png" alt="" width="20px" height="20px;">
                        <p>Republic of the Philippines</p>
                        <b>City of Olongapo</b>
@@ -70,8 +70,8 @@
                       <td id="table_left" width="30%">
                         <table class="table_header" width="100%">
                           <tr>
-                            <td width="20%">Division: </td>
-                            <td width="80%" class="underline"><center>{{$info->_main_dept_desc}}</center></td>
+                            <td>Division: </td>
+                            <td width="50%" class="underline">{{$info->_main_dept_desc}}</td>
                           </tr>
                           <tr>
                             <td>Office: </td>
@@ -173,16 +173,16 @@
                             <tr id="tbl_items">
                               <td>{{ $count }}</td>
                               <td>{{ $data->unit }}  </td>
-                            <?php
-                                  $desc =$data->description;
-
-                                  //if (strlen($desc) > 100) { --}}
-
-                                  if (strlen($desc) > 88) {
-                                    echo '<td class="text-right2" id="desc_style" style="word-wrap:break-word; font-size: 6px;">'.$desc.'</td>';
-                                  } else {
-                                      echo '<td class="text-right2">'.$desc.'</td>';
-                                  }
+                               <?php if(strlen($data->description)>85){
+                                echo"<td class='text-right2' style='word-wrap: break-word;font-size:7px' >";
+                                echo $data->description;
+                                echo"</td>";
+                                }
+                                else{
+                                echo"<td class='text-right2' style='word-wrap: break-word;' >";
+                                echo $data->description;
+                                echo"</td>";
+                                }
                                 ?>
                               <td>{{ $data->qty }} </td>
                               <td class="text-right2"></td>
@@ -192,7 +192,7 @@
                         @endforeach
 
                         <?php
-                          $totaltr = 34;
+                          $totaltr = 40;
                           $loop = $totaltr - $count;
                           if($loop > 0){
                             for ($i=0; $i < $loop; $i++) {
@@ -209,17 +209,16 @@
                             }
                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
                         ?>
-                            <tr>
-                             <td colspan="5" class="total" style="font-size: 15px;">Total</td>
-                             <td class="text-right2 total" style="font-size: 15px;">{{ number_format($total_price,2) }}</td>
+                            {{-- <tr>
+                             <td colspan="5" class="total">Total</td>
+                             <td class="text-right2 total">{{ number_format($total_price,2) }}</td>
                             </tr>
                             <tr>
                               <td colspan="6">
                                 <table class="table_header" width="100%">
                                   <tr>
-                                    <td width="9%" style="margin-left: 10px;">Purpose:</td>
+                                    <td width="10%" style="margin-left: 10px;">Purpose:</td>
                                     <td width="90%" class="underline" style="margin-right: 5px;">{{$info->pr_purpose}}</td>
-                                    <td width="0.5%"></td>
                                   </tr>
                                   <tr>
                                     <td colspan="2" class="underline">&nbsp;</td>
@@ -227,7 +226,7 @@
 
                                 </table>
                               </td>
-                            </tr>
+                            </tr> --}}
 
 
 
@@ -418,49 +417,29 @@
    @stop
 
 
-  <?php if ($count <= 30 && $count > 26){
-                          echo "<style>
-                                #tbl_items{
-                                font-size: 7px;
-                                }
-                              </style>";
+ <?php if ($count <= 30 && $count > 21){
+                          echo "<style>";
+                          echo "#tbl_items{";
+                          echo "font-size: 9.5px;";
+                          echo "}";
+                          echo "</style>";
                         }
-                        else if ($count <= 25 && $count > 21){
-                          echo "<style>
-                                #tbl_items{
-                                font-size: 8px;
-                                }
-                              </style>";
-                        }
-                        else if ($count <= 20 && $count > 16){
-                          echo "<style>
-                                #tbl_items{
-                                font-size: 9px;
-                                }
-                              </style>";
-                        }
-                        else if ($count <= 15 && $count > 11){
-                          echo "<style>
-                                #tbl_items{
-                                font-size: 11px;
-                                }
-                              </style>";
-                        }
-                        else if ($count <= 10 && $count > 6){
-                          echo "<style>
-                                #tbl_items{
-                                font-size: 13px;
-                                }
-                              </style>";
+                        else if ($count <= 20 && $count > 11){
+                          echo "<style>";
+                          echo "#tbl_items{";
+                          echo "font-size: 10.5px;";
+                          echo "}";
+                          echo "</style>";
                         }
                         else {
-                          echo "<style>
-                                #tbl_items{
-                                font-size: 15px;
-                                }
-                              </style>";
+                          echo "<style>";
+                          echo "#tbl_items{";
+                          echo "font-size: 11.5px;";
+                          echo "}";
+                          echo "</style>";
                         }
-                        ?>
+?>
+
 
 
 
@@ -470,7 +449,6 @@
 html,body{
   margin: 5px 5px;
   font-size: 12px;
-  padding-bottom: -20px;
 }
 .table-thnormal>thead>tr>th{
   font-weight: normal;

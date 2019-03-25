@@ -53,7 +53,7 @@
           </tr>
         </table>
      </div>
-  </div> 
+  </div>
   <div class="">
     <table class="table" id="main_tbl" border="1">
         <tr>
@@ -71,9 +71,19 @@
         </tr>
         <?php $count  = 0; ?>
         @foreach ($items as $key=>$data)
-          <tr>
+          <tr id="tbl_items">
             <td>{{$key+1}}</td>
-            <td>{{$data->description}}</td>
+                       <?php
+                                  $desc = $data->description;
+
+                                  //if (strlen($desc) > 100) { --}}
+
+                                  if (strlen($desc) > 88) {
+                                    echo '<td style="word-wrap:break-word; font-size: 6px;">'.$desc.'</td>';
+                                  } else {
+                                      echo '<td style="text-align: center;">'.$desc.'</td>';
+                                  }
+                                ?>
             <td style="text-align: center;">{{$data->qty}}</td>
             <td style="text-align: center;">{{$data->unit}}</td>
             <?php echo $list[$key] ?>
@@ -98,24 +108,24 @@
   </div>
   <div class="">
           <p>We hereby certify that the foregoing abstract of bid proposal or canvasses are correct that we are present when such bid proposals of canvasses for the above item were opened at ______________________________ (Note: at least three (3) price quotations for canvass). <p>
-          <p>AWARD(S) IS HEREBY GIVEN TO <?= $awards_given ?>  as the 
+          <p>AWARD(S) IS HEREBY GIVEN TO <?= $awards_given ?>  as the
           prices offered by it/them is/are the lowest/highest calculated/rated responsive bid and the same is/are considered reasonable and advantageous to the City Government.</p>
   </div>
   <div>
   <div>
       <table width="100%"  border="0" class="tbl_signee">
         <tr>
-          @for( $x = 0 ; $x< count($committee) ; $x++)  
-            <td class="underline" width="10%">{{ strtoupper($committee[$x]->employee_name) }}</td>  
+          @for( $x = 0 ; $x< count($committee) ; $x++)
+            <td class="underline" width="10%">{{ strtoupper($committee[$x]->employee_name) }}</td>
             <td width="5%"></td>
           @endfor
-        </tr> 
+        </tr>
         <tr>
-          @for( $x = 0 ; $x< count($committee) ; $x++)  
-            <td class="center">{{$committee[$x]->title}}</td>  
+          @for( $x = 0 ; $x< count($committee) ; $x++)
+            <td class="center">{{$committee[$x]->title}}</td>
             <td width="5%"></td>
           @endfor
-        </tr> 
+        </tr>
       </table><br>
       <table width="50%"  border="0" class="tbl_signee" align="center">
         <tr>
@@ -136,12 +146,56 @@
           @endfor
        </tr>
      </table>
-  </div> 
+  </div>
 </div>
 </body>
 </html>
 
+<?php if ($count <= 30 && $count > 26){
+                          echo "<style>
+                                #tbl_items{
+                                font-size: 7px;
+                                }
+                              </style>";
+                        }
+                        else if ($count <= 25 && $count > 21){
+                          echo "<style>
+                                #tbl_items{
+                                font-size: 8px;
+                                }
+                              </style>";
+                        }
+                        else if ($count <= 20 && $count > 16){
+                          echo "<style>
+                                #tbl_items{
+                                font-size: 9px;
+                                }
+                              </style>";
+                        }
+                        else if ($count <= 15 && $count > 11){
+                          echo "<style>
+                                #tbl_items{
+                                font-size: 10px;
+                                }
+                              </style>";
+                        }
+                        else if ($count <= 10 && $count > 6){
+                          echo "<style>
+                                #tbl_items{
+                                font-size: 11px;
+                                }
+                              </style>";
+                        }
+                        else {
+                          echo "<style>
+                                #tbl_items{
+                                font-size: 12px;
+                                }
+                              </style>";
+                        }
+                        ?>
 <style type="text/css">
+
   body{
     margin:25px;
     color: #000;

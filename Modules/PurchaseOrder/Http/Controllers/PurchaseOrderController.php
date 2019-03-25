@@ -475,8 +475,8 @@ class PurchaseOrderController extends Controller
         $this->data['info']  = $info;
 
         $pdf = PDF::loadView('purchaseorder::purchase-order.pdf',$this->setup());
-        // $pdf->setPaper(215.9,330.2);
-        $pdf->setPaper('legal');
+         $pdf->setPaper(array(0,0,612.00,936.0),'portrait');
+       // $pdf->setPaper('legal');
         return @$pdf->stream();
 
     }
@@ -625,8 +625,8 @@ class PurchaseOrderController extends Controller
         $this->data['info']  = $info;
 
         $pdf = PDF::loadView('purchaseorder::requisition.pdf',$this->setup());
-        // $pdf->setPaper(215.9,330.2);
-        $pdf->setPaper('legal');
+        $pdf->setPaper(array(0,0,612.00,936.0));
+        //$pdf->setPaper('legal');
         return @$pdf->stream();
     }
 
@@ -673,8 +673,8 @@ class PurchaseOrderController extends Controller
         $this->data['info']  = $info;
 
         $pdf = PDF::loadView('purchaseorder::requisition.pdf2',$this->setup());
-        // $pdf->setPaper(215.9,330.2);
-        $pdf->setPaper('legal');
+        $pdf->setPaper(array(0,0,612.00,936.0));
+        //$pdf->setPaper('legal');
         return @$pdf->stream();
     }
 
@@ -740,8 +740,8 @@ class PurchaseOrderController extends Controller
         $this->data['info']  = $info;
 
         $pdf = PDF::loadView('purchaseorder::acceptance.pdf',$this->setup());
-        // $pdf->setPaper(215.9,330.2);
-        $pdf->setPaper('legal');
+       $pdf->setPaper(array(0,0,612.00,936.0));
+        //$pdf->setPaper('legal');
         return @$pdf->stream();
     }
 
