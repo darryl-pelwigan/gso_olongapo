@@ -11,15 +11,46 @@
       <div class="">
           <table class="table" width="100%">
           <tr>
-              <td width="20%"></td>
+              <td align="right"></td>
               <td align="center" width="55%">
-                Republic of the Philippines<br>
-                CITY OF OLONGAPO<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Republic of the Philippines<br>
+               <img src="{{asset('olongapo')}}/img/logo-100.png" height="45px" style="margin-right:25px"> CITY OF OLONGAPO<br>
+
                 <b id="abstract_title">
-                    ABSTRACT OF RECORDS OF PROCUREMENT THRU<br>
-                    ALTERNATIVE MODE OF PROCUREMENT
-                </b></td>
-              <td width="25%">
+                    ABSTRACT FOR QUOTATION THRU ALTERNATIVE MODE OF PROCUREMENT
+                </b>
+              </td>
+          </tr>
+          <tr>
+            <!-- <td align="center" colspan="3" style="border: 0px;">
+              Abtract of Public or <u> &nbsp;&nbsp;&nbsp;&nbsp; {{ $items[0]->proc_title }} &nbsp;&nbsp;&nbsp;&nbsp; </u> and award for the Purchase/Procurement/Acquisition of OFFICE SUPPLIES AND/OR PROPERTY
+            </td> -->
+            <td width="25%">
+                 <table width="100%" class="control_info">
+                      <tr>
+                          <td width="10%">Project No.:</td>
+                      </tr>
+                  </table>
+                  <table width="100%" class="control_info">
+                      <tr>
+                          <td width="10%">End User/Project Location:</td>
+                      </tr>
+                  </table>
+                  <table width="100%" class="control_info">
+                      <tr>
+                          <td width="10%">Approved Project for the Contract:</td>
+                      </tr>
+                  </table>
+                  <table width="100%" class="control_info">
+                      <tr>
+                          <td width="10%">Type of Alternative Mode of Procurement:</td>
+                      </tr>
+                  </table>
+              </td>
+
+              <td width="50%"></td>
+
+            <td width="25%">
                  <table width="100%" class="control_info">
                       <tr>
                           <td width="25%">Control No.</td>
@@ -46,72 +77,94 @@
                   </table>
               </td>
           </tr>
-          <tr>
-             <td align="center" colspan="3" style="border: 0px;">
-              Abtract of Public or <u> &nbsp;&nbsp;&nbsp;&nbsp; {{ $items[0]->proc_title }} &nbsp;&nbsp;&nbsp;&nbsp; </u> and award for the Purchase/Procurement/Acquisition of OFFICE SUPPLIES AND/OR PROPERTY
-            </td>
-          </tr>
         </table>
      </div>
   </div>
+
   <div class="">
     <table class="table" id="main_tbl" border="1">
         <tr>
-          <th rowspan="3" class="tg-9hbo" style="text-align: center;" width="3%">Item<br>No.</th>
-          <th rowspan="3" class="tg-9hbo" style="text-align: center;" width="40%">NAME OF ARTICLE BEING REQUESTITIONED</th>
-          <th rowspan="3" class="tg-9hbo" style="text-align: center;">Qty.</th>
-          <th rowspan="3" class="tg-9hbo" style="text-align: center;">Unit</th>
-          <th colspan="{{count($suppliersx)*2}}" style="text-align: center;">N A M E OF D E A L E R S / S U P P L I E R S O R C O N T R A C T O R S</th>
+          <th rowspan="3" class="tg-9hbo" style="text-align: center; vertical-align: middle;" width="3%">Item<br>No.</th>
+          <th rowspan="3" class="tg-9hbo" style="text-align: center; vertical-align: middle;" width="40%">Item Description</th>
+          <th rowspan="3" class="tg-9hbo" style="text-align: center; vertical-align: middle;" width="5%">Qty.</th>
+          <th rowspan="3" class="tg-9hbo" style="text-align: center; vertical-align: middle;" width="5%">Unit</th>
+          {{-- <th colspan="{{count($suppliersx)*2}}" style="text-align: center;">Name of Dealers/Suppliers</th> --}}
+          <th colspan="6" style="text-align: center;">Name of Dealers/Suppliers</th>
         </tr>
         <tr>
-          <?=$suppliers_clean?>
+         <?=$suppliers_clean?>
         </tr>
         <tr>
-          <?php echo $subth ?>
+           <?php echo $subth ?>
         </tr>
         <?php $count  = 0; ?>
         @foreach ($items as $key=>$data)
-          <tr id="tbl_items">
+          <tr>
             <td>{{$key+1}}</td>
-                       <?php
-                                  $desc = $data->description;
-
-                                  //if (strlen($desc) > 100) { --}}
-
-                                  if (strlen($desc) > 88) {
-                                    echo '<td style="word-wrap:break-word; font-size: 6px;">'.$desc.'</td>';
-                                  } else {
-                                      echo '<td style="text-align: center;">'.$desc.'</td>';
-                                  }
-                                ?>
+            <td>{{$data->description}}</td>
             <td style="text-align: center;">{{$data->qty}}</td>
             <td style="text-align: center;">{{$data->unit}}</td>
-            <?php echo $list[$key] ?>
+             <?php echo $list[$key] ?>
           </tr>
           <?php $count++; ?>
         @endforeach
+
+        <?php
+          $totaltr = 12;
+          $loop = $totaltr - $count;
+            if($loop > 0){
+              for ($i=0; $i < $loop; $i++) {
+        ?>
+          <tr>
+            <td><br></td>
+            <td><br></td>
+            <td><br></td>
+            <td><br></td>
+            <td><br></td>
+            <td><br></td>
+            <td><br></td>
+            <td><br></td>
+            <td><br></td>
+            <td><br></td>
+          </tr>
+        <?php
+            }
+          }
+        ?>
+
         <tr>
           <td></td>
           <td></td>
           <td></td>
           <td></td>
-          @foreach($subtotal as $s)
+           @foreach($subtotal as $s)
               <td>  </td>
               <td style="text-align: right;"><b>{{$s->subtotal}}</b></td>
-
-          @endforeach
+           @endforeach
+           @if(count($subtotal) == 2)
+              <td>  </td>
+              <td>  </td>
+            @elseif(count($subtotal) == 1)
+              <td>  </td>
+              <td>  </td>
+              <td>  </td>
+              <td>  </td>
+           @endif
         </tr>
     </table>
   </div>
-  <div class="text-center">
-          <p><strong>BIDS AND AWARDS COMMITTEE</strong></p>
+
+  <div><div class="text-center">
+          <p style="font-size: 14px; margin-top: -15px;"><strong>BIDS AND AWARDS COMMITTEE</strong></p>
   </div>
   <div class="">
-          <p>We hereby certify that the foregoing abstract of bid proposal or canvasses are correct that we are present when such bid proposals of canvasses for the above item were opened at ______________________________ (Note: at least three (3) price quotations for canvass). <p>
+          {{-- <p>We hereby certify that the foregoing abstract of bid proposal or canvasses are correct that we are present when such bid proposals of canvasses for the above item were opened at ______________________________ (Note: at least three (3) price quotations for canvass). <p> --}}
+
+          <p>We hereby certify that the foregoing abstract of quotation are correct that request for quotation for the items above were issued to suppliers.<p>
+
           <p>AWARD(S) IS HEREBY GIVEN TO <?= $awards_given ?>  as the
           prices offered by it/them is/are the lowest/highest calculated/rated responsive bid and the same is/are considered reasonable and advantageous to the City Government.</p>
   </div>
-  <div>
   <div>
       <table width="100%"  border="0" class="tbl_signee">
         <tr>
@@ -151,67 +204,23 @@
 </body>
 </html>
 
-<?php if ($count <= 30 && $count > 26){
-                          echo "<style>
-                                #tbl_items{
-                                font-size: 7px;
-                                }
-                              </style>";
-                        }
-                        else if ($count <= 25 && $count > 21){
-                          echo "<style>
-                                #tbl_items{
-                                font-size: 8px;
-                                }
-                              </style>";
-                        }
-                        else if ($count <= 20 && $count > 16){
-                          echo "<style>
-                                #tbl_items{
-                                font-size: 9px;
-                                }
-                              </style>";
-                        }
-                        else if ($count <= 15 && $count > 11){
-                          echo "<style>
-                                #tbl_items{
-                                font-size: 10px;
-                                }
-                              </style>";
-                        }
-                        else if ($count <= 10 && $count > 6){
-                          echo "<style>
-                                #tbl_items{
-                                font-size: 11px;
-                                }
-                              </style>";
-                        }
-                        else {
-                          echo "<style>
-                                #tbl_items{
-                                font-size: 12px;
-                                }
-                              </style>";
-                        }
-                        ?>
 <style type="text/css">
-
   body{
-    margin:25px;
+    margin: 15px 25px;
     color: #000;
-    font-size:13px;
+    font-size:10px;
   }
   #abstract_title{
     font-size:14px;
   }
   #main_tbl tr td, #main_tbl tr th{
     margin-top: 0px;
-    padding: 2px;
+    padding: 1px;
     border: 1px solid #000;
     font-size:11.5px;
   }
   .suppliers{
-    font-size: 10px;
+    font-size: 8px;
   }
   .tg  {border-collapse:collapse;border-spacing:0;}
   .tg td{font-family:Arial, sans-serif;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
@@ -230,6 +239,7 @@
   }
   .table{
     border-collpase : collapse;
+    margin-top: -20px;
   }
 
 </style>

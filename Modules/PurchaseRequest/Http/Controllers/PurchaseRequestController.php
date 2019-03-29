@@ -97,8 +97,9 @@ class PurchaseRequestController extends Controller
     public function pr_edit( Request $request){
         $this->data['proc_methods'] = Procmethod::all();
         $this->data['edit_view']   = $request->input('view')  ? 'view' :  'edit';
+        $purely_consumption   = PurchaseNo::find($request->input('pr_id'));
+        $this->data['purely_consumption']   = $purely_consumption->pr_purelyconsumption;
         $this->data['pr'] = PurchaseNo::find($request->input('pr_id'));
-
         if($request->input('pdf')){
             $this->data['approved_by'] = Requestordersignee::where('deleted_at','=',null)->get();
 
@@ -116,7 +117,9 @@ class PurchaseRequestController extends Controller
 
             $pdf = PDF::loadView('purchaserequest::request.pdf',$this->setup());
            $pdf->setPaper(array(0,0,612.00,936.0));
+
             return @$pdf->stream();
+
         }else{
             return view('purchaserequest::request.edit',$this->setup());
         }
@@ -141,6 +144,7 @@ class PurchaseRequestController extends Controller
             return back()->withInput()->withErrors($validator->messages());
         }else{
                  $PurchaseNo = PurchaseNo::find($request->input('pr_id'));
+                 if($PurchaseNo->pr_purelyconsumption == 0){
                  if($PurchaseNo){
                     // $PurchaseNo->requested_by = Session::get('jhmc_permission')->id;
                     $PurchaseNo->pr_date = $request->input('pr_date');
@@ -180,12 +184,39 @@ class PurchaseRequestController extends Controller
 
                         Session::flash('info', ['Purchase Request Successfully Updated']);
                         return back()->withInput();
+                    }
+                 }else{
+                    if($PurchaseNo){
+                    // $PurchaseNo->requested_by = Session::get('jhmc_permission')->id;
+                    $PurchaseNo->pr_date = $request->input('pr_date');
+                    $PurchaseNo->pr_no = $request->input('pr_no');
+                    $PurchaseNo->proc_type = $request->input('proc_type');
+                    $PurchaseNo->save();
+                       for($x = 0 ; $x< count($request->input('item_desc'));$x++){
+                                    if($request->input('item_id.'.$x)){
+                                            $item =  $PurchaseNo->pr_items()->where('id',$request->input('item_id.'.$x))->first();
+                                            $item->unit_price =  $request->input('item_price.'.$x);
+                                            $item->total_price =  $request->input('item_qty.'.$x)*$request->input('item_price.'.$x);
+                                              if($request->input('delete.'.$x) === 'true'){
+                                                $item->delete();
+                                            }else{
+                                                $item->save();
+                                            }
+
+                                    }
+                        }
+
+                        Session::flash('info', ['Purchase Request Successfully Updated']);
+                        return back()->withInput();
+                    }
+
                  }
+            }
+
                  Session::flash('danger', ['Purchase Request ERROR UPDATING PLEASE REFRESH YOUR BROWSER AND TRY AGAIN.']);
                 return back()->withInput();
+}
 
-        }
-    }
 
     public function set_obr($request,$update=false){
         if($update===false)    {$OBR = new OBR;}

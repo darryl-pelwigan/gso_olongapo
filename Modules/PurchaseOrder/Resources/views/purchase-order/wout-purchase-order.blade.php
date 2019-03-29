@@ -176,7 +176,7 @@
                   <thead>
                     <tr>
                       <th>No</th>
-                      <th>Description</th>
+                      <th style="word-wrap:break-word;">Description</th>
                       <th>Brand</th>
                       <th>Qty</th>
                       <th>Unit</th>
@@ -319,7 +319,7 @@ $.fn.addPOnumber = function(bac_id){
                   total_amount = total_amount + parseInt(data.itemsx[x].abs_total_price);
                   tr +=  '   <tr>'+
                             '     <td>'+count+'</td>'+
-                            '     <td>'+data.itemsx[x].description+'<input type="hidden" name="item_id[]" value="'+data.itemsx[x].item_id+'"/></td>'+
+                            '     <td style="font-size:10px;">'+data.itemsx[x].description+'<input type="hidden" name="item_id[]" value="'+data.itemsx[x].item_id+'"/></td>'+
                             '     <td><input type="text" value="" name="brand[]" class="form-control"/></td>'+
                             '     <td>'+data.itemsx[x].qty+'</td>'+
                             '     <td>'+data.itemsx[x].unit+'</td>'+

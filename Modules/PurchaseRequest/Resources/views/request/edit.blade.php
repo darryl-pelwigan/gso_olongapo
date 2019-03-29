@@ -23,8 +23,8 @@
                 <!-- /.box-header -->
                 <div class="box-body">
                   <form class="form-horizontal" method="POST" action="{{ route('pr.pr_edit_save') }}">
-                  
-                
+
+
                   <div class="form-group">
                      <label for="pr_no" class="col-sm-2 control-label">REQUEST DATE: </label>
                         <div class="col-sm-2">
@@ -47,7 +47,7 @@
                                   {{$pr->pr_purpose}}
                     </div>
                 </div>
-            
+
                 <div class="form-group">
                      <label for="pr_no" class="col-sm-2 control-label">Procurement Type: </label>
                         <div class="col-sm-4">
@@ -93,7 +93,7 @@
 
 
                    <div class="form-group">
-                     <label for="pr_no" class="col-sm-2 control-label">PURCHASE REQUEST NO : </label>
+                     <label for="pr_no" class="col-sm-2 control-label">PURCHASE REQUEST NO: </label>
                         <div class="col-sm-3">
                         @if($edit_view === 'edit')
                           <input type="text" class="form-control" name="pr_no" id="pr_no" value="{{$pr_no}}"  placeholder="PURCHASE REQUEST NO." required readonly  />
@@ -104,11 +104,16 @@
                 </div>
 
                  <div class="form-group">
+                  @if($purely_consumption == '1')
+                  @else
                      <label for="obr_no" class="col-sm-2 control-label">OBR NO : </label>
+                  @endif
                         <div class="col-sm-3">
                         @if($edit_view === 'edit')
-                        
+                          @if($purely_consumption == '1')
+                          @else
                           <input type="text" class="form-control" name="obr_no" id="obr_no" value="{{$pr->pr_obr->obr_no ?? ''}}"  placeholder="OBR NO." required   />
+                          @endif
                         @else
                             {{$pr->pr_obr->obr_no ?? '' }}
                         @endif
@@ -116,11 +121,16 @@
                 </div>
 
                 <div class="form-group">
+                  @if($purely_consumption == '1')
+                  @else
                      <label for="obr_date" class="col-sm-2 control-label">OBR DATE : </label>
+                  @endif
                         <div class="col-sm-3">
                         @if($edit_view === 'edit')
-
+                          @if($purely_consumption == '1')
+                          @else
                           <input type="text" class="form-control datepicker" name="obr_date" id="obr_date" value="{{$pr->pr_obr->obr_date ?? ''}}"  placeholder="OBR DATE YYYY-MM-DD" required   />
+                          @endif
                         @else
                             {{$pr->pr_obr->obr_date ?? '' }}
                         @endif
@@ -129,10 +139,16 @@
 
 
                 <div class="form-group">
+                  @if($purely_consumption == '1')
+                  @else
                      <label for="sai_no" class="col-sm-2 control-label">SAI NO : </label>
+                  @endif
                         <div class="col-sm-3">
                         @if($edit_view === 'edit')
+                          @if($purely_consumption == '1')
+                          @else
                           <input type="text" class="form-control" name="sai_no" id="sai_no" value="{{$pr->sai_no ?? ''}}"  placeholder="SAI NO." required   />
+                          @endif
                         @else
                             {{$pr->sai_no ?? '' }}
                         @endif
@@ -140,11 +156,16 @@
                 </div>
 
                 <div class="form-group">
+                  @if($purely_consumption == '1')
+                  @else
                      <label for="sai_date" class="col-sm-2 control-label">SAI DATE : </label>
+                  @endif
                         <div class="col-sm-3">
                         @if($edit_view === 'edit')
-
+                          @if($purely_consumption == '1')
+                          @else
                           <input type="text" class="form-control datepicker" name="sai_date" id="sai_date" value="{{ $sai_date }}"  placeholder="SAI DATE  YYYY-MM-DD " required   />
+                          @endif
                         @else
                             {{$pr->sai_date ?? '' }}
                         @endif
@@ -170,7 +191,7 @@
                                   <?php $total_price = $prs->unit_price  * $prs->qty; ?>
                                             <tr>
                                                   <td>{{ $count }}<input type="hidden" name="item_id[]" value="{{ $prs->id }}" /></td>
-                                                  <td><textarea class="form-control hidden" placeholder="Description" name="item_desc[]"  >{{ $prs->description }}</textarea> {{ $prs->description }}</td>
+                                                  <td><textarea class="form-control hidden" placeholder="Description" name="item_desc[]"  style="word-wrap:break-word;">{{ $prs->description }}</textarea> {{ $prs->description }}</td>
                                                   <td><input class="form-control item_qty hidden" type="text" name="item_qty[]" value="{{ $prs->qty }}"  /> {{ $prs->qty }}</td>
                                                  <td><input class="form-control hidden" type="text" name="item_unit[]" value="{{ $prs->unit }}"  /> {{ $prs->unit }}</td>
                                                  <td><input class="form-control item_price text-right" type="text" name="item_price[]" value="{{ $prs->unit_price }}" /></td>

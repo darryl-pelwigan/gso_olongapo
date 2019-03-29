@@ -85,6 +85,7 @@ class Bac_datatable
                 ->select([
                             'olongapo_purchase_request_no.id as prno_id',
                             'olongapo_subdepartment.dept_desc',
+                            'olongapo_subdepartment.dept_id',
                             'olongapo_purchase_request_no.pr_date',
                             'olongapo_purchase_order_requisition_number.id as requisition_id'
                 ])

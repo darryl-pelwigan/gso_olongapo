@@ -321,7 +321,7 @@
                                   </tr>
                                   <tr>
                                     <td class="border" align="center"><b>Printed Name:</b></td>
-                                    <td class="border" align="center"> &nbsp; </td>
+                                    <td class="border" align="center"> {{ strtoupper($info->fname ?? '') }} {{ strtoupper($info->mname ?? '')  }}  {{ strtoupper($info->lname ?? '')  }}</td>
                                     <td class="border_bottom" align="center"> <b>ROLEN C. PAULINO</b> </td>
                                     <td class="border_bottom" align="center"> <b>SHEILA R. PADILLA</b> </td>
                                     <td class="border" align="center"> &nbsp; </td>
@@ -337,7 +337,7 @@
                                   </tr>
                                   <tr>
                                     <td class="border" align="center"><b>Designation:</b></td>
-                                    <td class="border" align="center">&nbsp;</td>
+                                    <td class="border" align="center">{{ strtoupper($info->designation ?? '') }}</td>
                                     <td class="border_bottom" align="center">&nbsp;</td>
                                     <td class="border_bottom" align="center">&nbsp;</td>
                                     <td class="border" align="center">&nbsp;</td>

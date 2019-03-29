@@ -141,7 +141,7 @@ if($pr->proc_type != 0){
                                   //if (strlen($desc) > 100) { --}}
 
                                   if (strlen($desc) > 88) {
-                                    echo '<td class="text-right2" id="desc_style" style="word-wrap:break-word; font-size: 6px;">'.$desc.'</td>';
+                                    echo '<td class="text-right2" id="desc_style" style="word-wrap:break-word; font-size: 7px;">'.$desc.'</td>';
                                   } else {
                                       echo '<td class="text-right2">'.$desc.'</td>';
                                   }

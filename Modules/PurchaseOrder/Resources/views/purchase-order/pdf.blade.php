@@ -173,7 +173,7 @@
                                       <tr>
                                         <td >Conforme:</td>
                                         <td></td>
-                                        <td ><br><br>____________________________</td>
+                                        <td><br><br><span><u>{{ strtoupper($info->fname ?? '') }} {{ strtoupper($info->mname ?? '')  }}  {{ strtoupper($info->lname ?? '') }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u></span></td>
                                       </tr>
                                       <tr>
                                         <td ></td>

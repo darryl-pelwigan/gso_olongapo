@@ -325,8 +325,8 @@ $.fn.addPOnumber = function(pono_id){
 
                 $('#po_no').val(data['info'].po_no);
                 $('#po_date').val(data['info'].po_date);
-                $('#po_id').val(data['info'].pono_id); 
-                
+                $('#po_id').val(data['info'].pono_id);
+
 
                  var total_amount = 0;
                 var count = 1;
@@ -366,6 +366,7 @@ $.fn.addPOnumber = function(pono_id){
       autoclose: true,
        format: 'yyyy-mm-dd',
     });
+
 $('#po_date').on('change',function(){
     $.ajax({
             type: "POST",

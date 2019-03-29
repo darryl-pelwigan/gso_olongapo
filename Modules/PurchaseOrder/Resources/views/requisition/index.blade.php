@@ -92,7 +92,7 @@
                 <div class="form-group">
                   <label for="obr_date" class="col-sm-2 control-label">RIS No : </label>
                   <div class="col-sm-3">
-                    <input type="text" class="form-control" id="ris_no"  name="ris_no" placeholder="RIS NUMBER">
+                    <input type="text" class="form-control" id="ris_no" name="ris_no" placeholder="RIS NUMBER" readonly="">
                   </div>
                    <label for="pr_no" class="col-sm-2 control-label">Date : </label>
                         <div class="col-sm-4">
@@ -261,7 +261,8 @@
                 <div class="form-group">
                   <label for="obr_date" class="col-sm-2 control-label">RIS No : </label>
                       <div class="col-sm-3">
-                        <input type="text" class="form-control" id="ris_no2"  name="ris_no" placeholder="RIS NUMBER">
+                        <input type="text" class="form-control" id="ris_no2"  name="ris_no" placeholder="RIS NUMBER" readonly="">
+                         <input type="hidden"  id="pr_dept_id2"   name="pr_dept_id"  />
                       </div>
                    <label for="pr_no" class="col-sm-2 control-label">Date : </label>
                         <div class="col-sm-4">
@@ -487,10 +488,11 @@ $.fn.addRequisition = function(pono_id){
                 var tr = "";
                 console.log(data.itemsx);
                  for(var x = 0; x<data.itemsx.length;x++){
+
                   total_amount = total_amount + parseInt(data.itemsx[x].abs_total_price);
                   tr +=  '   <tr>'+
                             '     <td>'+count+'</td>'+
-                            '     <td>'+data.itemsx[x].description+'<input type="hidden" name="po_item_id[]" value="'+data.itemsx[x].po_item_id+'"/></td>'+
+                            '     <td style="font-size:10px;">'+data.itemsx[x].description+'<input type="hidden" name="po_item_id[]" value="'+data.itemsx[x].po_item_id+'"/></td>'+
                             '     <td>'+data.itemsx[x].qty+'</td>'+
                             '     <td>'+data.itemsx[x].unit+'</td>'+
                             '     <td>'+data.itemsx[x].po_amount+'</td>'+
@@ -561,7 +563,7 @@ $.fn.addRequisition = function(pono_id){
                   total_amount = total_amount + parseInt(data.itemsx[x].abs_total_price);
                   tr +=  '   <tr>'+
                             '     <td>'+count+'</td>'+
-                            '     <td>'+data.itemsx[x].description+'<input type="hidden" name="po_item_id[]" value="'+data.itemsx[x].po_item_id+'"/></td>'+
+                            '     <td style="font-size:10px;">'+data.itemsx[x].description+'<input type="hidden" name="po_item_id[]" value="'+data.itemsx[x].po_item_id+'"/></td>'+
                             '     <td>'+data.itemsx[x].qty+'</td>'+
                             '     <td>'+data.itemsx[x].unit+'</td>'+
                             '     <td>'+data.itemsx[x].po_amount+'</td>'+
@@ -603,6 +605,7 @@ $.fn.addRequisition_pc = function(prno_id){
             success: function(data){
 
                 $('#pr_dept_desc1').val(data['info'].dept_desc);
+                $('#pr_dept_id2').val(data['info'].dept_id);
                 $('#prno_id1').val(data['info'].prno_id);
                 $('#po_id1').val(data['info'].prno_id);
                 $('#po_date1').val(data['info'].pr_date);
@@ -616,7 +619,7 @@ $.fn.addRequisition_pc = function(prno_id){
                   total_amount = total_amount + parseInt(data.itemsx[x].total_price);
                   tr +=  '   <tr>'+
                             '     <td>'+count+'</td>'+
-                            '     <td>'+data.itemsx[x].description+'<input type="hidden" name="po_item_id[]" value="'+data.itemsx[x].po_item_id+'"/></td>'+
+                            '     <td style="font-size:10px;">'+data.itemsx[x].description+'<input type="hidden" name="po_item_id[]" value="'+data.itemsx[x].po_item_id+'"/></td>'+
                             '     <td>'+data.itemsx[x].qty+'</td>'+
                             '     <td>'+data.itemsx[x].unit+'</td>'+
                             '     <td>'+data.itemsx[x].unit_price+'</td>'+
@@ -654,6 +657,7 @@ $.fn.addRequisition_pc = function(prno_id){
             success: function(data){
 
                 $('#pr_dept_desc1').val(data['info'].dept_desc);
+                $('#pr_dept_id2').val(data['info'].dept_id);
                 $('#prno_id1').val(data['info'].prno_id);
                 $('#po_id1').val(data['info'].prno_id);
                 $('#po_date1').val(data['info'].pr_date);
@@ -672,7 +676,7 @@ $.fn.addRequisition_pc = function(prno_id){
                   total_amount = total_amount + parseInt(data.itemsx[x].total_price);
                   tr +=  '   <tr>'+
                             '     <td>'+count+'</td>'+
-                            '     <td>'+data.itemsx[x].description+'<input type="hidden" name="po_item_id[]" value="'+data.itemsx[x].po_item_id+'"/></td>'+
+                            '     <td style="font-size:10px;">'+data.itemsx[x].description+'<input type="hidden" name="po_item_id[]" value="'+data.itemsx[x].po_item_id+'"/></td>'+
                             '     <td>'+data.itemsx[x].qty+'</td>'+
                             '     <td>'+data.itemsx[x].unit+'</td>'+
                             '     <td>'+data.itemsx[x].unit_price+'</td>'+
@@ -702,27 +706,50 @@ $.fn.addRequisition_pc = function(prno_id){
       autoclose: true,
        format: 'yyyy-mm-dd',
     });
-// $('#po_date').on('change',function(){
-//     $.ajax({
-//             type: "POST",
-//             url: "{{route('po.check_po_no')}}",
-//             data : {
-//             pr_dept_id : $('#pr_dept_id').val(),
-//             po_date : $('#po_date').val(),
-//             prno_id : $('#prno_id').val(),
-//              _token : '{{csrf_token()}}'
-//           },
-//             dataType: "html",
-//             error: function(){
-//               console.log('error');
-//             },
-//             success: function(data){
-//               if(data!=''){
-//                   $('#po_no').val(data);
-//               }
-//             }
-//      });
-// });
+
+$('#ris_date').on('change',function(){
+    $.ajax({
+            type: "POST",
+            url: "{{route('po.check_ris_no')}}",
+            data : {
+            pr_dept_id : $('#pr_dept_id').val(),
+            po_date : $('#ris_date').val(),
+            prno_id : $('#prno_id').val(),
+             _token : '{{csrf_token()}}'
+          },
+            dataType: "html",
+            error: function(){
+              console.log('error');
+            },
+            success: function(data){
+              if(data!=''){
+                  $('#ris_no').val(data);
+              }
+            }
+     });
+});
+
+$('#ris_date2').on('change',function(){
+    $.ajax({
+            type: "POST",
+            url: "{{route('po.check_ris_no')}}",
+            data : {
+            pr_dept_id : $('#pr_dept_id2').val(),
+            po_date : $('#ris_date2').val(),
+            prno_id : $('#prno_id1').val(),
+             _token : '{{csrf_token()}}'
+          },
+            dataType: "html",
+            error: function(){
+              console.log('error');
+            },
+            success: function(data){
+              if(data!=''){
+                  $('#ris_no2').val(data);
+              }
+            }
+     });
+});
 
   $.fn.sentRequisitionNo = function(isCnsmp){
     console.log(isCnsmp);

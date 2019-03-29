@@ -13,6 +13,7 @@ Route::group(['middleware' => ['web','auth'], 'prefix' => 'purchaseorder', 'name
     Route::post('/get-purchase-request-po', 'PurchaseOrderController@get_request_po')->name('pr.get-request-po');
 
     Route::post('/check-pono', 'PurchaseOrderController@check_po_no')->name('po.check_po_no');
+    Route::post('/check-risno', 'PurchaseOrderController@check_ris_no')->name('po.check_ris_no');
 
     Route::post('/add-purchase-order', 'PurchaseOrderController@add_po_records')->name('po.add_po_records');
 

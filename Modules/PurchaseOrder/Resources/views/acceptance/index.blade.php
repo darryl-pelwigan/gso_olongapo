@@ -202,7 +202,7 @@
                   <thead>
                     <tr>
                       <th>No</th>
-                      <th>Description</th>
+                      <th style="word-wrap:break-word;">Description</th>
                       <th>Qty</th>
                       <th>Unit</th>
                       <th>Price</th>
@@ -302,7 +302,7 @@ $(function() {
                       }else{
                           return '<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).addRequisition('+data.pono_id+');" >Add Acceptance</button> ';
                       }
-                     
+
                 }
               },
         ],
@@ -320,7 +320,7 @@ $(function() {
 
 $.fn.addRequisition = function(pono_id){
     $("#add_requisition_number")[0].reset();
-  
+
     $.ajax({
             type: "POST",
              url: "{{route('po.get-po')}}",
@@ -354,8 +354,8 @@ $.fn.addRequisition = function(pono_id){
 
                 $('#po_no').val(data['info'].po_no);
                 $('#po_date').val(data['info'].po_date);
-                $('#po_id').val(data['info'].pono_id); 
-                
+                $('#po_id').val(data['info'].pono_id);
+
 
                  var total_amount = 0;
                 var count = 1;
@@ -367,7 +367,7 @@ $.fn.addRequisition = function(pono_id){
                   total_amount = total_amount + parseInt(data.itemsx[x].abs_total_price);
                   tr +=  '   <tr>'+
                             '     <td>'+count+'</td>'+
-                            '     <td>'+data.itemsx[x].description+'<input type="hidden" name="po_item_id[]" value="'+data.itemsx[x].po_item_id+'"/></td>'+
+                            '     <td style="font-size:10px;">'+data.itemsx[x].description+'<input type="hidden" name="po_item_id[]" value="'+data.itemsx[x].po_item_id+'"/></td>'+
                             '     <td>'+data.itemsx[x].qty+'</td>'+
                             '     <td>'+data.itemsx[x].unit+'</td>'+
                             '     <td>'+data.itemsx[x].po_amount+'</td>'+
@@ -424,8 +424,8 @@ $.fn.addRequisition = function(pono_id){
 
                 $('#po_no').val(data['info'].po_no);
                 $('#po_date').val(data['info'].po_date);
-                $('#po_id').val(data['info'].pono_id); 
-                
+                $('#po_id').val(data['info'].pono_id);
+
 
                  var total_amount = 0;
                 var count = 1;
@@ -437,7 +437,7 @@ $.fn.addRequisition = function(pono_id){
                   total_amount = total_amount + parseInt(data.itemsx[x].abs_total_price);
                   tr +=  '   <tr>'+
                             '     <td>'+count+'</td>'+
-                            '     <td>'+data.itemsx[x].description+'<input type="hidden" name="po_item_id[]" value="'+data.itemsx[x].po_item_id+'"/></td>'+
+                            '     <td style="font-size:10px;">'+data.itemsx[x].description+'<input type="hidden" name="po_item_id[]" value="'+data.itemsx[x].po_item_id+'"/></td>'+
                             '     <td>'+data.itemsx[x].qty+'</td>'+
                             '     <td>'+data.itemsx[x].unit+'</td>'+
                             '     <td>'+data.itemsx[x].po_amount+'</td>'+
@@ -474,7 +474,7 @@ $.fn.addRequisition = function(pono_id){
       autoclose: true,
        format: 'yyyy-mm-dd',
     });
-    
+
 // $('#po_date').on('change',function(){
 //     $.ajax({
 //             type: "POST",

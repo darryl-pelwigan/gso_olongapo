@@ -27,28 +27,6 @@
                  </table>
                </div>
              </header>
-                <div class="header_tbl">
-                  <table class="table table-thnormal">
-                    <tr>
-                      <td id="table_left" width="50%">
-                        <table class="table_header" width="100%">
-                          <tr>
-                            <td>Entity Name: </td>
-                            <td class="underline"></td>
-                          </tr>
-                        </table>
-                      </td>
-                      <td width="50%">
-                        <table class="table_header" width="100%">
-                          <tr>
-                            <td width="40%">Fund Cluster: </td>
-                            <td width="60%" class="underline">{{$info->sourcefund}}</td>
-                          </tr>
-                        </table>
-                      </td>
-                    </tr>
-                  </table>
-                </div>
                  <div class="header_tbl">
                   <table class="table table-thnormal">
                     <tr>
@@ -96,79 +74,99 @@
                   </table>
                 </div>
 
-                  <table id = "tbl_items" class="table table-bordered page-break">
+                  <table class="table table-thnormal table-bordered">
                       <tr>
-                        <td width="5%" align="center"><b>Stock/ <br /> Property No.</b></td>
-                        <td width="51%" align="center"><b>Description</b></td>
-                        <td width="12%" align="center"><b>Unit</b></td>
-                        <td width="12%" align="center"><b>Quantity</b></td>
+                        <td align="center"><b>Stock/<br>Property<br>No.</b></td>
+                        <td align="center"><b>Description</b></td>
+                        <td align="center"><b>Unit</b></td>
+                        <td align="center"><b>Quantity</b></td>
                       </tr>
                       <?php $count=1; $total_price=0; ?>
                         @foreach( $po_items as $data )
                             <tr id= "tbl_items">
-                              <td>{{ $count }}</td>
-                              <td>{{ $data->unit }}  </td>
-                              <td>{{ $data->qty }} </td>
-                              <?php if(strlen($data->description)>85){
-                                echo"<td class='text-right2' style='word-wrap: break-word;font-size:5px' >";
-                                echo $data->description;
-                                echo"</td>";
-                                }
-                                else{
-                                echo"<td class='text-right2' style='word-wrap: break-word;' >";
-                                echo $data->description;
-                                echo"</td>";
-                                }
-                                ?>
+                              <td align="center">{{ $count }}</td>
 
+                              <?php
+                              $descript = $data->description;
+                             if (strlen($descript) > 100) {
+                                    echo '<td style="word-wrap:break-word; font-size: 6px;">'.$descript.'</td>';
+                                  } else {
+                                      echo '<td>'.$descript.'</td>';
+                                  }
+                                ?>
+                              ?>
+                              <td align="center">{{ $data->unit }}</td>
+                              <td align="center">{{ $data->qty }}</td>
                             </tr>
                           <?php $count++; $total_price += $data->po_total; ?>
                         @endforeach
 
                         <?php
-                          $totaltr = 40;
+                          $totaltr = 36;
                           $loop = $totaltr - $count;
                           if($loop > 0){
                             for ($i=0; $i < $loop; $i++) {
                         ?>
-                            <tr>
+                          <tr>
                               <td><br></td>
                               <td><br></td>
                               <td><br></td>
                               <td><br></td>
-
                             </tr>
-                        <?php
+                            <?php
                             }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                           }
+                                                                                                                                                                                                                                                                                                                                                                                                                }
                         ?>
 
-
                   </table>
-                   <div class="header_tbl">
+                </div>
+                  <div class="header_tbl">
                     <table class="table table-thnormal">
                       <tr>
                         <td id="table_left" width="50%">
                           <table class="table_header" width="100%">
                             <tr>
-                              <td class="text-center">INSPECTION</td>
+                              <td class="text-center"><b>ACCEPTANCE</b></td>
                             </tr>
                           </table>
                         </td>
                         <td width="50%">
                           <table class="table_header" width="100%">
                             <tr>
-                              <td class="text-center">ACCEPTANCE</td>
+                              <td class="text-center"><b>INSPECTION</b></td>
                             </tr>
                           </table>
                         </td>
                       </tr>
                   </table>
                 </div>
+
                 <div class="header_tbl">
                     <table class="table table-thnormal">
                       <tr>
                         <td id="table_left" width="50%">
+                          <table class="table_header" width="100%">
+                             <tr>
+                              <td>Date Received: _________________________________________</td>
+                            </tr>
+                            <tr>
+                              <td><input type="checkbox" name=""> Completed</td>
+                            </tr>
+                            <tr>
+                              <td><input type="checkbox" name=""> Partial (pls. specify quantity)</td>
+                            </tr>
+                            <tr>
+                              <td><br></td>
+                            </tr>
+                            <tr>
+                              <td class="text-center">_________________________________</td>
+                            </tr>
+                            <tr>
+                              <td class="text-center">Supply and/or Property Custodian</td>
+                            </tr>
+                          </table>
+                        </td>
+                        <td  width="50%">
                           <table class="table_header" width="100%">
                             <tr>
                               <td>Date Inspected: _________________________________________</td>
@@ -189,28 +187,6 @@
                               <td class="text-center">Inspection Officer/Inspection Committee</td>
                             </tr>
 
-                          </table>
-                        </td>
-                        <td width="50%">
-                          <table class="table_header" width="100%">
-                             <tr>
-                              <td>Date Received: _________________________________________</td>
-                            </tr>
-                            <tr>
-                              <td><input type="checkbox" name=""> Completed</td>
-                            </tr>
-                            <tr>
-                              <td><input type="checkbox" name=""> Partial (pls. specify quantity)</td>
-                            </tr>
-                            <tr>
-                              <td><br></td>
-                            </tr>
-                            <tr>
-                              <td class="text-center">_________________________________</td>
-                            </tr>
-                            <tr>
-                              <td class="text-center">Supply and/or Property Custodian</td>
-                            </tr>
                           </table>
                         </td>
                       </tr>
@@ -238,50 +214,41 @@
 
 @section('plugins-css')
 <style type="text/css">
-<?php if ($count <= 30 && $count > 26){
+<?php
+  $count = count($descript);
+  //$count = count($po_items);
+  if ($count <= 36 && $count > 18){
+                          echo "
+                                #tbl_items{
+                                font-size: 6px;
+                                }
+                              ";
+                        }
+
+                        else if ($count <= 15 && $count > 11){
                           echo "
                                 #tbl_items{
                                 font-size: 7px;
                                 }
                               ";
                         }
-                        else if ($count <= 25 && $count > 21){
+                        else if ($count <= 10 && $count > 6){
                           echo "
                                 #tbl_items{
                                 font-size: 8px;
                                 }
-                              ";
-                        }
-                        else if ($count <= 20 && $count > 16){
-                          echo "
-                                #tbl_items{
-                                font-size: 9px;
-                                }
-                              ";
-                        }
-                        else if ($count <= 15 && $count > 11){
-                          echo "
-                                #tbl_items{
-                                font-size: 11px;
-                                }
-                              ";
-                        }
-                        else if ($count <= 10 && $count > 6){
-                          echo "
-                                #tbl_items{
-                                font-size: 13px;
-                                }
-                              ";
+                             ";
                         }
                         else {
                           echo "
                                 #tbl_items{
-                                font-size: 15px;
+                                font-size: 9px;
                                 }
-                              ";
+                             ";
                         }
-                        ?>
 
+
+?>
 html,body{
   margin: 5px 5px;
   font-size: 12px;

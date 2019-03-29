@@ -223,6 +223,25 @@ class PurchaseOrderController extends Controller
         return ($pono);
     }
 
+        public function check_ris_no(Request $request){
+        $dt = new Carbon($request->input('po_date'));
+            $pr_no = db::table('olongapo_purchase_order_no')
+                                ->where('po_date','=',$request->input('po_date'))
+                                ->get();
+            $get_dept = db::table('olongapo_subdepartment')
+                                ->find($request->input('pr_dept_id'));
+            $y = $dt->format('y');
+            $md = $dt->format('m');
+            $dept = $get_dept->dept_id;
+            $subdept_code = $get_dept->dept_id;
+            $count = sprintf("%'03d",$pr_no->count());
+            $pono = $subdept_code.'-'.$y.'-'.$md.'-'.$count;
+
+
+
+        return ($pono);
+    }
+
       public function get_pr(Request $request){
 
         $info = DB::table('olongapo_bac_control_info')
@@ -302,7 +321,8 @@ class PurchaseOrderController extends Controller
                 ->select([
                             'olongapo_purchase_request_no.id as prno_id',
                             'olongapo_subdepartment.dept_desc as dpt_desc',
-                            'olongapo_purchase_request_no.pr_date_dept as pr_date'
+                            'olongapo_purchase_request_no.pr_date_dept as pr_date',
+                            'olongapo_subdepartment.dept_id as dept_id',
                 ])
                 ->where('olongapo_purchase_request_no.pr_purelyconsumption','=','1')
                 ->where('olongapo_purchase_request_ppmp_approval.status','=','1')
@@ -420,6 +440,7 @@ class PurchaseOrderController extends Controller
         $info = DB::table('olongapo_purchase_order_no')
                     ->join('olongapo_bac_control_info' ,'olongapo_bac_control_info.id','=', 'olongapo_purchase_order_no.bac_control_id')
                     ->join('olongapo_purchase_request_no' ,'olongapo_bac_control_info.prno_id','=', 'olongapo_purchase_request_no.id')
+                    ->join('olongapo_employee_list', 'olongapo_purchase_request_no.requested_by', '=', 'olongapo_employee_list.id')
                     ->leftjoin('olongapo_obr' , 'olongapo_obr.id','=','olongapo_purchase_request_no.obr_id')
                     ->join('olongapo_subdepartment','olongapo_subdepartment.id','=','olongapo_purchase_request_no.dept_id')
                     ->join('olongapo_bac_source_fund','olongapo_bac_source_fund.id','=','olongapo_bac_control_info.sourcefund_id')
@@ -447,7 +468,10 @@ class PurchaseOrderController extends Controller
                                 'olongapo_absctrct_pubbid.supplier_id',
                                 'olongapo_purchase_order_no.id as pono_id',
                                 'olongapo_purchase_order_no.po_no as po_no',
-                                'olongapo_purchase_order_no.po_date as po_date'
+                                'olongapo_purchase_order_no.po_date as po_date',
+                                'olongapo_employee_list.fname as fname',
+                                'olongapo_employee_list.lname as lname',
+                                'olongapo_employee_list.mname as mname'
                             ])
                     ->where('olongapo_purchase_order_no.id', '=', $request->input('pono_id'))
                     ->first();
@@ -516,6 +540,8 @@ class PurchaseOrderController extends Controller
         return $data;
     }
 
+
+
     public function po_acceptance(){
          return view('purchaseorder::acceptance.index',$this->setup());
     }
@@ -562,6 +588,8 @@ class PurchaseOrderController extends Controller
                     ->join('olongapo_purchase_order_requisition_number' ,'olongapo_purchase_order_requisition_number.pono_id','=', 'olongapo_purchase_order_no.id')
                     ->join('olongapo_bac_control_info' ,'olongapo_bac_control_info.id','=', 'olongapo_purchase_order_no.bac_control_id')
                     ->join('olongapo_purchase_request_no' ,'olongapo_bac_control_info.prno_id','=', 'olongapo_purchase_request_no.id')
+                     ->join('olongapo_employee_list', 'olongapo_purchase_request_no.requested_by', '=', 'olongapo_employee_list.id')
+                     ->leftjoin('olongapo_position', 'olongapo_position.id', '=', 'olongapo_employee_list.position_id')
                     ->leftjoin('olongapo_obr' , 'olongapo_obr.id','=','olongapo_purchase_request_no.obr_id')
                     ->join('olongapo_subdepartment','olongapo_subdepartment.id','=','olongapo_purchase_request_no.dept_id')
                     ->join('olongapo_department','olongapo_department.id','=','olongapo_subdepartment.dept_id')
@@ -589,6 +617,7 @@ class PurchaseOrderController extends Controller
                                 'olongapo_bac_category.description as bac_categ',
                                 'supplier_info.title as suppl_title',
                                 'supplier_address.details',
+                                'olongapo_purchase_request_no.requested_by',
                                 'olongapo_bac_control_info.id as control_id',
                                 'olongapo_bac_source_fund.description as sourcefund',
                                 'olongapo_procurement_method.proc_title as bac_mode',
@@ -598,6 +627,10 @@ class PurchaseOrderController extends Controller
                                 'olongapo_purchase_order_no.po_date as po_date',
                                 'olongapo_purchase_order_requisition_number.ris_no',
                                 'olongapo_purchase_order_requisition_number.ris_date',
+                                'olongapo_employee_list.fname as fname',
+                                'olongapo_employee_list.lname as lname',
+                                'olongapo_employee_list.mname as mname',
+                                'olongapo_position.title as designation'
                             ])
                     ->where('olongapo_purchase_order_requisition_number.id', '=', $request->input('requisition_id'))
                     ->first();
@@ -632,6 +665,8 @@ class PurchaseOrderController extends Controller
 
  public function requisition_pc_pdf(Request $request){
          $info = DB::table('olongapo_purchase_request_no')
+                ->join('olongapo_employee_list', 'olongapo_purchase_request_no.requested_by', '=', 'olongapo_employee_list.id')
+                ->leftjoin('olongapo_position', 'olongapo_position.id', '=', 'olongapo_employee_list.position_id')
                 ->join('olongapo_purchase_order_requisition_number' ,'olongapo_purchase_order_requisition_number.pono_id','=', 'olongapo_purchase_request_no.id')
                 ->join('olongapo_purchase_request_ppmp_approval' , 'olongapo_purchase_request_no.id','=','olongapo_purchase_request_ppmp_approval.request_no_id')
                 ->join('olongapo_subdepartment','olongapo_subdepartment.id','=','olongapo_purchase_request_no.dept_id')
@@ -642,6 +677,11 @@ class PurchaseOrderController extends Controller
                                 'olongapo_department.dept_desc as _main_dept_desc',
                                 'olongapo_purchase_order_requisition_number.ris_no',
                                 'olongapo_purchase_order_requisition_number.ris_date',
+                                'olongapo_employee_list.fname as fname',
+                                'olongapo_employee_list.lname as lname',
+                                'olongapo_employee_list.mname as mname',
+                                'olongapo_position.title as designation',
+                                'olongapo_purchase_request_no.requested_by'
                             ])
                 ->where('olongapo_purchase_order_requisition_number.id', '=', $request->input('requisition_id'))
                 ->where('olongapo_purchase_request_no.pr_purelyconsumption','=','1')

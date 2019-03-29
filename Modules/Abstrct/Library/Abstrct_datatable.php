@@ -22,14 +22,15 @@ class Abstrct_datatable
                             ->leftjoin('olongapo_bac_control_info' , 'olongapo_bac_control_info.prno_id','=','olongapo_purchase_request_items.prno_id')
                             ->leftjoin('olongapo_absctrct' , 'olongapo_absctrct.prno_id','=','olongapo_purchase_request_items.prno_id')
                             ->select(['olongapo_purchase_request_items.id as item_id', 'olongapo_purchase_request_items.description', 'olongapo_purchase_request_items.remarks', 'olongapo_purchase_request_items.unit', 'olongapo_purchase_request_items.qty',
-                                    'olongapo_purchase_request_no.id as prno_id', 'olongapo_purchase_request_no.dept_id as prno_dept', 'olongapo_purchase_request_no.pr_date as prno_date', 'olongapo_purchase_request_no.pr_count as prno_count','olongapo_purchase_request_no.pr_no',
+                                    'olongapo_purchase_request_no.id as prno_id', 'olongapo_purchase_request_no.dept_id as prno_dept', 'olongapo_purchase_request_no.pr_date as prno_date', 'olongapo_purchase_request_no.pr_count as prno_count','olongapo_purchase_request_no.pr_no','olongapo_purchase_request_no.pr_purelyconsumption',
                                     'olongapo_department.dept_code',
                                     'olongapo_subdepartment.subdept_code',
                                     ])
                             ->where('olongapo_purchase_request_items.deleted_at','=',NULL)
                             ->where('olongapo_bac_control_info.id','=',null)
                             ->where('olongapo_absctrct.id','=',null)
-                            ->where('olongapo_purchase_request_no.pr_no', '!=', null);
+                            ->where('olongapo_purchase_request_no.pr_no', '!=', null)
+                            ->where('olongapo_purchase_request_no.pr_purelyconsumption','=','0');
 
         return $items;
     }

@@ -582,11 +582,21 @@ class AbstrctController extends Controller
         $subtotal_array = "";
 
 
-        for($s = 0;$s<count($suppliers);$s++){
-            $th2 .= '<th colspan="2" class="suppliers" style="text-align: center;">'.$suppliers[$s]->title.'</th>';
-            $sub_th .= '<th>Unit Price</th><th>Total Price</th>';
+        // for($s = 0;$s<count($suppliers);$s++){
+        //     $th2 .= '<th colspan="2" class="suppliers" style="text-align: center;">'.$suppliers[$s]->title.'</th>';
+        //     $sub_th .= '<th>Unit Price</th><th>Total Price</th>';
+        // }
+          for($s = 0; $s < 3; $s++){
+            if($s < count($suppliers)){
+                $th2 .= '<td colspan="2" class="suppliers" style="text-align: center; font-weight: bold;">'.$suppliers[$s]->title.'</td>';
+            }else{
+                $th2 .= '<td colspan="2" class="suppliers" style="text-align: center; font-weight: bold;"> </td>';
+            }
         }
 
+        for($s = 0; $s < 3; $s++){
+            $sub_th .= '<th><center>Unit Price</center></th><th><center>Total Price</center></th>';
+        }
 
 
         $td[]="";
@@ -603,12 +613,25 @@ class AbstrctController extends Controller
                                 ->orderby('olongapo_purchase_request_items.id', 'asc')
                                 ->get();
 
+            // if($listx->count()){
+            //     $tdx = '';
+            //     for($s = 0;$s<count($listx);$s++){
+            //         $total_pricex = ($listx[$s]->unit_price*$listx[$s]->qty);
+            //         $total_price = round($total_pricex,2);
+            //         $tdx .= '<td style="text-align: right;">'.number_format($listx[$s]->unit_price, 2).'</td><td style="text-align: right;">'.number_format($total_price, 2).'</td>';
+            //     }
+            //     $td[$i] = $tdx;
+            //
             if($listx->count()){
                 $tdx = '';
-                for($s = 0;$s<count($listx);$s++){
+                for($s = 0;$s<3;$s++){
+                    if($s < count($listx)){
                     $total_pricex = ($listx[$s]->unit_price*$listx[$s]->qty);
                     $total_price = round($total_pricex,2);
                     $tdx .= '<td style="text-align: right;">'.number_format($listx[$s]->unit_price, 2).'</td><td style="text-align: right;">'.number_format($total_price, 2).'</td>';
+                    }else{
+                        $tdx .='<td></td><td></td>';
+                    }
                 }
                 $td[$i] = $tdx;
             }

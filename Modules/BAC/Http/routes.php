@@ -69,7 +69,7 @@ Route::group(['middleware' => ['web','auth'], 'prefix' => 'bac', 'namespace' => 
     Route::post('/supplier', 'BACSuppliersController@supplier')->name('bac.supplier');
     Route::post('/update_supplier', 'BACSuppliersController@update_supplier')->name('bac.update_supplier');
     Route::post('/delete_supplier', 'BACSuppliersController@delete_supplier')->name('bac.delete_supplier');
-    
+
     /**
      * autocomplete
      */
@@ -96,7 +96,7 @@ Route::group(['middleware' => ['web','auth'], 'prefix' => 'bac', 'namespace' => 
    Route::post('/item_category/add', 'ItemCategoryController@create')->name('bac.add-category-item');
    Route::post('/item_category/view', 'ItemCategoryController@show')->name('bac.get-category');
    Route::post('/item_category/delete', 'ItemCategoryController@destroy')->name('bac.delete-group');
-   
+
     /**
      * ITEM CATEGORY GROUP
     */

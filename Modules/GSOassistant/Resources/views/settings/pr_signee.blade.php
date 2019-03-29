@@ -36,6 +36,7 @@
                       <select name="emp_position" class="form-control">
                           <option value="City Mayor">City Mayor</option>
                           <option value="Secretary to the Mayor">Secretary to the Mayor</option>
+                          <option value="Acting City Mayor">Acting City Mayor</option>
                     </select>
                   </div>
                 </div>

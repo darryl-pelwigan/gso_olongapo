@@ -39,7 +39,9 @@ class DepartmentController extends Controller
         $this->data['templatex'] = DB::table('olongapo_bac_template')->select('id','template_desc','code')->get();
 
         $employee_id = Session::get('olongapo_user')->employee_id;
-        
+
+
+
         $query = DB::table('olongapo_employee_list')
                     ->select('olongapo_employee_list.dept_id')
                     ->where('id', '=', $employee_id)
@@ -50,8 +52,8 @@ class DepartmentController extends Controller
                         ->where('olongapo_purchase_item_ppmp_upload.subdept_id', '=', $dept_id)
                         ->where('olongapo_purchase_item_ppmp_upload.deleted_at', '=', null)
                         ->get();
-        $this->data['uploads'] = $uploads; 
-    
+        $this->data['uploads'] = $uploads;
+
         $this->data['pr'] = PurchaseNo::where('dept_id', '=', session::get('olongapo_emp_depts')->dept_id)->orderBy('id', 'desc')->get();
 
         $status[] = "";
@@ -70,7 +72,7 @@ class DepartmentController extends Controller
 
             ##po_number
             $po = PurchaseOrderNo::where('prno_id', '=', $request_id)->first();
-            $status[$key] = 
+            $status[$key] =
                 array(
                     'ppmp' => $ppmp,
                     'abstract'      => $abstract,
@@ -81,6 +83,8 @@ class DepartmentController extends Controller
         $this->data['status'] = $status;
 
         $this->data['department'] = DEPTsubcode::all();
+
+        $this->data['employee'] = DB::table('olongapo_employee_list')->select('id','fname','mname','lname')->get();
 
         return view('department::purchase_request.index',$this->setup());
     }
