@@ -221,7 +221,7 @@ if($pr->proc_type != 0){
               @if($i == round($pageloop) || $pageloop == 1)
                 <table class="table  table-bordered tbl_purpose" border="1">
                    <tr>
-                       <td colspan="6" rowspan="4">PURPOSE :  <u><span>{{$pr->pr_purpose}}</span></u></td>
+                       <td colspan="6" rowspan="4">PURPOSE :  <span><u>{{$pr->pr_purpose}}</u></span><br>___________________________________________________________________________________________________________________</td>
                      </tr>
                 </table>
               @endif

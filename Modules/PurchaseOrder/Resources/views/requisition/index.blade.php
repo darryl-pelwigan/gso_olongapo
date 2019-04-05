@@ -98,7 +98,7 @@
                         <div class="col-sm-4">
                         <input type="text" class="form-control" id="ris_date" name="ris_date" placeholder="DATE" />
                         <input type="hidden"  id="po_id" name="po_id" />
-                        <input type="hidden"  id="requisition_id" name="requisition_id" />
+
 
                     </div>
                 </div>
@@ -269,7 +269,7 @@
                         <input type="text" class="form-control" id="ris_date2" name="ris_date" placeholder="DATE" />
                         <input type="hidden"  id="po_id1" name="po_id" />
                         <input type="hidden"  id="po_date1" name="po_date" />
-                        <input type="hidden"  id="requisition_id1" name="requisition_id" />
+
 
                     </div>
                 </div>

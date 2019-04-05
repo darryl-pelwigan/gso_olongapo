@@ -45,7 +45,6 @@ class EmployeeController extends Controller
     }
 
 
-
     public function get_position(Request $request){
         $check_data = DB::table('olongapo_position as position')->select(['position.id AS data','position.title AS value'])
                                                         ->where('position.title','like','%'.$request->input('query').'%')

@@ -60,13 +60,17 @@ class DetpPurchaseRequestController extends Controller
             $PurchaseNo =new PurchaseNo;
             $department = $request->input('department') ?? session::get('olongapo_emp_depts')->dept_id;
 
-            if(Session::get('olongapo_user')->group_id =! 9){
-                $employee_id = Session::get('olongapo_user')->employee_id;
-                $PurchaseNo->requested_by =  $employee_id;
-            }else{
-                $employee_id = $request->input('employee');
-                $PurchaseNo->requested_by =  $employee_id;
-            }
+            // if(Session::get('olongapo_user')->group_id =! 9){
+            //     $department = Session::get('olongapo_emp_depts')->dept_id;
+            //     $employee_id = Session::get('olongapo_user')->employee_id;
+            //     $PurchaseNo->requested_by =  $employee_id;
+            // }else{
+            //     $employee_id = $request->input('employee');
+            //     $PurchaseNo->requested_by =  $employee_id;
+            // }
+
+            $department = Session::get('olongapo_emp_depts')->dept_id ?? $request->input('employee');
+
 
             $PurchaseNo->dept_id =  $department;
             $PurchaseNo->pr_date_dept =  $request->input('pr_no_date');

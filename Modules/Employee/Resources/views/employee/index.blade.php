@@ -18,21 +18,21 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Purchase Order List</h3>
+              <h3 class="box-title">Employee List</h3>
                <button class="btn btn-success pull-right" data-toggle="modal" data-target="#new_employee_modal" data-backdrop="static" data-keyboard="false" ><i class="fa fa-plus"></i></button>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
                  <table id="employee_list" class="table table-bordered table-hover">
                       <thead>
-                      <tr id="test">
+{{--                       <tr id="test">
                               <td></td>
                               <td><input type="text" class="form-control" /></td>
                               <td><input type="text" class="form-control" /></td>
                               <td><input type="text" class="form-control" /></td>
                               <td><input type="text" class="form-control" /></td>
                               <td><input type="text" class="form-control" /></td>
-                        </tr>
+                        </tr> --}}
                         <tr>
                               <th>No</th>
                               <th>Last Name</th>
@@ -185,8 +185,6 @@
 <script src="{{asset('adminlte')}}/plugins/datepicker/bootstrap-datepicker.js"></script>
 <script src="{{asset('adminlte')}}/plugins/datatables/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
-
-
 $(function() {
 
   //Date picker
@@ -222,14 +220,41 @@ $(function() {
   });
 
 
+});
 
 $.fn.loadPPEmnthly = function(){
 if ( $.fn.dataTable.isDataTable( '#job-request' ) ) {
     $('#job-request').dataTable().fnDestroy();
 }
-
+};
 
 $.fn.loadPPEmnthly();
+
+$(function() {
+       $('#employee_list').dataTable({
+        processing: true,
+        serverSide: true,
+        ajax:{
+          "url" : '{!! route('emp.emp_list') !!}',
+        },
+        columns: [
+            { data: 'id' , name: 'olongapo_employee_list.id' },
+            { data: 'lname', name: 'olongapo_employee_list.lname' },
+            { data: 'fname', name: 'olongapo_employee_list.fname' },
+            { data: 'mname', name: 'olongapo_employee_list.mname' },
+            { data: 'dept_desc', name: 'olongapo_subdepartment.dept_desc' },
+            { data: 'title', name: 'olongapo_position.title' },
+           { data: null, name: 'olongapo_employee_list.sex' ,
+              render : function(data , type , row){
+                      if(data.id){
+                        return '<button type="button" class="btn btn-primary btn-sm"" data-toggle="modal" data-target="#new_employee_modal" onclick="$(this).editEmployee('+data.id+');" >Edit Employee</button>\ ';
+                      }
+                }
+              },
+        ],
+    });
+  });
+
 
 $.fn.editEmployee = function(emp_id){
         var el = $('#submit_empl');
@@ -299,6 +324,15 @@ $.fn.sentNewEmployee = function(){
      });
 };
 
+$('[data-dismiss=modal]').on('click', function (e) {
+    var $t = $(this),
+        target = $t[0].href || $t.data("target") || $t.parents('.modal') || [];
+
+  $(target)
+    .find("input,textarea,select")
+       .val('')
+       .end()
+})
 </script>
 <script src="{{asset('adminlte')}}/plugins/datatables/table-header-search.js"></script>
 @stop

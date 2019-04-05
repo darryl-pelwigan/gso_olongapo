@@ -3,7 +3,7 @@
 Route::group(['middleware' => ['web','auth'], 'prefix' => 'employee', 'namespace' => 'Modules\Employee\Http\Controllers'], function()
 {
     Route::get('/', 'EmployeeController@index')->name('emp.list');
-    // Route::post('/', 'EmployeeController@emp_list')->name('emp.emp_list');
+    Route::get('/get_emplist', 'EmployeeController@emp_list')->name('emp.emp_list');
     Route::post('/get_employee', 'EmployeeController@get_employee')->name('emp.get_employee');
     Route::post('/new_employee', 'EmployeeController@new_employee')->name('emp.new_employee');
 
@@ -17,8 +17,8 @@ Route::group(['middleware' => ['web','auth'], 'prefix' => 'employee', 'namespace
 
     Route::post('/set_employee_creadentials', 'EmployeeCredentialsController@set_employee_creadentials')->name('emp.set_employee_creadentials');
     Route::post('/delete_employee_record', 'EmployeeCredentialsController@delete_employee_record')->name('emp.delete_employee_record');
-    
-    
+
+
 
     /* Auto Complete*/
     Route::post('/get_employee_name','EmployeeController@get_employee_name')->name('emp.get_employee_name');
