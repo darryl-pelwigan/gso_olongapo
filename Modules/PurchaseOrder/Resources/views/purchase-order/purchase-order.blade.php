@@ -252,7 +252,7 @@ $(function() {
             data: null,
               name: 'olongapo_purchase_request_no.pr_date',
               render: function(data, type, row){
-                var prno_date = moment(data.prno_date).format("YY-MM-DD");
+                var prno_date = moment(data.pr_date).format("YY-MM-DD");
                   return prno_date;
               }
             },

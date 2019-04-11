@@ -46,7 +46,7 @@ class Bac_datatable
     public function bac_list_po($vars = null){
         $items = DB::table('olongapo_purchase_order_no')
                 ->join('olongapo_bac_control_info' , 'olongapo_purchase_order_no.bac_control_id','=','olongapo_bac_control_info.id')
-                ->join('olongapo_purchase_request_no' ,'olongapo_bac_control_info.prno_id','=', 'olongapo_purchase_request_no.id')
+                ->join('olongapo_purchase_request_no' ,'olongapo_purchase_order_no.prno_id','=', 'olongapo_purchase_request_no.id')
                 ->join('olongapo_subdepartment','olongapo_subdepartment.id','=','olongapo_purchase_request_no.dept_id')
                 ->join('olongapo_bac_source_fund','olongapo_bac_source_fund.id','=','olongapo_bac_control_info.sourcefund_id')
                 ->join('olongapo_absctrct_pubbid_apprved','olongapo_absctrct_pubbid_apprved.pr_no','=','olongapo_bac_control_info.prno_id')
@@ -73,7 +73,7 @@ class Bac_datatable
                             'olongapo_obr.obr_no','olongapo_obr.obr_date','olongapo_purchase_order_requisition_number.id as requisition_id','olongapo_purchase_order_acceptance_issuance.id as acceptance_id'
                 ])
                 ->groupBy('olongapo_purchase_order_no.id');
-
+        // dd($items);
         return $items;
     }
 
