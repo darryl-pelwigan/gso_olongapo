@@ -59,10 +59,10 @@ class PPEMonthlyReportController extends Controller
             $get_ppe_mnthly = PpeMnthlyReport::all();
 
         $dataArray = [];
+        $po_no="";
         foreach ($get_ppe_mnthly as $key => $value) {
            // $po_no = $value->pono_id ? $value->pr_no->pr_orderno->po_no : '';
-            $po_no = $value->po_no;
-            dd($po_no);
+           $po_no = $value->po_no;
            $employee_name = '';
             foreach ($value->inv_items as $key => $inv_item) {
                 $employee_name = $inv_item->accountable_person ? $inv_item->accountable->lname.', '.$inv_item->accountable->fname : '';
@@ -189,7 +189,7 @@ class PPEMonthlyReportController extends Controller
                 $PpeMnthlyReport->type  = $request->input('type_es');
                 $PpeMnthlyReport->department  = $request->input('pr_sdept_id');
                 $PpeMnthlyReport->po_no  = $request->input('item_pono');
-                $PpeMnthlyReport->pono_id  = $request->input('pono_id');
+                $PpeMnthlyReport->pono_id  = $request->input('item_poid');
                 $PpeMnthlyReport->save();
                 $datax = [];
                 for($c = 0 ; $c < count($request->input('item_desc')); $c++){
