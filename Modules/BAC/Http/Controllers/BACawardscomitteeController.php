@@ -117,31 +117,31 @@ class BACawardscomitteeController extends Controller
     public function save_bac_committee_approvedby($request){
         $data =  $request->session()->get(config('app.projcode').'_user')->ucrd_realname;
 
-        $ac = new approvedby;
+        $aa = new approvedby;
         if($request->input('committe_update')){
-            $ac =  approvedby::find($request->input('committe_update'));
+            $aa =  approvedby::find($request->input('committe_update'));
         }
 
-        $ac->employee_id = $request->input('employee_id');
-        $ac->employee_name = $request->input('employee_name');
-        $ac->employee_bacposition = $this->add_position($request);
-        $ac->department = $data;
-        $ac->save();
+        $aa->employee_id = $request->input('employee_id');
+        $aa->employee_name = $request->input('employee_name');
+        $aa->employee_bacposition = $this->add_position($request);
+        $aa->department = $data;
+        $aa->save();
     }
 
     public function save_bac_committee_attestedby($request){
         $data =  $request->session()->get(config('app.projcode').'_user')->ucrd_realname;
 
-        $ac = new atestedby;
+        $at = new atestedby;
         if($request->input('committe_update')){
             $ac =  atestedby::find($request->input('committe_update'));
         }
 
-        $ac->employee_id = $request->input('employee_id');
-        $ac->employee_name = $request->input('employee_name');
-        $ac->employee_bacposition = $this->add_position($request);
-        $ac->department = $data;
-        $ac->save();
+        $at->employee_id = $request->input('employee_id');
+        $at->employee_name = $request->input('employee_name');
+        $at->employee_bacposition = $this->add_position($request);
+        $at->department = $data;
+        $at->save();
     }
 
     public function add_position($request){

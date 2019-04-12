@@ -38,9 +38,9 @@
                 <div class="col-md-4">
                     <h3><strong>{{$committee[$x]->employee_name}}</strong></h3>
                     <h4>{{$committee[$x]->title}}</h4>
-                      <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#deleteGroup_modal{{$committee[$x]->comm_id}}" title="DELETE">Delete</button>
+                      <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#deleteGroup_modala{{$committee[$x]->comm_id}}" title="DELETE">Delete</button>
                       <!-- Modal-->
-                    <div class="modal fade" id="deleteGroup_modal{{$committee[$x]->comm_id}}" role="dialog">
+                    <div class="modal fade" id="deleteGroup_modala{{$committee[$x]->comm_id}}" role="dialog">
                              <div class="modal-dialog">
                                     <!-- Modal content-->
                                     <div class="modal-content">
@@ -83,9 +83,9 @@
                 <div class="col-md-4">
                     <h3><strong>{{$approved_by[$x]->employee_name}}</strong></h3>
                     <h4>{{$approved_by[$x]->title}}</h4>
-                    <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#deleteGroup_modal{{$approved_by[$x]->comm_id}}" title="DELETE">Delete</button>
+                    <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#deleteGroup_modalb{{$approved_by[$x]->comm_id}}" title="DELETE">Delete</button>
                     <!-- Modal-->
-                    <div class="modal fade" id="deleteGroup_modal{{$approved_by[$x]->comm_id}}" role="dialog">
+                    <div class="modal fade" id="deleteGroup_modalb{{$approved_by[$x]->comm_id}}" role="dialog">
                              <div class="modal-dialog">
                                     <!-- Modal content-->
                                     <div class="modal-content">
@@ -128,9 +128,9 @@
                 <div class="col-md-4">
                     <h3><strong>{{$attested_by[$x]->employee_name}}</strong></h3>
                     <h4>{{$attested_by[$x]->title}}</h4>
-                    <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#deleteGroup_modal{{$attested_by[$x]->comm_id}}" title="DELETE">Delete</button>
+                    <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#deleteGroup_modalc{{$attested_by[$x]->comm_id}}" title="DELETE">Delete</button>
                     <!-- Modal-->
-                    <div class="modal fade" id="deleteGroup_modal{{$attested_by[$x]->comm_id}}" role="dialog">
+                    <div class="modal fade" id="deleteGroup_modalc{{$attested_by[$x]->comm_id}}" role="dialog">
                              <div class="modal-dialog">
                                     <!-- Modal content-->
                                     <div class="modal-content">

@@ -77,6 +77,7 @@
                         <label for="item_pono" class="col-sm-3 control-label">PO Number : </label>
                         <div class="col-sm-6">
                           <input type="text" class="form-control " id="item_pono"   name="item_pono"   placeholder="PO Number" value="{{ $bac->pr->pr_orderno->po_no }}" readonly/>
+                          <input type="hidden" id="item_pono"   name="item_pono" value="{{ $bac->pr->pr_orderno->id }}" readonly/>
                         </div>
                     </div>
 

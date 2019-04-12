@@ -41,11 +41,11 @@ class CreateDnlxUserCredentials extends Migration
                 'is_approved' => 1,
             ],
             [
-                'ucrd_realname' => 'Invetory',
+                'ucrd_realname' => 'Inventory',
                 'ucrd_username' => 'inventory_root',
                 'password' => '$2y$10$oyqauLvd34lHcseLRz/6yusVnMba./Y48jIA1giIJhFwW3qGKDjkq',
                 'employee_id' => 2,
-                'ucrd_email' => 'invetory_root@mail.com',
+                'ucrd_email' => 'inventory_root@mail.com',
                 'group_id' => 2,
                 'created_at' => date('Y-m-d H:i:s'),
                 'is_approved' => 1,
