@@ -125,6 +125,7 @@ if($pr->proc_type != 0){
                           $xx = $rowsperpage * $i;
                           $loops = $rowsperpage * ($i+1);
                           $prs = $pr->pr_items()->get();
+                          $counter;
                         ?>
 
                         @for ($x = $xx; $x < $loops; $x++)
@@ -141,7 +142,9 @@ if($pr->proc_type != 0){
                                   //if (strlen($desc) > 100) { --}}
 
                                   if (strlen($desc) > 88) {
-                                    echo '<td class="text-right2" id="desc_style" style="word-wrap:break-word; font-size: 7px;">'.$desc.'</td>';
+                                    echo '<td class="text-right2" id="desc_style" style="word-wrap:break-word; font-size: 11px;">'.$desc.'</td>';
+                                    $loops--;
+                                    $counter++;
                                   } else {
                                       echo '<td class="text-right2">'.$desc.'</td>';
                                   }
@@ -169,42 +172,42 @@ if($pr->proc_type != 0){
                          <?php if ($totalrows <= 30 && $totalrows > 26){
                           echo "<style>
                                 #tbl_items{
-                                font-size: 7px;
+
                                 }
                               </style>";
                         }
                         else if ($totalrows <= 25 && $totalrows > 21){
                           echo "<style>
                                 #tbl_items{
-                                font-size: 8px;
+
                                 }
                               </style>";
                         }
                         else if ($totalrows <= 20 && $totalrows > 16){
                           echo "<style>
                                 #tbl_items{
-                                font-size: 9px;
+
                                 }
                               </style>";
                         }
                         else if ($totalrows <= 15 && $totalrows > 11){
                           echo "<style>
                                 #tbl_items{
-                                font-size: 11px;
+
                                 }
                               </style>";
                         }
                         else if ($totalrows <= 10 && $totalrows > 6){
                           echo "<style>
                                 #tbl_items{
-                                font-size: 13px;
+
                                 }
                               </style>";
                         }
                         else {
                           echo "<style>
                                 #tbl_items{
-                                font-size: 14px;
+
                                 }
                               </style>";
                         }

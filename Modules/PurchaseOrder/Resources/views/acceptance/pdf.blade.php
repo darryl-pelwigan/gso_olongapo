@@ -89,7 +89,7 @@
                               <?php
                               $descript = $data->description;
                              if (strlen($descript) > 100) {
-                                    echo '<td style="word-wrap:break-word; font-size: 6px;">'.$descript.'</td>';
+                                    echo '<td style="word-wrap:break-word;">'.$descript.'</td>';
                                   } else {
                                       echo '<td>'.$descript.'</td>';
                                   }
@@ -214,9 +214,8 @@
 
 @section('plugins-css')
 <style type="text/css">
-<?php
+{{-- <?php
   $count = count($descript);
-  //$count = count($po_items);
   if ($count <= 36 && $count > 18){
                           echo "
                                 #tbl_items{
@@ -248,7 +247,7 @@
                         }
 
 
-?>
+?> --}}
 html,body{
   margin: 5px 5px;
   font-size: 12px;

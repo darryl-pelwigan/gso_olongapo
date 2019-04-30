@@ -126,7 +126,7 @@
                                   //if (strlen($desc) > 100) { --}}
 
                                   if (strlen($desc) > 88) {
-                                    echo '<td class="text-right2" id="desc_style" style="word-wrap:break-word; font-size: 4px;">'.$desc.'</td>';
+                                    echo '<td class="text-right2" id="desc_style" style="word-wrap:break-word;">'.$desc.'</td>';
                                   } else {
                                       echo '<td class="text-right2">'.$desc.'</td>';
                                   }
@@ -252,49 +252,49 @@
 
 @section('plugins-css')
 <style type="text/css">
-< <?php if ($count <= 30 && $count > 26){
+/*< <?php if ($count <= 30 && $count > 26){
                           echo "
                                 #tbl_items{
-                                font-size: 5px;
+
                                 }
                               ";
                         }
                         else if ($count <= 25 && $count > 21){
                           echo "
                                 #tbl_items{
-                                font-size: 6px;
+
                                 }
                               ";
                         }
                         else if ($count <= 20 && $count > 16){
                           echo "
                                 #tbl_items{
-                                font-size: 7px;
+
                                 }
                               ";
                         }
                         else if ($count <= 15 && $count > 11){
                           echo "
                                 #tbl_items{
-                                font-size: 8px;
+
                                 }
                               ";
                         }
                         else if ($count <= 10 &&  $count > 6){
                           echo "
                                 #tbl_items{
-                                font-size: 9px;
+
                                 }
                               ";
                         }
                         else {
                           echo "
                                 #tbl_items{
-                                font-size: 10px;
+
                                 }
                               ";
                         }
-                        ?>
+                        ?>*/
 html,body{
   margin: 5px 5px;
   font-size: 11px;
