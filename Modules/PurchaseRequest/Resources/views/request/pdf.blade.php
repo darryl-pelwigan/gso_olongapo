@@ -141,7 +141,7 @@ if($pr->proc_type != 0){
                                   if ( $length_count > 88) {
 
                                     $div = $length_count / 88;
-                                    $whole_numer = floor($div);
+                                    $whole_numer = ceil($div);
 
                                     echo '<td class="text-right2" id="desc_style" style="word-wrap:break-word;">'.$desc.'</td>';
                                     $loops -= $whole_numer;
