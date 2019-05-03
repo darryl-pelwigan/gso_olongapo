@@ -95,11 +95,14 @@ class PurchaseRequestController extends Controller
     }
 
     public function pr_edit( Request $request){
+
+        // dd('asdas');
         $this->data['proc_methods'] = Procmethod::all();
         $this->data['edit_view']   = $request->input('view')  ? 'view' :  'edit';
         $purely_consumption   = PurchaseNo::find($request->input('pr_id'));
         $this->data['purely_consumption']   = $purely_consumption->pr_purelyconsumption;
         $this->data['pr'] = PurchaseNo::find($request->input('pr_id'));
+
         if($request->input('pdf')){
             $this->data['approved_by'] = Requestordersignee::where('deleted_at','=',null)->get();
 
