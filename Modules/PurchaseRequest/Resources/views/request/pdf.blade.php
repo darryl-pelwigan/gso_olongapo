@@ -141,8 +141,9 @@ if($pr->proc_type != 0){
                                   if ( $length_count > 88) {
 
                                     $div = $length_count / 88;
-                                    $whole_numer = ceil($div);
+                                    $whole_numer = round($div);
 
+                                    //echo '<td class="text-right2" id="desc_style" style="word-wrap:break-word;">'.$div.' ___ '.$whole_numer.'</td>';
                                     echo '<td class="text-right2" id="desc_style" style="word-wrap:break-word;">'.$desc.'</td>';
                                     $loops -= $whole_numer;
                                     $counter++;
@@ -282,6 +283,9 @@ if($pr->proc_type != 0){
 
   $prs2 = $pr->pr_items()->get();
 
+
+  if ($counter != 0 ) {
+  
  @endphp
 
 <div class="page-break"></div>
@@ -386,14 +390,13 @@ if($pr->proc_type != 0){
                           $xx2 = $rowsperpage2 * $i;
                           $loops2 = $rowsperpage2 * ($i+1) + $loops;
 
-                          $prs_array = $pr->pr_items()->get();
                           $counter2 = 0;
 
                         ?>
 
                         @for ($x = $xx2; $x < $loops2; $x++)
                           <?php 
-                            if ($x >= $loops) {
+                            if ( $x >= $loops) {
 
                               if(isset($prs2[$x]['qty'] )){ 
                           ?>
@@ -541,6 +544,9 @@ if($pr->proc_type != 0){
     <!-- /.content -->
   </div>
    @stop
+@php
+  }
+@endphp
 
 
 @section('plugins-css')
