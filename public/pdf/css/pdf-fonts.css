@@ -8,3 +8,9 @@
   font-weight: bold;
   src: url('../fonts/Tahoma.ttf') format("truetype");
 }
+
+@font-face {
+  font-family: 'arial-black';
+  font-weight: bold;
+  src: url('../fonts/arial-black/Arial Black.ttf') format("truetype");
+}

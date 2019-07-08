@@ -2,7 +2,7 @@
 
 @section('content')
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+  <div class="main-border content-wrapper">
 
 
     <!-- Main content -->
@@ -13,17 +13,16 @@
             <!-- /.box-header -->
            <div class="box-body">
              <header>
-               <div class="header_tbl">
+               <div class="">
                  <table class="table table-thnormal" >
                    <tr>
                      <td width="25%"></td>
-                     <td align="center" width="50%">
-                       <h3 class="pr_title" style="font-size: 20px;">REQUISITION AND ISSUE SLIP</h3>
-                       <img src="{{asset('olongapo')}}/img/logo-100.png" alt="" width="20px" height="20px;">
+                     <td class="center" align="center" width="50%" height="7%" >
+                       <h3 class="pr_title">REQUISITION AND ISSUE SLIP</h3>
+                       <img src="{{asset('olongapo')}}/img/logo-100.png" alt="" width="30px" height="30px;">
                        <p>Republic of the Philippines</p>
-                       <b>City of Olongapo</b>
+                       <p>City of Olongapo</p>
                      </td>
-
                      <td width="25%"></td>
                    </tr>
                  </table>
@@ -68,7 +67,7 @@
 
                     <tr>
                       <td id="table_left" width="30%">
-                        <table class="table_header" width="100%">
+                        <table class="table_header" width="100%" >
                           <tr>
                             <td width="20%">Division: </td>
                             <td width="80%" class="underline"><center>{{$info->_main_dept_desc}}</center></td>
@@ -82,12 +81,14 @@
                       <td id="table_left" width="20%">
                         <table class="table_header" width="100%">
                           <tr>
-                            <td width="60%">Responsibility Center Code: </td>
-                            <td width="40%" class="underline">&nbsp;</td>
+                            <td width="50%">Responsibility Center Code:</td>
+                          </tr>
+                          <tr>
+                            <td width="50%" class="underline">&nbsp;</td>
                           </tr>
                         </table>
                       </td>
-                      <td id="table_left" width="30%">
+                      <td id="" width="30%">
                         <table class="table_header" width="100%">
                           <tr>
                             <td width="40%">RIS No.: </td>
@@ -155,18 +156,20 @@
                   </tr>
                 </table>
                </div> -->
-                  <table class="table table-bordered page-break">
+               <div >
+                  <table class="table1 table-bordered page-break">
                       <tr>
-                        <td colspan="4" align="center"><b>Requisition</b></td>
-                        <td colspan="2" align="center"><b>Issuance</b></td>
+                        <td class="letter-space" colspan="4" align="center" height="2%"><b>Requisition</b></td>
+               </div>
+                        <td class="letter-space" colspan="2" align="center"><b>Issuance</b></td>
                       </tr>
                       <tr>
-                        <td width="5%" align="center"><b>Stock <br /> No.</b></td>
-                        <td width="10%" align="center"><b>Unit</b></td>
-                        <td width="51%" align="center"><b>Description</b></td>
-                        <td width="10%" align="center"><b>QUANTITY</b></td>
-                        <td width="12%" align="center"><b>Quantity</td>
-                        <td width="12%" align="center"><b>Remarks</b></td>
+                        <td class="gray" width="10%" align="center" height="1%"><b>Stock No.</b></td>
+                        <td class="gray" width="5%" align="center"><b>Unit</b></td>
+                        <td class="gray" width="51%" align="center"><b>Description</b></td>
+                        <td class="gray" width="10%" align="center"><b>Quantity</b></td>
+                        <td class="gray" width="12%" align="center"><b>Quantity</td>
+                        <td class="gray" width="12%" align="center"><b>Remarks</b></td>
                       </tr>
                       <?php $count=1; $total_price=0; ?>
                         @foreach( $po_items as $data )
@@ -210,8 +213,8 @@
                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
                         ?>
                             <tr>
-                             <td colspan="5" class="total" style="font-size: 15px;">Total</td>
-                             <td class="text-right2 total" style="font-size: 15px;">{{ number_format($total_price,2) }}</td>
+                             <td colspan="5" class="total" style="font-size: 12px;" height="1%">Total</td>
+                             <td class="text-right2 total" style="font-size: 12px;">{{ number_format($total_price,2) }}</td>
                             </tr>
                             <tr>
                               <td colspan="6">
@@ -303,24 +306,24 @@
 
                             <tr>
                               <td colspan="6">
-                                <table class="table_header" width="100%">
+                                <table class="table1 page-break" width="100%">
                                   <tr>
-                                    <td class="border" width="10%" align="center">&nbsp;</td>
+                                    <td class="borderZero" width="10%" align="center">&nbsp;</td>
                                     <td class="border" width="15%" align="center"><b>Requested by:</b></td>
                                     <td class="border" width="40%" align="center" colspan="2"><b>Approved by:</b></td>
                                     <td class="border" width="15%" align="center"><b>Issued by:</b></td>
                                     <td class="border" width="20%" align="center"><b>Received by:</b></td>
                                   </tr>
-                                  <tr>
-                                    <td class="border" align="center">&nbsp;</b></td>
+                                  <!--tr>
+                                    <td align="center">&nbsp;</b></td>
                                     <td class="border" align="center"> &nbsp; </td>
                                     <td class="border_bottom" align="center"> &nbsp; </td>
                                     <td class="border_bottom" align="center"> &nbsp; </td>
                                     <td class="border" align="center"> &nbsp; </td>
                                     <td class="border" align="center"> &nbsp; </td>
-                                  </tr>
+                                  </tr-->
                                   <tr>
-                                    <td class="border" align="center"><b>Printed Name:</b></td>
+                                    <td align="center"><b>Printed Name:</b></td>
                                     <td class="border" align="center"> {{ strtoupper($info->fname ?? '') }} {{ strtoupper($info->mname ?? '')  }}  {{ strtoupper($info->lname ?? '')  }}</td>
                                     <td class="border_bottom" align="center"> <b>ROLEN C. PAULINO</b> </td>
                                     <td class="border_bottom" align="center"> <b>SHEILA R. PADILLA</b> </td>
@@ -328,23 +331,23 @@
                                     <td class="border" align="center"> &nbsp; </td>
                                   </tr>
                                   <tr>
-                                    <td class="border" align="center"><b>Signature:</b></td>
+                                    <td class="borderZero" align="center"><b>Signature:</b></td>
                                     <td class="border" align="center">&nbsp;</td>
-                                    <td class="border_bottom" align="center"> <b>City Mayor</b> </td>
-                                    <td class="border_bottom" align="center"> <b>Secratary to the Mayor</b> </td>
+                                    <td class="border_bottom" align="center">  </td>
+                                    <td class="border_bottom" align="center">  </td>
                                     <td class="border" align="center">&nbsp;</td>
                                     <td class="border" align="center">&nbsp;</td>
                                   </tr>
                                   <tr>
-                                    <td class="border" align="center"><b>Designation:</b></td>
+                                    <td class="borderZero" align="center"><b>Designation:</b></td>
                                     <td class="border" align="center">{{ strtoupper($info->designation ?? '') }}</td>
-                                    <td class="border_bottom" align="center">&nbsp;</td>
-                                    <td class="border_bottom" align="center">&nbsp;</td>
+                                    <td class="border_bottom" align="center"><b>City Mayor</b></td>
+                                    <td class="border_bottom" align="center"><b>Secratary to the Mayor</b></td>
                                     <td class="border" align="center">&nbsp;</td>
                                     <td class="border" align="center">&nbsp;</td>
                                   </tr>
                                   <tr>
-                                    <td class="border" align="center"><b>Date:</b></td>
+                                    <td align="center"><b>Date:</b></td>
                                     <td class="border" align="center">&nbsp;</td>
                                     <td class="border_bottom" align="center">&nbsp;</td>
                                     <td class="border_bottom" align="center">&nbsp;</td>
@@ -473,7 +476,7 @@ html,body{
   padding-bottom: -20px;
 }
 .table-thnormal>thead>tr>th{
-  font-weight: normal;
+  
 }
 .table-thnormal {
   margin-bottom: -2px !important;
@@ -483,7 +486,6 @@ html,body{
   border:1px solid #000;
   word-break: break-all;
   padding: 1px;
-  margin: 0;
   text-indent: 0;
 
 }
@@ -504,8 +506,10 @@ html,body{
   text-align: center;
 }
 .pr_title{
-  font-family: "Arial" !important;
-  font-weight: bolder;
+  font-family:  "arial-black" !important;
+  font-weight: 900;
+  padding: 5px;
+  font-size: 22px;
 }
 .header_tbl{
   border: 1px solid #000 !important;
@@ -516,6 +520,7 @@ html,body{
 }
 .table_header tr td{
   /*padding: 3px;*/
+  text-align: left;
 }
 #table_left{
   border-right: 1px solid #000;
@@ -526,7 +531,8 @@ html,body{
 }
 
 .table1 td{
-  padding:0; margin:0;
+  padding:0; 
+  margin:0;
 }
 
 .table_footer tr td{
@@ -539,6 +545,28 @@ html,body{
 
 .border_bottom {
   border-bottom: 1px solid black;
+}
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  }
+.main-border{
+  border-style: solid;
+  border-width: 2px;
+}
+
+.gray{
+  background: lightgray;
+}
+.letter-space{
+  letter-spacing: 2px;
+  font-style: italic;
+  font-weight: bold;
+  font-family:   sans-serif !important;
+}
+.borderZero{
+  border: 0px;
 }
 
 div {
