@@ -89,4 +89,10 @@
   'tahoma-bold' => array(
     'bold' => $fontDir . '\ea23964f1c95c540bef108c1d8e82674',
   ),
+  'times new roman' => array(
+    'bold' => $fontDir . '\0aca8200fa4a8979bf6ee5d6f6c9f901',
+  ),
+  'times-new-roman' => array(
+    'bold' => $fontDir . '\0aca8200fa4a8979bf6ee5d6f6c9f901',
+  ),
 ) ?>
