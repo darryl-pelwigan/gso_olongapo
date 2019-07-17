@@ -37,8 +37,8 @@
                       <td id="table_left" width="30%">
                         <table class="table_header" width="100%">
                           <tr>
-                            <td>Division: </td>
-                            <td width="50%" class="underline">{{$info->_main_dept_desc}}</td>
+                            <td style="padding:10px">Division: </td>
+                            <td width="50%" class="underline" style="padding-left:10px">{{$info->_main_dept_desc}}</td>
                           </tr>
                           <tr>
                             <td>Office: </td>
@@ -49,8 +49,8 @@
                       <td id="table_left" width="20%">
                         <table class="table_header" width="100%">
                           <tr>
-                            <td width="60%">Responsibility Center Code: </td>
-                            <td width="40%" class="underline">&nbsp;</td>
+                            <td width="60%">Responsibility <br>Center Code: </td>
+                            <td width="40%" class="underline" style="padding-left:50px">&nbsp;</td>
                           </tr>
                         </table>
                       </td>
