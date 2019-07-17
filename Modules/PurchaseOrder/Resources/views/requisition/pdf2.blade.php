@@ -14,11 +14,11 @@
            <div class="box-body">
              <header>
                <div class="header_tbl">
-                 <table class="table table-thnormal" >
+                 <table class="table table-thnormal"  style="border-collapse:collapse;">
                    <tr>
                      <td width="25%"></td>
-                     <td align="center" width="50%">
-                       <h3 class="pr_title">REQUISITION AND ISSUE SLIP</h3>
+                     <td align="center" >
+                       <h3 class="pr_title" style="font-size:20px">REQUISITION AND ISSUE SLIP</h3>
                        <img src="{{asset('olongapo')}}/img/logo-100.png" alt="" width="20px" height="20px;">
                        <p>Republic of the Philippines</p>
                        <b>City of Olongapo</b>
@@ -30,7 +30,7 @@
                </div>
              </header>
                 <div class="header_tbl">
-                  <table class="table table-thnormal">
+                  <table class="table table-thnormal" style="border-collapse:collapse;">
 
 
                     <tr>
@@ -83,7 +83,7 @@
                   </table>
                 </div>
 
-                  <table class="table table-bordered page-break">
+                  <table class="table table-bordered page-break" style="border-collapse:collapse;">
                       <tr>
                         <td colspan="4" align="center"><b>Requisition</b></td>
                         <td colspan="2" align="center"><b>Issuance</b></td>
@@ -141,7 +141,7 @@
 
                             <tr>
                               <td colspan="6">
-                                <table class="table_header" width="100%">
+                                <table class="table_header" width="100%" style="border-collapse:collapse;">
                                   <tr>
                                     <td class="border" width="10%" align="center">&nbsp;</td>
                                     <td class="border" width="15%" align="center"><b>Requested by:</b></td>
@@ -271,7 +271,7 @@ html,body{
   font-weight: normal;
 }
 .table-thnormal {
-  margin-bottom: -2px !important;
+  /*margin-bottom: -2px !important;*/
 }
 
 .table-bordered>tbody>tr>td,.table-bordered>thead>tr>th{

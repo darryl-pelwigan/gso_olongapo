@@ -95,4 +95,7 @@
   'times-new-roman' => array(
     'bold' => $fontDir . '\0aca8200fa4a8979bf6ee5d6f6c9f901',
   ),
+  'arial-black' => array(
+    'bold' => $fontDir . '\91424dc0fe7ead35f8653f9c8cffff60',
+  ),
 ) ?>
