@@ -17,8 +17,8 @@
                  <table class="table table-thnormal"  style="border-collapse:collapse;">
                    <tr>
                      <td width="25%"></td>
-                     <td align="center" >
-                       <h3 class="pr_title" style="font-size:20px">REQUISITION AND ISSUE SLIP</h3>
+                     <td align="center" style="text-align:center;padding-left:220px">
+                       <h3 class="pr_title" style="font-size:20px;text-align:center;padding:10px">REQUISITION AND ISSUE SLIP</h3>
                        <img src="{{asset('olongapo')}}/img/logo-100.png" alt="" width="20px" height="20px;">
                        <p>Republic of the Philippines</p>
                        <b>City of Olongapo</b>
