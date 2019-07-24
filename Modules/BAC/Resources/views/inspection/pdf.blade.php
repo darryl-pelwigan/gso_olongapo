@@ -101,7 +101,7 @@
                                   </tr>
                                 <?php } ?>
                             </tbody>
-                        </table> 
+                        </table>
                         <b>Note: Both Waste Material and Equipment must be present for inspection.</b><br><br><br><br>
                     </td>
                     <td width="20%">

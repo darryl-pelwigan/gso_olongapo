@@ -24,7 +24,7 @@
             <div class="box-body">
 
               @php
-                // dd($pmi->pr_no->pr_orderno->po_no);
+                 // dd($pmi->pr_no->bac_info);
               @endphp
 
                @include('template::admin-layouts.includes.message')

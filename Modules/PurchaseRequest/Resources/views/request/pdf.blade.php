@@ -114,17 +114,16 @@ if($pr->proc_type != 0){
                   </table>
               </div>
 
-              <table class="table table-bordered" id="tbl_items" width="100%" style="border-collapse:collapse; font-size:15px">
+                <table class="table table-bordered" id="tbl_items" width="100%">
                     <thead>
                       <tr>
                         <th align="center" width="5%">Item <br /> No.</th>
                         <th align="center" width="6%">Quantity</th>
                         <th align="center" width="8%">Unit of <br/> Issue</th>
-                        <th align="center" >Item Description</th>
+                        <th align="center">Item Description</th>
                         <th align="center" width="10%">Estimated<br>Unit Cost</th>
                         <th align="center" width="10%">Estimated<br>Cost</th>
                       </tr>
-
                     </thead>
                     <tbody>
                       <?php $count=1; $unit_price_total=0; $sum_price_total=0; ?>
@@ -133,50 +132,25 @@ if($pr->proc_type != 0){
                           $xx = $rowsperpage * $i;
                           $loops = $rowsperpage * ($i+1);
                           $prs = $pr->pr_items()->get();
-                          $counter = 0;
-                          $whole_numer = 0;
                         ?>
 
-                        @for ($x = 0; $x < $loops;$x+$whole_numer)
-
-                          <?php if(isset($prs[$counter]['qty'] )){?>
-                            <?php $total_price = $prs[$counter]['unit_price'] * $prs[$counter]['qty'];?>
+                        @for ($x = $xx; $x < $loops; $x++)
+                          <?php if(isset($prs[$x]['qty'] )){?>
+                            <?php $total_price = $prs[$x]['unit_price'] * $prs[$x]['qty'];  ?>
                               <tr id="tbl_items">
-                                <td class="text-right2">{{ $counter+1 }}</td>
-                                <td class="text-right2">{{ $prs[$counter]['qty'] }}</td>
-                                <td class="text-right2">{{ $prs[$counter]['unit'] }}</td>
-                                {{--td class="text-right2">{{ $prs[$x]['description'] }}</td>--}}
-                                <?php
-                                  $desc = $prs[$counter]['description'];
-                                  $length_count = strlen($desc);
-
-                                  if ( $length_count > 69) {
-
-                                    $div = $length_count / 69;
-                                    $whole_numer = round($div);
-
-                                    //echo '<td class="text-right2" id="desc_style" style="word-wrap:break-word;">'.$div.' ___ '.$whole_numer.'</td>';
-                                    echo '<td class="text-right2" id="desc_style" style="word-wrap:break-word;">'.$desc.'</td>';
-                                    $loops -= $whole_numer;
-
-
-
-
-                                  } else {
-                                      echo '<td class="text-right2">'.$desc.'</td>';
-                                  }
-
-                                ?>
-
-                                <td class="text-right2">{{ number_format($prs[$counter]['unit_price'],2) }} </td>
-                                <td class="text-right2">{{ number_format($prs[$counter]['total_price'],2) }} </td>
+                                <td class="text-right2" style='padding:5px;'>{{ ($x+1) }}</td>
+                                <td class="text-right2">{{ $prs[$x]['qty'] }}</td>
+                                <td class="text-right2">{{ $prs[$x]['unit'] }}</td>
+                                <td class="text-right2">{{ $prs[$x]['description'] }}</td>
+                                <td class="text-right2">{{ number_format($prs[$x]['unit_price'],2) }} </td>
+                                <td class="text-right2">{{ number_format($prs[$x]['total_price'],2) }} </td>
                               </tr>
                             <?php $count++;  $unit_price_total += $prs[$x]['unit_price'] ; $sum_price_total +=$total_price;  ?>
                         <?php
                         }else{
                         ?>
                             <tr>
-                              <td>&nbsp;</td>
+                              <td style='padding:5px;'><br></td>
                               <td><br></td>
                               <td><br></td>
                               <td><br></td>
@@ -185,13 +159,35 @@ if($pr->proc_type != 0){
                             </tr>
                         <?php
                         }
-                        $counter++;
                         ?>
                         @endfor
+                         <?php if ($count <= 30 && $count > 21){
+                          echo "<style>";
+                          echo "#tbl_items{";
+                          echo "font-size: 9.5px;";
+                          echo "}";
+                          echo "</style>";
+                        }
+                        else if ($count <= 20 && $count > 11){
+                          echo "<style>";
+                          echo "#tbl_items{";
+                          echo "font-size: 10.5px;";
+                          echo "}";
+                          echo "</style>";
+                        }
+                        else {
+                          echo "<style>";
+                          echo "#tbl_items{";
+                          echo "font-size: 11.5px;";
+                          echo "}";
+                          echo "</style>";
+                        }
+                        ?>
+
                         <?php $alltotal += $sum_price_total; ?>
                         <tr>
-                         <td colspan="5" class="total" style="padding: 10px;">{{ ($i == round($pageloop) || round($pageloop) == 1 ? 'Total' : 'Subtotal') }} </td>
-                         <td class="text-right2 total">{{ ($i == round($pageloop) || round($pageloop) == 1 ? number_format($alltotal,2) : number_format($sum_price_total,2))  }}</td>
+                         <td colspan="5" class="total" style="padding:10px">{{ ($i == round($pageloop) || round($pageloop) == 1 ? 'Total' : 'Subtotal') }} </td>
+                         <td class="text-right2 total" style="padding:10px">{{ ($i == round($pageloop) || round($pageloop) == 1 ? number_format($alltotal,2) : number_format($sum_price_total,2))  }}</td>
                         </tr>
 
                     </tbody>
@@ -284,6 +280,8 @@ html,body{
 
 .text-right2{
   text-align: center;
+
+
 }
 .pr_title{
   font-family: "Arial" !important;
@@ -312,6 +310,7 @@ html,body{
 #tbl_items{
   padding: 1px;
   margin: 0px;
+  border-collapse: collapse;
   /*font-size: 14px;*/
 }
 .tbl_purpose{

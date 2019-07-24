@@ -14,6 +14,7 @@ use Modules\Inventory\Entities\PpeMnthlyReport;
 use Modules\Inventory\Entities\PpeMnthlyReportItems;
 use Session;
 use Carbon\Carbon;
+use PDF;
 
 
 
@@ -214,6 +215,80 @@ class PPEMonthlyReportController extends Controller
 
             }
 
+    }
+
+     public function generate_report(){
+        return view('inventory::ppe-mnthly.generate',$this->setup());
+    }
+
+       public function generate_report_pdf(){
+        // return view('inventory::ppe-mnthly.generate',$this->setup());
+        // $this->data['approved_by'] = Requestordersignee::where('deleted_at','=',null)->get();
+
+        // $this->data['requested_by'] = DB::table('olongapo_purchase_request_no')
+        //                             ->join('olongapo_employee_list', 'olongapo_purchase_request_no.requested_by', '=', 'olongapo_employee_list.id')
+        //                             ->leftjoin('olongapo_position', 'olongapo_position.id', '=', 'olongapo_employee_list.position_id')
+        //                             ->select([
+        //                                 'olongapo_employee_list.fname',
+        //                                 'olongapo_employee_list.lname',
+        //                                 'olongapo_employee_list.mname',
+        //                                 'olongapo_position.title'
+        //                             ])
+        //                             ->where('olongapo_purchase_request_no.id', '=', $request->input('pr_id') )
+        //                             ->first();
+
+         $get_ppe_mnthly = DB::table('olongapo_ppe_mnthly_report')
+                                    ->join('olongapo_ppe_mnthly_report_items','olongapo_ppe_mnthly_report_items.ppe_mnthly_id','=','olongapo_ppe_mnthly_report.id')
+                                    ->join('olongapo_employee_list','olongapo_employee_list.id','=','olongapo_ppe_mnthly_report_items.accountable_person')
+                                    ->join('olongapo_subdepartment','olongapo_subdepartment.id','=','olongapo_ppe_mnthly_report.department')
+                                    ->join('supplier_info','supplier_info.id','=','olongapo_ppe_mnthly_report_items.supplier')
+                                    ->select(
+                                                'olongapo_ppe_mnthly_report.id as ppe_mnthly_id'
+                                                ,'olongapo_ppe_mnthly_report.date_log','olongapo_ppe_mnthly_report.inv_control_no','olongapo_ppe_mnthly_report.type'
+                                                ,'olongapo_ppe_mnthly_report_items.id as ppe_mnthly_items_id'
+                                                ,'olongapo_ppe_mnthly_report_items.item_desc','olongapo_ppe_mnthly_report_items.property_code','olongapo_ppe_mnthly_report_items.po_no'
+                                                ,'olongapo_ppe_mnthly_report_items.qty','olongapo_ppe_mnthly_report_items.unit_value','olongapo_ppe_mnthly_report_items.total_value','olongapo_ppe_mnthly_report_items.invoice'
+                                                ,db::raw('CONCAT(olongapo_employee_list.fname," ",olongapo_employee_list.mname," ",olongapo_employee_list.lname) as employee_name')
+                                                ,'olongapo_subdepartment.dept_desc'
+                                                ,'supplier_info.title','supplier_info.id'
+                                            )
+                                    ->get()
+                                    ;
+
+        $get_ppe_mnthly = PpeMnthlyReport::all();
+
+        $dataArray = [];
+        foreach ($get_ppe_mnthly as $key => $value) {
+           $po_no = $value->pono_id ? $value->pr_no->pr_orderno->po_no : '';
+           $employee_name = '';
+            foreach ($value->inv_items as $key => $inv_item) {
+                $employee_name = $inv_item->accountable_person ? $inv_item->accountable->lname.', '.$inv_item->accountable->fname : '';
+                $suplier = $inv_item->supplier ? $inv_item->supplier_info->title : "" ;
+                $dataArray[] =   array(
+                                        $value->date_log,
+                                        $value->inv_control_no,
+                                        $inv_item->item_desc,
+                                        $inv_item->property_code,
+                                        $po_no,
+                                        $inv_item->qty,
+                                        $inv_item->unit_value,
+                                        $inv_item->total_value,
+                                        $employee_name,
+                                        $suplier,
+                                        $inv_item->invoice,
+                                        $value->inv_dept->dept_desc,
+                                        '<a class="btn btn-sm btn-info" href="'.route('inventory.edit_ppe_pr',$value->id).'" >edit</a> '
+                                    );
+
+            }
+        }
+
+        $this->data['ppe'] =  $dataArray;
+
+        // dd( $this->data['ppe']);
+        $pdf = PDF::loadView('inventory::ppe-mnthly.generate-pdf',$this->setup());
+        $pdf->setPaper('Legal', 'landscape');
+        return @$pdf->stream();
     }
 
 

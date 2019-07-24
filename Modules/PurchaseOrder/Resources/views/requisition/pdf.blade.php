@@ -157,14 +157,14 @@
                 </table>
                </div> -->
                <div >
-                  <table class="table1 table-bordered page-break">
+                  <table class="table1 table-bordered page-break" width="100%">
                       <tr>
-                        <td class="letter-space" colspan="4" align="center" height="2%"><b>Requisition</b></td>
+                        <td class="letter-space" colspan="4" align="center" height="2%" style="padding:10px"><b>Requisition</b></td>
                </div>
                         <td class="letter-space" colspan="2" align="center"><b>Issuance</b></td>
                       </tr>
                       <tr>
-                        <td class="gray" width="10%" align="center" height="1%"><b>Stock No.</b></td>
+                        <td class="gray" width="10%" align="center" height="1%" style="padding:10px"><b>Stock No.</b></td>
                         <td class="gray" width="5%" align="center"><b>Unit</b></td>
                         <td class="gray" width="51%" align="center"><b>Description</b></td>
                         <td class="gray" width="10%" align="center"><b>Quantity</b></td>
@@ -476,7 +476,7 @@ html,body{
   padding-bottom: -20px;
 }
 .table-thnormal>thead>tr>th{
-  
+
 }
 .table-thnormal {
   margin-bottom: -2px !important;
@@ -531,7 +531,7 @@ html,body{
 }
 
 .table1 td{
-  padding:0; 
+  padding:0;
   margin:0;
 }
 

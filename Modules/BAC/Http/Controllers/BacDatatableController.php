@@ -16,7 +16,6 @@ class BacDatatableController extends Controller
             $vars = $request->all();
             $method = $request->input('dataTables');
             $datatable = $Bac_datatable->$method($vars);
-
             return Datatables::of($datatable)->make(true);
         }
         return json_encode('errors');

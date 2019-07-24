@@ -261,7 +261,7 @@ class PurchaseRequestController extends Controller
                             ->get();
         $pr_count = $pr_no[0]->pr_count > 1 ? $pr_no[0]->pr_count-1 : $pr_no[0]->pr_count;
         $sdept = $pr->pr_dept->subdept_code == 0 ? '' : '.'.$pr->pr_dept->subdept_code;
-        $pr_count = (( $pr_no[0]->pr_count > 0) ? $pr_no[0]->pr_count : 0);
+        $pr_count = (( $pr_no[0]->pr_count > 0) ? $pr_no[0]->pr_count : 0)+100;
         $pr_nox = ($pr->pr_dept->dept->dept_code).$sdept.'-'.$dt->format('y').'-'.$dt->format('m').'-'.$dt->format('d').'-'.sprintf('%03d', $pr_count);
         return  json_encode($pr_nox);
     }

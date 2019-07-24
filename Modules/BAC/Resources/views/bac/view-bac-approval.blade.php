@@ -3,14 +3,14 @@
 @section('header')
 <header>
     <div class="row" id="">
-        <div class="col-xs-2 text-right">
-            <br><img class="img-responsive"  src="{{asset('olongapo/img/logo-360.png')}}" style="margin-top: 10px; width: 95px; height: 95px;" />
+        <div class="col-xs-2 text-right" style="display:inline-block">
+            <br><img class="img-responsive"  src="{{asset('olongapo/img/logo-360.png')}}" style=" margin-top:-130px;width: 95px; height: 95px;margin-left:20px"/>
         </div>
-        <div class="col-xs-8 text-center" style="font-size: 12px;">
+        <div class="col-xs-8 text-center" style="font-size: 12px;display:inline-block;margin-top:15px;margin-left:-150px" align="center">
             <p class="coo" >Republic of the Philippines</p>
             <p class="coo" >City of Olongapo</p>
-            <h3 class="c_title" style="font-size:12px"><strong>BIDS AND AWARDS COMMITTEE</strong></h3>
-            <img src="{{asset('adminlte-custom/img/line.png')}}" class="img-line" />
+            <h3 class="c_title" style="font-size:25px"><strong>BIDS AND AWARDS COMMITTEE</strong></h3>
+            <img src="{{asset('adminlte-custom/img/line.png')}}" class="img-line" style="padding-left:220px"/>
             <p class="coo" >General Services Office, 2/F Olongapo City Hall, Olongapo City</p>
             <p class="cntc web">web: www.olongapocity.gov.ph </p>
             <p class="cntc">email: olongapo_gso@yahoo.com </p>
@@ -25,7 +25,7 @@
 @section('content')
 {!! ($bac_template) !!}
     <br>
-    <div class="text-center" style="margin: 0; padding: 0">
+    <div class="text-center" style="margin: 0; padding: 0;text-align:center" >
         <b>BIDS AND AWARDS COMMITTEE</b>
         <p style="text-align: center;" style="margin: 0; padding: 0;">Requested by: </p>
     </div>
@@ -40,9 +40,9 @@
                     <?php $cx=1; $cd=1; ?>
                  <div class="row">
             @endif
-                 <div class="col-xs-4 col-xs-offset-1" style="font-size: 11px;">
-                    <p class="text-center"><strong><u>{{ strtoupper($committee[$x]->employee_name) }}</u></strong></p>
-                    <p class="text-center">{{$committee[$x]->title}}</p><br><br>
+                 <div class="col-xs-4 col-xs-offset-1" style="font-size: 11px;display:inline-block;" >
+                    <p class="text-center" style="padding-left:150px"><strong><u>{{ strtoupper($committee[$x]->employee_name) }}</u></strong></p>
+                    <p class="text-center" style="padding-left:150px">{{$committee[$x]->title}}</p><br><br>
                 </div>
 
             @if( $cc%2==0 && $cx==2 )

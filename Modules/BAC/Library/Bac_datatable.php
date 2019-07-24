@@ -230,6 +230,7 @@ class Bac_datatable
                     ])
                     ->groupBy('olongapo_absctrct_pubbid_apprved.pubbid');
 
+
         return $items;
     }
 

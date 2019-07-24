@@ -279,6 +279,7 @@ $(function() {
             },
            { data: 'title'},
              { data: null ,
+              name:'olongapo_bac_control_info.apprved_pubbid_id',
               render : function(data , type , row){
                     return (data.apprved_pubbid_id != null ? '<span class="text-success"><i class="fa fa-check"> Processed</i></span>' : '<span class="text-warning"><i class="fa fa-spinner"> Pending</i></span>');
                 }
@@ -298,7 +299,7 @@ $(function() {
         ],
         columnDefs: [
           {
-              orderable: false, targets: [0,-1, -2]
+              orderable: false, targets: [0,-1]
            }
         ],
         "order": [[ 0, 'asc' ]],
@@ -307,13 +308,13 @@ $(function() {
 
 
   });
-<?php 
+<?php
   $dates = array();
   foreach($holiday as $d){
       array_push($dates, date('Y').'-'.$d->holiday);
   }
   $h = json_encode($dates);
-?>  
+?>
 
 //Date picker
     $('#bac_date').datepicker({
@@ -328,12 +329,12 @@ $(function() {
 function editDays(date) {
     var disabledDates = ['2017-10-20', '2017-10-21'];
         for (var i = 0; i < disabledDates.length; i++) {
-            if (new Date(disabledDates[i]).toString() == date.toString()) {                  
+            if (new Date(disabledDates[i]).toString() == date.toString()) {
                  return [false, "akljsdfl;jkaf"];
             }
         }
         return [true];
-  }   
+  }
 
     $.fn.setControllNumber = function(){
       var bac_date = $('#bac_date').val();
@@ -373,7 +374,7 @@ function editDays(date) {
             },
             success: function(data){
                 console.log(data);
-              
+
               if(data.info != null){
                 $('#pr_no').val(data.info.pr_no);
                 $('#pr_dept_desc').val(data.info.dept_desc);
