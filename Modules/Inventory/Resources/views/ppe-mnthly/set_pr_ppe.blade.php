@@ -104,6 +104,9 @@
                                       <th>TOTAL VALUE</th>
                                       <th>ACCOUNTABLE PERSON</th>
                                       <th>INVOICE</th>
+                                      <th>ESTIMATED LIFE YEARS</th>
+                                      <th>(EXACT LOCATION, CONDITIONS, ETC.)</th>
+                                      <th>DEPRECIABLE</th>
                                 </tr>
                               </thead>
 
@@ -122,7 +125,10 @@
                                               <td><input type="text" class="form-control"  name="item_total_value[]" style="width: 100px;" disabled="" value="{{ $items->prices->unit_price * $items->pr_item->qty }}" readonly /></td>
                                               <td><input type="text" class="form-control item_accountable_person"  name="item_accountable_person[]"  /> <input type="hidden" class="form-control"  name="item_accountable_person_id[]" /> </td>
                                               <td><input type="text" class="form-control"  name="item_invoice[]" value="" /></td>
-                                          </tr> --}}
+                                              <td><input type="text" class="form-control"  name="item_est[]" /></td>
+                                              <td><input type="text" class="form-control"  name="item_loc[]" /></td>
+                                              <td><select name="item_dep[]" class="form-control"> <option disabled selected value> -- select an option -- </option><option value="I">Yes</option><option value="O">No</option></select></td>
+                                          </tr>
                                 @endforeach
 
                               </tbody>

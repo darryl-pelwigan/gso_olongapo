@@ -18,7 +18,10 @@ class PpeMnthlyReportItems extends Model
                                             'accountable_person',
                                             'department',
                                             'supplier',
-                                            'invoice'];
+                                            'invoice',
+                                            'est_life',
+                                            'location',
+                                            'depreciable'];
 
     public function inv(){
         return $this->belongsTo('Modules\Inventory\Entities\PpeMnthlyReport', 'ppe_mnthly_id');

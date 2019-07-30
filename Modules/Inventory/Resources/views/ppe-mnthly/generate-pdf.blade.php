@@ -39,23 +39,23 @@
                         <th>GSO</th>
                         <th>ACCOUNT</th>
                         <th style="border-bottom: 0px">DESCRIPTION</th>
-                        <th>Est.</th>
+                        <th>Estimated</th>
                         <th>Date</th>
                         <th>ACCOUNTABLE</th>
                         <th>(Exact Location,</th>
-                        <th>orecia</th>
+                        <th>Depreciable</th>
                         <th>UNIT</th>
                         <th style="border-right:0px">Balance per card</th>
                         <th style="border-left:0px"></th>
                         <th style="border-right:0px">Shortage</th>
                         <th style="border-left:0px"></th>
-                        <th>ACCUM</th>
+                        <th>ACCUMULATED</th>
                         <th>RESIDUAL</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <th>Prop Code</th>
+                        <th>Property Code</th>
                         <th>GROUP</th>
                         <th style="border-top:0px"></th>
                         <th>life yrs</th>
@@ -68,26 +68,26 @@
                         <th>Value</th>
                         <th>Qty</th>
                         <th>Total Value</th>
-                        <th>VALUE</th>
+                        <th>DEPRECIATION</th>
                         <th>VALUE</th>
                       </tr>
                       @foreach($ppe as $p)
                         <tr>
-                          <td>{{$p[3]}}</td>
-                          <td></td>
-                          <td>{{$p[2]}}</td>
-                          <td></td>
                           <td>{{$p[0]}}</td>
+                          <td>{{$p[1]}}</td>
+                          <td>{{$p[2]}}</td>
+                          <td>{{$p[3]}}</td>
+                          <td>{{$p[4]}}</td>
+                          <td>{{$p[5]}}</td>
+                          <td>{{$p[6]}}</td>
+                          <td>{{$p[7]}}</td>
+                          <td>{{$p[8]}}</td>
+                          <td>{{$p[9]}}</td>
                           <td>{{$p[8]}}</td>
                           <td></td>
                           <td></td>
-                          <td>{{$p[6]}}</td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
+                          <td>{{$p[10]}}</td>
+                          <td>{{$p[11]}}</td>
                         </tr>
                       @endforeach
                     </tbody>

@@ -98,6 +98,9 @@
                                       <th>TOTAL VALUE</th>
                                       <th>ACCOUNTABLE PERSON</th>
                                       <th>INVOICE</th>
+                                      <th>ESTIMATED LIFE YEARS</th>
+                                      <th>(EXACT LOCATION, CONDITIONS, ETC.)</th>
+                                      <th>DEPRECIABLE</th>
                                       <th></th>
                                 </tr>
                               </thead>
@@ -113,6 +116,9 @@
                                     <td><input type="text" class="form-control"  name="item_total_value[]" style="width: 100px;" readonly="" /></td>
                                     <td><input type="text" class="form-control item_accountable_person"  name="item_accountable_person[]"  /> <input type="hidden" class="form-control"  name="item_accountable_person_id[]" /> </td>
                                     <td><input type="text" class="form-control"  name="item_invoice[]" /></td>
+                                    <td><input type="text" class="form-control"  name="item_est[]" /></td>
+                                    <td><input type="text" class="form-control"  name="item_loc[]" /></td>
+                                    <td><select name="item_dep[]" class="form-control"> <option disabled selected value> -- select an option -- </option><option value="I">Yes</option><option value="O">No</option></select></td>
                                     <td><button type="button" class="btn btn-xs btn-success add-tr"><i class="fa fa-plus"></i> row</button></td>
                                 </tr>
                               @else
@@ -126,6 +132,9 @@
                                                                   <td><input type="text" class="form-control"  name="item_total_value[]" style="width: 100px;" disabled="" value="{{ old('item_total_value.'.$x) }}" /></td>
                                                                   <td><input type="text" class="form-control item_accountable_person"  name="item_accountable_person[]"  /> <input type="hidden" class="form-control"  name="item_accountable_person_id[]" /> </td>
                                                                   <td><input type="text" class="form-control"  name="item_invoice[]" value="{{ old('item_invoice.'.$x) }}" /></td>
+                                                                  <td><input type="text" class="form-control"  name="item_est[]" value="{{ old('item_invoice.'.$x) }}" /></td>
+                                                                  <td><input type="text" class="form-control"  name="item_loc[]" value="{{ old('item_invoice.'.$x) }}" /></td>
+                                                                  <td><select name="item_dep[]" class="form-control"> <option disabled selected value> -- select an option -- </option><option value="I">Yes</option><option value="O">No</option></select></td>
                                                                   <td><button type="button" class="btn btn-xs btn-success add-tr"><i class="fa fa-plus"></i> row</button></td>
                                                               </tr>
                                         @endfor

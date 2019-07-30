@@ -141,7 +141,7 @@ if($pr->proc_type != 0){
                                 <td class="text-right2" style='padding:5px;'>{{ ($x+1) }}</td>
                                 <td class="text-right2">{{ $prs[$x]['qty'] }}</td>
                                 <td class="text-right2">{{ $prs[$x]['unit'] }}</td>
-                                <td class="text-right2">{{ $prs[$x]['description'] }}</td>
+                                <td class="text-right2" style='word-wrap: break-word;'>{{ $prs[$x]['description'] }}</td>
                                 <td class="text-right2">{{ number_format($prs[$x]['unit_price'],2) }} </td>
                                 <td class="text-right2">{{ number_format($prs[$x]['total_price'],2) }} </td>
                               </tr>

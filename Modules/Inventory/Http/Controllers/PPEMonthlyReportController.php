@@ -194,6 +194,7 @@ class PPEMonthlyReportController extends Controller
                 $PpeMnthlyReport->save();
                 $datax = [];
                 for($c = 0 ; $c < count($request->input('item_desc')); $c++){
+
                     $datax[] = [
                                             'ppe_mnthly_id'                   => $PpeMnthlyReport->id,
                                             'prno_item_id'                    =>  ($request->input('item_id.'.$c)) ? $request->input('item_id.'.$c) : null,
@@ -208,6 +209,9 @@ class PPEMonthlyReportController extends Controller
                                             'supplier'                              =>  $request->input('item_supplier_id'),
                                             'department'                      => $request->input('pr_sdept_id'),
                                             'invoice'                               => $request->input('item_invoice.'.$c),
+                                            'est_life'                               => $request->input('item_est.'.$c),
+                                            'location'                               => $request->input('item_loc.'.$c),
+                                            'depreciable'                               => $request->input('item_dep.'.$c),
                                     ];
                 }
                 $PpeMnthlyReport->inv_items()->insert($datax);
@@ -255,6 +259,7 @@ class PPEMonthlyReportController extends Controller
                                     ->get()
                                     ;
 
+
         $get_ppe_mnthly = PpeMnthlyReport::all();
 
         $dataArray = [];
@@ -264,19 +269,25 @@ class PPEMonthlyReportController extends Controller
             foreach ($value->inv_items as $key => $inv_item) {
                 $employee_name = $inv_item->accountable_person ? $inv_item->accountable->lname.', '.$inv_item->accountable->fname : '';
                 $suplier = $inv_item->supplier ? $inv_item->supplier_info->title : "" ;
+                $res = $inv_item->unit_value * 0.1;
+                $dep=0;
+                if($inv_item->est_life){
+                     $dep = ($inv_item->unit_value - $res)/$inv_item->est_life;
+                }
+
                 $dataArray[] =   array(
-                                        $value->date_log,
+                                        $inv_item->property_code,
                                         $value->inv_control_no,
                                         $inv_item->item_desc,
-                                        $inv_item->property_code,
-                                        $po_no,
-                                        $inv_item->qty,
-                                        $inv_item->unit_value,
-                                        $inv_item->total_value,
+                                        $inv_item->est_life,
+                                        $value->date_log,
                                         $employee_name,
-                                        $suplier,
-                                        $inv_item->invoice,
-                                        $value->inv_dept->dept_desc,
+                                        $inv_item->location,
+                                        $inv_item->depreciable,
+                                        $inv_item->unit_value,
+                                        $inv_item->qty,
+                                        $res,
+                                        $dep,
                                         '<a class="btn btn-sm btn-info" href="'.route('inventory.edit_ppe_pr',$value->id).'" >edit</a> '
                                     );
 
@@ -293,6 +304,7 @@ class PPEMonthlyReportController extends Controller
 
 
     public function update_monthly_report_new(Request $request){
+        $request->input('item_loc');
             $validator = Validator::make($request->all(), [
                     'date_log' => 'required|date',
                     'pr_sdept_id' => 'required',
@@ -329,6 +341,9 @@ class PPEMonthlyReportController extends Controller
                                  'property_code'                  => $request->input('item_property_code.'.$key),
                                  'accountable_person'        => $request->input('item_accountable_person_id.'.$key),
                                  'invoice'        => $request->input('item_invoice.'.$key),
+                                 'est_life'        => $request->input('item_est.'.$key),
+                                 'location'        => $request->input('item_loc.'.$key),
+                                 'depreciable'        => $request->input('item_dep.'.$key),
                                  'po_no'                                   =>  $request->input('item_pono'),
                             ]
                     );
