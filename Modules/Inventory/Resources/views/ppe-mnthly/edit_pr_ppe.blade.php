@@ -82,8 +82,10 @@
                       $supplier_id = '';
                       $po_no = '';
                         if($pmi->pono_id){
-                          $supplier = $pmi->pr_no->bac_info->pubbid()->first()->abstrct_supplier->supplier->title;
-                          $supplier_id = $pmi->pr_no->bac_info->pubbid()->first()->abstrct_supplier->supplier->id;
+                          // $supplier = $pmi->pr_no->bac_info->pubbid()->first()->abstrct_supplier->supplier->title;
+                          // $supplier_id = $pmi->pr_no->bac_info->pubbid()->first()->abstrct_supplier->supplier->id;
+                          $supplier = $pmi->pr_no->bac_info->abstrct_supplier->supplier->title;
+                          $supplier_id = $pmi->pr_no->bac_info->abstrct_supplier->supplier->id;
                           $po_no = $pmi->pr_no->pr_orderno->po_no;
                           $po_readonly = 'readonly';
                         }else{

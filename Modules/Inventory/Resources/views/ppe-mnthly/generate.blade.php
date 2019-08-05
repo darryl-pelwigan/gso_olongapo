@@ -30,7 +30,7 @@
                   <div class="form-group row">
                        <label for="pr_no" class="col-sm-3 control-label">DATE FROM </label>
                           <div class="col-sm-9">
-                          <input type="text" class="form-control date" id="" name="pr_no_date" placeholder="PR DATE" />
+                          <input type="text" class="form-control date" id="from" name="from" placeholder="PR DATE" />
                       </div>
                   </div>
                 </div>
@@ -38,7 +38,7 @@
                   <div class="form-group row">
                        <label for="pr_no" class="col-sm-3 control-label">DATE TO </label>
                           <div class="col-sm-9">
-                          <input type="text" class="form-control date" id="" name="pr_no_date" placeholder="PR DATE" />
+                          <input type="text" class="form-control date" id="to" name="to" placeholder="PR DATE" />
                       </div>
                   </div>
                 </div>
