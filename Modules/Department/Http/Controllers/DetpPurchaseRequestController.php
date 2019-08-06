@@ -58,7 +58,14 @@ class DetpPurchaseRequestController extends Controller
             $data['status'] = 0;
             $data['errors'] = 'Successfully Save PUrchase Request';
             $PurchaseNo =new PurchaseNo;
-            $department = $request->input('department') ?? session::get('olongapo_emp_depts')->dept_id;
+            $employee_dept = DB::table('olongapo_employee_list')
+                    ->select('olongapo_employee_list.dept_id')
+                    ->where('id', '=',  $request->input('employee'))
+                    ->get()
+                    ->first();
+
+            //$department = $request->input('department') ?? session::get('olongapo_emp_depts')->dept_id;
+            $department = $employee_dept->dept_id ?? session::get('olongapo_emp_depts')->dept_id;
 
             // if(Session::get('olongapo_user')->group_id =! 9){
             //     $department = Session::get('olongapo_emp_depts')->dept_id;
