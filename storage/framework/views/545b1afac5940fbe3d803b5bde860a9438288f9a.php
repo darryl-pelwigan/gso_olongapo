@@ -21,8 +21,10 @@
               <li class="ppe-codes blue">
                 <a style="font-size: 20px">
                 <span class="pull-right-container">
-                                  <span class="label bg-yellow "></span>
-                                </span>
+                  
+
+                  <button type="button" onclick="$(this).delete_ppe_category(<?php echo e($value->cat_id); ?>);"  class="btn btn-danger btn-sm delete_ppe_category"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+
                   <strong><?php echo e(($value->cat_desc)); ?></strong>
                 </a>
                  <ul class="ppe-codes">
@@ -30,9 +32,17 @@
                           <?php if($value->cat_id==$value2->cat_id): ?>
                              <li class="ppe-codes ">
                               <a style="font-size: 20px">
-                               <span class="pull-right-container">
-                                    <span class="label bg-dark-blue "><?php echo e($value2->code_family); ?></span>
-                                  </span>
+                                <span class="pull-right-container">
+
+                                  
+
+                                  <button type="button" onclick="$(this).delete_ppe_sub_category(<?php echo e($value2->sub_id); ?>);"  class="btn btn-danger btn-sm delete_ppe_category"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+
+
+                                  <span class="label bg-dark-blue "><?php echo e($value2->code_family); ?></span>
+
+                                </span>
+
                                   <strong><?php echo e(($value2->subcat_desc)); ?> <i>(<?php echo e(($value2->code_coa)); ?>)</i></strong>
 
                                   </a>
@@ -43,11 +53,11 @@
                                                <li class="ppe-items ">
                                                 <a style="font-size: 20px">
                                                  <span class="pull-right-container">
-                                                    <button type="button" onclick="$(this).delete_ppe_code(<?php echo e($value3->ppeitems_id); ?>);"  class="btn btn-danger delete_ppe_code"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                                    
+                                                    <button type="button" onclick="$(this).delete_ppe_items(<?php echo e($value3->ppeitems_id); ?>);"  class="btn btn-danger delete_ppe_code"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
                                                       <span class="label bg-light-blue "><?php echo e(sprintf("%02d", $value3->code_no)); ?></span>
                                                     </span>
                                                     <strong><?php echo e(($value3->ppeitems_desc)); ?></strong>
-
                                                     </a>
                                                </li>
                                              <?php endif; ?>
@@ -112,7 +122,21 @@
                 <div class="form-group">
                   <label for="PPE_code_category" class="col-sm-4 control-label">Category</label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control PPE_code_category" id="PPE_code_category" name="PPE_code_category" placeholder="Code Desc">
+
+                    <select class="form-control PPE_code_category" name="PPE_code_category">
+                      <?php if($codes['get_catcodes'] ): ?>
+
+                        <option disabled="" selected="">Select Category</option>
+                        <?php $__currentLoopData = $codes['get_catcodes']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $element): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                          <option value="<?php echo e($element->cat_desc); ?>"><?php echo e($element->cat_desc); ?></option>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        
+
+                      <?php else: ?>
+                        <option selected="" disabled="">NO Category of PPE Added</option>
+                      <?php endif; ?>
+
+                    </select>
                   </div>
                 </div>
 
@@ -314,13 +338,14 @@
   };
 
 
-  $.fn.delete_ppe_code = function(id){
+  $.fn.delete_ppe_category = function(id){
+
     var txt;
     var r = confirm("Are You sure you want to delete this records! ? ");
     if (r == true) {
       $.ajax({
         type: "GET",
-        url: "<?php echo e(route('delete.ppe_code')); ?>",
+        url: "<?php echo e(route('delete.delete_ppe_category')); ?>",
         data : { id: id },
         dataType: "json",
         success: function(data){
@@ -329,7 +354,48 @@
       });
 
     }
+
   }
+
+  $.fn.delete_ppe_sub_category = function(id){
+
+    var r2 = confirm("Are You sure you want to delete this records! ? ");
+    if (r2 == true) {
+      $.ajax({
+        type: "GET",
+        url: "<?php echo e(route('delete.delete_ppe_sub_category')); ?>",
+        data : { id: id },
+        dataType: "json",
+        success: function(data){
+          location.reload();
+        }
+      });
+
+    }
+
+  }
+
+  $.fn.delete_ppe_items = function(id){
+
+    var r2 = confirm("Are You sure you want to delete this records! ? ");
+    if (r2 == true) {
+      $.ajax({
+        type: "GET",
+        url: "<?php echo e(route('delete.delete_ppe_items')); ?>",
+        data : { id: id },
+        dataType: "json",
+        success: function(data){
+          location.reload();
+        }
+      });
+
+    }
+
+  }
+
+
+  
+
 </script>
 <?php $__env->stopSection(); ?>
 
