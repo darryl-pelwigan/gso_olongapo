@@ -170,19 +170,19 @@ class PurchaseRequestController extends Controller
                                     }
                         }
 
-                        if( $request->input('obr_no') != '' && $request->input('obr_date') != ''){
-                            if($PurchaseNo->obr_id != null){
-                                $obr = OBR::find($PurchaseNo->obr_id);
-                            }else{
-                                $obr = new OBR;
-                            }
+                        // if( $request->input('obr_no') != '' && $request->input('obr_date') != ''){
+                        //     if($PurchaseNo->obr_id != null){
+                        //         $obr = OBR::find($PurchaseNo->obr_id);
+                        //     }else{
+                        //         $obr = new OBR;
+                        //     }
 
-                            $obr->obr_no = $request->input('obr_no');
-                            $obr->obr_date = $request->input('obr_date');
-                            $obr->save();
-                            $PurchaseNo->obr_id =  $obr->id;
-                            $PurchaseNo->save();
-                        }
+                        //     $obr->obr_no = $request->input('obr_no');
+                        //     $obr->obr_date = $request->input('obr_date');
+                        //     $obr->save();
+                        //     $PurchaseNo->obr_id =  $obr->id;
+                        //     $PurchaseNo->save();
+                        // }
 
 
                         Session::flash('info', ['Purchase Request Successfully Updated']);
