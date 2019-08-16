@@ -199,9 +199,9 @@ if($pr->proc_type != 0){
                      </tr>
                 </table>
               @endif
-              <table class="table  table-bordered table_footer" border="1" style="border-collapse: collapse;" width="100%">
+              <table class="table  table-bordered table_footer" border="1" style="border-collapse: collapse;"  width="100%">
                   <tr>
-                      <td width="20%">&nbsp;</td>
+                      <td >&nbsp;</td>
                       <td width="25%" style="padding-right: 50px; padding-left:50px;">Requested by:</td>
                       <td width="23%" style="padding-right: 35px; padding-left:35px;">Appropriation Availability:</td>
                       <td width="37%" >Approved by:</td>

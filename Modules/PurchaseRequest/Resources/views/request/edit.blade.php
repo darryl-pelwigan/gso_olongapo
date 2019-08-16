@@ -103,7 +103,7 @@
                     </div>
                 </div>
 
-                 <div class="form-group">
+{{--                  <div class="form-group">
                   @if($purely_consumption == '1')
                   @else
                      <label for="obr_no" class="col-sm-2 control-label">OBR NO : </label>
@@ -136,7 +136,7 @@
                         @endif
                     </div>
                 </div>
-
+ --}}
 
                 <div class="form-group">
                   @if($purely_consumption == '1')

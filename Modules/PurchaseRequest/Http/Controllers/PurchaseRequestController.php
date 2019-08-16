@@ -170,19 +170,19 @@ class PurchaseRequestController extends Controller
                                     }
                         }
 
-                        if( $request->input('obr_no') != '' && $request->input('obr_date') != ''){
-                            if($PurchaseNo->obr_id != null){
-                                $obr = OBR::find($PurchaseNo->obr_id);
-                            }else{
-                                $obr = new OBR;
-                            }
+                        // if( $request->input('obr_no') != '' && $request->input('obr_date') != ''){
+                        //     if($PurchaseNo->obr_id != null){
+                        //         $obr = OBR::find($PurchaseNo->obr_id);
+                        //     }else{
+                        //         $obr = new OBR;
+                        //     }
 
-                            $obr->obr_no = $request->input('obr_no');
-                            $obr->obr_date = $request->input('obr_date');
-                            $obr->save();
-                            $PurchaseNo->obr_id =  $obr->id;
-                            $PurchaseNo->save();
-                        }
+                        //     $obr->obr_no = $request->input('obr_no');
+                        //     $obr->obr_date = $request->input('obr_date');
+                        //     $obr->save();
+                        //     $PurchaseNo->obr_id =  $obr->id;
+                        //     $PurchaseNo->save();
+                        // }
 
 
                         Session::flash('info', ['Purchase Request Successfully Updated']);
@@ -261,7 +261,7 @@ class PurchaseRequestController extends Controller
                             ->get();
         $pr_count = $pr_no[0]->pr_count > 1 ? $pr_no[0]->pr_count-1 : $pr_no[0]->pr_count;
         $sdept = $pr->pr_dept->subdept_code == 0 ? '' : '.'.$pr->pr_dept->subdept_code;
-        $pr_count = (( $pr_no[0]->pr_count > 0) ? $pr_no[0]->pr_count : 0)+100;
+        $pr_count = (( $pr_no[0]->pr_count > 0) ? $pr_no[0]->pr_count : 0);
         $pr_nox = ($pr->pr_dept->dept->dept_code).$sdept.'-'.$dt->format('y').'-'.$dt->format('m').'-'.$dt->format('d').'-'.sprintf('%03d', $pr_count);
         return  json_encode($pr_nox);
     }
