@@ -32,7 +32,7 @@ class GSOcodeController extends Controller
                                     ->get();
         $codes['get_codes'] = DB::table('inv_gsoprop_code_category as gsocat')
                                     ->join('inv_gsoprop_code_list as gsocodes' ,'gsocat.id','=','gsocodes.gsocode_cat_id')
-                                    ->select('gsocat.id as cat_id','gsocat.code_family','gsocodes.desc','gsocodes.useful_life','gsocodes.code_no')
+                                    ->select('gsocat.id as cat_id','gsocat.code_family','gsocodes.desc','gsocodes.useful_life','gsocodes.code_no', 'gsocodes.id as code_list_id')
                                     ->orderby('gsocodes.code_no')
                                     ->groupby('gsocat.id','gsocodes.desc')
                                     ->get();
@@ -110,6 +110,15 @@ class GSOcodeController extends Controller
                     }
             return $data;
         }
+    }
+
+    public function delete_gso_category(Request $request){
+        $category_id = $request->category_id;
+        $lists = gsocodeitems::where('id', $category_id)->delete();
+
+        return 0;
+        // return view('inventory::inventory.gso-code');
+
     }
 
 }

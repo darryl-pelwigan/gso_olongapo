@@ -25,6 +25,8 @@ Route::group(['middleware' => ['web','auth'], 'prefix' => 'inventory', 'namespac
 
     Route::get('/inventory-ppe-code', 'PPEcodeController@index')->name('inventory.ppe_code');
 
+    Route::get('/delete-ppe-code', 'PPEcodeController@delete_ppe_code')->name('delete.ppe_code');
+
 
     Route::post('/inventory-supplier', 'SupplierController@new_suppplier')->name('inv.new_suppplier');
 
@@ -41,6 +43,8 @@ Route::group(['middleware' => ['web','auth'], 'prefix' => 'inventory', 'namespac
     Route::post('/add_ppeitems', 'PPEcodeController@add_ppeitems')->name('inventory.add_ppeitems');
 
     Route::post('/add_control_number', 'InventoryController@add_control_number')->name('inv.add_control_number');
+
+    Route::get('/delete_gso_category', 'GSOcodeController@delete_gso_category')->name('inv.delete_gso_category');
 
     /**
      * PPE MONTHLY REPORT

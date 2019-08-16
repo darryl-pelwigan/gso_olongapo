@@ -26,7 +26,7 @@
                 <span class="pull-right-container">
                                   <span class="label bg-yellow ">{{$value->code_family}}</span>
                                 </span>
-                  <strong>{{($value->cat_desc)}}   </strong>
+                  <strong>{{($value->cat_desc)}}  </strong>
                 </a>
                  <ul class="gso-codes">
                  @foreach($codes['get_codes'] as $key => $value2 )
@@ -34,11 +34,12 @@
                        <li class="gso-codes ">
                         <a style="font-size: 20px">
                          <span class="pull-right-container">
+                          <button type="button" onclick="$(this).delete_cat_list({{ $value2->code_list_id }} );"  class="btn btn-danger delete_cat_list"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
                               <span class="label bg-light-blue ">{{$value2->code_no}}</span>
-                            </span>
-                            <strong>{{($value2->desc)}}</strong>
+                          </span>
+                          <strong>{{($value2->desc)}}</strong>
 
-                            </a>
+                        </a>
                        </li>
                      @endif
                   @endforeach
@@ -200,6 +201,27 @@
                   }
             });
   };
+
+  $.fn.delete_cat_list = function(id){
+    var txt;
+    var r = confirm("Are You sure you want to delete this records! ? ");
+    if (r == true) {
+      $.ajax({
+          type: "GET",
+          url: "{{route('inv.delete_gso_category')}}",
+          data : { category_id: id },
+          dataType: "json",
+          success: function(data){
+            location.reload();
+            // alert(data);
+          }
+        });
+    }
+
+    // alert(id);
+
+  }
+
 
 </script>
 @stop

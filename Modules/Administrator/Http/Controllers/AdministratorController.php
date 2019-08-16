@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Hash;
 use Modules\Template\Entities\UserGroup;
 use Modules\Template\Entities\UserCredentials;
 
+use Modules\Template\Library\Navigations as navs;
+
 
 class AdministratorController extends Controller
 {
@@ -36,7 +38,12 @@ class AdministratorController extends Controller
      * @return Response
      */
     public function index(){
-        return view('administrator::administrator.index',$this->setup());
+        // dd("asdas");
+
+        // return view('administrator::administrator.index',$this->setup());
+      $navs = new navs;
+      $navs = $navs->get_all_navigations();
+      return view('administrator::administrator/navigations' , $this->setup())->with('navs',$navs);
     }
 
     public function user_list(){

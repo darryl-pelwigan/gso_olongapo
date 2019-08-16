@@ -45,6 +45,7 @@
                                                <li class="ppe-items ">
                                                 <a style="font-size: 20px">
                                                  <span class="pull-right-container">
+                                                    <button type="button" onclick="$(this).delete_ppe_code({{$value3->ppeitems_id }});"  class="btn btn-danger delete_ppe_code"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
                                                       <span class="label bg-light-blue ">{{sprintf("%02d", $value3->code_no)}}</span>
                                                     </span>
                                                     <strong>{{($value3->ppeitems_desc)}}</strong>
@@ -310,6 +311,24 @@
                   }
             });
   };
+
+
+  $.fn.delete_ppe_code = function(id){
+    var txt;
+    var r = confirm("Are You sure you want to delete this records! ? ");
+    if (r == true) {
+      $.ajax({
+        type: "GET",
+        url: "{{route('delete.ppe_code')}}",
+        data : { id: id },
+        dataType: "json",
+        success: function(data){
+          location.reload();
+        }
+      });
+
+    }
+  }
 </script>
 @stop
 
