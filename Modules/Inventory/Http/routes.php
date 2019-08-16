@@ -25,7 +25,12 @@ Route::group(['middleware' => ['web','auth'], 'prefix' => 'inventory', 'namespac
 
     Route::get('/inventory-ppe-code', 'PPEcodeController@index')->name('inventory.ppe_code');
 
-    Route::get('/delete-ppe-code', 'PPEcodeController@delete_ppe_code')->name('delete.ppe_code');
+
+    Route::get('/delete_ppe_category', 'PPEcodeController@delete_ppe_category')->name('delete.delete_ppe_category');
+
+    Route::get('/delete_ppe_sub_category', 'PPEcodeController@delete_ppe_sub_category')->name('delete.delete_ppe_sub_category');
+
+    Route::get('/delete_ppe_items', 'PPEcodeController@delete_ppe_items')->name('delete.delete_ppe_items');
 
 
     Route::post('/inventory-supplier', 'SupplierController@new_suppplier')->name('inv.new_suppplier');

@@ -35,7 +35,7 @@ class PPEcodeController extends Controller
 
         $codes['get_subcatcodes'] = DB::table('inv_ppe_code_category as ppecat')
                                     ->join('inv_ppe_code_subcategory as ppesubcat','ppecat.id','=','ppesubcat.ppe_cat_id')
-                                    ->select('ppecat.id as cat_id','ppecat.desc as cat_desc','ppesubcat.id as subcat_id','ppesubcat.desc as subcat_desc','ppesubcat.code_coa as code_coa','ppesubcat.code_family as code_family')
+                                    ->select('ppecat.id as cat_id','ppecat.desc as cat_desc','ppesubcat.id as subcat_id','ppesubcat.desc as subcat_desc','ppesubcat.code_coa as code_coa','ppesubcat.code_family as code_family', 'ppesubcat.id as sub_id')
                                     ->orderby('ppesubcat.id','asc')
                                     ->get();
 
@@ -46,7 +46,8 @@ class PPEcodeController extends Controller
                                     ->groupby('ppeitems.desc')
                                     ->orderby('ppeitems.code_no','asc')
                                     ->get();
-            $this->data['codes']=$codes;
+        $this->data['codes']=$codes;
+
        return view('inventory::inventory.ppe-code',$this->setup());
     }
 
@@ -217,12 +218,22 @@ class PPEcodeController extends Controller
          return $data;
     }
 
-    function delete_ppe_code(Request $request){
 
-        $lists = PPEsubcode::where('id', $request->id)->delete();
-
+    function delete_ppe_category(Request $request){
+        $lists = PPEcode::where('id', $request->id)->delete();
         return 0;
+    }
 
+    function delete_ppe_sub_category(Request $request){
+        $lists = PPEsubcode::where('id', $request->id)->delete();
+        return 0;
+    }
+
+
+    function delete_ppe_items(Request $request){
+        $lists = PPEitems::where('id', $request->id)->delete();
+        return 0;
+        
     }
 
 }
