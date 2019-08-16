@@ -100,7 +100,7 @@ class AdministratorController extends Controller
                 ->withInput();
         }
         $user->ucrd_username = $request['ucrd_username'];
-        $user->password = $request['password'];
+        $user->password = Hash::make($request['password']);
         $user->ucrd_email = $request['ucrd_email'];
         $user->group_id = $request['group_id'];
         $user->save();
