@@ -102,7 +102,7 @@ class NavigationsController extends Controller
       $validator = Validator::make($request->all(), [
             'menu_group_id' => 'required|numeric',
             'menu_title' => 'required|regex:/^[a-z0-9 .\-]+$/i',
-            'menu_route' => 'required|unique:olongapo_tmpl_main_navigation,route|regex:/^[a-z0-9 .\-]+$/i',
+            // 'menu_route' => 'required|unique:olongapo_tmpl_main_navigation,route|regex:/^[a-z0-9 .\-]+$/i',
             'menu_arrangement' => 'required|numeric',
         ],
         [
@@ -110,7 +110,7 @@ class NavigationsController extends Controller
             'menu_group_id.numeric' => 'The Group must be numeric.',
             'menu_title.required' => 'The Title is required and cant be empty.',
             'menu_title.unique' => 'The Title must be unique.',
-            'menu_route.unique' => 'The Route must be unique.',
+            // 'menu_route.unique' => 'The Route must be unique.',
             'menu_route.required' => 'The Route is required and cant be empty.',
         ]);
         $mainnav = new mainnav;

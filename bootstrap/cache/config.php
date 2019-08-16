@@ -237,7 +237,7 @@
       'sqlite' => 
       array (
         'driver' => 'sqlite',
-        'database' => 'olongapo2',
+        'database' => 'olongapo',
         'prefix' => '',
       ),
       'mysql' => 
@@ -245,7 +245,7 @@
         'driver' => 'mysql',
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'olongapo2',
+        'database' => 'olongapo',
         'username' => 'root',
         'password' => '',
         'charset' => 'utf8mb4',
@@ -259,7 +259,7 @@
         'driver' => 'pgsql',
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'olongapo2',
+        'database' => 'olongapo',
         'username' => 'root',
         'password' => '',
         'charset' => 'utf8',

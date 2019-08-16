@@ -215,7 +215,7 @@ class PurchaseOrderController extends Controller
             $md = $dt->format('md');
             $dept = $get_dept->dept_id;
             $subdept_code = $get_dept->subdept_code;
-            $count = sprintf("%'03d",$pr_no->count()+100);
+            $count = sprintf("%'03d",$pr_no->count());
             $pono = $y.'-'.$dept.'-'.$subdept_code.'-'.$md.'-'.$count;
 
 
@@ -234,7 +234,7 @@ class PurchaseOrderController extends Controller
             $md = $dt->format('m');
             $dept = $get_dept->dept_id;
             $subdept_code = $get_dept->dept_id;
-            $count = sprintf("%'03d",$pr_no->count()+100);
+            $count = sprintf("%'03d",$pr_no->count());
             $pono = $subdept_code.'-'.$y.'-'.$md.'-'.$count;
 
 
