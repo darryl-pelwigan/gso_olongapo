@@ -1,6 +1,4 @@
-@extends('template::admin-pages.menus.'.$template['menu'])
-
-@section('content')
+<?php $__env->startSection('content'); ?>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -16,13 +14,14 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-               @include('template::admin-layouts.includes.message')
+               <?php echo $__env->make('template::admin-layouts.includes.message', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
             </div>
 
             <!-- /.box-header -->
             <div class="box-body">
             <form class="form-horizontal" method="POST" action="#">
-            {{csrf_field()}}
+            <?php echo e(csrf_field()); ?>
+
                <div class="form-group">
                   <label class="control-label col-sm-2" for="emp_name">Employee Full Name:</label>
                   <div class="col-sm-6">
@@ -57,9 +56,9 @@
                   <label class="control-label col-sm-2" for="year_signee_start">YEAR START:</label>
                   <div class="col-sm-6">
                      <select name="year_signee_start" class="form-control">
-                         @for( $x = 0 ; $x < 4 ; $x++)
-                          <option value="{{date('Y')-$x}}">{{date('Y')-$x}}</option>
-                         @endfor
+                         <?php for( $x = 0 ; $x < 4 ; $x++): ?>
+                          <option value="<?php echo e(date('Y')-$x); ?>"><?php echo e(date('Y')-$x); ?></option>
+                         <?php endfor; ?>
                     </select>
                   </div>
                 </div>
@@ -68,9 +67,9 @@
                   <label class="control-label col-sm-2" for="year_signee_end">YEAR END:</label>
                   <div class="col-sm-6">
                      <select name="year_signee_end" class="form-control">
-                         @for( $x = 0 ; $x < 4 ; $x++)
-                          <option value="{{date('Y')+$x}}">{{date('Y')+$x}}</option>
-                         @endfor
+                         <?php for( $x = 0 ; $x < 4 ; $x++): ?>
+                          <option value="<?php echo e(date('Y')+$x); ?>"><?php echo e(date('Y')+$x); ?></option>
+                         <?php endfor; ?>
                     </select>
                   </div>
                 </div>
@@ -100,7 +99,7 @@
             <div class="modal-body">
               <div id="status"></div>
               <div id="contents-menu">
-                  <form class="form-horizontal" id="new_employee" method="post" action="{{ route('gso_update_pr_signee') }}">
+                  <form class="form-horizontal" id="new_employee" method="post" action="<?php echo e(route('gso_update_pr_signee')); ?>">
                     <div class="box-body">
                       <div id="statusCI"></div>
                       <div class="employee_info">
@@ -138,9 +137,9 @@
                           <label for="obr_date" class="col-sm-3 control-label">Year Start : </label>
                           <div class="col-sm-9">
                             <select name="year_signee_start" id="year_signee_start" class="form-control">
-                              @for( $x = 0 ; $x < 4 ; $x++)
-                               <option value="{{date('Y')-$x}}">{{date('Y')-$x}}</option>
-                              @endfor
+                              <?php for( $x = 0 ; $x < 4 ; $x++): ?>
+                               <option value="<?php echo e(date('Y')-$x); ?>"><?php echo e(date('Y')-$x); ?></option>
+                              <?php endfor; ?>
                            </select>
                           </div>
                         </div>
@@ -149,9 +148,9 @@
                           <label for="obr_date" class="col-sm-3 control-label">Year End : </label>
                           <div class="col-sm-9">
                             <select name="year_signee_end" id="year_signee_end" class="form-control">
-                                @for( $x = 0 ; $x < 4 ; $x++)
-                                 <option value="{{date('Y')+$x}}">{{date('Y')+$x}}</option>
-                                @endfor
+                                <?php for( $x = 0 ; $x < 4 ; $x++): ?>
+                                 <option value="<?php echo e(date('Y')+$x); ?>"><?php echo e(date('Y')+$x); ?></option>
+                                <?php endfor; ?>
                            </select>
                           </div>
                         </div>
@@ -168,7 +167,8 @@
                     </div>
                     <!-- /.box-footer -->
                     <input type="hidden" id="rec_id" name="rec_id" />
-                    {{csrf_field()}}
+                    <?php echo e(csrf_field()); ?>
+
                   </form>
 
               </div>
@@ -214,19 +214,19 @@
   <!-- /.content-wrapper -->
 
   <!-- Modal -->
-   @stop
+   <?php $__env->stopSection(); ?>
 
 
 
 
 
-@section('plugins-script')
-<script src="{{asset('adminlte/plugins/autocomplete/')}}/jquery.autocomplete.min.js"></script>
-<script src="{{asset('adminlte/plugins/daterangepicker/')}}/moment.min.js"></script>
+<?php $__env->startSection('plugins-script'); ?>
+<script src="<?php echo e(asset('adminlte/plugins/autocomplete/')); ?>/jquery.autocomplete.min.js"></script>
+<script src="<?php echo e(asset('adminlte/plugins/daterangepicker/')); ?>/moment.min.js"></script>
 <!-- bootstrap datepicker http://bootstrap-datepicker.readthedocs.org/ -->
-<script src="{{asset('adminlte')}}/plugins/datepicker/bootstrap-datepicker.js"></script>
-<script src="{{asset('adminlte')}}/plugins/tinymce/js/tinymce/tinymce.min.js"></script>
-<script src="{{asset('adminlte')}}/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="<?php echo e(asset('adminlte')); ?>/plugins/datepicker/bootstrap-datepicker.js"></script>
+<script src="<?php echo e(asset('adminlte')); ?>/plugins/tinymce/js/tinymce/tinymce.min.js"></script>
+<script src="<?php echo e(asset('adminlte')); ?>/plugins/datatables/jquery.dataTables.min.js"></script>
 
 <script type="text/javascript">
   $(function() {
@@ -242,10 +242,10 @@ $.fn.showSignee = function(){
         serverSide: true,
         ajax:{
           "type": 'POST',
-          "url" : '{!! route('gso.set_datatables') !!}',
+          "url" : '<?php echo route('gso.set_datatables'); ?>',
           data : {
                   dataTables : 'gso_signee',
-                  "_token" : '{{csrf_token()}}'
+                  "_token" : '<?php echo e(csrf_token()); ?>'
           }
         },
         columns: [
@@ -315,10 +315,10 @@ $.fn.showSignee = function(){
 
            $.ajax({
             type: "POST",
-            url: "{{route('gso.deleteSignee')}}",
+            url: "<?php echo e(route('gso.deleteSignee')); ?>",
             data : {
               data_id : data_id,
-              _token : '{{csrf_token()}}'
+              _token : '<?php echo e(csrf_token()); ?>'
             },
             dataType: "json",
             error: function(){
@@ -331,11 +331,11 @@ $.fn.showSignee = function(){
  };
 
    $('#emp_name').autocomplete({
-        serviceUrl: '{{route("emp.get_employee_name")}}',
+        serviceUrl: '<?php echo e(route("emp.get_employee_name")); ?>',
         dataType: 'json',
         type: 'POST',
         params : {
-                  _token : '{{csrf_token()}}'
+                  _token : '<?php echo e(csrf_token()); ?>'
         },
         onSelect: function (suggestion) {
           console.log(suggestion.dept_desc);
@@ -352,11 +352,11 @@ $.fn.showSignee = function(){
       $.ajax({
         type: 'POST',
         data:{
-          _token: '{{ csrf_token() }}',
+          _token: '<?php echo e(csrf_token()); ?>',
           id:id
         },
         dataType: 'JSON',
-        url: '{{ route("gso.get_pr_signee") }}',
+        url: '<?php echo e(route("gso.get_pr_signee")); ?>',
         success: function(data) {
           $('#new_employee_modalLabel').text('Update Record')
           $('#full_name').val(data.full_name);
@@ -369,13 +369,13 @@ $.fn.showSignee = function(){
       });
     }
 </script>
-@stop
+<?php $__env->stopSection(); ?>
 
 
-@section('plugins-css')
+<?php $__env->startSection('plugins-css'); ?>
  <!-- Bootstrap time Picker -->
-  <link rel="stylesheet" href="{{asset('adminlte')}}/plugins/datepicker/datepicker3.css">
- <link rel="stylesheet" href="{{asset('adminlte')}}/plugins/datatables/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="<?php echo e(asset('adminlte')); ?>/plugins/datepicker/datepicker3.css">
+ <link rel="stylesheet" href="<?php echo e(asset('adminlte')); ?>/plugins/datatables/jquery.dataTables.min.css">
   <style type="text/css">
 
 .autocomplete-suggestions { border: 1px solid #999; background: #FFF; overflow: auto; }
@@ -397,4 +397,6 @@ table>thead>tr#test>th>input,table>tfoot>tr>th>input{
   </style>
 
 
-@stop
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('template::admin-pages.menus.'.$template['menu'], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
