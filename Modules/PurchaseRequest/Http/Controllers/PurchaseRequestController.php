@@ -104,7 +104,7 @@ class PurchaseRequestController extends Controller
         $this->data['pr'] = PurchaseNo::find($request->input('pr_id'));
 
         if($request->input('pdf')){
-            $this->data['approved_by'] = Requestordersignee::where('deleted_at','=',null)->get();
+            $this->data['approved_by'] = Requestordersignee::where('deleted_at','=',null)->orderBy('position', 'DESC')->get();
 
             $this->data['requested_by'] = DB::table('olongapo_purchase_request_no')
                                         ->join('olongapo_employee_list', 'olongapo_purchase_request_no.requested_by', '=', 'olongapo_employee_list.id')
@@ -117,9 +117,9 @@ class PurchaseRequestController extends Controller
                                         ])
                                         ->where('olongapo_purchase_request_no.id', '=', $request->input('pr_id') )
                                         ->first();
-
+            // dd( $this->data['approved_by'] ); 
             $pdf = PDF::loadView('purchaserequest::request.pdf',$this->setup());
-           $pdf->setPaper(array(0,0,612.00,936.0));
+            $pdf->setPaper(array(0,0,612.00,936.0));
 
             return @$pdf->stream();
 

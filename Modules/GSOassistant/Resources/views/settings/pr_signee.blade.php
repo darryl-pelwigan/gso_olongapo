@@ -35,8 +35,9 @@
                   <div class="col-sm-6">
                       <select name="emp_position" class="form-control">
                           <option value="City Mayor">City Mayor</option>
-                          <option value="Secretary to the Mayor">Secretary to the Mayor</option>
                           <option value="Acting City Mayor">Acting City Mayor</option>
+                          <option value="ICO, City Treasurer's Office">ICO, City Treasurer's Office</option>
+                          <option value="Secretary to the Mayor">Secretary to the Mayor</option>
                     </select>
                   </div>
                 </div>
@@ -115,6 +116,8 @@
                           <div class="col-sm-9">
                             <select name="position" id="position" class="form-control">
                                 <option value="City Mayor">City Mayor</option>
+                                <option value="Acting City Mayor">Acting City Mayor</option>
+                                <option value="ICO, City Treasurer's Office">ICO, City Treasurer's Office</option>
                                 <option value="Secretary to the Mayor">Secretary to the Mayor</option>
                             </select>
                           </div>

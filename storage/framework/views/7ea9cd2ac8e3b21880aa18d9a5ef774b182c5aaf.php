@@ -1,6 +1,4 @@
-@extends('template::pdf.default')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
   <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 <?php
@@ -41,7 +39,7 @@ if($pr->proc_type != 0){
                <div class="header_tbl">
                  <table class="table table-thnormal" >
                    <tr>
-                     <td align="right" width="25%" style="padding-left:130px;"><img src="{{asset('olongapo')}}/img/logo-100.png" alt="" height="75px;"></td>
+                     <td align="right" width="25%" style="padding-left:130px;"><img src="<?php echo e(asset('olongapo')); ?>/img/logo-100.png" alt="" height="75px;"></td>
                      <td align="center" width="100%" style="padding-left:60px;">
                        <h3 class="pr_title">PURCHASE REQUEST</h3>
                        <p>Republic of the Philippines</p>
@@ -57,11 +55,11 @@ if($pr->proc_type != 0){
                         <table class="table_header" width="100%">
                           <tr>
                             <td style="padding-right:60px;">Department: </td>
-                            <td class="underline"><strong>{{$pr->pr_dept->dept->dept_desc}}</strong></td>
+                            <td class="underline"><strong><?php echo e($pr->pr_dept->dept->dept_desc); ?></strong></td>
                           </tr>
                           <tr>
                             <td>Section: </td>
-                            <td class="underline"><strong>{{$pr->pr_dept->dept_desc}}</strong></td>
+                            <td class="underline"><strong><?php echo e($pr->pr_dept->dept_desc); ?></strong></td>
                           </tr>
                           <tr>
                             <td> &nbsp;</td>
@@ -75,19 +73,19 @@ if($pr->proc_type != 0){
                         <table class="table_header" width="100%" style="margin-right:15px;">
                           <tr>
                             <td width="40%">PR No.: </td>
-                            <td width="60%" class="underline" style="padding-right:80px;"><strong>{{$pr->pr_no}}</strong></td>
+                            <td width="60%" class="underline" style="padding-right:80px;"><strong><?php echo e($pr->pr_no); ?></strong></td>
                           </tr>
                           <tr>
                             <td>SAI No.:</td>
-                            <td class="underline"><strong>{{$pr->sai_no}}</strong></td>
+                            <td class="underline"><strong><?php echo e($pr->sai_no); ?></strong></td>
                           </tr>
                           <tr>
                             <td>ALOBS No.: </td>
-                            <td class="underline"><strong>{{$pr->pr_obr->obr_no ?? ''}}</strong></td>
+                            <td class="underline"><strong><?php echo e($pr->pr_obr->obr_no ?? ''); ?></strong></td>
                           </tr>
                           <tr>
                             <td style="padding-right:25px;">APP/PPMP No.:</td>
-                            <td class="underline"><strong>{{$pr->ppmp->ppmp_no ?? ''}}</strong></td>
+                            <td class="underline"><strong><?php echo e($pr->ppmp->ppmp_no ?? ''); ?></strong></td>
                           </tr>
                         </table>
                       </td>
@@ -95,15 +93,15 @@ if($pr->proc_type != 0){
                         <table class="table_header" width="100%">
                           <tr>
                             <td style="padding-right:30px;">Date:</td>
-                            <td class="underline" style="padding-right:50px;">{{$pr_date->format('F d , Y')}}</td>
+                            <td class="underline" style="padding-right:50px;"><?php echo e($pr_date->format('F d , Y')); ?></td>
                           </tr>
                           <tr>
                             <td>Date:</td>
-                            <td class="underline">{{ date('F d, Y', strtotime($pr->sai_date)) }}</td>
+                            <td class="underline"><?php echo e(date('F d, Y', strtotime($pr->sai_date))); ?></td>
                           </tr>
                           <tr>
                             <td>Date:</td>
-                            <td class="underline">{{ $obr_date }}</td>
+                            <td class="underline"><?php echo e($obr_date); ?></td>
                           </tr>
                            <tr>
                             <td> &nbsp;</td>
@@ -134,16 +132,16 @@ if($pr->proc_type != 0){
                           $prs = $pr->pr_items()->get();
                         ?>
 
-                        @for ($x = $xx; $x < $loops; $x++)
+                        <?php for($x = $xx; $x < $loops; $x++): ?>
                           <?php if(isset($prs[$x]['qty'] )){?>
                             <?php $total_price = $prs[$x]['unit_price'] * $prs[$x]['qty'];  ?>
                               <tr id="tbl_items">
-                                <td class="text-right2" style='padding:5px;'>{{ ($x+1) }}</td>
-                                <td class="text-right2">{{ $prs[$x]['qty'] }}</td>
-                                <td class="text-right2">{{ $prs[$x]['unit'] }}</td>
-                                <td class="text-right2" style='word-wrap: break-word;'>{{ $prs[$x]['description'] }}</td>
-                                <td class="text-right2">{{ number_format($prs[$x]['unit_price'],2) }} </td>
-                                <td class="text-right2">{{ number_format($prs[$x]['total_price'],2) }} </td>
+                                <td class="text-right2" style='padding:5px;'><?php echo e(($x+1)); ?></td>
+                                <td class="text-right2"><?php echo e($prs[$x]['qty']); ?></td>
+                                <td class="text-right2"><?php echo e($prs[$x]['unit']); ?></td>
+                                <td class="text-right2" style='word-wrap: break-word;'><?php echo e($prs[$x]['description']); ?></td>
+                                <td class="text-right2"><?php echo e(number_format($prs[$x]['unit_price'],2)); ?> </td>
+                                <td class="text-right2"><?php echo e(number_format($prs[$x]['total_price'],2)); ?> </td>
                               </tr>
                             <?php $count++;  $unit_price_total += $prs[$x]['unit_price'] ; $sum_price_total +=$total_price;  ?>
                         <?php
@@ -160,7 +158,7 @@ if($pr->proc_type != 0){
                         <?php
                         }
                         ?>
-                        @endfor
+                        <?php endfor; ?>
                          <?php if ($count <= 30 && $count > 21){
                           echo "<style>";
                           echo "#tbl_items{";
@@ -186,19 +184,19 @@ if($pr->proc_type != 0){
 
                         <?php $alltotal += $sum_price_total; ?>
                         <tr>
-                         <td colspan="5" class="total" style="padding:10px">{{ ($i == round($pageloop) || round($pageloop) == 1 ? 'Total' : 'Subtotal') }} </td>
-                         <td class="text-right2 total" style="padding:10px">{{ ($i == round($pageloop) || round($pageloop) == 1 ? number_format($alltotal,2) : number_format($sum_price_total,2))  }}</td>
+                         <td colspan="5" class="total" style="padding:10px"><?php echo e(($i == round($pageloop) || round($pageloop) == 1 ? 'Total' : 'Subtotal')); ?> </td>
+                         <td class="text-right2 total" style="padding:10px"><?php echo e(($i == round($pageloop) || round($pageloop) == 1 ? number_format($alltotal,2) : number_format($sum_price_total,2))); ?></td>
                         </tr>
 
                     </tbody>
               </table>
-              @if($i == round($pageloop) || $pageloop == 1)
+              <?php if($i == round($pageloop) || $pageloop == 1): ?>
                 <table class="table  table-bordered tbl_purpose" style="margin-left:-1px;">
                    <tr>
-                       <td colspan="6" rowspan="4" style="padding-right:6px;">PURPOSE :  <span><u>{{$pr->pr_purpose}}</u></span><br>___________________________________________________________________________________________________________________</td>
+                       <td colspan="6" rowspan="4" style="padding-right:6px;">PURPOSE :  <span><u><?php echo e($pr->pr_purpose); ?></u></span><br>___________________________________________________________________________________________________________________</td>
                      </tr>
                 </table>
-              @endif
+              <?php endif; ?>
               <table class="table  table-bordered table_footer" border="1" style="border-collapse: collapse;" width="100%">
                   <tr>
                       <td width="20%">&nbsp;</td>
@@ -213,18 +211,11 @@ if($pr->proc_type != 0){
                     <td class="underline"><br></td>
                   </tr>
                   <tr>
-                    <td class="underline">{{ strtoupper($requested_by->fname ?? '') }} {{ strtoupper($requested_by->mname ?? '')  }}  {{ strtoupper($requested_by->lname ?? '')  }}</td>
+                    <td class="underline"><?php echo e(strtoupper($requested_by->fname ?? '')); ?> <?php echo e(strtoupper($requested_by->mname ?? '')); ?>  <?php echo e(strtoupper($requested_by->lname ?? '')); ?></td>
 
-      {{--               @if ($approved_by)
-                      @foreach ($approved_by as $element)
-                        @if ($element->position == "ICo, City Treasurer's Office")
-                          <td class="underline"> {{ $element->full_name }}</td>
-                        @endif
-                        
-                      @endforeach
-                    @endif --}}
+      
 
-                    @php
+                    <?php 
                       $treasurer = '';
                       $sec_mayor = '';
                       if ($approved_by) {
@@ -245,21 +236,23 @@ if($pr->proc_type != 0){
 
                         }
                       }
-                    @endphp
+                     ?>
 
                     <td>
-                      {{ $treasurer}}
+                      <?php echo e($treasurer); ?>
+
                     </td>
                     <td>
-                      {{ $sec_mayor}}
+                      <?php echo e($sec_mayor); ?>
+
                     </td>
 
                     
 
-                    {{-- <td class="underline" style="padding-right: 20px; padding-left:20px;">{{ strtoupper($approved_by[0]->full_name ?? '') }} / {{ strtoupper($approved_by[1]->full_name ?? '') }}</td> --}}
+                    
                   </tr>
                    <tr>
-                    <td class="underline">{{ $requested_by->title ?? '' }}</td>
+                    <td class="underline"><?php echo e($requested_by->title ?? ''); ?></td>
                     <td class="underline">ICO, City Treasurer's Office</td>
                     <td class="underline"><br>Secretary to the Mayor / City Mayor</td>
                   </tr>
@@ -283,7 +276,7 @@ if($pr->proc_type != 0){
 
 
 
-@section('plugins-css')
+<?php $__env->startSection('plugins-css'); ?>
 <style type="text/css">
 
 html,body{
@@ -368,4 +361,6 @@ html,body{
 </style>
 
 
-@stop
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('template::pdf.default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
