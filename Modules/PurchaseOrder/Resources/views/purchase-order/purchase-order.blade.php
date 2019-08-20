@@ -206,10 +206,46 @@
 
         </div>
       </div>
-
     </div>
   </div>
 </div>
+
+      <div class="modal fade" id="pdf" tabindex="-1" role="dialog" aria-labelledby="add_purchase_order_modalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="add_purchase_order_modalLabel"> <span>Set Authorized Official</span></h4>
+      </div>
+      <div class="modal-body">
+        <div id="status"></div>
+        <div id="contents-menu">
+            <form class="form-horizontal" id="auth_official_form">
+              <div class="box-body">
+                <div id="statusC"></div>
+
+                <div class="form-group">
+                  <label for="obr_date" class="col-sm-2 control-label">Authorized Official: </label>
+                  <div class="col-sm-3">
+                    <input type="text" class="form-control" id="auth_official"  name="auth_official" placeholder="Authorized Official">
+                  </div>
+
+
+                <button type="button" class="btn btn-info" onclick="$(this).sentPurchaseOrder();">Submit</button>
+                </div>
+              <!-- /.box-footer -->
+
+              {{csrf_field()}}
+            </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
 
 
    @stop
@@ -274,7 +310,7 @@ $(function() {
               { data: null, name: 'olongapo_bac_control_info.id' ,
               render : function(data , type , row){
                       return '<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#add_purchase_order_modal" onclick="$(this).addPOnumber('+data.pono_id+');" >Update</button>\
-                        <form method="post" action="{{route('po.po_pdf')}}">{{csrf_field()}}<input type="hidden" name="pono_id" value="'+data.pono_id+'" /><input type="submit" class="btn btn-sm btn-default" name="pdf" value="Pdf" /> </form> ';
+                        <button type="button" class="btn  btn-sm" data-toggle="modal" data-target="#pdf" onclick="$(this).pdf('+data.pono_id+');" >PDF</button> ';
                 }
               },
         ],
@@ -353,6 +389,29 @@ $.fn.addPOnumber = function(pono_id){
 
 
               $('#add_purchase_request_modal').modal({
+                      backdrop: 'static',
+                      keyboard: false
+              });
+
+            }
+     });
+  };
+
+$.fn.pdf = function(pono_id){
+    $.ajax({
+            type: "POST",
+             url: "{{route('po.get-po')}}",
+            data : {
+              pono_id : pono_id,
+              _token : '{{csrf_token()}}'
+            },
+            dataType: "json",
+            error: function(){
+              console.log('error');
+            },
+            success: function(data){
+
+              $('#pdf').modal({
                       backdrop: 'static',
                       keyboard: false
               });

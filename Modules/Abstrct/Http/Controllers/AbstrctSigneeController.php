@@ -47,19 +47,20 @@ class AbstrctSigneeController extends Controller
     public function index()
     {
         $this->data['signee'] = AbstrctSignee::all();
+
         return view('abstrct::signee.index',$this->setup());
-        
+
     }
 
     public function update(Request $request)
     {
         $data['status'] = 1;
-        
+
         $signee_name = $request->input('signee_name');
         $signee_id = $request->input('signee_id');
         $signee_position = $request->input('signee_position');
 
-        for ($i=0; $i < count($signee_id); $i++) { 
+        for ($i=0; $i < count($signee_id); $i++) {
             $abstract_sign = AbstrctSignee::find($signee_id[$i]);
             $abstract_sign->name = $signee_name[$i];
             $abstract_sign->position =$signee_position[$i];
@@ -67,7 +68,7 @@ class AbstrctSigneeController extends Controller
         }
          $this->data['signee'] = AbstrctSignee::all();
         return view('abstrct::signee.index',$this->setup());
-        
+
     }
 
 

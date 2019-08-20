@@ -715,8 +715,10 @@ class AbstrctController extends Controller
         $data['awards_given'] = $awards_given;
 
         $pdf = PDF::loadView('abstrct::abstrct.absctrct_list_pdf',$data);
-       $pdf->setPaper(array(0,0,612.00,936.0),'landscape');
+        $pdf->setPaper(array(0,0,612.00,936.0),'landscape');
         return @$pdf->stream();
+
+
     }
 
     public function delete_abstract(Request $request)

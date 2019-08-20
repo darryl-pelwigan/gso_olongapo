@@ -167,7 +167,7 @@
   </div>
   <div>
       <table width="100%"  border="0" class="tbl_signee">
-        <tr>
+        {{-- <tr>
           @for( $x = 0 ; $x< count($committee) ; $x++)
             <td class="underline" width="10%">{{ strtoupper($committee[$x]->employee_name) }}</td>
             <td width="5%"></td>
@@ -176,6 +176,18 @@
         <tr>
           @for( $x = 0 ; $x< count($committee) ; $x++)
             <td class="center">{{$committee[$x]->title}}</td>
+            <td width="5%"></td>
+          @endfor
+        </tr> --}}
+        <tr>
+          @for( $x = 0 ; $x< count($signee) ; $x++)
+            <td class="underline" width="10%">{{ strtoupper($signee[$x]->name) }}</td>
+            <td width="5%"></td>
+          @endfor
+        </tr>
+        <tr>
+          @for( $x = 0 ; $x< count($signee) ; $x++)
+            <td class="center">{{$signee[$x]->position}}</td>
             <td width="5%"></td>
           @endfor
         </tr>

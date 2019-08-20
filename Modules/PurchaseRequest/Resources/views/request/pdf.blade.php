@@ -45,7 +45,7 @@ if($pr->proc_type != 0){
                      <td align="center" width="100%" style="padding-left:60px;">
                        <h3 class="pr_title">PURCHASE REQUEST</h3>
                        <p>Republic of the Philippines</p>
-                       City of Olongapo</td> 
+                       City of Olongapo</td>
                    </tr>
                  </table>
                </div>
@@ -138,12 +138,12 @@ if($pr->proc_type != 0){
                           <?php if(isset($prs[$x]['qty'] )){?>
                             <?php $total_price = $prs[$x]['unit_price'] * $prs[$x]['qty'];  ?>
                               <tr id="tbl_items">
-                                <td class="text-right2" style='padding:5px;'>{{ ($x+1) }}</td>
-                                <td class="text-right2">{{ $prs[$x]['qty'] }}</td>
-                                <td class="text-right2">{{ $prs[$x]['unit'] }}</td>
-                                <td class="text-right2" style='word-wrap: break-word;'>{{ $prs[$x]['description'] }}</td>
-                                <td class="text-right2">{{ number_format($prs[$x]['unit_price'],2) }} </td>
-                                <td class="text-right2">{{ number_format($prs[$x]['total_price'],2) }} </td>
+                                <td class="text-right2" style='padding:5px; text-align: left'>{{ ($x+1) }}</td>
+                                <td class="text-right2" style='text-align: right'>{{ $prs[$x]['qty'] }}</td>
+                                <td class="text-right2" style='text-align: left'>{{ $prs[$x]['unit'] }}</td>
+                                <td class="text-right2" style='word-wrap: break-word; text-align: left' >{{ $prs[$x]['description'] }}</td>
+                                <td class="text-right2"  style='text-align: right'>{{ number_format($prs[$x]['unit_price'],2) }} </td>
+                                <td class="text-right2"  style='text-align: right'>{{ number_format($prs[$x]['total_price'],2) }} </td>
                               </tr>
                             <?php $count++;  $unit_price_total += $prs[$x]['unit_price'] ; $sum_price_total +=$total_price;  ?>
                         <?php
@@ -220,7 +220,7 @@ if($pr->proc_type != 0){
                         @if ($element->position == "ICo, City Treasurer's Office")
                           <td class="underline"> {{ $element->full_name }}</td>
                         @endif
-                        
+
                       @endforeach
                     @endif --}}
 
@@ -231,7 +231,7 @@ if($pr->proc_type != 0){
                         foreach ($approved_by as $key => $value) {
                           if ($value->position == "Ico, City Treasurer's Office") {
                             $treasurer = $value->full_name;
-                            
+
                           }
 
                           if ($value->position == "Secretary To The Mayor") {
@@ -254,7 +254,7 @@ if($pr->proc_type != 0){
                       {{ $sec_mayor}}
                     </td>
 
-                    
+
 
                     {{-- <td class="underline" style="padding-right: 20px; padding-left:20px;">{{ strtoupper($approved_by[0]->full_name ?? '') }} / {{ strtoupper($approved_by[1]->full_name ?? '') }}</td> --}}
                   </tr>
