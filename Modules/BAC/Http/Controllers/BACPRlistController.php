@@ -38,7 +38,6 @@ class BACPRlistController extends Controller
 
         $this->data['holiday'] = $holiday;
         $this->data['procurement'] = Procmethod::all();
-
         return view('bac::bac-pr.pr-list',$this->setup());
     }
 
