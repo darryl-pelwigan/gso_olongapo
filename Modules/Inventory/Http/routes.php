@@ -32,7 +32,6 @@ Route::group(['middleware' => ['web','auth'], 'prefix' => 'inventory', 'namespac
 
     Route::get('/delete_ppe_items', 'PPEcodeController@delete_ppe_items')->name('delete.delete_ppe_items');
 
-
     Route::post('/inventory-supplier', 'SupplierController@new_suppplier')->name('inv.new_suppplier');
 
     Route::get('/inventory-supplier', 'SupplierController@index')->name('inventory.supplier');

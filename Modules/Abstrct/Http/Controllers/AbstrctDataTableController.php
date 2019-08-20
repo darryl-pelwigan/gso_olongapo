@@ -12,6 +12,7 @@ use Modules\Abstrct\Library\Abstrct_datatable;
 class AbstrctDataTableController extends Controller
 {
     public function set_datatables(Request $request){
+        
         $Abstrct_datatable = new Abstrct_datatable;
         if(method_exists ( $Abstrct_datatable, $request->input('dataTables') )){
             $vars = $request->all();

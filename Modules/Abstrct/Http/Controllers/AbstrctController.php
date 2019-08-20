@@ -48,16 +48,16 @@ class AbstrctController extends Controller
     public function index()
     {
         $this->data['committee'] = db::table('olongapo_bac_awards_committee')
-                                        ->join('olongapo_position','olongapo_position.id','=','olongapo_bac_awards_committee.employee_bacposition')
-                                        ->select([
-                                                    'olongapo_position.title',
-                                                    'olongapo_bac_awards_committee.employee_id as employee_id','olongapo_bac_awards_committee.employee_name'
-                                                ])
-                                        ->where('olongapo_bac_awards_committee.deleted_at','=',null)
-                                        ->where('department', '=','Bids and Awards Committee')
-                                        ->limit(4)
-                                        ->orderBy('olongapo_bac_awards_committee.id', 'desc')
-                                        ->get();
+                ->join('olongapo_position','olongapo_position.id','=','olongapo_bac_awards_committee.employee_bacposition')
+                ->select([
+                            'olongapo_position.title',
+                            'olongapo_bac_awards_committee.employee_id as employee_id','olongapo_bac_awards_committee.employee_name'
+                        ])
+                ->where('olongapo_bac_awards_committee.deleted_at','=',null)
+                ->where('department', '=','Bids and Awards Committee')
+                ->limit(4)
+                ->orderBy('olongapo_bac_awards_committee.id', 'desc')
+                ->get();
 
 
         $this->data['proc_methods'] = Procmethod::all();
@@ -372,29 +372,6 @@ class AbstrctController extends Controller
                     $purchasereq = PurchaseNo::where('id', '=', $request['pr_id_update'])->first();
                     $purchasereq->proc_type = $request['proc_type'];
                     $purchasereq->save();
-
-                    ##abstract signee
-                    // $result = AbstrctSignee::all();
-                    // if(count($result) == 0){
-                    //     for ($i=0; $i < count($request->input('employee_id')); $i++) {
-                    //         $abstract_sign = new AbstrctSignee;
-                    //         $abstract_sign->employee_id = $request->input('employee_id')[$i];
-                    //         $abstract_sign->rank = $request->input('rank')[$i];
-                    //         $abstract_sign->save();
-                    //     }
-                    // }else{
-                    //     for ($i=0; $i < count($request->input('employee_id')); $i++) {
-                    //         $count = AbstrctSignee::where('rank', '=', $request->input('rank')[$i])->first();
-                    //         if(count($count) == 0){
-                    //             $abstract_sign = new AbstrctSignee;
-                    //         }else{
-                    //             $abstract_sign = AbstrctSignee::where('rank', '=', $request->input('rank')[$i])->first();
-                    //         }
-                    //         $abstract_sign->employee_id = $request->input('employee_id')[$i];
-                    //         $abstract_sign->rank = $request->input('rank')[$i];
-                    //         $abstract_sign->save();
-                    //     }
-                    // }
 
                     for($y=0;$y<count($request['pubbid_id']);$y++){
                         if($request['pubbid_id.'.$y]){
