@@ -5,7 +5,7 @@
 
 
   <div class="borderr content-wrapper">
- 
+
     <!-- Main content -->
     <section class="content">
       <div class="row">
@@ -20,9 +20,9 @@
                    <tr>
                      <td width="50%"></td>
                      <td style="padding-bottom: 11px; !important" id="centertext" align="center" width="50%">
-                        <h3 class=pr_title">PURCHASE ORDER</h3>
+                        <h3 class="pr_title">PURCHASE ORDER</h3>
                         <p>Republic of the Philippines</p>
-                        <b>City of Olongapo</b>                     
+                        <b>City of Olongapo</b>
                      </td>
                      <td width="50%"></td>
                    </tr>
@@ -87,7 +87,7 @@
                       <table class="table_header" width="100%">
                         <tr>
                           <td width="0%" >Place of Delivery: </td>
-                          <td width="0%" class="" > _____________________________</td>
+                          <td width="0%" class="" style="font-size:13px" ><u>{{ $info->dept_desc }}</u></td>
                         </tr>
                         <tr>
                         <td width="0%">Date of Delivery: </td>
@@ -178,7 +178,7 @@
                                       <tr>
                                         <td >Conforme:</td>
                                         <td></td>
-                                        <td style=""><br><br><span><u>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;{{ strtoupper($info->fname ?? '') }} {{ strtoupper($info->mname ?? '')  }}  {{ strtoupper($info->lname ?? '')}}&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;</u></span></td>
+                                        <td style=""><br><br><span><u>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;{{ strtoupper($info->fname ?? '') }} {{ strtoupper($info->mname ?? '')  }}  {{ strtoupper($info->lname ?? '')}}</u></span></td>
                                       </tr>
                                       <tr>
                                         <td ></td>
@@ -186,7 +186,7 @@
                                         <td><p style="font-style:italic; padding-left: 50px;">(Authorized Official)</p></td>
                                       </tr>
                                       <tr>
-                                        <td style="padding-left: 30px;"><br>____________________________</td>
+                                        <td style="padding-left: 30px;"><br><u>{{$info->suppl_title}}</u></td>
                                         <td></td>
                                         <td ></td>
                                       </tr>
@@ -245,7 +245,7 @@
 
     </section>
     <!-- /.content -->
-    
+
   </div>
     </div>
   <!-- /.content-wrapper -->
@@ -305,7 +305,7 @@
 html,body{
   margin: 10px 20px;
   font-size: 15.3px;
-  
+
 }
 
 .serif {
@@ -317,7 +317,7 @@ html,body{
 }
 
 .bold{
-  font-style:bold; 
+  font-style:bold;
 }
 
 /* .borderless{
@@ -327,7 +327,7 @@ html,body{
 .borderr{
   border-style: solid;
   border-width: 2px;
-  
+
 }
 /* .content-wrapper{
   flex-flow: row wrap;
@@ -338,11 +338,11 @@ html,body{
 } */
 .table-thnormal>thead>tr>th{
   font-weight: normal;
-  
+
 }
 .table-thnormal {
   margin-bottom: -2px !important;
- 
+
 }
 
 .table-bordered>tbody>tr>td,.table-bordered>thead>tr>th{
@@ -351,7 +351,7 @@ html,body{
   padding: 1px;
   margin: 0;
   text-indent: 0;
-  
+
 }
 
 .table-bordered>thead>tr>th{
@@ -359,12 +359,12 @@ html,body{
 }
 .content{
   border: 1px;
-  
+
 }
 .total{
   font-size: 17px;
   font-weight: bold
-  
+
 }
 
 .text-right2{
@@ -374,7 +374,7 @@ html,body{
   font-family: "Arial-black" !important;
   font-weight: bolder;
   text-align: center;
- 
+
 }
 
 .centertext2{
@@ -383,19 +383,19 @@ html,body{
   margin-right: auto;
   font-family: "Times-New-Roman";
 }
-  
+
 }
 #centertext{
   display: block;
   margin-left: auto;
   margin-right: auto;
-  
+
 }
 .header_tbl{
   /* border: 2px solid #000 !important; */
   border-top: 1px solid #000;
   text-align: center;
- 
+
   /* border: none; */
   /*margin-bottom: -20px;*/
 }
@@ -407,7 +407,7 @@ html,body{
   /* padding: 3px; */
   text-align: center;
   /* padding-bottom: 25px; */
-  
+
   /* border: none; */
 }
 .padding-bottom{
@@ -416,7 +416,7 @@ html,body{
 
 .center{
   text-align: center;
- 
+
 }
 #table_left{
   /* border-right: 1px solid #000; */
@@ -427,7 +427,7 @@ html,body{
 .table1{
   /* border-right: 1px solid #000; */
   border-collapse: collapse;
- 
+
 }
 #border-top{
   border-top: 1px solid #000;
@@ -436,7 +436,7 @@ html,body{
 .table1 td{
   padding:0;
   margin:0;
- 
+
 }
 
 .table_footer tr td{

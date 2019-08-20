@@ -92,7 +92,7 @@
                 <div class="form-group">
                   <label for="obr_date" class="col-sm-2 control-label">RIS No : </label>
                   <div class="col-sm-3">
-                    <input type="text" class="form-control" id="ris_no" name="ris_no" placeholder="RIS NUMBER" readonly="">
+                    <input type="text" class="form-control" id="ris_no" name="ris_no" placeholder="RIS NUMBER" >
                   </div>
                    <label for="pr_no" class="col-sm-2 control-label">Date : </label>
                         <div class="col-sm-4">
@@ -261,7 +261,7 @@
                 <div class="form-group">
                   <label for="obr_date" class="col-sm-2 control-label">RIS No : </label>
                       <div class="col-sm-3">
-                        <input type="text" class="form-control" id="ris_no2"  name="ris_no" placeholder="RIS NUMBER" readonly="">
+                        <input type="text" class="form-control" id="ris_no2"  name="ris_no" placeholder="RIS NUMBER" >
                          <input type="hidden"  id="pr_dept_id2"   name="pr_dept_id"  />
                       </div>
                    <label for="pr_no" class="col-sm-2 control-label">Date : </label>

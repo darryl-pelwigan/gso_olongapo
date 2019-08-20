@@ -147,7 +147,7 @@
                         @if($edit_view === 'edit')
                           @if($purely_consumption == '1')
                           @else
-                          <input type="text" class="form-control" name="sai_no" id="sai_no" value="{{$pr->sai_no ?? ''}}"  placeholder="SAI NO." required   />
+                          <input type="text" class="form-control" name="sai_no" id="sai_no" value="{{$pr->sai_no ?? ''}}"  placeholder="SAI NO."    />
                           @endif
                         @else
                             {{$pr->sai_no ?? '' }}
@@ -164,7 +164,7 @@
                         @if($edit_view === 'edit')
                           @if($purely_consumption == '1')
                           @else
-                          <input type="text" class="form-control datepicker" name="sai_date" id="sai_date" value="{{ $sai_date }}"  placeholder="SAI DATE  YYYY-MM-DD " required   />
+                          <input type="text" class="form-control datepicker" name="sai_date" id="sai_date" value="{{ $sai_date }}"  placeholder="SAI DATE  YYYY-MM-DD "    />
                           @endif
                         @else
                             {{$pr->sai_date ?? '' }}
