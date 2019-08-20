@@ -228,10 +228,11 @@
                   <label for="obr_date" class="col-sm-2 control-label">Authorized Official: </label>
                   <div class="col-sm-3">
                     <input type="text" class="form-control" id="auth_official"  name="auth_official" placeholder="Authorized Official">
+                   <input type="hidden"  name="pono_id" id="pono_id" />
                   </div>
 
 
-                <button type="button" class="btn btn-info" onclick="$(this).sentPurchaseOrder();">Submit</button>
+                <button type="button" class="btn btn-info" onclick="$(this).sentPdf();">Submit</button>
                 </div>
               <!-- /.box-footer -->
 
@@ -364,7 +365,7 @@ $.fn.addPOnumber = function(pono_id){
                 $('#po_id').val(data['info'].pono_id);
 
 
-                 var total_amount = 0;
+                var total_amount = 0;
                 var count = 1;
                 var appvd_id = 0;
                 var fintotal = 0;
@@ -410,7 +411,7 @@ $.fn.pdf = function(pono_id){
               console.log('error');
             },
             success: function(data){
-
+              $('#pono_id').val(data['info'].pono_id);
               $('#pdf').modal({
                       backdrop: 'static',
                       keyboard: false
@@ -473,6 +474,35 @@ $('#po_date').on('change',function(){
 
             }
      });
+  };
+
+   $.fn.sentPdf = function(){
+      var form = $('#auth_official_form').serialize();
+     //  $.ajax({
+     //        type: "POST",
+     //
+
+     //          data : form,
+     //        dataType: "json",
+     //        success: function(data){
+     //           var errors = '';
+     //                if(data['status']==0){
+     //                   for(var key in data['errors']){
+     //                       errors += data['errors'][key]+'<br />';
+     //                    }
+     //                  $('#statusC').html('<div class="alert alert-danger alert-dismissible"><h4><i class="icon fa fa-ban"></i> Alert!</h4>'+errors+'</div>').fadeIn().delay(5000).fadeOut();
+     //                }else{
+     //                  $('#statusC').html('<div class="alert alert-success alert-dismissible"><h4><i class="icon fa fa-ban"></i> Success!</h4>'+errors+'</div>').fadeIn().delay(5000).fadeOut();
+     //                }
+
+     //        }
+     // });
+     //
+     var route = "{{route('po.po_pdf',['change1','change2'])}}";
+     route =route.replace("change1", $('#pono_id').val());
+     route =route.replace("change2", $('#auth_official').val());
+     window.location.href = route;
+
   };
 </script>
 @stop

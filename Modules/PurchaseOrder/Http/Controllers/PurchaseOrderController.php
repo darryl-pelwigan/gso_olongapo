@@ -15,7 +15,7 @@ use Modules\PurchaseOrder\Entities\PurchaseOrderRequisition;
 use Modules\PurchaseOrder\Entities\PurchaseOrderAcceptance;
 
 use PDF;
-
+use Input;
 use Carbon\Carbon;
 use Yajra\Datatables\Datatables;
 
@@ -435,7 +435,7 @@ class PurchaseOrderController extends Controller
 
     }
 
-    public function po_pdf(Request $request){
+    public function po_pdf(Request $request,$id,$auth){
 
         $info = DB::table('olongapo_purchase_order_no')
                     ->join('olongapo_bac_control_info' ,'olongapo_bac_control_info.id','=', 'olongapo_purchase_order_no.bac_control_id')
@@ -473,7 +473,7 @@ class PurchaseOrderController extends Controller
                                 'olongapo_employee_list.lname as lname',
                                 'olongapo_employee_list.mname as mname'
                             ])
-                    ->where('olongapo_purchase_order_no.id', '=', $request->input('pono_id'))
+                    ->where('olongapo_purchase_order_no.id', '=', $id)
                     ->first();
 
 
@@ -492,11 +492,13 @@ class PurchaseOrderController extends Controller
                         'items.unit_price as unit_price',
                         'items.total_price as total_price'
                     ])
-                    ->where('po.pono_id','=',$request->input('pono_id'))
+                    ->where('po.pono_id','=',$id)
                     ->get();
+
 
         $this->data['po_items'] = $items_bac;
         $this->data['info']  = $info;
+        $this->data['auth_official'] = $auth;
 
         $pdf = PDF::loadView('purchaseorder::purchase-order.pdf',$this->setup());
          $pdf->setPaper(array(0,0,612.00,936.0),'portrait');

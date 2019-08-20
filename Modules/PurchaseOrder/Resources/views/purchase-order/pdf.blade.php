@@ -178,7 +178,7 @@
                                       <tr>
                                         <td >Conforme:</td>
                                         <td></td>
-                                        <td style=""><br><br><span><u>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;{{ strtoupper($info->fname ?? '') }} {{ strtoupper($info->mname ?? '')  }}  {{ strtoupper($info->lname ?? '')}}</u></span></td>
+                                        <td style=""><br><br><span><u>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;{{$auth_official}}</u></span></td>
                                       </tr>
                                       <tr>
                                         <td ></td>
