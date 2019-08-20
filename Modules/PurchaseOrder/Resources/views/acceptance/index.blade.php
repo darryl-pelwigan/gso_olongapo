@@ -234,6 +234,44 @@
   </div>
 </div>
 
+<div class="modal fade" id="set_prop_modal" tabindex="-1" role="dialog" aria-labelledby="add_purchase_order_modalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="add_purchase_order_modalLabel"> <span>Add Requisition and Issue Slip</span></h4>
+      </div>
+      <div class="modal-body">
+        <div id="status"></div>
+        <div id="contents-menu">
+            <form class="form-horizontal" id="set_prop">
+              <div class="box-body">
+                <div id="statusC"></div>
+                   <div class="form-group">
+                     <label for="pr_no" class="col-sm-2 control-label">Supply and/or Property Custodian : </label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" id="prop"   placeholder="Supply and/or Property Custodian" />
+                        <input type="hidden"  id="po_id" name="po_id" />
+                        <input type="hidden"  id="acceptance_id" name="acceptance_id" />
+                    </div>
+                </div>
+
+              <!-- /.box-body -->
+
+                <button type="button" class="btn btn-info pull-right" onclick="$(this).sentPdf();">Submit</button>
+
+              <!-- /.box-footer -->
+
+              {{csrf_field()}}
+            </form>
+
+        </div>
+      </div>
+  </div>
+
+    </div>
+  </div>
+</div>
 
    @stop
 
@@ -298,7 +336,7 @@ $(function() {
               render : function(data , type , row){
                       if(data.acceptance_id){
                         return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).updateRequisition('+data.pono_id+');" >Update Acceptance</button>\
-                        <form method="post" action="{{route('po.po_acceptance_pdf')}}">{{csrf_field()}}<input type="hidden" name="acceptance_id" value="'+data.acceptance_id+'" /><input type="submit" class="btn btn-sm btn-default" name="pdf" value="Pdf" /> </form>  ';
+                        <button type="button" class="btn  btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).setProp('+data.pono_id+');" >PDF</button>  ';
                       }else{
                           return '<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).addRequisition('+data.pono_id+');" >Add Acceptance</button> ';
                       }
@@ -465,6 +503,32 @@ $.fn.addRequisition = function(pono_id){
      });
   };
 
+
+  $.fn.setProp = function(pono_id){
+    // $("#add_requisition_number")[0].reset();
+    $.ajax({
+            type: "POST",
+             url: "{{route('po.get-po')}}",
+            data : {
+              pono_id : pono_id,
+              _token : '{{csrf_token()}}'
+            },
+            dataType: "json",
+            error: function(){
+              console.log('error');
+            },
+            success: function(data){
+              $('#po_id').val(data['info'].pono_id);
+              $('#acceptance_id').val(data['info'].acceptance_id);
+              $('#set_prop_modal').modal({
+                      backdrop: 'static',
+                      keyboard: false
+              });
+
+            }
+     });
+  };
+
   //Date picker
     $('#ris_date').datepicker({
       autoclose: true,
@@ -522,6 +586,36 @@ $.fn.addRequisition = function(pono_id){
 
             }
      });
+  };
+
+  $.fn.sentPdf = function(){
+      var form = $('#set_prop').serialize();
+     //  $.ajax({
+     //        type: "POST",
+     //
+
+     //          data : form,
+     //        dataType: "json",
+     //        success: function(data){
+     //           var errors = '';
+     //                if(data['status']==0){
+     //                   for(var key in data['errors']){
+     //                       errors += data['errors'][key]+'<br />';
+     //                    }
+     //                  $('#statusC').html('<div class="alert alert-danger alert-dismissible"><h4><i class="icon fa fa-ban"></i> Alert!</h4>'+errors+'</div>').fadeIn().delay(5000).fadeOut();
+     //                }else{
+     //                  $('#statusC').html('<div class="alert alert-success alert-dismissible"><h4><i class="icon fa fa-ban"></i> Success!</h4>'+errors+'</div>').fadeIn().delay(5000).fadeOut();
+     //                }
+
+     //        }
+     // });
+     //
+     var route = "{{route('po.po_acceptance_pdf',['change1','change2','change3'])}}";
+     route =route.replace("change1", $('#po_id').val());
+      route =route.replace("change2", $('#acceptance_id').val());
+     route =route.replace("change3", $('#prop').val());
+     window.location.href = route;
+
   };
 </script>
 @stop

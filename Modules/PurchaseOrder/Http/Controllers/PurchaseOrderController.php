@@ -719,7 +719,7 @@ class PurchaseOrderController extends Controller
         return @$pdf->stream();
     }
 
-    public function acceptance_pdf(Request $request){
+    public function acceptance_pdf(Request $request,$id,$aid,$prop){
          $info = DB::table('olongapo_purchase_order_no')
                     ->join('olongapo_purchase_order_acceptance_issuance' ,'olongapo_purchase_order_acceptance_issuance.pono_id','=', 'olongapo_purchase_order_no.id')
                     ->join('olongapo_bac_control_info' ,'olongapo_bac_control_info.id','=', 'olongapo_purchase_order_no.bac_control_id')
@@ -757,7 +757,7 @@ class PurchaseOrderController extends Controller
                                 'olongapo_purchase_order_acceptance_issuance.invoice_no',
                                 'olongapo_purchase_order_acceptance_issuance.invoice_date'
                             ])
-                    ->where('olongapo_purchase_order_acceptance_issuance.id', '=', $request->input('acceptance_id'))
+                    ->where('olongapo_purchase_order_acceptance_issuance.id', '=', $aid)
                     ->first();
 
         $items_bac = DB::table('olongapo_purchase_order_items as po')
@@ -774,13 +774,14 @@ class PurchaseOrderController extends Controller
                         'items.unit_price as unit_price',
                         'items.total_price as total_price'
                     ])
-                    ->where('po.pono_id','=',$info->pono_id)
+                    ->where('po.pono_id','=',$id)
                     ->get();
 
         $this->data['po_items'] = $items_bac;
         $this->data['info']  = $info;
-
-        $pdf = PDF::loadView('purchaseorder::acceptance.pdf',$this->setup());
+        $this->data['prop'] =$prop;
+        // dd($this->data['prop']);
+         $pdf = PDF::loadView('purchaseorder::acceptance.pdf',$this->setup());
        $pdf->setPaper(array(0,0,612.00,936.0));
         //$pdf->setPaper('legal');
         return @$pdf->stream();

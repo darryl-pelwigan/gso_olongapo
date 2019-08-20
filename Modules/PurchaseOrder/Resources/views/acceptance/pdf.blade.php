@@ -148,7 +148,7 @@
                               <td><br></td>
                             </tr>
                             <tr>
-                              <td class="text">_________________________________</td>
+                              <td class="text"><u>{{$prop}}</u></td>
                             </tr>
                             <tr>
                               <td class="text">Supply and/or Property Custodian</td>
