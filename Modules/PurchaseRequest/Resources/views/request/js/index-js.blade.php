@@ -6,7 +6,7 @@
   }
     $('#purchase_request_list').dataTable({
               processing: true,
-              serverSide: true,
+              serverSide: false,
               ajax:{
                 "type": 'POST',
                 "url" : '{!! route('popr.set_datatables') !!}',

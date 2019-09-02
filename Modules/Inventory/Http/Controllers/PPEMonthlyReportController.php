@@ -15,6 +15,9 @@ use Modules\Inventory\Entities\PpeMnthlyReportItems;
 use Session;
 use Carbon\Carbon;
 use PDF;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
 
 
 
@@ -209,7 +212,6 @@ class PPEMonthlyReportController extends Controller
                                             'supplier'                              =>  $request->input('item_supplier_id'),
                                             'department'                      => $request->input('pr_sdept_id'),
                                             'invoice'                               => $request->input('item_invoice.'.$c),
-                                            'est_life'                               => $request->input('item_est.'.$c),
                                             'location'                               => $request->input('item_loc.'.$c),
                                             'depreciable'                               => $request->input('item_dep.'.$c),
                                     ];
@@ -225,7 +227,7 @@ class PPEMonthlyReportController extends Controller
         return view('inventory::ppe-mnthly.generate',$this->setup());
     }
 
-       public function generate_report_pdf(Request $request){
+    public function generate_report_pdf(Request $request){
 
         // return view('inventory::ppe-mnthly.generate',$this->setup());
         // $this->data['approved_by'] = Requestordersignee::where('deleted_at','=',null)->get();
@@ -267,13 +269,17 @@ class PPEMonthlyReportController extends Controller
         ->get();
 
 
-        $dataArray = [];
+        $dataArray = [
+            ['DATE', 'CONTROL #', 'DESCRIPTION', 'PROPERTY CODE', 'CATEGORY', 'PO#', 'QTY', 'UNIT VALUE', 'TOTAL VALUE', 'ACOUNTABLE PERSON', 'DEPARTMENT', 'SUPPLIER', 'INVOICE']
+                    ];
         foreach ($get_ppe_mnthly as $key => $value) {
            $po_no = $value->pono_id ? $value->pr_no->pr_orderno->po_no : '';
+           $category = $value->type ? $value->type:'';
            $employee_name = '';
             foreach ($value->inv_items as $key => $inv_item) {
                 $employee_name = $inv_item->accountable_person ? $inv_item->accountable->lname.', '.$inv_item->accountable->fname : '';
-                $suplier = $inv_item->supplier ? $inv_item->supplier_info->title : "" ;
+                $supplier = $inv_item->supplier ? $inv_item->supplier_info->title : "" ;
+                // $department = $inv_item->accountable_person ? $inv_item->accountable->lname.', '.$inv_item->accountable->fname : '';
                 $res = $inv_item->unit_value * 0.1;
                 $dep=0;
                 if($inv_item->est_life){
@@ -281,30 +287,48 @@ class PPEMonthlyReportController extends Controller
                 }
 
                 $dataArray[] =   array(
-                                        $inv_item->property_code,
+                                        $value->date_log,
                                         $value->inv_control_no,
                                         $inv_item->item_desc,
-                                        $inv_item->est_life,
-                                        $value->date_log,
+                                        $inv_item->property_code,
+                                        $category,
+                                        $po_no,
+                                        $inv_item->qty,
+                                        $inv_item->unit_value,
+                                        $inv_item->total_value,
                                         $employee_name,
                                         $inv_item->location,
-                                        $inv_item->depreciable,
-                                        $inv_item->unit_value,
-                                        $inv_item->qty,
-                                        $res,
-                                        $dep,
-                                        '<a class="btn btn-sm btn-info" href="'.route('inventory.edit_ppe_pr',$value->id).'" >edit</a> '
+                                        $supplier,
+                                        $inv_item->invoice,
                                     );
 
             }
         }
 
-        $this->data['ppe'] =  $dataArray;
+        // $this->data['ppe'] =  $dataArray;
 
-        // dd( $this->data['ppe']);
-        $pdf = PDF::loadView('inventory::ppe-mnthly.generate-pdf',$this->setup());
-        $pdf->setPaper('Legal', 'landscape');
-        return @$pdf->stream();
+        // // dd( $this->data['ppe']);
+        // $pdf = PDF::loadView('inventory::ppe-mnthly.generate-pdf',$this->setup());
+        // $pdf->setPaper('Legal', 'landscape');
+        // return @$pdf->stream();
+        //
+
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $sheet->fromArray(
+        $dataArray,  // The data to set
+        'A1'         // Top left coordinate of the worksheet range where
+                     //    we want to set these values (default is A1)
+        );
+
+        $writer = new Xlsx($spreadsheet);
+        $writer->save('excel/PPE_Report.xlsx');
+
+
+        return response()->download('excel/PPE_Report.xlsx');
+
     }
 
 
@@ -346,7 +370,6 @@ class PPEMonthlyReportController extends Controller
                                  'property_code'                  => $request->input('item_property_code.'.$key),
                                  'accountable_person'        => $request->input('item_accountable_person_id.'.$key),
                                  'invoice'        => $request->input('item_invoice.'.$key),
-                                 'est_life'        => $request->input('item_est.'.$key),
                                  'location'        => $request->input('item_loc.'.$key),
                                  'depreciable'        => $request->input('item_dep.'.$key),
                                  'po_no'                                   =>  $request->input('item_pono'),

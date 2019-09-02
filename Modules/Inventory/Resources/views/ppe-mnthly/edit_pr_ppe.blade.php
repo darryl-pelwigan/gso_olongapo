@@ -126,7 +126,6 @@
                                       <th>TOTAL VALUE</th>
                                       <th>ACCOUNTABLE PERSON</th>
                                       <th>INVOICE</th>
-                                      <th>ESTIMATED LIFE YEARS</th>
                                       <th>(EXACT LOCATION, CONDITIONS, ETC.)</th>
                                       <th>DEPRECIABLE</th>
                                 </tr>
@@ -146,7 +145,6 @@
                                               <td><input type="text" class="form-control"  name="item_total_value[]" style="width: 100px;" disabled="" value="{{ $items->unit_value * $items->qty }}" readonly /></td>
                                               <td><input type="text" class="form-control item_accountable_person"  name="item_accountable_person[]" value="{{ $items->accountable ? $items->accountable->lname.','.$items->accountable->fname : '' }}"  /> <input type="hidden" class="form-control"  name="item_accountable_person_id[]" value="{{ $items->accountable_person }}" /> </td>
                                               <td><input type="text" class="form-control"  name="item_invoice[]" value="{{ $items->invoice}}" /></td>
-                                              <td><input type="text" class="form-control"  name="item_est[]" value="{{ $items->est_life}}" /></td>
                                               <td><input type="text" class="form-control"  name="item_loc[]" value="{{ $items->location}}" /></td>
                                               <td><select name="item_dep[]" class="form-control"> <option disabled selected value> -- select an option -- </option><option value="I">Yes</option><option value="O">No</option></select></td>
                                           </tr>

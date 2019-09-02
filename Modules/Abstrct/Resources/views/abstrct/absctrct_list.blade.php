@@ -145,7 +145,7 @@
                     </table>
 
                     <div id="other_content_b">
-                      
+
                     </div>
 
                 </div> <!-- /.box-body -->

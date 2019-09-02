@@ -75,7 +75,7 @@
                   </div>
                    <label for="pr_no" class="col-sm-2 control-label">PO No. : </label>
                         <div class="col-sm-4">
-                        <input type="text" class="form-control" id="po_no"  readonly="" name="po_no" placeholder="PO No." />
+                        <input type="text" class="form-control" id="po_no"   name="po_no" placeholder="PO No." />
                         <input type="hidden"  id="po_id" name="po_id" />
                     </div>
                 </div>

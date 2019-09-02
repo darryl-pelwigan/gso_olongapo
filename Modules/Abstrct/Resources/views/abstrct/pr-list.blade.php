@@ -123,7 +123,7 @@
                   <div class="form-group">
                       <label for="absctrct_no" class="col-sm-2 control-label">ABSTRACT NO.</label>
                         <div class="col-sm-6">
-                         <input type="text" class="form-control" id="absctrct_no"  name="absctrct_no"    placeholder="ABSTRACT NO"  disabled="true"  />
+                         <input type="text" class="form-control" id="absctrct_no"  name="absctrct_no"    placeholder="ABSTRACT NO"    />
                       </div>
                        <label for="absctrct_date" class="col-sm-2 control-label">ABSTRACT DATE : </label>
                           <div class="col-sm-2">
@@ -157,8 +157,8 @@
 
 
                   <div id="other_content_b"></div>
-              
-                 
+
+
                 </div>
                 <!-- /.box-footer -->
                 <input type="hidden" name="removetx_items" id="removetx_items" value="">

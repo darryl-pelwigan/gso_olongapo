@@ -96,7 +96,7 @@
                      <label for="pr_no" class="col-sm-2 control-label">PURCHASE REQUEST NO: </label>
                         <div class="col-sm-3">
                         @if($edit_view === 'edit')
-                          <input type="text" class="form-control" name="pr_no" id="pr_no" value="{{$pr_no}}"  placeholder="PURCHASE REQUEST NO." required readonly  />
+                          <input type="text" class="form-control" name="pr_no" id="pr_no" value="{{$pr_no}}"  placeholder="PURCHASE REQUEST NO." required   />
                         @else
                             {{$pr_no}}
                         @endif

@@ -6,7 +6,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-      PPE MONTHLY REPORT
+      PPE REPORT
       </h1>
     </section>
 
@@ -18,7 +18,7 @@
         <div class="col-xs-12">
           <div class="box box-info box-shadow">
             <div class="box-header">
-              <h3 class="box-title">PPE MONTHLY REPORT</h3>
+              <h3 class="box-title">PPE REPORT</h3>
 
 
             </div>

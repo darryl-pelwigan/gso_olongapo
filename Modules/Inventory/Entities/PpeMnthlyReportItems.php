@@ -35,6 +35,10 @@ class PpeMnthlyReportItems extends Model
         return $this->belongsTo('Modules\Employee\Entities\Employee', 'accountable_person');
     }
 
+    public function dept(){
+        return $this->belongsTo('Modules\Administrator\Entities\DeptCodes', 'department');
+    }
+
     public function supplier_info(){
         return $this->belongsTo('Modules\Inventory\Entities\Supplier', 'supplier');
     }
