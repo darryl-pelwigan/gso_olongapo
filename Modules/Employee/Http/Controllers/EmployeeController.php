@@ -203,5 +203,11 @@ class EmployeeController extends Controller
          return $data;
     }
 
+    public function show_status()
+    {
+        $this->data['templatex'] = DB::table('olongapo_bac_template')->select('id','template_desc','code')->get();
+        return view('employee::status.status',$this->setup());
+    }
+
 
 }

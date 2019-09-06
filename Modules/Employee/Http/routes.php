@@ -24,9 +24,12 @@ Route::group(['middleware' => ['web','auth'], 'prefix' => 'employee', 'namespace
     Route::post('/get_employee_name','EmployeeController@get_employee_name')->name('emp.get_employee_name');
     Route::post('/get_position','EmployeeController@get_position')->name('emp.get_position');
     Route::post('/get_department','EmployeeController@get_department')->name('emp.get_department');
+
+    Route::get('/status', 'EmployeeController@show_status')->name('emp.status');
 });
 
 Route::group(['middleware' => ['web'],  'namespace' => 'Modules\Employee\Http\Controllers'], function()
 {
     Route::get('/test1', 'TestController@index');
 });
+

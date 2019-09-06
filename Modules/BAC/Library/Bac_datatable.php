@@ -234,6 +234,25 @@ class Bac_datatable
         return $items;
     }
 
+     public function status_list($vars = null){
+        $items = DB::table('olongapo_purchase_request_no')
+                     ->join('olongapo_purchase_request_ppmp_approval' , 'olongapo_purchase_request_ppmp_approval.request_no_id','=','olongapo_purchase_request_no.id')
+                     ->leftjoin('olongapo_absctrct' , 'olongapo_absctrct.prno_id','=','olongapo_purchase_request_no.id')
+                      ->leftjoin('olongapo_bac_control_info' , 'olongapo_bac_control_info.prno_id','=','olongapo_purchase_request_no.id')
+                     ->leftjoin('olongapo_purchase_order_no' , 'olongapo_purchase_order_no.prno_id','=','olongapo_purchase_request_no.pr_no')
+                     ->select([
+                        'olongapo_purchase_request_no.id',
+                        'olongapo_purchase_request_no.pr_no',
+                        'olongapo_purchase_request_no.pr_date',
+                        'olongapo_purchase_request_ppmp_approval.ppmp_no',
+                        'olongapo_absctrct.abstrct_date',
+                        'olongapo_bac_control_info.bac_control_no',
+                        'olongapo_purchase_order_no.po_no'
+                    ]);
+
+        return $items;
+    }
+
 }
 
 

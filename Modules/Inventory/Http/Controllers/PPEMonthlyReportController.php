@@ -279,7 +279,7 @@ class PPEMonthlyReportController extends Controller
             foreach ($value->inv_items as $key => $inv_item) {
                 $employee_name = $inv_item->accountable_person ? $inv_item->accountable->lname.', '.$inv_item->accountable->fname : '';
                 $supplier = $inv_item->supplier ? $inv_item->supplier_info->title : "" ;
-                // $department = $inv_item->accountable_person ? $inv_item->accountable->lname.', '.$inv_item->accountable->fname : '';
+                $department = $inv_item->department ? $inv_item->department : '';
                 $res = $inv_item->unit_value * 0.1;
                 $dep=0;
                 if($inv_item->est_life){
@@ -297,7 +297,7 @@ class PPEMonthlyReportController extends Controller
                                         $inv_item->unit_value,
                                         $inv_item->total_value,
                                         $employee_name,
-                                        $inv_item->location,
+                                        $department,
                                         $supplier,
                                         $inv_item->invoice,
                                     );
@@ -305,13 +305,6 @@ class PPEMonthlyReportController extends Controller
             }
         }
 
-        // $this->data['ppe'] =  $dataArray;
-
-        // // dd( $this->data['ppe']);
-        // $pdf = PDF::loadView('inventory::ppe-mnthly.generate-pdf',$this->setup());
-        // $pdf->setPaper('Legal', 'landscape');
-        // return @$pdf->stream();
-        //
 
 
         $spreadsheet = new Spreadsheet();
