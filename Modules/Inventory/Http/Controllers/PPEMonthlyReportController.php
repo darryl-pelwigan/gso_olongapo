@@ -263,58 +263,216 @@ class PPEMonthlyReportController extends Controller
          //                            ->get()
          //                            ;
 
-
         $get_ppe_mnthly = PpeMnthlyReport::where('olongapo_ppe_mnthly_report.date_log','>=',$request->from)
         ->where('olongapo_ppe_mnthly_report.date_log','<=',$request->to)
         ->get();
 
 
-        $dataArray = [
-            ['DATE', 'CONTROL #', 'DESCRIPTION', 'PROPERTY CODE', 'CATEGORY', 'PO#', 'QTY', 'UNIT VALUE', 'TOTAL VALUE', 'ACOUNTABLE PERSON', 'DEPARTMENT', 'SUPPLIER', 'INVOICE']
-                    ];
-        foreach ($get_ppe_mnthly as $key => $value) {
-           $po_no = $value->pono_id ? $value->pr_no->pr_orderno->po_no : '';
-           $category = $value->type ? $value->type:'';
-           $employee_name = '';
-            foreach ($value->inv_items as $key => $inv_item) {
-                $employee_name = $inv_item->accountable_person ? $inv_item->accountable->lname.', '.$inv_item->accountable->fname : '';
-                $supplier = $inv_item->supplier ? $inv_item->supplier_info->title : "" ;
-                $department = $inv_item->department ? $inv_item->department : '';
-                $res = $inv_item->unit_value * 0.1;
-                $dep=0;
-                if($inv_item->est_life){
-                     $dep = ($inv_item->unit_value - $res)/$inv_item->est_life;
+
+
+
+        // $mnth = Carbon::parse($request->from);
+        // $dataArray[$mnth->format('F')] = [];
+        $i = 0;
+        for($mnth = Carbon::parse($request->from); $mnth->format('m') <= Carbon::parse($request->to)->format('m'); $mnth->addMonth()) {
+            $dataArray[$mnth->format('F')] = [];
+            foreach ($get_ppe_mnthly as $key => $value) {
+                $po_no = $value->pono_id ? $value->pr_no->pr_orderno->po_no : '';
+                $category = $value->type ? $value->type:'';
+                $employee_name = '';
+                foreach ($value->inv_items as $key2 => $inv_item) {
+                    $employee_name = $inv_item->accountable_person ? $inv_item->accountable->lname.', '.$inv_item->accountable->fname : '';
+                    $supplier = $inv_item->supplier ? $inv_item->supplier_info->title : "" ;
+                    // $department = $inv_item->accountable_person ? $inv_item->accountable->lname.', '.$inv_item->accountable->fname : '';
+                    $res = $inv_item->unit_value * 0.1;
+                    $dep=0;
+                    if($inv_item->est_life){
+                        $dep = ($inv_item->unit_value - $res)/$inv_item->est_life;
+                    }
+
+                    // $dataArray[] =   array(
+                    //                         $value->date_log,
+                    //                         $value->inv_control_no,
+                    //                         $inv_item->item_desc,
+                    //                         $inv_item->property_code,
+                    //                         $category,
+                    //                         $po_no,
+                    //                         $inv_item->qty,
+                    //                         $inv_item->unit_value,
+                    //                         $inv_item->total_value,
+                    //                         $employee_name,
+                    //                         $inv_item->location,
+                    //                         $supplier,
+                    //                         $inv_item->invoice
+                    //                     );
+
+                    if(strcasecmp(Carbon::parse($value->date_log)->format('F'), $mnth->format('F')) == 0) {
+                        $dataArray[$mnth->format('F')][$i] = array(
+                                $value->date_log,
+                                $value->inv_control_no,
+                                $inv_item->item_desc,
+                                $inv_item->property_code,
+                                $category,
+                                $po_no,
+                                $inv_item->qty,
+                                $inv_item->unit_value,
+                                $inv_item->total_value,
+                                $employee_name,
+                                $inv_item->location,
+                                $supplier,
+                                $inv_item->invoice,
+                            );
+                        $i++;
+                    } /*else {
+                        // reset month
+                        $mnth = $mnth->addMonth();
+                        $i = 0;
+                    }*/
                 }
-
-                $dataArray[] =   array(
-                                        $value->date_log,
-                                        $value->inv_control_no,
-                                        $inv_item->item_desc,
-                                        $inv_item->property_code,
-                                        $category,
-                                        $po_no,
-                                        $inv_item->qty,
-                                        $inv_item->unit_value,
-                                        $inv_item->total_value,
-                                        $employee_name,
-                                        $department,
-                                        $supplier,
-                                        $inv_item->invoice,
-                                    );
-
             }
+            // if(strcasecmp(Carbon::parse($value->date_log)->format('F'), $mnth->format('F')) != 0) {
+            //     $mnth = $mnth->addMonth();
+            //     $i = 0;
+            // }
         }
 
 
-
         $spreadsheet = new Spreadsheet();
-        $sheet = $spreadsheet->getActiveSheet();
+        // $sheet = $spreadsheet->getActiveSheet();
 
-        $sheet->fromArray(
-        $dataArray,  // The data to set
-        'A1'         // Top left coordinate of the worksheet range where
-                     //    we want to set these values (default is A1)
-        );
+        // month per sheet
+        foreach($dataArray as $key => $value) {
+            $excel_rows = count($value);
+            if(gettype($key) == "string" && $excel_rows > 0) {
+                $new_sheet = new \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet($spreadsheet, $key);
+                $spreadsheet->addSheet($new_sheet, $spreadsheet->getSheetCount()+1);
+
+                $sheet = $spreadsheet->getSheetByName($key);
+
+                $sheet->fromArray(
+                    $value,  // The data to set
+                    null,    // Top left coordinate of the worksheet range where
+                    'A5'     //    we want to set these values (default is A1)
+                );
+
+                $sheet->fromArray(
+                    $dataArray[0],  // headers
+                    null,
+                    'A4'
+                );
+
+            // STYLES
+            $excel_rows += 4; // num of rows for heading....
+            $style_array1 = array(
+                'borders' => array(
+                    'top' => array(
+                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK,
+                        'color' => array('argb' => '000000'),
+                    ),
+                ),
+            );
+            $style_array2 = array(
+                'borders' => array(
+                    'left' => array(
+                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK,
+                        'color' => array('argb' => '000000'),
+                    ),
+                ),
+            );
+            $style_array3 = array(
+                'borders' => array(
+                    'right' => array(
+                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK,
+                        'color' => array('argb' => '000000'),
+                    ),
+                ),
+            );
+            $style_array4 = array(
+                'borders' => array(
+                    'bottom' => array(
+                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK,
+                        'color' => array('argb' => '000000'),
+                    ),
+                ),
+            );
+            $style_array_gen = array( // general
+                'borders' => array(
+                    'top' => array(
+                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                        'color' => array('argb' => '000000'),
+                    ),
+                    'bottom' => array(
+                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                        'color' => array('argb' => '000000'),
+                    ),
+                    'left' => array(
+                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                        'color' => array('argb' => '000000'),
+                    ),
+                    'right' => array(
+                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                        'color' => array('argb' => '000000'),
+                    ),
+                ),
+            );
+
+            foreach (range('A','M') as $col) {
+                $sheet->getColumnDimension($col)->setAutoSize(true);
+            }
+            // header
+            $sheet->mergeCells('D1:G1');
+            $sheet->mergeCells('D2:G2');
+            $sheet->setCellValue('D1', 'PPE MONTHLY REPORT');
+            $sheet->setCellValue('D2', Carbon::parse($key)->startOfMonth()->format('F d').'-'.Carbon::parse($key)->endOfMonth()->format('F d'));
+            $sheet->getStyle('D1:G1')->getFont()->setBold(true);
+            $sheet->getStyle('D2:G2')->getFont()->setBold(true);
+            $sheet->getStyle('A4:M4')->getFont()->setBold(true);
+            $sheet->getStyle('A4:M4')->getAlignment()->setHorizontal('center');
+
+            // signatories
+            $sign_row_label = $excel_rows+3;
+            $sheet->mergeCells('A'.$sign_row_label.':B'.$sign_row_label);
+            $sheet->mergeCells('C'.$sign_row_label.':D'.$sign_row_label);
+            $sheet->mergeCells('E'.$sign_row_label.':F'.$sign_row_label);
+            $sheet->mergeCells('G'.$sign_row_label.':I'.$sign_row_label);
+            $sheet->setCellValue('A'.$sign_row_label, 'Prepared By: ');
+            $sheet->setCellValue('C'.$sign_row_label, 'Reviewed By: ');
+            $sheet->setCellValue('E'.$sign_row_label, 'Noted By: ');
+            $sheet->setCellValue('G'.$sign_row_label, 'Endorsed To: ');
+            $sheet->getStyle('A'.$sign_row_label.':I'.$sign_row_label)->getAlignment()->setHorizontal('center');
+
+            $columns = ['A','B','C','D','E','F','G','H','I','J','K','L','M'];
+            for($i = 0; $i < count($columns); $i++) {
+                for($j = 4; $j <= $excel_rows; $j++) {
+                    $sheet->getStyle($columns[$i].$j)->applyFromArray($style_array_gen);
+                }
+            }
+
+            $sheet->getStyle('A4:M4')->applyFromArray($style_array4);
+            $sheet->getStyle('A4:M4')->applyFromArray($style_array2);
+            $sheet->getStyle('A4:M4')->applyFromArray($style_array1);
+            $sheet->getStyle('A4:A'.$excel_rows)->applyFromArray($style_array2);
+            $sheet->getStyle('M4:M'.$excel_rows)->applyFromArray($style_array3);
+            $sheet->getStyle('A'.$excel_rows.':M'.$excel_rows)->applyFromArray($style_array4);
+            $sheet->getStyle('D1:G1')->getAlignment()->setHorizontal('center');
+            $sheet->getStyle('D2:G2')->getAlignment()->setHorizontal('center');
+            $sheet->getStyle('D2:G2')->getAlignment()->setHorizontal('center');
+            $sheet->getStyle('A5:F'.$excel_rows)->getAlignment()->setHorizontal('left');
+            $sheet->getStyle('G5:I'.$excel_rows)->getAlignment()->setHorizontal('right');
+            $sheet->getStyle('A5:F'.$excel_rows)->getAlignment()->setHorizontal('left');
+            $sheet->getStyle('J5:K'.$excel_rows)->getAlignment()->setHorizontal('center');
+            $sheet->getStyle('L5:M'.$excel_rows)->getAlignment()->setHorizontal('left');
+            // END STYLES
+
+            // $sheet->fromArray(
+            //     $dataArray,  // The data to set
+            //     null,        // Top left coordinate of the worksheet range where
+            //     'A4'         //    we want to set these values (default is A1)
+            // );
+            }
+        }
+        $empty_sheet = $spreadsheet->getIndex($spreadsheet->getSheetByName('Worksheet'));
+        $spreadsheet->removeSheetByIndex($empty_sheet);
 
         $writer = new Xlsx($spreadsheet);
         $writer->save('excel/PPE_Report.xlsx');
