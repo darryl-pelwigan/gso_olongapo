@@ -193,6 +193,7 @@ $('.add-tr').on('click',function(){
   var tr_data = ' <tr id="tr_'+(parseInt(tbody_tr.length)+1)+'">'+
                                     '<td><textarea   class="form-control" name="item_desc[]" ></textarea></td>'+
                                     '<td><input type="text" class="form-control"  name="item_property_code[]" /></td>'+
+                                    '<td><input type="text" class="form-control"  name="item_account_code[]" /></td>'+
                                     // '<td><input type="text" class="form-control"  name="item_pono[]" /></td>'+
                                     '<td><input type="text" class="form-control"  name="item_unit[]" /></td>'+
                                     '<td><input type="text" class="form-control item_qty"  name="item_qty[]" style="width: 60px;padding-right: 2px;" /></td>'+
@@ -201,6 +202,7 @@ $('.add-tr').on('click',function(){
                                     '<td><input type="text" class="form-control item_accountable_person"  name="item_accountable_person[]" /><input type="hidden" class="form-control"  name="item_accountable_person_id[]" /></td>'+
                                     // '<td><input type="text" class="form-control item_supplier"  name="item_supplier[]" /><input type="hidden" class="form-control"  name="item_supplier_id[]" /></td>'+
                                     '<td><input type="text" class="form-control"  name="item_invoice[]" /></td>'+
+                                     '<td><input type="text" class="form-control"  name="item_loc[]" /></td>'+
                                     '<td><button type="button" class="btn btn-xs btn-danger remove-tr" data-tr-id="'+(parseInt(tbody_tr.length)+1)+'" ><i class="fa fa-minus"></i> row</button></td>'+
                                 '</tr>';
 

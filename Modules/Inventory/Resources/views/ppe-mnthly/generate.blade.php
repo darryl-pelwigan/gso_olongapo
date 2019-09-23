@@ -18,12 +18,12 @@
         <div class="col-xs-12">
           <div class="box box-info box-shadow">
             <div class="box-header">
-              <h3 class="box-title">PPE REPORT</h3>
+              <h3 class="box-title">PPE MONTHLY REPORT</h3>
 
 
             </div>
             <!-- /.box-header -->
-            <form class="form-horizontal" method="POST" action="{{route('inventory.ppe-generate-report-pdf')}}">
+            <form class="form-horizontal" method="POST" action="{{route('inventory.ppe-generate-monthly-report-pdf')}}">
             {{csrf_field()}}
             <div class="box-body">
                 <div class="col-md-4">
@@ -43,7 +43,7 @@
                   </div>
                 </div>
                 <div class="col-md-4">
-                  <button type="submit" class="btn btn-info pull-right" id="submit_butts" onclick="$(this).sentPurchaseRequest();">Submit</button>
+                  <button type="submit" class="btn btn-info pull-right" id="submit_butts" onclick="$(this).sentPurchaseRequest();">Generate</button>
                 </div>
               </form>
             <!-- /.box-body -->
@@ -51,6 +51,40 @@
           <!-- /.box -->
         </div>
       </div>
+
+    </section>
+
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box box-info box-shadow">
+            <div class="box-header">
+              <h3 class="box-title">PPE YEARLY REPORT</h3>
+
+
+            </div>
+            <!-- /.box-header -->
+            <form class="form-horizontal" method="POST" action="{{route('inventory.ppe-generate-yearly-report-pdf')}}">
+            {{csrf_field()}}
+            <div class="box-body">
+                <div class="col-md-4">
+                  <div class="form-group row">
+                       <label for="pr_no" class="col-sm-3 control-label">SELECT YEAR </label>
+                          <div class="col-sm-9">
+                          <input type="text" class="form-control date" id="from" name="from" placeholder="PR DATE" />
+                      </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <button type="submit" class="btn btn-info pull-right" id="submit_butts" onclick="$(this).sentRequest();">Generate</button>
+                </div>
+              </form>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+      </div>
+
     </section>
     <!-- /.content -->
   </div>

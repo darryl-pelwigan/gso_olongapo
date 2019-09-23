@@ -19,9 +19,8 @@ class PpeMnthlyReportItems extends Model
                                             'department',
                                             'supplier',
                                             'invoice',
-                                            'est_life',
                                             'location',
-                                            'depreciable'];
+                                            'account_group'];
 
     public function inv(){
         return $this->belongsTo('Modules\Inventory\Entities\PpeMnthlyReport', 'ppe_mnthly_id');
@@ -41,6 +40,10 @@ class PpeMnthlyReportItems extends Model
 
     public function supplier_info(){
         return $this->belongsTo('Modules\Inventory\Entities\Supplier', 'supplier');
+    }
+
+      public function account(){
+        return $this->belongsTo('Modules\Inventory\Entities\GSOItems', 'account_group');
     }
 
 

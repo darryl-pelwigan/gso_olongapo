@@ -23,10 +23,12 @@ class PpeMonthlyReportItems extends Migration
             $table->decimal('total_value',11,2)->nullable();
             $table->integer('accountable_person')->comment('Refer to olongapo_employee_list')->nullable();
             $table->integer('department')->comment('Refer to olongapo_subdepartment')->nullable();
-             $table->integer('supplier')->comment('Refer to supplier_info')->nullable();
+            $table->integer('supplier')->comment('Refer to supplier_info')->nullable();
             $table->string('invoice')->nullable();
             $table->softDeletes();
             $table->timestamps();
+            $table->string('location')->nullable();
+            $table->string('account_group')->nullable();
         });
     }
 

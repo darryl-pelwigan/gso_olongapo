@@ -98,6 +98,7 @@
                                 <tr>
                                       <th>DESCRIPTION</th>
                                       <th>PROPERTY CODE</th>
+                                      <th>ACCOUNT CODE</th>
                                        <th>UNIT</th>
                                         <th>QTY</th>
                                       <th>UNIT VALUE</th>
@@ -106,7 +107,7 @@
                                       <th>INVOICE</th>
 
                                       <th>(EXACT LOCATION, CONDITIONS, ETC.)</th>
-                                      <th>DEPRECIABLE</th>
+                                      {{-- <th>DEPRECIABLE</th> --}}
                                 </tr>
                               </thead>
 
@@ -119,6 +120,7 @@
                                               <input type="hidden" class="form-control"  name="item_id[]" value="{{ $items->pr_item->id }}" />
                                               <td><textarea   class="form-control" name="item_desc[]" readonly>{{ $items->pr_item->description }}</textarea></td>
                                               <td><input type="text" class="form-control"  name="item_property_code[]" value="" /></td>
+                                              <td><input type="text" class="form-control"  name="item_account_code[]" value="" /></td>
                                               <td><input type="text" class="form-control"  name="item_unit[]" value="{{ $items->pr_item->unit }}" readonly  /></td>
                                               <td><input type="text" class="form-control item_qty"  name="item_qty[]" style="width: 60px;padding-right: 2px;" value="{{ $items->pr_item->qty }}" readonly /></td>
                                               <td><input type="text" class="form-control item_unit_value"  name="item_unit_value[]" style="width: 100px;" value="{{ $items->prices->unit_price }}" readonly /></td>
@@ -127,7 +129,7 @@
                                               <td><input type="text" class="form-control"  name="item_invoice[]" value="" /></td>
 
                                               <td><input type="text" class="form-control"  name="item_loc[]" /></td>
-                                              <td><select name="item_dep[]" class="form-control"> <option disabled selected value> -- select an option -- </option><option value="I">Yes</option><option value="O">No</option></select></td>
+                                              {{-- <td><select name="item_dep[]" class="form-control"> <option disabled selected value> -- select an option -- </option><option value="I">Yes</option><option value="O">No</option></select></td> --}}
                                           </tr>
                                 @endforeach
 

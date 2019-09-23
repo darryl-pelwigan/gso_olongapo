@@ -92,15 +92,16 @@
                                 <tr>
                                       <th>DESCRIPTION</th>
                                       <th>PROPERTY CODE</th>
+                                      <th>ACCOUNT GROUP  </th>
                                        <th>UNIT</th>
                                         <th>QTY</th>
                                       <th>UNIT VALUE</th>
                                       <th>TOTAL VALUE</th>
                                       <th>ACCOUNTABLE PERSON</th>
                                       <th>INVOICE</th>
-                                      <th>ESTIMATED LIFE YEARS</th>
+                                      {{-- <th>ESTIMATED LIFE YEARS</th> --}}
                                       <th>(EXACT LOCATION, CONDITIONS, ETC.)</th>
-                                      <th>DEPRECIABLE</th>
+                                      {{-- <th>DEPRECIABLE</th> --}}
                                       <th></th>
                                 </tr>
                               </thead>
@@ -110,15 +111,16 @@
                                 <tr id="tr_1">
                                     <td><textarea   class="form-control" name="item_desc[]" ></textarea></td>
                                     <td><input type="text" class="form-control"  name="item_property_code[]" /></td>
+                                    <td><input type="text" class="form-control"  name="item_account_code[]" /></td>
                                     <td><input type="text" class="form-control"  name="item_unit[]"  /></td>
                                     <td><input type="text" class="form-control item_qty"  name="item_qty[]" style="width: 60px;padding-right: 2px;" /></td>
                                     <td><input type="text" class="form-control item_unit_value"  name="item_unit_value[]" style="width: 100px;" /></td>
                                     <td><input type="text" class="form-control"  name="item_total_value[]" style="width: 100px;" readonly="" /></td>
                                     <td><input type="text" class="form-control item_accountable_person"  name="item_accountable_person[]"  /> <input type="hidden" class="form-control"  name="item_accountable_person_id[]" /> </td>
                                     <td><input type="text" class="form-control"  name="item_invoice[]" /></td>
-                                    <td><input type="text" class="form-control"  name="item_est[]" /></td>
+                                    {{-- <td><input type="text" class="form-control"  name="item_est[]" /></td> --}}
                                     <td><input type="text" class="form-control"  name="item_loc[]" /></td>
-                                    <td><select name="item_dep[]" class="form-control"> <option disabled selected value> -- select an option -- </option><option value="I">Yes</option><option value="O">No</option></select></td>
+                                    {{-- <td><select name="item_dep[]" class="form-control"> <option disabled selected value> -- select an option -- </option><option value="I">Yes</option><option value="O">No</option></select></td> --}}
                                     <td><button type="button" class="btn btn-xs btn-success add-tr"><i class="fa fa-plus"></i> row</button></td>
                                 </tr>
                               @else
@@ -126,15 +128,16 @@
                                                              <tr id="tr_1">
                                                                   <td><textarea   class="form-control" name="item_desc[]" >{{ old('item_desc.'.$x) }}</textarea></td>
                                                                   <td><input type="text" class="form-control"  name="item_property_code[]" value="{{ old('item_property_code.'.$x) }}" /></td>
+                                                                   <td><input type="text" class="form-control"  name="item_account_code[]" value="{{ old('item_account_code.'.$x) }}" /></td>
                                                                   <td><input type="text" class="form-control"  name="item_unit[]" value="{{ old('item_unit.'.$x) }}"  /></td>
                                                                   <td><input type="text" class="form-control item_qty"  name="item_qty[]" style="width: 60px;padding-right: 2px;" value="{{ old('item_qty.'.$x) }}"  /></td>
                                                                   <td><input type="text" class="form-control item_unit_value"  name="item_unit_value[]" style="width: 100px;" value="{{ old('item_unit_value.'.$x) }}" /></td>
                                                                   <td><input type="text" class="form-control"  name="item_total_value[]" style="width: 100px;" disabled="" value="{{ old('item_total_value.'.$x) }}" /></td>
                                                                   <td><input type="text" class="form-control item_accountable_person"  name="item_accountable_person[]"  /> <input type="hidden" class="form-control"  name="item_accountable_person_id[]" /> </td>
                                                                   <td><input type="text" class="form-control"  name="item_invoice[]" value="{{ old('item_invoice.'.$x) }}" /></td>
-                                                                  <td><input type="text" class="form-control"  name="item_est[]" value="{{ old('item_invoice.'.$x) }}" /></td>
+                                                                  {{-- <td><input type="text" class="form-control"  name="item_est[]" value="{{ old('item_invoice.'.$x) }}" /></td> --}}
                                                                   <td><input type="text" class="form-control"  name="item_loc[]" value="{{ old('item_invoice.'.$x) }}" /></td>
-                                                                  <td><select name="item_dep[]" class="form-control"> <option disabled selected value> -- select an option -- </option><option value="I">Yes</option><option value="O">No</option></select></td>
+                                                                  {{-- <td><select name="item_dep[]" class="form-control"> <option disabled selected value> -- select an option -- </option><option value="I">Yes</option><option value="O">No</option></select></td> --}}
                                                                   <td><button type="button" class="btn btn-xs btn-success add-tr"><i class="fa fa-plus"></i> row</button></td>
                                                               </tr>
                                         @endfor

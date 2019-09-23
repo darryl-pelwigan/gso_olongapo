@@ -60,7 +60,8 @@ Route::group(['middleware' => ['web','auth'], 'prefix' => 'inventory', 'namespac
     Route::post('/set_ppe_mnthly_control_no', 'PPEMonthlyReportController@set_ppe_mnthly_control_no')->name('inv.set_ppe_mnthly_control_no');
     Route::post('/set_ppe_mnthly_report', 'PPEMonthlyReportController@set_ppe_mnthly_report')->name('inv.set_ppe_mnthly_report');
     Route::get('/ppe-monthly-report-generate', 'PPEMonthlyReportController@generate_report')->name('inventory.ppe-monthly-report-generate');
-    Route::post('/ppe-monthly-report-generate-pdf', 'PPEMonthlyReportController@generate_report_pdf')->name('inventory.ppe-generate-report-pdf');
+    Route::post('/ppe-monthly-report-generate-pdf', 'PPEMonthlyReportController@generate_monthly_report_pdf')->name('inventory.ppe-generate-monthly-report-pdf');
+    Route::post('/ppe-yearly-report-generate-pdf', 'PPEMonthlyReportController@generate_yearly_report_pdf')->name('inventory.ppe-generate-yearly-report-pdf');
 
     // AUTO COMPLETE
     Route::post('/get_ppecodes', 'PPEcodeController@get_ppecodes')->name('inventory.get_ppecodes');

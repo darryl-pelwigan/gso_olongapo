@@ -12,6 +12,7 @@ use Modules\Inventory\Entities\GSOCategory as gsocodecat;
 use Modules\Inventory\Entities\GSOItems as gsocodeitems;
 use Modules\Inventory\Entities\PpeMnthlyReport;
 use Modules\Inventory\Entities\PpeMnthlyReportItems;
+use Modules\Inventory\Entities\PPEsubcode;
 use Session;
 use Carbon\Carbon;
 use PDF;
@@ -203,6 +204,7 @@ class PPEMonthlyReportController extends Controller
                                             'prno_item_id'                    =>  ($request->input('item_id.'.$c)) ? $request->input('item_id.'.$c) : null,
                                             'item_desc'                           =>  $request->input('item_desc.'.$c),
                                             'property_code'                  => $request->input('item_property_code.'.$c),
+                                            'account_group'                  => $request->input('item_account_code.'.$c),
                                             'po_no'                                   =>  $request->input('item_pono'),
                                             'unit'                                     => $request->input('item_unit.'.$c),
                                             'qty'                                       => $request->input('item_qty.'.$c),
@@ -213,7 +215,7 @@ class PPEMonthlyReportController extends Controller
                                             'department'                      => $request->input('pr_sdept_id'),
                                             'invoice'                               => $request->input('item_invoice.'.$c),
                                             'location'                               => $request->input('item_loc.'.$c),
-                                            'depreciable'                               => $request->input('item_dep.'.$c),
+                                            // 'depreciable'                               => $request->input('item_dep.'.$c),
                                     ];
                 }
                 $PpeMnthlyReport->inv_items()->insert($datax);
@@ -227,7 +229,7 @@ class PPEMonthlyReportController extends Controller
         return view('inventory::ppe-mnthly.generate',$this->setup());
     }
 
-    public function generate_report_pdf(Request $request){
+    public function generate_monthly_report_pdf(Request $request){
 
         // return view('inventory::ppe-mnthly.generate',$this->setup());
         // $this->data['approved_by'] = Requestordersignee::where('deleted_at','=',null)->get();
@@ -262,22 +264,22 @@ class PPEMonthlyReportController extends Controller
          //                                    )
          //                            ->get()
          //                            ;
-
+        // ob_clean();
         $get_ppe_mnthly = PpeMnthlyReport::where('olongapo_ppe_mnthly_report.date_log','>=',$request->from)
         ->where('olongapo_ppe_mnthly_report.date_log','<=',$request->to)
         ->get();
 
+          $dataArray = [
+            ['DATE', 'CONTROL #', 'DESCRIPTION', 'PROPERTY CODE', 'CATEGORY', 'PO#', 'QTY', 'UNIT VALUE', 'TOTAL VALUE', 'ACOUNTABLE PERSON', 'DEPARTMENT', 'SUPPLIER', 'INVOICE']
+                    ];
 
-
-
-
-        // $mnth = Carbon::parse($request->from);
-        // $dataArray[$mnth->format('F')] = [];
         $i = 0;
         for($mnth = Carbon::parse($request->from); $mnth->format('m') <= Carbon::parse($request->to)->format('m'); $mnth->addMonth()) {
             $dataArray[$mnth->format('F')] = [];
+
             foreach ($get_ppe_mnthly as $key => $value) {
                 $po_no = $value->pono_id ? $value->pr_no->pr_orderno->po_no : '';
+
                 $category = $value->type ? $value->type:'';
                 $employee_name = '';
                 foreach ($value->inv_items as $key2 => $inv_item) {
@@ -289,22 +291,6 @@ class PPEMonthlyReportController extends Controller
                     if($inv_item->est_life){
                         $dep = ($inv_item->unit_value - $res)/$inv_item->est_life;
                     }
-
-                    // $dataArray[] =   array(
-                    //                         $value->date_log,
-                    //                         $value->inv_control_no,
-                    //                         $inv_item->item_desc,
-                    //                         $inv_item->property_code,
-                    //                         $category,
-                    //                         $po_no,
-                    //                         $inv_item->qty,
-                    //                         $inv_item->unit_value,
-                    //                         $inv_item->total_value,
-                    //                         $employee_name,
-                    //                         $inv_item->location,
-                    //                         $supplier,
-                    //                         $inv_item->invoice
-                    //                     );
 
                     if(strcasecmp(Carbon::parse($value->date_log)->format('F'), $mnth->format('F')) == 0) {
                         $dataArray[$mnth->format('F')][$i] = array(
@@ -336,11 +322,10 @@ class PPEMonthlyReportController extends Controller
             // }
         }
 
-
         $spreadsheet = new Spreadsheet();
-        // $sheet = $spreadsheet->getActiveSheet();
 
         // month per sheet
+
         foreach($dataArray as $key => $value) {
             $excel_rows = count($value);
             if(gettype($key) == "string" && $excel_rows > 0) {
@@ -471,9 +456,137 @@ class PPEMonthlyReportController extends Controller
             // );
             }
         }
-        $empty_sheet = $spreadsheet->getIndex($spreadsheet->getSheetByName('Worksheet'));
-        $spreadsheet->removeSheetByIndex($empty_sheet);
 
+        // $empty_sheet = $spreadsheet->getIndex($spreadsheet->getSheetByName('Worksheet'));
+        // $spreadsheet->removeSheetByIndex($empty_sheet);
+
+        $writer = new Xlsx($spreadsheet);
+        $writer->save('excel/PPEMNHTLYReport.xlsx');
+
+
+        return response()->download('excel/PPEMNHTLYReport.xlsx');
+
+    }
+
+     public function generate_yearly_report_pdf(Request $request){
+
+        $get_ppe = PpeMnthlyReport::whereYear('olongapo_ppe_mnthly_report.date_log','=', $request->from)
+        ->get();
+
+        //account group
+        $get_codes = PPEsubcode::all();
+        foreach ($get_codes as $codes){
+            $codesArray[$codes->code_family]=$codes->desc.' ('.$codes->code_coa.') Code '.$codes->code_family;
+        }
+
+        // headerArray
+        $headerArray = [
+            ['GSO', 'ACCOUNT ', 'DESCRIPTION', 'Estimated ', 'Date ', 'ACCOUNTABLE ', '(Exact Location,', 'Depriciable', 'UNIT', 'Balance per card',' ', 'Shortage', ' ', 'ACCUMULATED', 'RESIDUAL'],
+            ['Property Code', 'GROUP', NULL, 'Life Years', 'Acquired','OFFICER', 'conditions, etc.)', '(I/O)','VALUE', 'Qty', 'Value', 'Qty', 'Total Value', 'DEPRECIATION', 'VALUE'],
+                    ];
+
+        //Inventory items population
+        foreach ($get_ppe as $key => $value) {
+                $po_no = $value->pono_id ? $value->pr_no->pr_orderno->po_no : '';
+
+                $category = $value->type ? $value->type:'';
+                $employee_name = '';
+
+                foreach ($value->inv_items as $key2 => $inv_item) {
+
+                    $employee_name = $inv_item->accountable_person ? $inv_item->accountable->lname.', '.$inv_item->accountable->fname : '';
+                    $supplier = $inv_item->supplier ? $inv_item->supplier_info->title : "" ;
+                    $account_group = $inv_item->account_group ? $inv_item->account->desc : "" ;
+                    $est_life = $inv_item->account_group ? $inv_item->account->useful_life : "" ;
+                    $depreciable = $inv_item->account->useful_life ? 'I':'O';
+
+                    $res = $inv_item->unit_value * 0.1;
+                    $dep=0;
+
+                    if($est_life){
+                        $dep = ($inv_item->unit_value - $res)/$est_life;
+                    }
+
+                    foreach($codesArray as $codes => $codeValue){
+
+                        $invCode = substr($inv_item->property_code,0,2);
+
+                        if($invCode == $codes){
+
+                              $itemsArray[$codeValue][] =
+                               array(
+                                $inv_item->property_code,
+                                "$account_group",
+                                $inv_item->item_desc,
+                                $est_life,
+                                $value->date_log,
+                                $employee_name,
+                                $inv_item->location,
+                                $depreciable,
+                                $inv_item->unit_value,
+                                $inv_item->qty,
+                                $inv_item->unit_value*$inv_item->qty,
+                                " ",
+                                " ",
+                                $dep,
+                                $res
+                                );
+                        }
+                    }
+                }
+            }
+
+        //sort inventory items according to account group
+        array_multisort(array_map(function($element) {
+            return $element[0];
+        }, $itemsArray), SORT_ASC, $itemsArray);
+
+
+        $spreadsheet = new Spreadsheet();
+
+        $spreadsheet->getActiveSheet()
+                    ->fromArray(
+                    $headerArray, //header
+                    NULL,        // Array values with this value will not be set
+                    'A8'         // Top left coordinate of the worksheet range where
+                     //    we want to set these values (default is A1)
+        );
+
+        //cell number
+        $i=10;
+
+        foreach($itemsArray as $items =>$value){
+
+            $spreadsheet->getActiveSheet()
+                    ->setCellValue('A'.$i, $items);
+            $i++;
+            $spreadsheet->getActiveSheet()
+                    ->fromArray(
+                    $value,
+                    NULL,        // Array values with this value will not be set
+                    'A'.$i         // Top left coordinate of the worksheet range where
+                     //    we want to set these values (default is A1)
+            );
+            $i=$i+count($value);
+        }
+
+        //styles
+        $spreadsheet->getActiveSheet()->mergeCells('C8:C9');
+        $spreadsheet->getActiveSheet()->mergeCells('J8:K8');
+        $spreadsheet->getActiveSheet()->mergeCells('L8:M8');
+        $spreadsheet->getActiveSheet()->getStyle('A8:O9')
+                    ->getBorders()->getTop()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK);
+        $spreadsheet->getActiveSheet()->getStyle('A8:O9')
+                    ->getBorders()->getBottom()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK);
+        $spreadsheet->getActiveSheet()->getStyle('A8:O9')
+                    ->getBorders()->getLeft()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK);
+        $spreadsheet->getActiveSheet()->getStyle('A8:O9')
+                    ->getBorders()->getRight()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK);
+        // $empty_sheet = $spreadsheet->getIndex($spreadsheet->getSheetByName('Worksheet'));
+        // $spreadsheet->removeSheetByIndex($empty_sheet);
+
+
+        //save
         $writer = new Xlsx($spreadsheet);
         $writer->save('excel/PPE_Report.xlsx');
 
@@ -481,8 +594,6 @@ class PPEMonthlyReportController extends Controller
         return response()->download('excel/PPE_Report.xlsx');
 
     }
-
-
     public function update_monthly_report_new(Request $request){
         $request->input('item_loc');
             $validator = Validator::make($request->all(), [
@@ -502,7 +613,7 @@ class PPEMonthlyReportController extends Controller
 
 
             }else{
-                 Session::flash('info', ['PPE montly saved']);
+                 Session::flash('info', ['PPE monthly saved']);
 
                 $PpeMnthlyReport = PpeMnthlyReport::find($request->pmi_id);
                 $PpeMnthlyReport->date_log = $request->input('date_log');
@@ -522,7 +633,8 @@ class PPEMonthlyReportController extends Controller
                                  'accountable_person'        => $request->input('item_accountable_person_id.'.$key),
                                  'invoice'        => $request->input('item_invoice.'.$key),
                                  'location'        => $request->input('item_loc.'.$key),
-                                 'depreciable'        => $request->input('item_dep.'.$key),
+                                 'account_group'        => $request->input('item_account_code.'.$key),
+                                 // 'depreciable'        => $request->input('item_dep.'.$key),
                                  'po_no'                                   =>  $request->input('item_pono'),
                             ]
                     );
