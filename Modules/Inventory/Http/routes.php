@@ -71,7 +71,7 @@ Route::group(['middleware' => ['web','auth'], 'prefix' => 'inventory', 'namespac
 
     Route::get('/inventory-items', 'InventoryController@items')->name('inventory.items');
     Route::get('/inventory-in-out/{id}', 'InventoryController@in_out_items')->name('inventory.in_out_view');
-    Route::post('/inventory-in-out', 'PPEMonthlyReportController@update_monthly_report_new')->name('inventory.update_ppe_pr');
-
+    Route::post('/inventory-in-out', 'InventoryController@in_out')->name('inventory.in_out');
+    Route::get('/inventory-log', 'InventoryController@items_log')->name('inventory.items_log');
 
 });
