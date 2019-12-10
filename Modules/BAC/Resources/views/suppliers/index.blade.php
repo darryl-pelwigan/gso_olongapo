@@ -121,7 +121,7 @@
       if($('.supplier_id:checked').length){
         $('#delete_supplier').prop('disabled', '');
       }else{
-        $('#delete_supplier').prop('disabled', 'disabled');     
+        $('#delete_supplier').prop('disabled', 'disabled');
       }
     });
 
@@ -129,7 +129,7 @@
       if($(this).is(':checked')){
         $('.delete_column').removeClass('hide');
       }else{
-        $('.delete_column').addClass('hide');      
+        $('.delete_column').addClass('hide');
       }
     });
 
@@ -166,14 +166,14 @@
                 if($(this).is(':checked')){
                   $('.delete_column').removeClass('hide');
                 }else{
-                  $('.delete_column').addClass('hide');      
+                  $('.delete_column').addClass('hide');
                 }
             });
 
             if($('#delete_checkbutton').is(':checked')){
               $('.delete_column').removeClass('hide');
             }else{
-              $('.delete_column').addClass('hide');      
+              $('.delete_column').addClass('hide');
             }
         }
     });
@@ -289,6 +289,14 @@ $.fn.deleteSupllierRecord = function(){
   }
 };
 
+
+$.fn.addSupp = function(){
+  $('#cmpny_name').val('');
+    $('#cmpny_desc').val('');
+    $('#cmpny_address').val('');
+  $('#submit_empl').attr('onclick','$(this).sentNewSupplier();');
+  $('#add_suuplier_modal').modal('show');
+};
 
 </script>
 @stop

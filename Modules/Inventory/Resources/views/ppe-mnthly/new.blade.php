@@ -92,7 +92,7 @@
                                 <tr>
                                       <th>DESCRIPTION</th>
                                       <th>PROPERTY CODE</th>
-                                      <th>ACCOUNT GROUP  </th>
+                                      {{-- <th>ACCOUNT GROUP  </th> --}}
                                        <th>UNIT</th>
                                         <th>QTY</th>
                                       <th>UNIT VALUE</th>
@@ -111,7 +111,7 @@
                                 <tr id="tr_1">
                                     <td><textarea   class="form-control" name="item_desc[]" ></textarea></td>
                                     <td><input type="text" class="form-control"  name="item_property_code[]" /></td>
-                                    <td><input type="text" class="form-control"  name="item_account_code[]" /></td>
+                                    {{-- <td><input type="text" class="form-control"  name="item_account_code[]" /></td> --}}
                                     <td><input type="text" class="form-control"  name="item_unit[]"  /></td>
                                     <td><input type="text" class="form-control item_qty"  name="item_qty[]" style="width: 60px;padding-right: 2px;" /></td>
                                     <td><input type="text" class="form-control item_unit_value"  name="item_unit_value[]" style="width: 100px;" /></td>
@@ -128,7 +128,7 @@
                                                              <tr id="tr_1">
                                                                   <td><textarea   class="form-control" name="item_desc[]" >{{ old('item_desc.'.$x) }}</textarea></td>
                                                                   <td><input type="text" class="form-control"  name="item_property_code[]" value="{{ old('item_property_code.'.$x) }}" /></td>
-                                                                   <td><input type="text" class="form-control"  name="item_account_code[]" value="{{ old('item_account_code.'.$x) }}" /></td>
+                                                                   {{-- <td><input type="text" class="form-control"  name="item_account_code[]" value="{{ old('item_account_code.'.$x) }}" /></td> --}}
                                                                   <td><input type="text" class="form-control"  name="item_unit[]" value="{{ old('item_unit.'.$x) }}"  /></td>
                                                                   <td><input type="text" class="form-control item_qty"  name="item_qty[]" style="width: 60px;padding-right: 2px;" value="{{ old('item_qty.'.$x) }}"  /></td>
                                                                   <td><input type="text" class="form-control item_unit_value"  name="item_unit_value[]" style="width: 100px;" value="{{ old('item_unit_value.'.$x) }}" /></td>

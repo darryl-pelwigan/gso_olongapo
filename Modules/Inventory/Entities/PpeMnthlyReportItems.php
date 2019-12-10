@@ -19,8 +19,7 @@ class PpeMnthlyReportItems extends Model
                                             'department',
                                             'supplier',
                                             'invoice',
-                                            'location',
-                                            'account_group'];
+                                            'location'];
 
     public function inv(){
         return $this->belongsTo('Modules\Inventory\Entities\PpeMnthlyReport', 'ppe_mnthly_id');

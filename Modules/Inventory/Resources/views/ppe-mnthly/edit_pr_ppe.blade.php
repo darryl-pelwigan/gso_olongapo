@@ -120,7 +120,7 @@
                                 <tr>
                                       <th>DESCRIPTION</th>
                                       <th>PROPERTY CODE</th>
-                                      <th>ACCOUNT CODE</th>
+                                      {{-- <th>ACCOUNT CODE</th> --}}
                                        <th>UNIT</th>
                                         <th>QTY</th>
                                       <th>UNIT VALUE</th>
@@ -140,7 +140,7 @@
                                          <tr id="tr_1"><input type="hidden" name="item_id[]" value="{{ $items->id }}">
                                               <td><textarea   class="form-control" name="item_desc[]" readonly>{{ $items->item_desc }}</textarea></td>
                                               <td><input type="text" class="form-control"  name="item_property_code[]" value="{{ $items->property_code }}" /></td>
-                                              <td><input type="text" class="form-control"  name="item_account_code[]" value="{{ $items->account_group }}" /></td>
+                                              {{-- <td><input type="text" class="form-control"  name="item_account_code[]" value="{{ $items->account_group }}" /></td> --}}
                                               <td><input type="text" class="form-control"  name="item_unit[]" value="{{ $items->unit }}" readonly  /></td>
                                               <td><input type="text" class="form-control item_qty"  name="item_qty[]" style="width: 60px;padding-right: 2px;" value="{{ $items->qty }}" readonly /></td>
                                               <td><input type="text" class="form-control item_unit_value"  name="item_unit_value[]" style="width: 100px;" value="{{ $items->unit_value }}" readonly /></td>

@@ -30,7 +30,7 @@
                   <div class="form-group row">
                        <label for="pr_no" class="col-sm-3 control-label">DATE FROM </label>
                           <div class="col-sm-9">
-                          <input type="text" class="form-control date" id="from" name="from" placeholder="PR DATE" />
+                          <input type="text" class="form-control date" id="from" name="from" placeholder="PR DATE" required />
                       </div>
                   </div>
                 </div>
@@ -38,7 +38,59 @@
                   <div class="form-group row">
                        <label for="pr_no" class="col-sm-3 control-label">DATE TO </label>
                           <div class="col-sm-9">
-                          <input type="text" class="form-control date" id="to" name="to" placeholder="PR DATE" />
+                          <input type="text" class="form-control date" id="to" name="to" placeholder="PR DATE" required/>
+                      </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group row">
+                       <label for="pr_no" class="col-sm-3 control-label">PREPARED BY </label>
+                          <div class="col-sm-9">
+                          <select class="form-control" name="prepared" id="prepared">
+                              <option></option>
+                              @foreach($employee as $emp)
+                                <option value={{$emp->id}}>{{$emp->fname}} {{$emp->mname}} {{$emp->lname}} </option>
+                              @endforeach
+                          </select>
+                      </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group row">
+                       <label for="pr_no" class="col-sm-3 control-label">REVIEWED BY </label>
+                          <div class="col-sm-9">
+                          <select class="form-control" name="reviewed" id="reviewed">
+                              <option></option>
+                              @foreach($employee as $emp)
+                                <option value={{$emp->id}}>{{$emp->fname}} {{$emp->mname}} {{$emp->lname}} </option>
+                              @endforeach
+                          </select>
+                      </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group row">
+                       <label for="pr_no" class="col-sm-3 control-label">NOTED BY </label>
+                          <div class="col-sm-9">
+                         <select class="form-control" name="noted" id="noted">
+                              <option></option>
+                              @foreach($employee as $emp)
+                                <option value={{$emp->id}}>{{$emp->fname}} {{$emp->mname}} {{$emp->lname}} </option>
+                              @endforeach
+                          </select>
+                      </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group row">
+                       <label for="pr_no" class="col-sm-3 control-label">ENDORSED TO </label>
+                          <div class="col-sm-9">
+                          <select class="form-control" name="endorsed" id="endorsed">
+                              <option></option>
+                              @foreach($employee as $emp)
+                                <option value={{$emp->id}}>{{$emp->fname}} {{$emp->mname}} {{$emp->lname}} </option>
+                              @endforeach
+                          </select>
                       </div>
                   </div>
                 </div>
@@ -71,7 +123,28 @@
                   <div class="form-group row">
                        <label for="pr_no" class="col-sm-3 control-label">SELECT YEAR </label>
                           <div class="col-sm-9">
-                          <input type="text" class="form-control date" id="from" name="from" placeholder="PR DATE" />
+                          <input type="text" class="form-control date" id="from" name="from" placeholder="PR DATE" required/>
+                      </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group row">
+                       <label for="pr_no" class="col-sm-3 control-label">ACCOUNTABLE OFFICER </label>
+                          <div class="col-sm-9">
+                           <select class="form-control" name="ao" id="ao">
+                              <option></option>
+                              @foreach($employee as $emp)
+                                <option value={{$emp->id}}>{{$emp->fname}} {{$emp->mname}} {{$emp->lname}} </option>
+                              @endforeach
+                          </select>
+                      </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group row">
+                       <label for="pr_no" class="col-sm-3 control-label">BUREAU OR OFFICE </label>
+                          <div class="col-sm-9">
+                          <input type="text" class="form-control" id="bureau" name="bureau"  required/>
                       </div>
                   </div>
                 </div>

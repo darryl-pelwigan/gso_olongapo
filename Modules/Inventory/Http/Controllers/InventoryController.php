@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\DB;
 use Modules\Inventory\Entities\InventoryInfo;
 use Modules\Inventory\Entities\InvoiceInfo;
 use Modules\Inventory\Entities\InventoryItems;
+use Modules\BAC\Entities\BacControlInfo;
+
 
 
 class InventoryController extends Controller
@@ -31,9 +33,27 @@ class InventoryController extends Controller
         return view('inventory::inventory.index',$this->setup());
     }
 
-     public function inventory()
+    public function inventory()
     {
         return view('inventory::inventory.index',$this->setup());
+    }
+
+    public function items()
+    {
+
+        $this->data['items'] = DB::table('inventory_items')
+             // ->join('inv_gsoprop_code_list','inv_gsoprop_code_list.id','=','inventory_items.item_code')
+             ->get()
+             ->all();
+        // dd($this->data['items']);
+        return view('inventory::inventory.items',$this->setup());
+    }
+
+    public function in_out_items($id){
+
+        $this->data['items'] = InventoryItems::find($id);
+        // dd($id);
+        return view('inventory::inventory.in_out',$this->setup());
     }
 
     public function add_control_number(Request $request){

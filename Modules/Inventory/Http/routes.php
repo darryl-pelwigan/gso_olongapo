@@ -69,5 +69,9 @@ Route::group(['middleware' => ['web','auth'], 'prefix' => 'inventory', 'namespac
     Route::post('/get_ppeitemcodes', 'PPEcodeController@get_ppeitemcodes')->name('inventory.get_ppeitemcodes');
     Route::post('/get_supplier', 'SupplierController@get_supplier')->name('inv.get_supplier');
 
+    Route::get('/inventory-items', 'InventoryController@items')->name('inventory.items');
+    Route::get('/inventory-in-out/{id}', 'InventoryController@in_out_items')->name('inventory.in_out_view');
+    Route::post('/inventory-in-out', 'PPEMonthlyReportController@update_monthly_report_new')->name('inventory.update_ppe_pr');
+
 
 });

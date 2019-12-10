@@ -13,6 +13,8 @@ use Modules\Inventory\Entities\GSOItems as gsocodeitems;
 use Modules\Inventory\Entities\PpeMnthlyReport;
 use Modules\Inventory\Entities\PpeMnthlyReportItems;
 use Modules\Inventory\Entities\PPEsubcode;
+use Modules\Inventory\Entities\InventoryItems;
+use Modules\Inventory\Entities\InventoryInfo;
 use Session;
 use Carbon\Carbon;
 use PDF;
@@ -61,7 +63,7 @@ class PPEMonthlyReportController extends Controller
                                         ->get()
                                         ;
 
-            $get_ppe_mnthly = PpeMnthlyReport::all();
+        $get_ppe_mnthly = PpeMnthlyReport::all();
 
         $dataArray = [];
         $po_no="";
@@ -186,7 +188,7 @@ class PPEMonthlyReportController extends Controller
 
 
             }else{
-                 Session::flash('info', ['PPE montly saved']);
+                 Session::flash('info', ['PPE monthly saved']);
 
                 $PpeMnthlyReport = new PpeMnthlyReport;
                 $PpeMnthlyReport->date_log = $request->input('date_log');
@@ -204,7 +206,7 @@ class PPEMonthlyReportController extends Controller
                                             'prno_item_id'                    =>  ($request->input('item_id.'.$c)) ? $request->input('item_id.'.$c) : null,
                                             'item_desc'                           =>  $request->input('item_desc.'.$c),
                                             'property_code'                  => $request->input('item_property_code.'.$c),
-                                            'account_group'                  => $request->input('item_account_code.'.$c),
+                                            // 'account_group'                  => $request->input('item_account_code.'.$c),
                                             'po_no'                                   =>  $request->input('item_pono'),
                                             'unit'                                     => $request->input('item_unit.'.$c),
                                             'qty'                                       => $request->input('item_qty.'.$c),
@@ -219,6 +221,43 @@ class PPEMonthlyReportController extends Controller
                                     ];
                 }
                 $PpeMnthlyReport->inv_items()->insert($datax);
+
+
+                for($c = 0 ; $c < count($request->input('item_desc')); $c++){
+
+                    $account_group = DB::table('inv_gsoprop_code_list')
+                        ->where('inv_gsoprop_code_list.gsocode_cat_id', '=', substr($request->input('item_property_code.'.$c),3,1))
+                        ->where('inv_gsoprop_code_list.code_no', '=',  substr($request->input('item_property_code.'.$c),4,1))
+                        ->get()
+                        ->first();
+
+                    $inv_items= InventoryItems::where('inventory_items.item_code', '=', $account_group->id)
+                            ->get()
+                            ->first();
+
+                    if(isset($inv_items)){
+
+                        $datay[] = [
+
+                                            'item_desc'                           =>  $account_group->desc,
+                                            'item_qty'                           => $request->input('item_qty.'.$c)+$inv_items->item_qty,
+                                            'item_code'                                       => $account_group->id,
+                                ];
+                        $inv_items->update($datay);
+
+                    } else{
+
+                        $inv_items = new InventoryItems;
+                            $datay[] = [
+
+                                            'item_desc'                           =>  $account_group->desc,
+                                            'item_qty'                                       => $request->input('item_qty.'.$c),
+                                            'item_code'                                       => $account_group->id,
+                                ];
+                        $inv_items->insert($datay);
+                    }
+                }
+
                  return redirect()->route('inventory.ppe');
 
             }
@@ -226,6 +265,8 @@ class PPEMonthlyReportController extends Controller
     }
 
      public function generate_report(){
+        $this->data['employee'] = DB::table('olongapo_employee_list')->select('id','fname','mname','lname')->get();
+        // $this->data['department'] = DEPTsubcode::all();
         return view('inventory::ppe-mnthly.generate',$this->setup());
     }
 
@@ -268,10 +309,36 @@ class PPEMonthlyReportController extends Controller
         $get_ppe_mnthly = PpeMnthlyReport::where('olongapo_ppe_mnthly_report.date_log','>=',$request->from)
         ->where('olongapo_ppe_mnthly_report.date_log','<=',$request->to)
         ->get();
-
+        // dd($get_ppe_mnthly);
           $dataArray = [
             ['DATE', 'CONTROL #', 'DESCRIPTION', 'PROPERTY CODE', 'CATEGORY', 'PO#', 'QTY', 'UNIT VALUE', 'TOTAL VALUE', 'ACOUNTABLE PERSON', 'DEPARTMENT', 'SUPPLIER', 'INVOICE']
                     ];
+
+         $prepared_det = DB::table('olongapo_employee_list')
+                    ->join('olongapo_department' , 'olongapo_department.dept_code','=','olongapo_employee_list.dept_id')
+                    ->where('olongapo_employee_list.id', '=',  $request->input('prepared'))
+                    ->get()
+                    ->first();
+
+         $reviewed_det = DB::table('olongapo_employee_list')
+                    ->join('olongapo_department' , 'olongapo_department.dept_code','=','olongapo_employee_list.dept_id')
+                    ->where('olongapo_employee_list.id', '=',  $request->input('reviewed'))
+                    ->get()
+                    ->first();
+
+         $noted_det = DB::table('olongapo_employee_list')
+                    ->join('olongapo_department' , 'olongapo_department.dept_code','=','olongapo_employee_list.dept_id')
+                    ->where('olongapo_employee_list.id', '=',  $request->input('noted'))
+                    ->get()
+                    ->first();
+
+         $endorsed_det = DB::table('olongapo_employee_list')
+                    ->join('olongapo_department' , 'olongapo_department.dept_code','=','olongapo_employee_list.dept_id')
+                    ->where('olongapo_employee_list.id', '=',  $request->input('endorsed'))
+                    ->get()
+                    ->first();
+        // dd($prepared_det);
+        // dd($request->input('prepared'));
 
         $i = 0;
         for($mnth = Carbon::parse($request->from); $mnth->format('m') <= Carbon::parse($request->to)->format('m'); $mnth->addMonth()) {
@@ -401,6 +468,7 @@ class PPEMonthlyReportController extends Controller
                 ),
             );
 
+
             foreach (range('A','M') as $col) {
                 $sheet->getColumnDimension($col)->setAutoSize(true);
             }
@@ -416,6 +484,8 @@ class PPEMonthlyReportController extends Controller
 
             // signatories
             $sign_row_label = $excel_rows+3;
+            $sign_row_name = $excel_rows+6;
+            $sign_row_position = $excel_rows+7;
             $sheet->mergeCells('A'.$sign_row_label.':B'.$sign_row_label);
             $sheet->mergeCells('C'.$sign_row_label.':D'.$sign_row_label);
             $sheet->mergeCells('E'.$sign_row_label.':F'.$sign_row_label);
@@ -424,6 +494,14 @@ class PPEMonthlyReportController extends Controller
             $sheet->setCellValue('C'.$sign_row_label, 'Reviewed By: ');
             $sheet->setCellValue('E'.$sign_row_label, 'Noted By: ');
             $sheet->setCellValue('G'.$sign_row_label, 'Endorsed To: ');
+            $sheet->setCellValue('A'.$sign_row_name, $prepared_det->fname.' '.$prepared_det->mname.' '.$prepared_det->lname);
+            $sheet->setCellValue('C'.$sign_row_name, $reviewed_det->fname.' '.$reviewed_det->mname.' '.$reviewed_det->lname);
+            $sheet->setCellValue('E'.$sign_row_name, $noted_det->fname.' '.$noted_det->mname.' '.$noted_det->lname);
+            $sheet->setCellValue('G'.$sign_row_name, $endorsed_det->fname.' '.$endorsed_det->mname.' '.$endorsed_det->lname);
+            $sheet->setCellValue('A'.$sign_row_position, $prepared_det->dept_desc);
+            $sheet->setCellValue('C'.$sign_row_position, $reviewed_det->dept_desc);
+            $sheet->setCellValue('E'.$sign_row_position, $noted_det->dept_desc);
+            $sheet->setCellValue('G'.$sign_row_position, $endorsed_det->dept_desc);
             $sheet->getStyle('A'.$sign_row_label.':I'.$sign_row_label)->getAlignment()->setHorizontal('center');
 
             $columns = ['A','B','C','D','E','F','G','H','I','J','K','L','M'];
@@ -479,11 +557,18 @@ class PPEMonthlyReportController extends Controller
             $codesArray[$codes->code_family]=$codes->desc.' ('.$codes->code_coa.') Code '.$codes->code_family;
         }
 
+        $ao_det = DB::table('olongapo_employee_list')
+                    ->join('olongapo_department' , 'olongapo_department.dept_code','=','olongapo_employee_list.dept_id')
+                    ->where('olongapo_employee_list.id', '=',  $request->input('ao'))
+                    ->get()
+                    ->first();
+        // dd($ao_det);
         // headerArray
         $headerArray = [
             ['GSO', 'ACCOUNT ', 'DESCRIPTION', 'Estimated ', 'Date ', 'ACCOUNTABLE ', '(Exact Location,', 'Depriciable', 'UNIT', 'Balance per card',' ', 'Shortage', ' ', 'ACCUMULATED', 'RESIDUAL'],
             ['Property Code', 'GROUP', NULL, 'Life Years', 'Acquired','OFFICER', 'conditions, etc.)', '(I/O)','VALUE', 'Qty', 'Value', 'Qty', 'Total Value', 'DEPRECIATION', 'VALUE'],
                     ];
+        // dd($get_ppe);
 
         //Inventory items population
         foreach ($get_ppe as $key => $value) {
@@ -496,11 +581,20 @@ class PPEMonthlyReportController extends Controller
 
                     $employee_name = $inv_item->accountable_person ? $inv_item->accountable->lname.', '.$inv_item->accountable->fname : '';
                     $supplier = $inv_item->supplier ? $inv_item->supplier_info->title : "" ;
-                    $account_group = $inv_item->account_group ? $inv_item->account->desc : "" ;
-                    $est_life = $inv_item->account_group ? $inv_item->account->useful_life : "" ;
-                    $depreciable = $inv_item->account->useful_life ? 'I':'O';
 
+
+
+                    $account_group = DB::table('inv_gsoprop_code_list')
+                    ->where('inv_gsoprop_code_list.gsocode_cat_id', '=', substr($inv_item->property_code,3,1))
+                    ->where('inv_gsoprop_code_list.code_no', '=',  substr($inv_item->property_code,4,1))
+                    ->get()
+                    ->first();
+
+                    // dd($account_group);
+                    $est_life = $account_group ? $account_group->useful_life : "" ;
+                    $depreciable = $account_group->useful_life ? 'I':'O';
                     $res = $inv_item->unit_value * 0.1;
+
                     $dep=0;
 
                     if($est_life){
@@ -516,7 +610,7 @@ class PPEMonthlyReportController extends Controller
                               $itemsArray[$codeValue][] =
                                array(
                                 $inv_item->property_code,
-                                "$account_group",
+                                $account_group->desc,
                                 $inv_item->item_desc,
                                 $est_life,
                                 $value->date_log,
@@ -552,6 +646,17 @@ class PPEMonthlyReportController extends Controller
                      //    we want to set these values (default is A1)
         );
 
+        $spreadsheet->getActiveSheet()->setCellValue('A1', 'INVENTORY OF EQUIPMENT');
+        $spreadsheet->getActiveSheet()->setCellValue('A3', 'Made as of '.Carbon::now()->format('F Y'));
+        $spreadsheet->getActiveSheet()->setCellValue('A5', 'For which');
+        $spreadsheet->getActiveSheet()->setCellValue('B5',  $ao_det->fname.' '.$ao_det->mname.' '.$ao_det->lname);
+        $spreadsheet->getActiveSheet()->setCellValue('C5',  $ao_det->dept_desc);
+        $spreadsheet->getActiveSheet()->setCellValue('D5',  $request->bureau.' is accountable having assumed such acountability on');
+        $spreadsheet->getActiveSheet()->setCellValue('B6', '(Name of Accountable Officer)');
+        $spreadsheet->getActiveSheet()->setCellValue('C6', '(Official designation)');
+        $spreadsheet->getActiveSheet()->setCellValue('D6', '(Bureau office)');
+
+
         //cell number
         $i=10;
 
@@ -559,6 +664,12 @@ class PPEMonthlyReportController extends Controller
 
             $spreadsheet->getActiveSheet()
                     ->setCellValue('A'.$i, $items);
+
+            $spreadsheet->getActiveSheet()
+                    ->getStyle('A'.$i)
+                    ->getFont()
+                    ->setSize(16);
+
             $i++;
             $spreadsheet->getActiveSheet()
                     ->fromArray(
@@ -570,7 +681,9 @@ class PPEMonthlyReportController extends Controller
             $i=$i+count($value);
         }
 
+
         //styles
+
         $spreadsheet->getActiveSheet()->mergeCells('C8:C9');
         $spreadsheet->getActiveSheet()->mergeCells('J8:K8');
         $spreadsheet->getActiveSheet()->mergeCells('L8:M8');
@@ -584,7 +697,9 @@ class PPEMonthlyReportController extends Controller
                     ->getBorders()->getRight()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK);
         // $empty_sheet = $spreadsheet->getIndex($spreadsheet->getSheetByName('Worksheet'));
         // $spreadsheet->removeSheetByIndex($empty_sheet);
-
+         foreach (range('A','O') as $col) {
+                $spreadsheet->getActiveSheet()->getColumnDimension($col)->setAutoSize(true);
+        }
 
         //save
         $writer = new Xlsx($spreadsheet);
@@ -639,7 +754,36 @@ class PPEMonthlyReportController extends Controller
                             ]
                     );
 
+                    $account_group = DB::table('inv_gsoprop_code_list')
+                    ->where('inv_gsoprop_code_list.gsocode_cat_id', '=', substr($request->input('item_property_code.'.$key),3,1))
+                    ->where('inv_gsoprop_code_list.code_no', '=',  substr($request->input('item_property_code.'.$key),4,1))
+                    ->get()
+                    ->first();
+
+                    $inv= InventoryItems::where('inventory_items.item_code', '=', $account_group->id)
+                            ->get()
+                            ->first();
+                    if(isset($inv)){
+                        $datay[] = [
+                                    'id'                                     =>  $account_group->desc,
+                                    'item_desc'                           =>  $account_group->desc,
+                                    'item_qty'                                       => $request->input('item_qty.'.$key),
+                                    'item_code'                                       => $account_group->id,
+                                ];
+                        $inv->update($datay);
+                    }else{
+                        $inv=new InventoryItems;
+                        $datay[] = [
+                                    'id'                                     =>  $account_group->desc,
+                                    'item_desc'                           =>  $account_group->desc,
+                                    'item_qty'                                       => $request->input('item_qty.'.$key),
+                                    'item_code'                                       => $account_group->id,
+                                ];
+                        $inv->update($datay);
+                    }
+
                 }
+
                  return back();
 
             }
