@@ -42,18 +42,30 @@ class InventoryController extends Controller
     {
 
         $this->data['items'] = DB::table('inventory_items')
-             // ->join('inv_gsoprop_code_list','inv_gsoprop_code_list.id','=','inventory_items.item_code')
              ->get()
              ->all();
-        // dd($this->data['items']);
+
         return view('inventory::inventory.items',$this->setup());
     }
 
     public function in_out_items($id){
 
         $this->data['items'] = InventoryItems::find($id);
-        // dd($id);
+        $this->data['employee'] = DB::table('olongapo_employee_list')->select('id','fname','mname','lname')->get();
+
         return view('inventory::inventory.in_out',$this->setup());
+    }
+
+    public function items_log()
+    {
+
+        $this->data['logs'] = DB::table('inventory_info')
+             ->join('olongapo_employee_list','olongapo_employee_list.id','=','inventory_info.accountable_id')
+             ->join('inventory_items','inventory_items.id','=','inventory_info.item_id')
+             ->get()
+             ->all();
+        // dd($this->data['logs']);
+        return view('inventory::inventory.inv_logs',$this->setup());
     }
 
     public function add_control_number(Request $request){
@@ -136,5 +148,28 @@ class InventoryController extends Controller
             return $data;
     }
 
+    public function in_out(Request $request){
+
+         $inv= InventoryItems::find($request->inv_id);
+
+         if($request->type =='In'){
+              $inv->item_qty = $request->qty + $inv->item_qty;
+              $inv->save();
+         }else if($request->type =='Out'){
+              $inv->item_qty = $inv->item_qty - $request -> qty;
+              $inv->save();
+         }
+
+         $info = new InventoryInfo;
+         $info->item_id = $request->inv_id;
+         $info->control_no=$request->control_no;
+         $info->type=$request->type;
+         $info->qty=$request->qty;
+         $info->accountable_id=$request->requested;
+         $info->inv_date = $request->date;
+         $info->save();
+
+         return redirect()->route('inventory.items')->with('status', 'Profile updated!');
+    }
 
 }

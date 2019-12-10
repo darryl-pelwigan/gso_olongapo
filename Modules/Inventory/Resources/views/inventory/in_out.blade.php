@@ -23,35 +23,64 @@
             <!-- /.box-header -->
 
 
-               @include('template::admin-layouts.includes.message')
-           <form class="form-horizontal" id="new_ppe_mnthly" method="POST" action="{{route('inventory.update_ppe_pr')}}">
 
+           <form class="form-horizontal" id="new_ppe_mnthly" method="POST" action="{{route('inventory.in_out')}}">
+              <input type="hidden" name="_token" value="{{ csrf_token() }}">
+              <div class="form-group">
+                            <label for="payment_price" class="col-sm-3 control-label">Control No: </label>
+                            <div class="col-sm-6">
+                              <input type="text" class="form-control" id="control_no" name="control_no"  >
+                            </div>
+              </div>
               <div class="form-group">
                         <label for="date_log" class="col-sm-3 control-label">Available Stock : </label>
                         <div class="col-sm-6">
-                          <input type="text" class="form-control  set-control-number" id="date_log"   name="date_log"  readonly value="{{ $items->item_qty }}" />
+                          <input type="text" class="form-control  set-control-number" id="Stock"   name="Stock"  readonly value="{{ $items->item_qty }}" />
                         </div>
                     </div>
 
 
                     <div class="form-group">
-                            <label for="payment_price" class="col-sm-3 control-label">Inventory In </label>
+                            <label for="payment_price" class="col-sm-3 control-label">Type </label>
                             <div class="col-sm-6">
-                              <input type="text" class="form-control" id="dept" name="dept"  value="{{ old('dept') }}" >
+                            <select class="form-control" name="type" id="type">
+
+                                <option value="In">In</option>
+                                 <option value="Out"> Out</option>
+                          </select>
                             </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="control_no" class="col-sm-3 control-label">Inventory Out </label>
+                        <label for="control_no" class="col-sm-3 control-label">Item Quantity: </label>
                         <div class="col-sm-6">
-                          <input type="text"  class="form-control  " id="control_no"   name="control_no"     value="{{ old('control_no') }}" />
+                          <input type="text"  class="form-control  " id="qty"   name="qty" />
                         </div>
-                      </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="control_no" class="col-sm-3 control-label">Date: </label>
+                        <div class="col-sm-6">
+                          <input type="text"  class="form-control date" id="date"   name="date" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="control_no" class="col-sm-3 control-label">Requested By: </label>
+                        <div class="col-sm-6">
+                          <select class="form-control" name="requested" id="requested">
+                              <option></option>
+                              @foreach($employee as $emp)
+                                <option value={{$emp->id}}>{{$emp->fname}} {{$emp->mname}} {{$emp->lname}} </option>
+                              @endforeach
+                          </select>
+                        </div>
+                    </div>
                       <input type="hidden" name="inv_id" value="{{$items->id}}">
                     <div class="form-group">
+                      <div class="col-sm-6">
+                        <input type="submit" class="btn btn-success"></input>
+                      </div>
                     </div>
-                          <button type="submit" class="btn btn-success" onclick="$(this).updatePPEMnthly();">Update</button>
-                                      <div class="box-body">
+
             </form>
 
             <!-- /.box-body -->
@@ -82,7 +111,13 @@
 <script src="{{asset('adminlte')}}/plugins/datatables/table-header-search.js"></script>
 <script src="//cdn.rawgit.com/ashl1/datatables-rowsgroup/v1.0.0/dataTables.rowsGroup.js"></script>
 <script src="{{asset('adminlte/plugins/autocomplete/')}}/jquery.autocomplete.min.js"></script>
-@include('inventory::ppe-mnthly.ajax-content.new_js_pr')
+<script type="text/javascript">
+  $('.date').datepicker({
+  autoclose: true,
+  format: 'yyyy-mm-dd',
+});
+
+</script>
 @stop
 
 
