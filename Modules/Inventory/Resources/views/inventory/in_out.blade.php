@@ -27,7 +27,7 @@
            <form class="form-horizontal" id="new_ppe_mnthly" method="POST" action="{{route('inventory.in_out')}}">
               <input type="hidden" name="_token" value="{{ csrf_token() }}">
               <div class="form-group">
-                            <label for="payment_price" class="col-sm-3 control-label">Control No: </label>
+                            <label for="payment_price" class="col-sm-3 control-label">RIS No: </label>
                             <div class="col-sm-6">
                               <input type="text" class="form-control" id="control_no" name="control_no"  >
                             </div>
@@ -68,8 +68,8 @@
                         <div class="col-sm-6">
                           <select class="form-control" name="requested" id="requested">
                               <option></option>
-                              @foreach($employee as $emp)
-                                <option value={{$emp->id}}>{{$emp->fname}} {{$emp->mname}} {{$emp->lname}} </option>
+                              @foreach($dept as $dep)
+                                <option value={{$dep->id}}>{{$dep->dept_desc}}</option>
                               @endforeach
                           </select>
                         </div>
@@ -112,9 +112,27 @@
 <script src="//cdn.rawgit.com/ashl1/datatables-rowsgroup/v1.0.0/dataTables.rowsGroup.js"></script>
 <script src="{{asset('adminlte/plugins/autocomplete/')}}/jquery.autocomplete.min.js"></script>
 <script type="text/javascript">
-  $('.date').datepicker({
+$('.date').datepicker({
   autoclose: true,
   format: 'yyyy-mm-dd',
+});
+
+$(document).ready(function(){
+
+    $('#type').keyup(function(){
+        if(document.getElementById("type").value == "In"){
+                $('#amount').val( rates1 + ($('#days').val() - 1) * 120);
+
+
+        }else if(document.getElementById("type").value == "Out"){
+
+            $('#amount').val( rates2 + ($('#days').val() - 1) * 120);
+
+        }
+
+    });
+
+
 });
 
 </script>

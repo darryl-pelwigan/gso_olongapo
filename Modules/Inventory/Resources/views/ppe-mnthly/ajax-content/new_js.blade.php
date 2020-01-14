@@ -151,23 +151,24 @@ $.fn.autoCompleteSupp = function(){
   });
 };
 $.fn.autoCompleteSupp();
-
-$.fn.autoCompleteEmpp = function(){
-  $('.item_accountable_person').autocomplete({
-        serviceUrl: '{{route("emp.get_employee_name")}}',
-        dataType: 'json',
-        type: 'POST',
-        params : {
+$(document).ready(function() {
+    $.fn.autoCompleteEmpp = function(){
+        $('.item_accountable_person').autocomplete({
+            serviceUrl: '{{route("emp.get_employee_name")}}',
+            dataType: 'json',
+            type: 'POST',
+            params : {
                   _token : '{{csrf_token()}}'
-        },
-        onSelect: function (suggestion) {
-            var index = $( ".item_accountable_person" ).index( this );
-            $('input[type=hidden][name^="item_accountable_person_id"]:eq('+index+')').val(suggestion.data);
-            console.log(index);
-        }
-  });
+            },
+            onSelect: function (suggestion) {
+                var index = $( ".item_accountable_person" ).index( this );
+                $('input[type=hidden][name^="item_accountable_person_id"]:eq('+index+')').val(suggestion.data);
+                console.log(index);
+            }
+    });
 };
 $.fn.autoCompleteEmpp();
+});
 
 
 $.fn.computeTotal = function(){

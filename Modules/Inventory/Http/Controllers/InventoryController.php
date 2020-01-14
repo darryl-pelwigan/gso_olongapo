@@ -51,7 +51,7 @@ class InventoryController extends Controller
     public function in_out_items($id){
 
         $this->data['items'] = InventoryItems::find($id);
-        $this->data['employee'] = DB::table('olongapo_employee_list')->select('id','fname','mname','lname')->get();
+        $this->data['dept'] = DB::table('olongapo_department')->get()->all();
 
         return view('inventory::inventory.in_out',$this->setup());
     }
