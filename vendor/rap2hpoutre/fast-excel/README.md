@@ -160,6 +160,21 @@ You can also import a specific sheet by its number:
 $users = (new FastExcel)->sheet(3)->import('file.xlsx');
 ```
 
+### Export large collections with chunk
+
+Export rows one by one to avoid `memory_limit` issues [using `yield`](https://www.php.net/manual/en/language.generators.syntax.php):
+
+```php
+function usersGenerator() {
+    foreach (User::cursor() as $user) {
+        yield $user;
+    }
+}
+
+// Export consumes only a few MB, even with 10M+ rows.
+(new FastExcel(usersGenerator()))->export('test.xlsx');
+```
+
 ## Why?
 
 FastExcel is intended at being Laravel-flavoured [Spout](https://github.com/box/spout):

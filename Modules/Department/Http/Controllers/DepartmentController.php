@@ -40,15 +40,13 @@ class DepartmentController extends Controller
 
         $employee_id = Session::get('olongapo_user')->employee_id;
 
-
-
-
         $query = DB::table('olongapo_employee_list')
                     ->select('olongapo_employee_list.dept_id')
                     ->where('id', '=', $employee_id)
                     ->get();
 
         $dept_id = $query[0]->dept_id;
+
 
         $uploads =  DB::table('olongapo_purchase_item_ppmp_upload')
                         ->where('olongapo_purchase_item_ppmp_upload.subdept_id', '=', $dept_id)

@@ -10,11 +10,13 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Carbon\Carbon;
-
+use Illuminate\Support\Facades\Input;
 
 use Modules\PurchaseRequest\Entities\PurchaseNo;
 use Modules\PurchaseRequest\Entities\PurchaseItems;
 
+use Excel;
+use Maatwebsite\Excel\HeadingRowImport;
 
 class DetpPurchaseRequestController extends Controller
 {
@@ -35,6 +37,8 @@ class DetpPurchaseRequestController extends Controller
         $validator = Validator::make($request->all(), [
         'pr_no_date'    => 'required|date',
         'purpose'       => 'required|min:5',
+        'select_dept'       =>'required',
+        'requested_by'       =>'required',
         'item_desc.*'   => 'required',
         'item_qty.*'    => ['required','regex:/^(0|[1-9]\d*)(\.\d+)?$/'],
         'item_unit.*'   =>  'required',
@@ -43,6 +47,8 @@ class DetpPurchaseRequestController extends Controller
       [
         'pr_no_date.required'   => 'PURCHASE REQUEST DATE IS REQUIRED',
         'purpose.required'      => 'PURCHASE REQUEST PURPOSE IS REQUIRED',
+        'select_dept.required'       => 'DEPARTMENT IS REQUIRED',
+        'requested_by.required'       => 'REQUESTED BY (PERSON INVLOVED) IS REQUIRED',
         'item_desc.required'  => 'PURCHASE REQUEST ITEMS DESCRIPTION IS REQUIRED',
         'item_qty.*.required'   => 'PURCHASE REQUEST ITEMS QUANTITY IS REQUIRED',
         'item_qty.*.regex'   => 'PURCHASE REQUEST ITEMS QUANTITY FORMAT IS INVALID',
@@ -64,36 +70,26 @@ class DetpPurchaseRequestController extends Controller
                     ->get()
                     ->first();
 
-            //$department = $request->input('department') ?? session::get('olongapo_emp_depts')->dept_id;
-            $department = $employee_dept->dept_id ?? session::get('olongapo_emp_depts')->dept_id;
+            // $department = $employee_dept->dept_id ?? session::get('olongapo_emp_depts')->dept_id;
+            $department = $request->input('select_dept');
 
-            // if(Session::get('olongapo_user')->group_id =! 9){
-            //     $department = Session::get('olongapo_emp_depts')->dept_id;
-            //     $employee_id = Session::get('olongapo_user')->employee_id;
-            //     $PurchaseNo->requested_by =  $employee_id;
-            // }else{
-            //     $employee_id = $request->input('employee');
-            //     $PurchaseNo->requested_by =  $employee_id;
-            // }
-
-            // $department = Session::get('olongapo_emp_depts')->dept_id ?? $request->input('employee');
-
-            $PurchaseNo->requested_by =  $request->input('employee') ?? $employee_id = Session::get('olongapo_user')->employee_id;
+            $PurchaseNo->requested_by =  $request->input('requested_by');
             $PurchaseNo->dept_id =  $department;
             $PurchaseNo->pr_date_dept =  $request->input('pr_no_date');
             $PurchaseNo->pr_purpose =  $request->input('purpose');
             $PurchaseNo->pr_purelyconsumption =  $request->input('pc');
+            $PurchaseNo->added_by =  $request->input('employee') ?? $employee_id = Session::get('olongapo_user')->employee_id;
             $PurchaseNo->save();
             for($x = 0 ; $x< count($request->input('item_desc'));$x++){
                 $datax[] = [
-                                        'prno_id' => $PurchaseNo->id,
-                                         'description' => $request->input('item_desc.'.$x),
-                                          'remarks' => $request->input('item_remarks.'.$x),
-                                           'unit' => $request->input('item_unit.'.$x),
-                                           'qty' => $request->input('item_qty.'.$x),
-                                            'unit_price' => $request->input('item_price.'.$x),
-                                            'total_price' => $request->input('item_qty.'.$x)*$request->input('item_price.'.$x),
-                                    ];
+                                'prno_id' => $PurchaseNo->id,
+                                 'description' => $request->input('item_desc.'.$x),
+                                  'remarks' => $request->input('item_remarks.'.$x),
+                                   'unit' => $request->input('item_unit.'.$x),
+                                   'qty' => $request->input('item_qty.'.$x),
+                                    'unit_price' => $request->input('item_price.'.$x),
+                                    'total_price' => $request->input('item_qty.'.$x)*$request->input('item_price.'.$x),
+                                ];
             }
             $PurchaseNo->pr_items()->insert( $datax );
             return $datax;
@@ -199,5 +195,43 @@ class DetpPurchaseRequestController extends Controller
         }
         $data['status'] = 0;
         return $data;
+    }
+
+    public function import(Request $request){
+
+
+        $data['status'] = 0;
+        $data['errors'] = 'Successfully Save PUrchase Request';
+        $PurchaseNo =new PurchaseNo;
+        $PurchaseNo->requested_by =  $request->input('import_requested_by');
+        $PurchaseNo->dept_id =  $request->input('import_select_dept');
+        $PurchaseNo->pr_date_dept =  $request->input('import_pr_no_date');
+        $PurchaseNo->pr_purpose =  $request->input('import_purpose');
+        $PurchaseNo->pr_purelyconsumption =  $request->input('import_pc');
+        $PurchaseNo->added_by =  $request->input('employee') ?? $employee_id = Session::get('olongapo_user')->employee_id;
+        $PurchaseNo->save();
+
+        $path = $request->file('document_excel')->getRealPath();
+        $result = Excel::load($path)->toObject();
+
+        if (count($result) > 0) {
+            foreach ($result as $key => $value) {
+                $datax[] = [
+                    'prno_id' => $PurchaseNo->id,
+                    'description' => $value->item_description,
+                    'remarks' => '',
+                    'unit' => $value->unit_of_issue,
+                    'qty' => $value->quantity,
+                    'unit_price' => $value->estimated_unit_cost,
+                    'total_price' => $value->estimated_costs,
+                ];
+
+            }
+
+            $PurchaseNo->pr_items()->insert( $datax );
+            return back();
+        }
+
+        return back();
     }
 }

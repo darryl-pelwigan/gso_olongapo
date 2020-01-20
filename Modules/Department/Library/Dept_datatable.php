@@ -21,9 +21,12 @@ class Dept_datatable
         if(Session::get('olongapo_user')->group_id == 9){
           $PurchaseNo = PurchaseNo::all();
         }else{
-          $PurchaseNo = PurchaseNo::where('dept_id', session::get('olongapo_emp_depts')->dept_id)->get();
+          $PurchaseNo = PurchaseNo::where('added_by', Session::get('olongapo_user')->employee_id)->get();
         }
         $records = [];
+
+
+        // dd($PurchaseNo);
         if(!$PurchaseNo->isEmpty()) {
                  foreach($PurchaseNo as $pr) {
                     #check if approved
