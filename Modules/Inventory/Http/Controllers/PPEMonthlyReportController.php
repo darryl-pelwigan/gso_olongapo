@@ -266,7 +266,7 @@ class PPEMonthlyReportController extends Controller
 
      public function generate_report(){
         $this->data['employee'] = DB::table('olongapo_employee_list')->select('id','fname','mname','lname')->get();
-        // $this->data['department'] = DEPTsubcode::all();
+        $this->data['dept'] = DB::table('olongapo_department')->get()->all();
         return view('inventory::ppe-mnthly.generate',$this->setup());
     }
 
@@ -306,10 +306,21 @@ class PPEMonthlyReportController extends Controller
          //                            ->get()
          //                            ;
         // ob_clean();
-        $get_ppe_mnthly = PpeMnthlyReport::where('olongapo_ppe_mnthly_report.date_log','>=',$request->from)
-        ->where('olongapo_ppe_mnthly_report.date_log','<=',$request->to)
-        ->get();
-        // dd($get_ppe_mnthly);
+        //
+
+        if(!empty($request->mon_sort_dept)){
+            $get_ppe_mnthly = PpeMnthlyReport::where('olongapo_ppe_mnthly_report.date_log','>=',$request->from)
+                ->where('olongapo_ppe_mnthly_report.date_log','<=',$request->to)
+                ->where('olongapo_ppe_mnthly_report.department','=',$request->mon_sort_dept)
+                ->get();
+
+        } else{
+            $get_ppe_mnthly = PpeMnthlyReport::where('olongapo_ppe_mnthly_report.date_log','>=',$request->from)
+                ->where('olongapo_ppe_mnthly_report.date_log','<=',$request->to)
+                ->get();
+        }
+
+
           $dataArray = [
             ['DATE', 'CONTROL #', 'DESCRIPTION', 'PROPERTY CODE', 'CATEGORY', 'PO#', 'QTY', 'UNIT VALUE', 'TOTAL VALUE', 'ACOUNTABLE PERSON', 'DEPARTMENT', 'SUPPLIER', 'INVOICE']
                     ];
@@ -337,28 +348,59 @@ class PPEMonthlyReportController extends Controller
                     ->where('olongapo_employee_list.id', '=',  $request->input('endorsed'))
                     ->get()
                     ->first();
-        // dd($prepared_det);
-        // dd($request->input('prepared'));
+
 
         $i = 0;
         for($mnth = Carbon::parse($request->from); $mnth->format('m') <= Carbon::parse($request->to)->format('m'); $mnth->addMonth()) {
             $dataArray[$mnth->format('F')] = [];
 
             foreach ($get_ppe_mnthly as $key => $value) {
-                $po_no = $value->pono_id ? $value->pr_no->pr_orderno->po_no : '';
+
+                $po_no = !empty($value->po_no) ? $value->po_no : '';
 
                 $category = $value->type ? $value->type:'';
                 $employee_name = '';
-                foreach ($value->inv_items as $key2 => $inv_item) {
+                if(!empty($request->mon_sort_person)){
+                    foreach ($value->inv_items as $key2 => $inv_item) {
+
+                        if($inv_item->accountable_person = $request->mon_sort_person){
+                        $employee_name = $inv_item->accountable_person ? $inv_item->accountable->lname.', '.$inv_item->accountable->fname : '';
+                        $supplier = $inv_item->supplier ? $inv_item->supplier_info->title : "" ;
+                        $res = $inv_item->unit_value * 0.1;
+                        $dep=0;
+                        if($inv_item->est_life){
+                            $dep = ($inv_item->unit_value - $res)/$inv_item->est_life;
+                        }
+
+                        if(strcasecmp(Carbon::parse($value->date_log)->format('F'), $mnth->format('F')) == 0) {
+                            $dataArray[$mnth->format('F')][$i] = array(
+                                $value->date_log,
+                                $value->inv_control_no,
+                                $inv_item->item_desc,
+                                $inv_item->property_code,
+                                $category,
+                                $po_no,
+                                $inv_item->qty,
+                                $inv_item->unit_value,
+                                $inv_item->total_value,
+                                $employee_name,
+                                $inv_item->location,
+                                $supplier,
+                                $inv_item->invoice,
+                            );
+                        $i++;
+                        }
+                    }
+                }
+            } else {
+                 foreach ($value->inv_items as $key2 => $inv_item) {
                     $employee_name = $inv_item->accountable_person ? $inv_item->accountable->lname.', '.$inv_item->accountable->fname : '';
                     $supplier = $inv_item->supplier ? $inv_item->supplier_info->title : "" ;
-                    // $department = $inv_item->accountable_person ? $inv_item->accountable->lname.', '.$inv_item->accountable->fname : '';
                     $res = $inv_item->unit_value * 0.1;
                     $dep=0;
                     if($inv_item->est_life){
                         $dep = ($inv_item->unit_value - $res)/$inv_item->est_life;
                     }
-
                     if(strcasecmp(Carbon::parse($value->date_log)->format('F'), $mnth->format('F')) == 0) {
                         $dataArray[$mnth->format('F')][$i] = array(
                                 $value->date_log,
@@ -376,18 +418,13 @@ class PPEMonthlyReportController extends Controller
                                 $inv_item->invoice,
                             );
                         $i++;
-                    } /*else {
-                        // reset month
-                        $mnth = $mnth->addMonth();
-                        $i = 0;
-                    }*/
+                    }
                 }
             }
-            // if(strcasecmp(Carbon::parse($value->date_log)->format('F'), $mnth->format('F')) != 0) {
-            //     $mnth = $mnth->addMonth();
-            //     $i = 0;
-            // }
+
         }
+
+    }
 
         $spreadsheet = new Spreadsheet();
 
@@ -548,8 +585,16 @@ class PPEMonthlyReportController extends Controller
 
      public function generate_yearly_report_pdf(Request $request){
 
-        $get_ppe = PpeMnthlyReport::whereYear('olongapo_ppe_mnthly_report.date_log','=', $request->from)
-        ->get();
+        if(!empty($request->year_sort_dept)){
+            $get_ppe = PpeMnthlyReport::whereYear('olongapo_ppe_mnthly_report.date_log','=', $request->from)
+                ->where('olongapo_ppe_mnthly_report.department','=',$request->year_sort_dept)
+                ->get();
+
+        }else{
+            $get_ppe = PpeMnthlyReport::whereYear('olongapo_ppe_mnthly_report.date_log','=', $request->from)
+                ->get();
+        }
+
 
         //account group
         $get_codes = PPEsubcode::all();
@@ -562,27 +607,74 @@ class PPEMonthlyReportController extends Controller
                     ->where('olongapo_employee_list.id', '=',  $request->input('ao'))
                     ->get()
                     ->first();
-        // dd($ao_det);
-        // headerArray
+
         $headerArray = [
             ['GSO', 'ACCOUNT ', 'DESCRIPTION', 'Estimated ', 'Date ', 'ACCOUNTABLE ', '(Exact Location,', 'Depriciable', 'UNIT', 'Balance per card',' ', 'Shortage', ' ', 'ACCUMULATED', 'RESIDUAL'],
             ['Property Code', 'GROUP', NULL, 'Life Years', 'Acquired','OFFICER', 'conditions, etc.)', '(I/O)','VALUE', 'Qty', 'Value', 'Qty', 'Total Value', 'DEPRECIATION', 'VALUE'],
                     ];
-        // dd($get_ppe);
 
-        //Inventory items population
         foreach ($get_ppe as $key => $value) {
-                $po_no = $value->pono_id ? $value->pr_no->pr_orderno->po_no : '';
-
                 $category = $value->type ? $value->type:'';
                 $employee_name = '';
+                if(!empty($request->year_sort_person)){
+                    foreach ($value->inv_items as $key2 => $inv_item) {
 
-                foreach ($value->inv_items as $key2 => $inv_item) {
+                        if($inv_item->accountable_person == $request->year_sort_person){
+                            $employee_name = $inv_item->accountable_person ? $inv_item->accountable->lname.', '.$inv_item->accountable->fname : '';
+                            $supplier = $inv_item->supplier ? $inv_item->supplier_info->title : "" ;
+
+                            // dd($employee_name);
+
+                            $account_group = DB::table('inv_gsoprop_code_list')
+                                ->where('inv_gsoprop_code_list.gsocode_cat_id', '=', substr($inv_item->property_code,3,1))
+                                ->where('inv_gsoprop_code_list.code_no', '=',  substr($inv_item->property_code,4,1))
+                                ->get()
+                                ->first();
+
+
+                            $est_life = $account_group ? $account_group->useful_life : "" ;
+                            $depreciable = $account_group->useful_life ? 'I':'O';
+                            $res = $inv_item->unit_value * 0.1;
+
+                            $dep=0;
+
+                            if($est_life){
+                                $dep = ($inv_item->unit_value - $res)/$est_life;
+                            }
+
+                            foreach($codesArray as $codes => $codeValue){
+
+                                $invCode = substr($inv_item->property_code,0,2);
+
+                                if($invCode == $codes){
+
+                                    $itemsArray[$codeValue][] =
+                                        array(
+                                            $inv_item->property_code,
+                                            $account_group->desc,
+                                            $inv_item->item_desc,
+                                            $est_life,
+                                            $value->date_log,
+                                            $employee_name,
+                                            $inv_item->location,
+                                            $depreciable,
+                                            $inv_item->unit_value,
+                                            $inv_item->qty,
+                                            $inv_item->unit_value*$inv_item->qty,
+                                            " ",
+                                            " ",
+                                            $dep,
+                                            $res
+                                        );
+                                }
+                            }
+                        }
+                    }
+                } else{
+                    foreach ($value->inv_items as $key2 => $inv_item) {
 
                     $employee_name = $inv_item->accountable_person ? $inv_item->accountable->lname.', '.$inv_item->accountable->fname : '';
                     $supplier = $inv_item->supplier ? $inv_item->supplier_info->title : "" ;
-
-
 
                     $account_group = DB::table('inv_gsoprop_code_list')
                     ->where('inv_gsoprop_code_list.gsocode_cat_id', '=', substr($inv_item->property_code,3,1))
@@ -590,7 +682,6 @@ class PPEMonthlyReportController extends Controller
                     ->get()
                     ->first();
 
-                    // dd($account_group);
                     $est_life = $account_group ? $account_group->useful_life : "" ;
                     $depreciable = $account_group->useful_life ? 'I':'O';
                     $res = $inv_item->unit_value * 0.1;
@@ -629,6 +720,7 @@ class PPEMonthlyReportController extends Controller
                     }
                 }
             }
+        }
 
         //sort inventory items according to account group
         array_multisort(array_map(function($element) {

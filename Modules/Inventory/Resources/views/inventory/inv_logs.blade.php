@@ -28,7 +28,7 @@
                        <thead>
                         <tr>
                           <th>NO</th>
-                          <th>Control No.</th>
+                          <th>RIS No.</th>
                           <th>Item Description</th>
                           <th>Type</th>
                           <th>Item Qty</th>
