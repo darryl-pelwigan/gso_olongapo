@@ -17,6 +17,7 @@ Route::group(['middleware' => ['web','auth'], 'prefix' => 'department', 'namespa
     Route::get('/purchase_request/edit/', 'DetpPurchaseRequestController@pr_edit')->name('dept.pr_edit');
     Route::post('/purchase_request/save_edit/', 'DetpPurchaseRequestController@save_edit')->name('dept.pr_edit_save');
     Route::post('/delete_pr', 'DetpPurchaseRequestController@destroy')->name('dept.delete_pr');
+    Route::post('/import_pr', 'DetpPurchaseRequestController@import')->name('dept.import_pr');
     
 
    

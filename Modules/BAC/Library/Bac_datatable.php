@@ -18,24 +18,23 @@ class Bac_datatable
 
     public function bac_list($vars = null){
         $items = DB::table('olongapo_bac_control_info')
-                            ->join('olongapo_purchase_request_no' ,'olongapo_bac_control_info.prno_id','=', 'olongapo_purchase_request_no.id')
-                            ->join('olongapo_subdepartment','olongapo_subdepartment.id','=','olongapo_purchase_request_no.dept_id')
-                            ->join('olongapo_bac_source_fund','olongapo_bac_source_fund.id','=','olongapo_bac_control_info.sourcefund_id')
-                            ->join('olongapo_absctrct_pubbid_apprved','olongapo_absctrct_pubbid_apprved.id','=','olongapo_bac_control_info.apprved_pubbid_id')
-                            ->join('olongapo_absctrct_pubbid','olongapo_absctrct_pubbid.id','=','olongapo_absctrct_pubbid_apprved.pubbid')
-                            ->join('supplier_info','supplier_info.id','=','olongapo_absctrct_pubbid.supplier_id')
-                            ->join('olongapo_bac_category','olongapo_bac_category.id','=','olongapo_bac_control_info.category_id')
-                            ->leftjoin('olongapo_absctrct' , 'olongapo_absctrct.prno_id','=','olongapo_bac_control_info.prno_id')
-                            ->select([
-                                        'supplier_info.title as sup_title',
-                                        'olongapo_bac_category.description as categ_desc',
-                                        'olongapo_bac_source_fund.description as sof_desc',
-                                        'olongapo_subdepartment.dept_desc',
-                                        'olongapo_absctrct.id as abstrct_id','olongapo_absctrct.control_no','olongapo_absctrct.abstrct_date',
-                                        'olongapo_purchase_request_no.id as prno_id','olongapo_purchase_request_no.pr_no','olongapo_purchase_request_no.obr_id','olongapo_purchase_request_no.pr_date',
-                                        'olongapo_bac_control_info.id as bac_id' ,'olongapo_bac_control_info.bac_control_no as bac_cono' , 'olongapo_bac_control_info.amount' , 'olongapo_bac_control_info.bac_date' , 'olongapo_bac_control_info.sourcefund_id' , 'olongapo_bac_control_info.category_id', 'olongapo_bac_control_info.bac_type_id' , 'olongapo_bac_control_info.apprved_pubbid_id'
-                                    ])
-                            ;
+            ->join('olongapo_purchase_request_no' ,'olongapo_bac_control_info.prno_id','=', 'olongapo_purchase_request_no.id')
+            ->join('olongapo_subdepartment','olongapo_subdepartment.id','=','olongapo_purchase_request_no.dept_id')
+            ->join('olongapo_bac_source_fund','olongapo_bac_source_fund.id','=','olongapo_bac_control_info.sourcefund_id')
+            ->join('olongapo_absctrct_pubbid_apprved','olongapo_absctrct_pubbid_apprved.id','=','olongapo_bac_control_info.apprved_pubbid_id')
+            ->join('olongapo_absctrct_pubbid','olongapo_absctrct_pubbid.id','=','olongapo_absctrct_pubbid_apprved.pubbid')
+            ->join('supplier_info','supplier_info.id','=','olongapo_absctrct_pubbid.supplier_id')
+            ->join('olongapo_bac_category','olongapo_bac_category.id','=','olongapo_bac_control_info.category_id')
+            ->leftjoin('olongapo_absctrct' , 'olongapo_absctrct.prno_id','=','olongapo_bac_control_info.prno_id')
+            ->select([
+                        'supplier_info.title as sup_title',
+                        'olongapo_bac_category.description as categ_desc',
+                        'olongapo_bac_source_fund.description as sof_desc',
+                        'olongapo_subdepartment.dept_desc',
+                        'olongapo_absctrct.id as abstrct_id','olongapo_absctrct.control_no','olongapo_absctrct.abstrct_date',
+                        'olongapo_purchase_request_no.id as prno_id','olongapo_purchase_request_no.pr_no','olongapo_purchase_request_no.obr_id','olongapo_purchase_request_no.pr_date',
+                        'olongapo_bac_control_info.id as bac_id' ,'olongapo_bac_control_info.bac_control_no as bac_cono' , 'olongapo_bac_control_info.amount' , 'olongapo_bac_control_info.bac_date' , 'olongapo_bac_control_info.sourcefund_id' , 'olongapo_bac_control_info.category_id', 'olongapo_bac_control_info.bac_type_id' , 'olongapo_bac_control_info.apprved_pubbid_id'
+                    ]);
 
             return $items;
     }

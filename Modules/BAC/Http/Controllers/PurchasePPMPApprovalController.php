@@ -91,7 +91,6 @@ class PurchasePPMPApprovalController extends Controller
     {
         $this->data['edit_view']   = $request->input('view')  ? 'view' :  'edit';
         $this->data['pr'] = PurchaseNo::find($request->input('pr_id'));
-
         $this->data['ppmp'] = PurchasePPMPApproval::where('request_no_id', '=', $request->input('pr_id'))->first();
 
         return view('bac::request.edit',$this->setup());

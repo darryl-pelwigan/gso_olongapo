@@ -14,7 +14,8 @@
         "owen-it/laravel-auditing": "^3.1",
         "phpoffice/phpspreadsheet": "^1.9",
         "rap2hpoutre/fast-excel": "^1.2",
-        "yajra/laravel-datatables-oracle": "^7.2"
+        "yajra/laravel-datatables-oracle": "^7.2",
+        "maatwebsite/excel": "~2.1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

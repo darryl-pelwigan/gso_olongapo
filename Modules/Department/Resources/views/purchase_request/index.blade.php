@@ -1,6 +1,79 @@
 @extends('template::admin-pages.menus.'.$template['menu'])
 
 @section('content')
+
+<style type="text/css">
+/* The container */
+.container {
+  display: inline-block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  margin-left: 3%;
+  width: 20%;
+}
+
+/* Hide the browser's default checkbox */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #ec7979;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark {
+  background-color: #00a65a;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+  
+</style>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -170,6 +243,8 @@
             <div class="box-header">
               <h3 class="box-title">Purchase Request List</h3>
               <button class="btn btn-success pull-right"  onclick="$(this).showAddModal();"><i class="fa fa-plus"></i> Add Request</button>
+
+              <button class="btn btn-warning pull-right"  data-toggle="modal" data-target="#upload_modal"><i class="fa fa-upload"></i> Upload Request(.CSV) </button>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -201,7 +276,7 @@
                   </table>
                   {{csrf_field()}}
                   <button class="btn btn-default"><input type="checkbox" id="delete_checkbutton"><b> Delete Purchase Request Record/s</b></button>
-                  <button type="button" class="btn btn-danger delete_column hide" name="delete" id="delete_prs" onclick="$(this).deletPRRequest();" disabled=""> <i class="fa fa-trash"></i> Confirm Purchase Request Deletion</button>
+                  <button type="button" class="btn btn-danger delete_column hide"  name="delete" id="delete_prs" onclick="$(this).deletPRRequest();" disabled=""> <i class="fa fa-trash"></i> Confirm Purchase Request Deletion</button>
                 </form>
             </div>
           </div>
@@ -267,23 +342,43 @@
                 @endif
 
                 <div class="form-group">
-                     <label for="pr_no" class="col-sm-2 control-label">PR DATE : </label>
-                        <div class="col-sm-2">
-                        <input type="text" class="form-control" id="pr_no_date" name="pr_no_date" placeholder="PR DATE" />
+                    <label class="control-label col-sm-2" for="id2">Department:</label>
+                    <div class="col-sm-6">
+                      
+                      <select class="form-control" name="select_dept" id="select_dept">
+                          <option value=""></option>
+                        @foreach ($department as $dept)
+                          <option value="{{$dept->id }}"> {{$dept->dept_desc }} </option>
+                        @endforeach
+
+                      </select>
                     </div>
-                </div>
+
+                  <label for="pr_no" class=" col-sm-1 control-label">PR DATE: </label>
+                  <div class="col-sm-2">
+                    <input type="text" class="form-control" id="pr_no_date" name="pr_no_date" placeholder="PR DATE" />
+                  </div>
+                  </div>
 
                  <div class="form-group">
                      <label for="purpose" class="col-sm-2 control-label">Purpose : </label>
                       <div class="col-sm-6">
                         <textarea  class="form-control" id="purpose"  name="purpose"    placeholder="Purpose" > </textarea>
                     </div>
-                </div>
-                <div class="form-group">
-                  <label for="purpose" class="col-sm-2 control-label">Purely Consumption  </label>
-                  <input type="hidden" name="pc" value=0> </input>
-                  <input type="checkbox" name="pc" value=1 style="margin-left:2px;"> </input>
 
+
+                    <label class="container">Purely Consumption 
+                      <input type="checkbox" name="pc" value=1>
+                      <input type="hidden" name="pc" value=0 >
+                      <span class="checkmark"></span>
+                    </label>
+                </div>
+
+                <div class="form-group">
+                     <label for="requested_by" class="col-sm-2 control-label">Requested By: </label>
+                      <div class="col-sm-6">
+                        <input type="text" class="form-control" id="requested_by" name="requested_by" placeholder="" />
+                    </div>
                 </div>
 
                 <button type="button" class="btn btn-success btn-sm pull-right" id="add_items"><i class="fa fa-plus"></i></button>
@@ -311,6 +406,7 @@
 
               </div>
               <!-- /.box-body -->
+              
               <div class="box-footer">
                 <button type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>
                 <button type="button" class="btn btn-info pull-right" id="submit_butts" onclick="$(this).sentPurchaseRequest();">Submit</button>
@@ -331,7 +427,35 @@
   </div>
 </div>
 
-   @stop
+
+{{-- <div class="modal fade" id="upload_modal" tabindex="-1" role="dialog" aria-labelledby="upload_modal">
+  <div class="modal-dialog modal-xlg">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h4 class="modal-title"></h4>
+      </div>
+        {{ csrf_field() }}
+      <div class="modal-body">
+      <form class="form-horizontal" method="POST" enctype="multipart/form-data" action="{{ route('dept.import_pr') }}">
+
+
+      </form>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning" data-dismiss="modal">
+          <span class='glyphicon glyphicon-remove'></span> Close
+        </button>
+      </div>
+
+
+      </div>
+  </div>
+</div> --}}
+
+@stop
 
 
 

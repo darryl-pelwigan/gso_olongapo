@@ -106,20 +106,26 @@ $('#pr_no_date').datepicker({
   format: 'yyyy-mm-dd',
 });
 
+$('#pr_no_date2').datepicker({
+  autoclose: true,
+  format: 'yyyy-mm-dd',
+});
+
+
 
 $.fn.showAddModal = function(){
     $('#add_purchase_request_modalLabel').text("Add Purchase Request");
     $('#add_purchase_request').trigger("reset");
     var count = 1;
     var add_tr =  '<tr >'+
-                                  '  <td><textarea class="form-control textarea" placeholder="Description" name="item_desc[]"></textarea></td>'+
-                                  // '  <td><textarea class="form-control textarea" placeholder="Remarks" name="item_remarks[]"></textarea></td>'+
-                                  '  <td class="td-sm"><input class="form-control item_qty input-sm" type="number" step="0.1" name="item_qty[]" value="1" /></td>'+
-                                  '  <td><input class="form-control input-sm item_unit" type="text" name="item_unit[]" value="" /></td>'+
-                                  '  <td class="td-sm" ><input class="form-control item_price" type="number" step="0.1" name="item_price[]" value="" /></td>'+
-                                  '  <td><input class="form-control item_total_price" type="text" name="item_total_price[]" value="" readonly /></td>'+
-                                  '  <td></td>'+
-                                  '</tr>';
+                          '  <td><textarea class="form-control textarea" placeholder="Description" name="item_desc[]"></textarea></td>'+
+                          // '  <td><textarea class="form-control textarea" placeholder="Remarks" name="item_remarks[]"></textarea></td>'+
+                          '  <td class="td-sm"><input class="form-control item_qty input-sm" type="number" step="0.1" name="item_qty[]" value="1" /></td>'+
+                          '  <td><input class="form-control input-sm item_unit" type="text" name="item_unit[]" value="" /></td>'+
+                          '  <td class="td-sm" ><input class="form-control item_price" type="number" step="0.1" name="item_price[]" value="" /></td>'+
+                          '  <td><input class="form-control item_total_price" type="text" name="item_total_price[]" value="" readonly /></td>'+
+                          '  <td></td>'+
+                          '</tr>';
     $('#items_list tbody').html(add_tr);
     
     $('#add_purchase_request_modal').modal({
