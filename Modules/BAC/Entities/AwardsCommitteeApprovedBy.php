@@ -14,4 +14,5 @@ class AwardsCommitteeApprovedBy extends Model
 
     protected $table = 'olongapo_bac_awards_committee_approved_by';
     protected $fillable = ['employee_id','employee_name','employee_bacposition','sequence','department'];
+    
 }

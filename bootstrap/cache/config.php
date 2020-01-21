@@ -201,6 +201,7 @@
       array (
         'driver' => 'file',
         'path' => 'C:\\xampp\\htdocs\\gso_olongapo\\storage\\framework/cache/data',
+
       ),
       'memcached' => 
       array (
@@ -634,121 +635,193 @@
   ),
   'filesystems' => 
   array (
-    'default' => 'local',
-    'cloud' => 's3',
-    'disks' => 
+    'cache' => 
     array (
-      'local' => 
+      'enable' => true,
+      'driver' => 'memory',
+      'settings' => 
       array (
         'driver' => 'local',
         'root' => 'C:\\xampp\\htdocs\\gso_olongapo\\storage\\app',
       ),
-      'public' => 
+      'memcache' => 
       array (
         'driver' => 'local',
         'root' => 'C:\\xampp\\htdocs\\gso_olongapo\\storage\\app/public',
         'url' => 'http://localhost/storage',
         'visibility' => 'public',
       ),
-      's3' => 
+      'dir' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\storage\\cache',
+    ),
+    'properties' => 
+    array (
+      'creator' => 'Maatwebsite',
+      'lastModifiedBy' => 'Maatwebsite',
+      'title' => 'Spreadsheet',
+      'description' => 'Default spreadsheet export',
+      'subject' => 'Spreadsheet export',
+      'keywords' => 'maatwebsite, excel, export',
+      'category' => 'Excel',
+      'manager' => 'Maatwebsite',
+      'company' => 'Maatwebsite',
+    ),
+    'sheets' => 
+    array (
+      'pageSetup' => 
       array (
-        'driver' => 's3',
-        'key' => NULL,
-        'secret' => NULL,
-        'region' => NULL,
-        'bucket' => NULL,
+        'orientation' => 'portrait',
+        'paperSize' => '9',
+        'scale' => '100',
+        'fitToPage' => false,
+        'fitToHeight' => true,
+        'fitToWidth' => true,
+        'columnsToRepeatAtLeft' => 
+        array (
+          0 => '',
+          1 => '',
+        ),
+        'rowsToRepeatAtTop' => 
+        array (
+          0 => 0,
+          1 => 0,
+        ),
+        'horizontalCentered' => false,
+        'verticalCentered' => false,
+        'printArea' => NULL,
+        'firstPageNumber' => NULL,
       ),
     ),
-  ),
-  'gsoassistant' => 
-  array (
-    'name' => 'GSOassistant',
-  ),
-  'inventory' => 
-  array (
-    'name' => 'Inventory',
-  ),
-  'mail' => 
-  array (
-    'driver' => 'smtp',
-    'host' => 'mailtrap.io',
-    'port' => '2525',
-    'from' => 
+    'creator' => 'Maatwebsite',
+    'csv' => 
     array (
-      'address' => 'hello@example.com',
-      'name' => 'Example',
+      'delimiter' => ',',
+      'enclosure' => '"',
+      'line_ending' => '
+',
+      'use_bom' => false,
     ),
-    'encryption' => NULL,
-    'username' => NULL,
-    'password' => NULL,
-    'markdown' => 
+    'export' => 
     array (
-      'theme' => 'default',
-      'paths' => 
+      'autosize' => true,
+      'autosize-method' => 'approx',
+      'generate_heading_by_indices' => true,
+      'merged_cell_alignment' => 'left',
+      'calculate' => false,
+      'includeCharts' => false,
+      'sheets' => 
+      array (
+        'page_margin' => false,
+        'nullValue' => NULL,
+        'startCell' => 'A1',
+        'strictNullComparison' => false,
+      ),
+      'store' => 
+      array (
+        'path' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\storage\\exports',
+        'returnInfo' => false,
+      ),
+      'pdf' => 
+      array (
+        'driver' => 'DomPDF',
+        'drivers' => 
+        array (
+          'DomPDF' => 
+          array (
+            'path' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\vendor/dompdf/dompdf/',
+          ),
+          'tcPDF' => 
+          array (
+            'path' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\vendor/tecnick.com/tcpdf/',
+          ),
+          'mPDF' => 
+          array (
+            'path' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\vendor/mpdf/mpdf/',
+          ),
+        ),
+      ),
+    ),
+    'filters' => 
+    array (
+      'registered' => 
+      array (
+        'chunk' => 'Maatwebsite\\Excel\\Filters\\ChunkReadFilter',
+      ),
+      'enabled' => 
       array (
         0 => 'C:\\xampp\\htdocs\\gso_olongapo\\resources\\views/vendor/mail',
       ),
     ),
-  ),
-  'manager' => 
-  array (
-    'name' => 'Manager',
-  ),
-  'modules' => 
-  array (
-    'namespace' => 'Modules',
-    'stubs' => 
+    'import' => 
     array (
       'enabled' => false,
       'path' => 'C:\\xampp\\htdocs\\gso_olongapo/vendor/nwidart/laravel-modules/src/Commands/stubs',
       'files' => 
       array (
-        'start' => 'start.php',
-        'routes' => 'Http/routes.php',
-        'json' => 'module.json',
-        'views/index' => 'Resources/views/index.blade.php',
-        'views/master' => 'Resources/views/layouts/master.blade.php',
-        'scaffold/config' => 'Config/config.php',
-        'composer' => 'composer.json',
+        'input' => 'UTF-8',
+        'output' => 'UTF-8',
       ),
-      'replacements' => 
+      'calculate' => true,
+      'ignoreEmpty' => false,
+      'force_sheets_collection' => false,
+      'dates' => 
       array (
-        'start' => 
+        'enabled' => true,
+        'format' => false,
+        'columns' => 
         array (
-          0 => 'LOWER_NAME',
         ),
-        'routes' => 
+      ),
+      'sheets' => 
+      array (
+        'test' => 
         array (
-          0 => 'LOWER_NAME',
-          1 => 'STUDLY_NAME',
-          2 => 'MODULE_NAMESPACE',
+          'firstname' => 'A2',
         ),
-        'json' => 
+      ),
+    ),
+    'views' => 
+    array (
+      'styles' => 
+      array (
+        'th' => 
         array (
-          0 => 'LOWER_NAME',
-          1 => 'STUDLY_NAME',
-          2 => 'MODULE_NAMESPACE',
+          'font' => 
+          array (
+            'bold' => true,
+            'size' => 12,
+          ),
         ),
-        'views/index' => 
+        'strong' => 
         array (
-          0 => 'LOWER_NAME',
+          'font' => 
+          array (
+            'bold' => true,
+            'size' => 12,
+          ),
         ),
-        'views/master' => 
+        'b' => 
         array (
-          0 => 'STUDLY_NAME',
+          'font' => 
+          array (
+            'bold' => true,
+            'size' => 12,
+          ),
         ),
-        'scaffold/config' => 
+        'i' => 
         array (
-          0 => 'STUDLY_NAME',
+          'font' => 
+          array (
+            'italic' => true,
+            'size' => 12,
+          ),
         ),
-        'composer' => 
+        'h1' => 
         array (
-          0 => 'LOWER_NAME',
-          1 => 'STUDLY_NAME',
-          2 => 'VENDOR',
-          3 => 'AUTHOR_NAME',
-          4 => 'AUTHOR_EMAIL',
-          5 => 'MODULE_NAMESPACE',
+          'font' => 
+          array (
+            'bold' => true,
+            'size' => 24,
+          ),
         ),
       ),
     ),
