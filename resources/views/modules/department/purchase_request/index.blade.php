@@ -314,7 +314,7 @@
                   </div>
                 @endif
 
-{{--                 @if(Session::get('olongapo_user')->group_id == 9)
+{{--      @if(Session::get('olongapo_user')->group_id == 9)
                   <div class="form-group">
                        <label for="pr_no" class="col-sm-2 control-label">DEPARTMENT : </label>
                           <div class="col-sm-6">

@@ -16,8 +16,6 @@
           <div class="box">
             <div class="box-header">
               <h3 class="box-title">BAC TEMPLATE List</h3>
-
-
                <a href="{{route('bac.add_template')}}" class="pull-right btn btn-success btn-sm"><i class="fa fa-plus"></i></a>&nbsp; &nbsp;&nbsp; &nbsp;
             </div>
             <!-- /.box-header -->
