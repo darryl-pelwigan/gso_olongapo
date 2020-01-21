@@ -93,8 +93,8 @@
       'View' => 'Illuminate\\Support\\Facades\\View',
       'Module' => 'Nwidart\\Modules\\Facades\\Module',
       'PDF' => 'Barryvdh\\DomPDF\\Facade',
-      'Excel' => 'Maatwebsite\\Excel\\Facades\\Excel',
       'Input' => 'Illuminate\\Support\\Facades\\Input',
+      'Excel' => 'Maatwebsite\\Excel\\Facades\\Excel',
     ),
   ),
   'auditing' => 
@@ -200,7 +200,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => 'C:\\xampp7.1.26\\htdocs\\gso_olongapo\\storage\\framework/cache/data',
+        'path' => 'C:\\xampp\\htdocs\\gso_olongapo\\storage\\framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -240,7 +240,7 @@
       'sqlite' => 
       array (
         'driver' => 'sqlite',
-        'database' => 'olongapo2',
+        'database' => 'gso_olongapo',
         'prefix' => '',
       ),
       'mysql' => 
@@ -248,7 +248,7 @@
         'driver' => 'mysql',
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'olongapo2',
+        'database' => 'gso_olongapo',
         'username' => 'root',
         'password' => '',
         'charset' => 'utf8mb4',
@@ -262,7 +262,7 @@
         'driver' => 'pgsql',
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'olongapo2',
+        'database' => 'gso_olongapo',
         'username' => 'root',
         'password' => '',
         'charset' => 'utf8',
@@ -350,10 +350,10 @@
     'orientation' => 'portrait',
     'defines' => 
     array (
-      'DOMPDF_FONT_DIR' => 'C:\\xampp7.1.26\\htdocs\\gso_olongapo\\storage\\fonts/',
-      'DOMPDF_FONT_CACHE' => 'C:\\xampp7.1.26\\htdocs\\gso_olongapo\\storage\\fonts/',
-      'DOMPDF_TEMP_DIR' => 'C:\\Users\\benedict\\AppData\\Local\\Temp',
-      'DOMPDF_CHROOT' => 'C:\\xampp7.1.26\\htdocs\\gso_olongapo',
+      'DOMPDF_FONT_DIR' => 'C:\\xampp\\htdocs\\gso_olongapo\\storage\\fonts/',
+      'DOMPDF_FONT_CACHE' => 'C:\\xampp\\htdocs\\gso_olongapo\\storage\\fonts/',
+      'DOMPDF_TEMP_DIR' => 'C:\\Users\\Jeannie\\AppData\\Local\\Temp',
+      'DOMPDF_CHROOT' => 'C:\\xampp\\htdocs\\gso_olongapo',
       'DOMPDF_UNICODE_ENABLED' => true,
       'DOMPDF_ENABLE_FONT_SUBSETTING' => false,
       'DOMPDF_PDF_BACKEND' => 'CPDF',
@@ -373,302 +373,6 @@
   array (
     'name' => 'Employee',
   ),
-  'filesystems' => 
-  array (
-    'default' => 'local',
-    'cloud' => 's3',
-    'disks' => 
-    array (
-      'local' => 
-      array (
-        'driver' => 'local',
-        'root' => 'C:\\xampp7.1.26\\htdocs\\gso_olongapo\\storage\\app',
-      ),
-      'public' => 
-      array (
-        'driver' => 'local',
-        'root' => 'C:\\xampp7.1.26\\htdocs\\gso_olongapo\\storage\\app/public',
-        'url' => 'http://localhost/storage',
-        'visibility' => 'public',
-      ),
-      's3' => 
-      array (
-        'driver' => 's3',
-        'key' => NULL,
-        'secret' => NULL,
-        'region' => NULL,
-        'bucket' => NULL,
-      ),
-    ),
-  ),
-  'gsoassistant' => 
-  array (
-    'name' => 'GSOassistant',
-  ),
-  'inventory' => 
-  array (
-    'name' => 'Inventory',
-  ),
-  'mail' => 
-  array (
-    'driver' => 'smtp',
-    'host' => 'mailtrap.io',
-    'port' => '2525',
-    'from' => 
-    array (
-      'address' => 'hello@example.com',
-      'name' => 'Example',
-    ),
-    'encryption' => NULL,
-    'username' => NULL,
-    'password' => NULL,
-    'markdown' => 
-    array (
-      'theme' => 'default',
-      'paths' => 
-      array (
-        0 => 'C:\\xampp7.1.26\\htdocs\\gso_olongapo\\resources\\views/vendor/mail',
-      ),
-    ),
-  ),
-  'manager' => 
-  array (
-    'name' => 'Manager',
-  ),
-  'modules' => 
-  array (
-    'namespace' => 'Modules',
-    'stubs' => 
-    array (
-      'enabled' => false,
-      'path' => 'C:\\xampp7.1.26\\htdocs\\gso_olongapo/vendor/nwidart/laravel-modules/src/Commands/stubs',
-      'files' => 
-      array (
-        'start' => 'start.php',
-        'routes' => 'Http/routes.php',
-        'json' => 'module.json',
-        'views/index' => 'Resources/views/index.blade.php',
-        'views/master' => 'Resources/views/layouts/master.blade.php',
-        'scaffold/config' => 'Config/config.php',
-        'composer' => 'composer.json',
-      ),
-      'replacements' => 
-      array (
-        'start' => 
-        array (
-          0 => 'LOWER_NAME',
-        ),
-        'routes' => 
-        array (
-          0 => 'LOWER_NAME',
-          1 => 'STUDLY_NAME',
-          2 => 'MODULE_NAMESPACE',
-        ),
-        'json' => 
-        array (
-          0 => 'LOWER_NAME',
-          1 => 'STUDLY_NAME',
-          2 => 'MODULE_NAMESPACE',
-        ),
-        'views/index' => 
-        array (
-          0 => 'LOWER_NAME',
-        ),
-        'views/master' => 
-        array (
-          0 => 'STUDLY_NAME',
-        ),
-        'scaffold/config' => 
-        array (
-          0 => 'STUDLY_NAME',
-        ),
-        'composer' => 
-        array (
-          0 => 'LOWER_NAME',
-          1 => 'STUDLY_NAME',
-          2 => 'VENDOR',
-          3 => 'AUTHOR_NAME',
-          4 => 'AUTHOR_EMAIL',
-          5 => 'MODULE_NAMESPACE',
-        ),
-      ),
-    ),
-    'paths' => 
-    array (
-      'modules' => 'C:\\xampp7.1.26\\htdocs\\gso_olongapo\\Modules',
-      'assets' => 'C:\\xampp7.1.26\\htdocs\\gso_olongapo\\public\\modules',
-      'migration' => 'C:\\xampp7.1.26\\htdocs\\gso_olongapo\\database/migrations',
-      'generator' => 
-      array (
-        'assets' => 'Assets',
-        'config' => 'Config',
-        'command' => 'Console',
-        'event' => 'Events',
-        'listener' => 'Events/Handlers',
-        'migration' => 'Database/Migrations',
-        'model' => 'Entities',
-        'repository' => 'Repositories',
-        'seeder' => 'Database/Seeders',
-        'controller' => 'Http/Controllers',
-        'filter' => 'Http/Middleware',
-        'request' => 'Http/Requests',
-        'provider' => 'Providers',
-        'lang' => 'Resources/lang',
-        'views' => 'Resources/views',
-        'test' => 'Tests',
-        'jobs' => 'Jobs',
-        'emails' => 'Emails',
-        'notifications' => 'Notifications',
-      ),
-    ),
-    'scan' => 
-    array (
-      'enabled' => false,
-      'paths' => 
-      array (
-        0 => 'C:\\xampp7.1.26\\htdocs\\gso_olongapo\\vendor/*/*',
-      ),
-    ),
-    'composer' => 
-    array (
-      'vendor' => 'nwidart',
-      'author' => 
-      array (
-        'name' => 'Nicolas Widart',
-        'email' => 'n.widart@gmail.com',
-      ),
-    ),
-    'cache' => 
-    array (
-      'enabled' => false,
-      'key' => 'laravel-modules',
-      'lifetime' => 60,
-    ),
-    'register' => 
-    array (
-      'translations' => true,
-    ),
-  ),
-  'purchaseorder' => 
-  array (
-    'name' => 'PurchaseOrder',
-  ),
-  'purchaserequest' => 
-  array (
-    'name' => 'PurchaseRequest',
-  ),
-  'queue' => 
-  array (
-    'default' => 'sync',
-    'connections' => 
-    array (
-      'sync' => 
-      array (
-        'driver' => 'sync',
-      ),
-      'database' => 
-      array (
-        'driver' => 'database',
-        'table' => 'jobs',
-        'queue' => 'default',
-        'retry_after' => 90,
-      ),
-      'beanstalkd' => 
-      array (
-        'driver' => 'beanstalkd',
-        'host' => 'localhost',
-        'queue' => 'default',
-        'retry_after' => 90,
-      ),
-      'sqs' => 
-      array (
-        'driver' => 'sqs',
-        'key' => 'your-public-key',
-        'secret' => 'your-secret-key',
-        'prefix' => 'https://sqs.us-east-1.amazonaws.com/your-account-id',
-        'queue' => 'your-queue-name',
-        'region' => 'us-east-1',
-      ),
-      'redis' => 
-      array (
-        'driver' => 'redis',
-        'connection' => 'default',
-        'queue' => 'default',
-        'retry_after' => 90,
-      ),
-    ),
-    'failed' => 
-    array (
-      'database' => 'mysql',
-      'table' => 'failed_jobs',
-    ),
-  ),
-  'services' => 
-  array (
-    'mailgun' => 
-    array (
-      'domain' => NULL,
-      'secret' => NULL,
-    ),
-    'ses' => 
-    array (
-      'key' => NULL,
-      'secret' => NULL,
-      'region' => 'us-east-1',
-    ),
-    'sparkpost' => 
-    array (
-      'secret' => NULL,
-    ),
-    'stripe' => 
-    array (
-      'model' => 'App\\User',
-      'key' => NULL,
-      'secret' => NULL,
-    ),
-  ),
-  'session' => 
-  array (
-    'driver' => 'file',
-    'lifetime' => 120,
-    'expire_on_close' => false,
-    'encrypt' => false,
-    'files' => 'C:\\xampp7.1.26\\htdocs\\gso_olongapo\\storage\\framework/sessions',
-    'connection' => NULL,
-    'table' => 'sessions',
-    'store' => NULL,
-    'lottery' => 
-    array (
-      0 => 2,
-      1 => 100,
-    ),
-    'cookie' => 'laravel_session',
-    'path' => '/',
-    'domain' => NULL,
-    'secure' => false,
-    'http_only' => true,
-  ),
-  'template' => 
-  array (
-    'name' => 'Template',
-  ),
-  'tinker' => 
-  array (
-    'commands' => 
-    array (
-    ),
-    'dont_alias' => 
-    array (
-    ),
-  ),
-  'view' => 
-  array (
-    'paths' => 
-    array (
-      0 => 'C:\\xampp7.1.26\\htdocs\\gso_olongapo\\resources\\views',
-    ),
-    'compiled' => 'C:\\xampp7.1.26\\htdocs\\gso_olongapo\\storage\\framework\\views',
-  ),
   'excel' => 
   array (
     'cache' => 
@@ -685,7 +389,7 @@
         'host' => 'localhost',
         'port' => 11211,
       ),
-      'dir' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\storage\\cache',
+      'dir' => 'C:\\xampp\\htdocs\\gso_olongapo\\storage\\cache',
     ),
     'properties' => 
     array (
@@ -751,7 +455,7 @@
       ),
       'store' => 
       array (
-        'path' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\storage\\exports',
+        'path' => 'C:\\xampp\\htdocs\\gso_olongapo\\storage\\exports',
         'returnInfo' => false,
       ),
       'pdf' => 
@@ -761,15 +465,15 @@
         array (
           'DomPDF' => 
           array (
-            'path' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\vendor/dompdf/dompdf/',
+            'path' => 'C:\\xampp\\htdocs\\gso_olongapo\\vendor/dompdf/dompdf/',
           ),
           'tcPDF' => 
           array (
-            'path' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\vendor/tecnick.com/tcpdf/',
+            'path' => 'C:\\xampp\\htdocs\\gso_olongapo\\vendor/tecnick.com/tcpdf/',
           ),
           'mPDF' => 
           array (
-            'path' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\vendor/mpdf/mpdf/',
+            'path' => 'C:\\xampp\\htdocs\\gso_olongapo\\vendor/mpdf/mpdf/',
           ),
         ),
       ),
@@ -927,5 +631,301 @@
         ),
       ),
     ),
+  ),
+  'filesystems' => 
+  array (
+    'default' => 'local',
+    'cloud' => 's3',
+    'disks' => 
+    array (
+      'local' => 
+      array (
+        'driver' => 'local',
+        'root' => 'C:\\xampp\\htdocs\\gso_olongapo\\storage\\app',
+      ),
+      'public' => 
+      array (
+        'driver' => 'local',
+        'root' => 'C:\\xampp\\htdocs\\gso_olongapo\\storage\\app/public',
+        'url' => 'http://localhost/storage',
+        'visibility' => 'public',
+      ),
+      's3' => 
+      array (
+        'driver' => 's3',
+        'key' => NULL,
+        'secret' => NULL,
+        'region' => NULL,
+        'bucket' => NULL,
+      ),
+    ),
+  ),
+  'gsoassistant' => 
+  array (
+    'name' => 'GSOassistant',
+  ),
+  'inventory' => 
+  array (
+    'name' => 'Inventory',
+  ),
+  'mail' => 
+  array (
+    'driver' => 'smtp',
+    'host' => 'mailtrap.io',
+    'port' => '2525',
+    'from' => 
+    array (
+      'address' => 'hello@example.com',
+      'name' => 'Example',
+    ),
+    'encryption' => NULL,
+    'username' => NULL,
+    'password' => NULL,
+    'markdown' => 
+    array (
+      'theme' => 'default',
+      'paths' => 
+      array (
+        0 => 'C:\\xampp\\htdocs\\gso_olongapo\\resources\\views/vendor/mail',
+      ),
+    ),
+  ),
+  'manager' => 
+  array (
+    'name' => 'Manager',
+  ),
+  'modules' => 
+  array (
+    'namespace' => 'Modules',
+    'stubs' => 
+    array (
+      'enabled' => false,
+      'path' => 'C:\\xampp\\htdocs\\gso_olongapo/vendor/nwidart/laravel-modules/src/Commands/stubs',
+      'files' => 
+      array (
+        'start' => 'start.php',
+        'routes' => 'Http/routes.php',
+        'json' => 'module.json',
+        'views/index' => 'Resources/views/index.blade.php',
+        'views/master' => 'Resources/views/layouts/master.blade.php',
+        'scaffold/config' => 'Config/config.php',
+        'composer' => 'composer.json',
+      ),
+      'replacements' => 
+      array (
+        'start' => 
+        array (
+          0 => 'LOWER_NAME',
+        ),
+        'routes' => 
+        array (
+          0 => 'LOWER_NAME',
+          1 => 'STUDLY_NAME',
+          2 => 'MODULE_NAMESPACE',
+        ),
+        'json' => 
+        array (
+          0 => 'LOWER_NAME',
+          1 => 'STUDLY_NAME',
+          2 => 'MODULE_NAMESPACE',
+        ),
+        'views/index' => 
+        array (
+          0 => 'LOWER_NAME',
+        ),
+        'views/master' => 
+        array (
+          0 => 'STUDLY_NAME',
+        ),
+        'scaffold/config' => 
+        array (
+          0 => 'STUDLY_NAME',
+        ),
+        'composer' => 
+        array (
+          0 => 'LOWER_NAME',
+          1 => 'STUDLY_NAME',
+          2 => 'VENDOR',
+          3 => 'AUTHOR_NAME',
+          4 => 'AUTHOR_EMAIL',
+          5 => 'MODULE_NAMESPACE',
+        ),
+      ),
+    ),
+    'paths' => 
+    array (
+      'modules' => 'C:\\xampp\\htdocs\\gso_olongapo\\Modules',
+      'assets' => 'C:\\xampp\\htdocs\\gso_olongapo\\public\\modules',
+      'migration' => 'C:\\xampp\\htdocs\\gso_olongapo\\database/migrations',
+      'generator' => 
+      array (
+        'assets' => 'Assets',
+        'config' => 'Config',
+        'command' => 'Console',
+        'event' => 'Events',
+        'listener' => 'Events/Handlers',
+        'migration' => 'Database/Migrations',
+        'model' => 'Entities',
+        'repository' => 'Repositories',
+        'seeder' => 'Database/Seeders',
+        'controller' => 'Http/Controllers',
+        'filter' => 'Http/Middleware',
+        'request' => 'Http/Requests',
+        'provider' => 'Providers',
+        'lang' => 'Resources/lang',
+        'views' => 'Resources/views',
+        'test' => 'Tests',
+        'jobs' => 'Jobs',
+        'emails' => 'Emails',
+        'notifications' => 'Notifications',
+      ),
+    ),
+    'scan' => 
+    array (
+      'enabled' => false,
+      'paths' => 
+      array (
+        0 => 'C:\\xampp\\htdocs\\gso_olongapo\\vendor/*/*',
+      ),
+    ),
+    'composer' => 
+    array (
+      'vendor' => 'nwidart',
+      'author' => 
+      array (
+        'name' => 'Nicolas Widart',
+        'email' => 'n.widart@gmail.com',
+      ),
+    ),
+    'cache' => 
+    array (
+      'enabled' => false,
+      'key' => 'laravel-modules',
+      'lifetime' => 60,
+    ),
+    'register' => 
+    array (
+      'translations' => true,
+    ),
+  ),
+  'purchaseorder' => 
+  array (
+    'name' => 'PurchaseOrder',
+  ),
+  'purchaserequest' => 
+  array (
+    'name' => 'PurchaseRequest',
+  ),
+  'queue' => 
+  array (
+    'default' => 'sync',
+    'connections' => 
+    array (
+      'sync' => 
+      array (
+        'driver' => 'sync',
+      ),
+      'database' => 
+      array (
+        'driver' => 'database',
+        'table' => 'jobs',
+        'queue' => 'default',
+        'retry_after' => 90,
+      ),
+      'beanstalkd' => 
+      array (
+        'driver' => 'beanstalkd',
+        'host' => 'localhost',
+        'queue' => 'default',
+        'retry_after' => 90,
+      ),
+      'sqs' => 
+      array (
+        'driver' => 'sqs',
+        'key' => 'your-public-key',
+        'secret' => 'your-secret-key',
+        'prefix' => 'https://sqs.us-east-1.amazonaws.com/your-account-id',
+        'queue' => 'your-queue-name',
+        'region' => 'us-east-1',
+      ),
+      'redis' => 
+      array (
+        'driver' => 'redis',
+        'connection' => 'default',
+        'queue' => 'default',
+        'retry_after' => 90,
+      ),
+    ),
+    'failed' => 
+    array (
+      'database' => 'mysql',
+      'table' => 'failed_jobs',
+    ),
+  ),
+  'services' => 
+  array (
+    'mailgun' => 
+    array (
+      'domain' => NULL,
+      'secret' => NULL,
+    ),
+    'ses' => 
+    array (
+      'key' => NULL,
+      'secret' => NULL,
+      'region' => 'us-east-1',
+    ),
+    'sparkpost' => 
+    array (
+      'secret' => NULL,
+    ),
+    'stripe' => 
+    array (
+      'model' => 'App\\User',
+      'key' => NULL,
+      'secret' => NULL,
+    ),
+  ),
+  'session' => 
+  array (
+    'driver' => 'file',
+    'lifetime' => 120,
+    'expire_on_close' => false,
+    'encrypt' => false,
+    'files' => 'C:\\xampp\\htdocs\\gso_olongapo\\storage\\framework/sessions',
+    'connection' => NULL,
+    'table' => 'sessions',
+    'store' => NULL,
+    'lottery' => 
+    array (
+      0 => 2,
+      1 => 100,
+    ),
+    'cookie' => 'laravel_session',
+    'path' => '/',
+    'domain' => NULL,
+    'secure' => false,
+    'http_only' => true,
+  ),
+  'template' => 
+  array (
+    'name' => 'Template',
+  ),
+  'tinker' => 
+  array (
+    'commands' => 
+    array (
+    ),
+    'dont_alias' => 
+    array (
+    ),
+  ),
+  'view' => 
+  array (
+    'paths' => 
+    array (
+      0 => 'C:\\xampp\\htdocs\\gso_olongapo\\resources\\views',
+    ),
+    'compiled' => 'C:\\xampp\\htdocs\\gso_olongapo\\storage\\framework\\views',
   ),
 );
