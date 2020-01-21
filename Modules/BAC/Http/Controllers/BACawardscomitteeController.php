@@ -66,15 +66,15 @@ class BACawardscomitteeController extends Controller
         $validator = Validator::make($request->all(),
             [
                 'employee_name'              => 'required',
-                'employee_id'              => 'required|exists:olongapo_employee_list,id',
+                // 'employee_id'              => 'required|exists:olongapo_employee_list,id',
                 'employee_position'              => 'required',
 
 
             ],
             [
                    'employee_name.required'          => 'Employee name is required',
-                   'employee_id.required'          => 'Employee name is required',
-                   'employee_id.exist'          => 'Employee name is required',
+                   // 'employee_id.required'          => 'Employee name is required',
+                   // 'employee_id.exist'          => 'Employee name is required',
                    'employee_position.required'          => 'Employee Position is required',
             ]);
 
@@ -105,8 +105,8 @@ class BACawardscomitteeController extends Controller
         if($request->input('committe_update')){
             $ac =  AC::find($request->input('committe_update'));
         }
-
-        $ac->employee_id = $request->input('employee_id');
+        $employee_id = !empty($request->input('employee_id')) ? $request->input('employee_id') : '';
+        $ac->employee_id = $employee_id;
         $ac->employee_name = $request->input('employee_name');
         $ac->employee_bacposition = $this->add_position($request);
         $ac->department = $data;
@@ -122,7 +122,8 @@ class BACawardscomitteeController extends Controller
             $aa =  approvedby::find($request->input('committe_update'));
         }
 
-        $aa->employee_id = $request->input('employee_id');
+        $employee_id = !empty($request->input('employee_id')) ? $request->input('employee_id') : '';
+        $aa->employee_id = $employee_id;
         $aa->employee_name = $request->input('employee_name');
         $aa->employee_bacposition = $this->add_position($request);
         $aa->department = $data;
@@ -137,7 +138,8 @@ class BACawardscomitteeController extends Controller
             $ac =  atestedby::find($request->input('committe_update'));
         }
 
-        $at->employee_id = $request->input('employee_id');
+        $employee_id = !empty($request->input('employee_id')) ? $request->input('employee_id') : '';
+        $at->employee_id = $employee_id;
         $at->employee_name = $request->input('employee_name');
         $at->employee_bacposition = $this->add_position($request);
         $at->department = $data;
