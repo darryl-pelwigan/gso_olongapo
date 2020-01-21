@@ -86,7 +86,7 @@ $.fn.getALL();
 $.fn.replaceCommas = function(currentVal){
     var components = currentVal.toString().split(".");
     console.log(components);
-    if (components.length === 1) 
+    if (components.length === 1)
         components[0] = currentVal;
         components[0] = components[0].replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     if (components.length === 2)
@@ -134,6 +134,7 @@ $.fn.updatePR = function(item_id){
             success: function(data){
               console.log(data['items']);
               console.log('asdasdasdasd');
+              // console.log('padas');
               $('#pr_dept_desc').val(data['items'][0].dept_desc);
               $('#pr_dept_id').val(data['items'][0].prno_dept);
               $('#pr_dept_code').val(data['items'][0].dept_code);
@@ -150,6 +151,9 @@ $.fn.updatePR = function(item_id){
               $('#items_list tbody').html('');
               var add_tr = '' ;
               for(var x = 0 ; x<(data['items'].length);x++){
+                     // var total_price = ['items'][x].unit_price * data['items'][x].qty;
+                     // var sum_price = sum_price + total_price;
+
                      add_tr = add_tr + '<tr id="item_'+x+'" >'+
                                   '  <td>'+(x+1)+
                                   ' <input type="hidden" name="item_id['+x+']" value="'+data['items'][x].item_id+'" />'+
@@ -314,7 +318,7 @@ $.fn.addSupplier = function(){
     if($('.supplier_row_'+x+':checked').length){
       $('input[name="supplier_item['+x+']['+th_supp+']"]').attr('disabled', 'disabled');
       $('.supplier_checkbox_col_'+th_supp).attr('disabled', 'disabled');
-      
+
     }else{
       $('input[name="supplier_item['+x+']['+th_supp+']"]').removeAttr('disabled');
       $('.supplier_checkbox_col_'+th_supp).removeAttr('disabled', 'disabled');
@@ -360,7 +364,7 @@ $.fn.highlightAmount = function(col, row){
     $('input[name="item_toprice['+col+']['+row+']"]').closest('td').removeClass('select_supplier');
     $('input[name="item_price['+col+']['+row+']"]').closest('td').removeClass('select_supplier');
     $(this).closest('td').removeClass('select_supplier');
-    $('.supplier_row_'+col).removeAttr('disabled');  
+    $('.supplier_row_'+col).removeAttr('disabled');
     $('.supplier_checkbox_col_'+row).removeAttr('checked');
     $('.supplier_checkbox_col_'+row).attr('disabled', 'disabled');
     $('#removecolumn_'+row).prop('disabled', '');
@@ -390,7 +394,7 @@ $.fn.allSupplierColumn = function(col){
         $('.supplier_column_'+col).closest('td').addClass('select_supplier');
         $('.supplier_column_'+col).prop('checked', 'checked');
         $('.supplier_checkbox').prop('disabled', 'disabled');
-        $('.supplier_column_'+col).removeAttr('disabled', ''); 
+        $('.supplier_column_'+col).removeAttr('disabled', '');
         $('.supplier_checkbox_col_'+col).prop('disabled', 'disabled');
         $(this).removeAttr('disabled');
 
@@ -401,7 +405,7 @@ $.fn.allSupplierColumn = function(col){
         $('.tprice_'+col).closest('td').removeClass('select_supplier');
         $('.supplier_column_'+col).closest('td').removeClass('select_supplier');
         $('.supplier_checkbox').removeAttr('disabled');
-        $('.supplier_checkbox').removeAttr('checked'); 
+        $('.supplier_checkbox').removeAttr('checked');
         $('.supplier_checkbox_col_'+col).prop('disabled', '');
 
         $('#removecolumn_'+col).prop('disabled', '');
@@ -411,7 +415,7 @@ $.fn.allSupplierColumn = function(col){
   }
 
 
- 
+
 };
 
 
