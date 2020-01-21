@@ -19,9 +19,7 @@ use Modules\PurchaseRequest\Entities\ApproveSupp;
 
 use Modules\GSOassistant\Entities\Procmethod;
 use PDF;
-
 use Modules\GSOassistant\Entities\Requestordersignee;
-
 
 class PurchaseRequestController extends Controller
 {
@@ -42,8 +40,6 @@ class PurchaseRequestController extends Controller
     {
         return view('purchaserequest::request.index',$this->setup());
     }
-
-
 
     public function get_pr(Request $request){
          $itemsx = DB::table('olongapo_purchase_request_items')

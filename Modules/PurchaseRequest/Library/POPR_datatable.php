@@ -25,23 +25,24 @@ class POPR_datatable
                 if(isset($pr->bac_type->proc_title)){
                     $proc_type = $pr->bac_type->proc_title.' ('.$pr->bac_type->proc_min_value.' - '.$pr->bac_type->proc_max_value.')';
                 }
-                    $approval = DB::table('olongapo_purchase_request_ppmp_approval')
-                          ->where("request_no_id", '=', $pr->id)
-                          ->get();
+
+                $approval = DB::table('olongapo_purchase_request_ppmp_approval')
+                      ->where("request_no_id", '=', $pr->id)
+                      ->get();
 
                 if(count($approval) > 0){
                
                      $record = array(
                           'olongapo_purchase_request_no.id' => $pr->id,
-                           'olongapo_purchase_request_no.pr_no' => $pr->pr_no ? $pr->pr_no : ' ',
-                            'dept_id' => $pr->dept_id,
-                             'olongapo_subdepartment.dept_desc' => $pr->pr_dept->dept_desc,
-                              'olongapo_purchase_request_no.pr_date' => $pr->pr_date,
-                              'pr_remarks' => $pr->remarks,
-                              'olongapo_purchase_request_no.pr_purpose' => $pr->pr_purpose,
-                               'pr_status' => $pr->status,
-                               'olongapo_purchase_request_no.pr_date_dept' => $pr->pr_date_dept,
-                               'proc_type' =>  $proc_type,
+                          'olongapo_purchase_request_no.pr_no' => $pr->pr_no ? $pr->pr_no : ' ',
+                          'dept_id' => $pr->dept_id,
+                          'olongapo_subdepartment.dept_desc' => $pr->pr_dept->dept_desc,
+                          'olongapo_purchase_request_no.pr_date' => $pr->pr_date,
+                          'pr_remarks' => $pr->remarks,
+                          'olongapo_purchase_request_no.pr_purpose' => $pr->pr_purpose,
+                          'pr_status' => $pr->status,
+                          'olongapo_purchase_request_no.pr_date_dept' => $pr->pr_date_dept,
+                          'proc_type' =>  $proc_type,
                         );
                      array_push($records, $record);
                 }
