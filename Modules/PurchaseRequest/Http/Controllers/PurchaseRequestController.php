@@ -133,7 +133,7 @@ class PurchaseRequestController extends Controller
             return redirect()->route('dept.index');
         }
 
-             $validator = Validator::make($request->all(), [
+            $validator = Validator::make($request->all(), [
                                     'item_price.*'  =>  ['required','regex:/^(0|[1-9]\d*)(\.\d+)?$/'],
                                     'pr_date'    => 'required|date',
                                   ],
@@ -141,7 +141,11 @@ class PurchaseRequestController extends Controller
                                     'item_price.*.required' => 'PURCHASE REQUEST ITEMS UNIT PRICE IS REQUIRED',
                                     'pr_date.required' => 'PURCHASE REQUEST DATE IS REQUIRED',
                                     'item_price.*.regex' => 'PURCHASE REQUEST ITEMS UNIT PRICE FORMAT IS INVALID',
-               ]);
+                                    'verify_iau' => 'required',
+                                    'verify_iau_date' => 'required|date',
+                                    'verify_bo' => 'required',
+                                    'verify_bo_date' => 'required|date'
+            ]);
 
        if($validator->fails()){
             return back()->withInput()->withErrors($validator->messages());
@@ -155,6 +159,12 @@ class PurchaseRequestController extends Controller
                     $PurchaseNo->proc_type = $request->input('proc_type');
                     $PurchaseNo->sai_no = $request->input('sai_no');
                     $PurchaseNo->sai_date = $request->input('sai_date');
+
+                    $PurchaseNo->iau_verified = isset($request->verify_iau) ? 1 : 0;
+                    $PurchaseNo->iau_vdate = $request->verify_iau_date;
+                    $PurchaseNo->budget_verified = isset($request->verify_bo) ? 1 : 0;
+                    $PurchaseNo->budget_vdate = $request->verify_bo_date;
+
                     $PurchaseNo->save();
                        for($x = 0 ; $x< count($request->input('item_desc'));$x++){
                                     if($request->input('item_id.'.$x)){

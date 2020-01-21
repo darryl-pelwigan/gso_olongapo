@@ -23,9 +23,9 @@
                 <!-- /.box-header -->
                 <div class="box-body">
                   <form class="form-horizontal" method="POST" action="{{ route('pr.pr_edit_save') }}">
-
-
-                  <div class="form-group">
+                
+                
+                <div class="form-group">
                      <label for="pr_no" class="col-sm-2 control-label">REQUEST DATE: </label>
                         <div class="col-sm-2">
                         <input type="hidden" name="pr_id" id="pr_id" value="{{ $pr->id }}" />
@@ -137,6 +137,45 @@
                     </div>
                 </div>
 
+                  <div class="form-inline">
+                    <div class="col-sm-6">
+                      <!-- <div class="form-check"> -->
+                      @if($pr->iau_verified == 1)
+                      <input type="checkbox" class="form-check-input" style="height: 30px; width: 30px;" name="verify_iau" id="verify_iau" required checked="checked">
+                      @else
+                      <input type="checkbox" class="form-check-input" style="height: 30px; width: 30px;" name="verify_iau" id="verify_iau" required>
+                      @endif
+                      <label class="form-check-label">VERIFIED BY IAU</label>
+                      <!-- </div> -->
+
+                      <label>ON </label>
+                      @if(!is_null($pr->iau_vdate) && $pr->iau_vdate != "")
+                      <input type="text" class="form-control datepicker" name="verify_iau_date" id="verify_iau_date" placeholder="{{ \Carbon\Carbon::parse($pr->iau_vdate)->format('Y-m-d') }}" value="{{ \Carbon\Carbon::parse($pr->iau_vdate)->format('Y-m-d') }}">
+                      @else
+                      <input type="text" class="form-control datepicker" name="verify_iau_date" id="verify_iau_date" placeholder="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
+                      @endif
+                    </div>
+                    
+                    <div class="col-sm-6"> 
+                      <!-- <div class="form-check"> -->
+                      @if($pr->budget_verified == 1)
+                      <input type="checkbox" class="form-check-input" style="height: 30px; width: 30px;" name="verify_bo" id="verify_bo" required checked="checked">
+                      @else
+                      <input type="checkbox" class="form-check-input" style="height: 30px; width: 30px;" name="verify_bo" id="verify_bo" required>
+                      @endif
+                      <label class="form-check-label">VERIFIED BY BUDGET OFFICE </label>
+                      <!-- </div> -->
+
+                      <label>ON </label>
+                      @if(!is_null($pr->budget_vdate) && $pr->budget_vdate != "")
+                      <input type="text" class="form-control datepicker" name="verify_bo_date" id="verify_bo_date" placeholder="{{ \Carbon\Carbon::parse($pr->budget_vdate)->format('Y-m-d') }}" value="{{ \Carbon\Carbon::parse($pr->budget_vdate)->format('Y-m-d') }}">
+                      @else
+                      <input type="text" class="form-control datepicker" name="verify_bo_date" id="verify_bo_date" placeholder="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
+                      @endif
+                    </div>
+                    
+                  </div>
+                </div>
 
                      <table class="table table-bordered table-hover" id="items_list">
                           <thead>
@@ -191,7 +230,7 @@
                     {{csrf_field()}}
                     @if($edit_view === 'edit')
                     <button type="submit" name="cancel" class="btn btn-sm btn-default " value="cancel">Cancel</button>
-                            <button  type="submit"  class="btn btn-sm btn-primary pull-right"><i class="fa fa-save"></i> Update</button>
+                    <button  type="submit"  class="btn btn-sm btn-primary pull-right" id="update_btn" disabled="disabled"><i class="fa fa-save"></i> Update</button>
                       @endif
                     </form>
                 </div>
@@ -210,31 +249,76 @@
 
    @stop
 
-
-
-
-
 @section('plugins-script')
 <script src="{{asset('adminlte/plugins/autocomplete/')}}/jquery.autocomplete.min.js"></script>
 <script src="{{asset('adminlte/plugins/daterangepicker/')}}/moment.min.js"></script>
 <script src="{{asset('adminlte')}}/plugins/datepicker/bootstrap-datepicker.js"></script>
 @include('department::purchase_request.js.edit-js')
-@stop
 
+<script type="text/javascript">
+  $(document).on('change', '#verify_iau', function() {
+    var iau = $(this).prop('checked');
+    var iau_date = $('#verify_iau_date').val();
+    var bo = $('#verify_bo').prop('checked');
+    var bo_date = $('#verify_bo_date').val();
+    if(iau == true && bo == true) {
+      $('#update_btn').removeAttr('disabled');
+    }
+  });
+  $(document).on('change', '#verify_iau_date', function() {
+    var iau = $('#verify_iau').prop('checked');
+    var iau_date = $(this).val();
+    var bo = $('#verify_bo').prop('checked');
+    var bo_date = $('#verify_bo_date').val();
+    if(iau == true && bo == true) {
+      $('#update_btn').removeAttr('disabled');
+    }
+  });
+  $(document).on('change', '#verify_bo', function() {
+    var iau = $('#verify_iau').prop('checked');
+    var iau_date = $('#verify_iau_date').val();
+    var bo = $(this).prop('checked');
+    var bo_date = $('#verify_bo_date').val();
+    if(iau == true && bo == true) {
+      $('#update_btn').removeAttr('disabled');
+    }
+  });
+  $(document).on('change', '#verify_bo_date', function() {
+    var iau = $('#verify_iau').prop('checked');
+    var iau_date = $('#verify_iau_date').val();
+    var bo = $('#verify_bo').prop('checked');
+    var bo_date = $(this).val();
+    if(iau == true && bo == true) {
+      $('#update_btn').removeAttr('disabled');
+    }
+  });
+  $(document).ready(function() {
+    var iau = $('#verify_iau').prop('checked');
+    var iau_date = $('#verify_iau_date').val();
+    var bo = $('#verify_bo').prop('checked');
+    var bo_date = $('#verify_bo_date').val();
+    if(iau == true && bo == true) {
+      $('#update_btn').removeAttr('disabled');
+    }
+  });
+</script>
+@stop
 
 @section('plugins-css')
  <!-- Bootstrap time Picker -->
-  <link rel="stylesheet" href="{{asset('adminlte')}}/plugins/datepicker/datepicker3.css">
-    <!-- DataTables -->
-  <link rel="stylesheet" href="{{asset('adminlte')}}/plugins/datatables/jquery.dataTables.min.css">
+<link rel="stylesheet" href="{{asset('adminlte')}}/plugins/datepicker/datepicker3.css">
+  <!-- DataTables -->
+<link rel="stylesheet" href="{{asset('adminlte')}}/plugins/datatables/jquery.dataTables.min.css">
 
 <style type="text/css">
-
   .remove>td{
   background: #ef6565;
   }
+
+  .form-inline * {
+    display: inline;
+    padding: 5px;
+    vertical-align: middle;
+  }
 </style>
-
-
-
 @stop
