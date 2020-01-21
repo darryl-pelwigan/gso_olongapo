@@ -239,7 +239,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="add_purchase_order_modalLabel"> <span>Add Requisition and Issue Slip</span></h4>
+        <h4 class="modal-title" id="add_purchase_order_modalLabel"> <span>Acceptance and Inspection Report</span></h4>
       </div>
       <div class="modal-body">
         <div id="status"></div>
@@ -247,14 +247,89 @@
             <form class="form-horizontal" id="set_prop">
               <div class="box-body">
                 <div id="statusC"></div>
+                  <!-- DATE RECEIVED -->
                    <div class="form-group">
-                     <label for="pr_no" class="col-sm-2 control-label">Supply and/or Property Custodian : </label>
-                      <div class="col-sm-10">
-                        <input type="text" class="form-control" id="prop"   placeholder="Supply and/or Property Custodian" />
-                        <input type="hidden"  id="po_id" name="po_id" />
-                        <input type="hidden"  id="acceptance_id" name="acceptance_id" />
+                     <label for="pr_no" class="col-sm-2 control-label">Date Received : </label>
+                      <div class="col-sm-4">
+                          <input type="text" class="form-control" id="dtr" name="dtr" placeholder="Date" />
                     </div>
-                </div>
+                  </div>
+
+                  <div class="form-group">
+                     <label for="pr_no" class="col-sm-2 control-label">Status : </label>
+                      <div class="col-sm-4">
+                         <label><input type="radio" name="status" value="0">Partial</label>
+                         <label><input type="radio" name="status" value="1">Complete</label>
+                    </div>
+                  </div>
+
+                   <div class="form-group">
+                     <label for="pr_no" class="col-sm-2 control-label">Property Officer</label>
+                      <div class="col-sm-10">
+                         <label><input type="radio" name="set_property" value="0">Employee</label>
+                         <label><input type="radio" name="set_property" value="1">Outside</label>
+                    </div>
+
+                     <label for="pr_no" class="col-sm-2 control-label"></label>
+
+
+                      <div class="col-sm-4 hidden" id="property1">
+                        <select class="form-control" id="emp"  name="prop_emp1">
+                           @foreach($employee as $emp)
+                          <option value="{{$emp->fname}} {{ $emp->mname}} {{ $emp->lname}} {{ $emp->ename}}">{{$emp->lname}}, {{ $emp->fname}} {{ $emp->mname}} {{ $emp->ename}}</option>
+                          @endforeach
+                      </select>
+                    </div>
+
+                      <div class="col-sm-4 hidden" id="property2">
+                       <input type="text" class="form-control" id="emp" name="prop_emp2"   placeholder="Property Officer" />
+                    </div>
+                  </div>
+
+
+
+                  <div class="form-group">
+                     <label for="pr_no" class="col-sm-2 control-label">Date Inspected : </label>
+                      <div class="col-sm-4">
+                          <input type="text" class="form-control" id="dti" name="dti" placeholder="Date" />
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                     <label for="pr_no" class="col-sm-2 control-label"></label>
+                      <div class="col-sm-4">
+                        <input type="checkbox" name="inspected">Inspected, verified and found OK As to quantity and specifications<br> 
+                    </div>
+                  </div>
+
+
+                  <div class="form-group">
+                     <label for="pr_no" class="col-sm-2 control-label">Inspector Officer/ <br> Committee</label>
+                      <div class="col-sm-10">
+                         <label><input type="radio" name="set_inspector" value="0">Employee</label>
+                         <label><input type="radio" name="set_inspector" value="1">Outside</label>
+                    </div>
+
+
+                    <div class="col-sm-4 hidden" id="insp1">
+                        <select class="form-control" id="insp_emp"  name="insp_emp1">
+                           @foreach($employee as $emp)
+                          <option value="{{$emp->fname}} {{ $emp->mname}} {{ $emp->lname}} {{ $emp->ename}}">{{$emp->lname}}, {{ $emp->fname}} {{ $emp->mname}} {{ $emp->ename}}</option>
+                          @endforeach
+                      </select>
+                    </div>
+
+                      <div class="col-sm-4 hidden" id="insp2">
+                       <input type="text" class="form-control" name="insp_emp2"   placeholder="Supply and/or Property Custodian" />
+                    </div>
+                  </div>
+
+
+
+
+                 
+                  <input type="hidden"  id="po_id" name="po_id" />
+                  <input type="hidden"  id="acceptance_id" name="acceptance_id" />
 
               <!-- /.box-body -->
 
@@ -337,6 +412,8 @@ $(function() {
                       if(data.acceptance_id){
                         return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).updateRequisition('+data.pono_id+');" >Update Acceptance</button>\
                         <button type="button" class="btn  btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).setProp('+data.pono_id+');" >PDF</button>  ';
+
+
                       }else{
                           return '<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).addRequisition('+data.pono_id+');" >Add Acceptance</button> ';
                       }
@@ -539,6 +616,42 @@ $.fn.addRequisition = function(pono_id){
        format: 'yyyy-mm-dd',
     });
 
+      $('#dtr, #dti').datepicker({
+      autoclose: true,
+       format: 'yyyy-mm-dd',
+    });
+
+$(':radio[name=set_inspector]').change(function() {
+  var stat = $(this).val();
+
+  if(stat == 0)
+  {
+    $('#insp1').removeClass("hidden");
+    $('#insp2').addClass("hidden");
+  }else{
+    $('#insp1').addClass("hidden");
+    $('#insp2').removeClass("hidden");
+  }
+
+});
+$(':radio[name=set_property]').change(function() {
+  var stat = $(this).val();
+
+    if(stat == 0)
+  {
+    $('#property1').removeClass("hidden");
+    $('#property2').addClass("hidden");
+  }else{
+    $('#property2').removeClass("hidden");
+    $('#property1').addClass("hidden");
+  }
+
+});
+
+
+
+
+
 // $('#po_date').on('change',function(){
 //     $.ajax({
 //             type: "POST",
@@ -589,7 +702,9 @@ $.fn.addRequisition = function(pono_id){
   };
 
   $.fn.sentPdf = function(){
-      var form = $('#set_prop').serialize();
+
+    var form = $('#set_prop').serialize();
+    console.log(form);
      //  $.ajax({
      //        type: "POST",
      //
@@ -611,9 +726,9 @@ $.fn.addRequisition = function(pono_id){
      // });
      //
      var route = "{{route('po.po_acceptance_pdf',['change1','change2','change3'])}}";
-     route =route.replace("change1", $('#po_id').val());
+      route =route.replace("change1", $('#po_id').val());
       route =route.replace("change2", $('#acceptance_id').val());
-     route =route.replace("change3", $('#prop').val());
+      route =route.replace("change3", form);
      window.location.href = route;
 
   };
@@ -626,7 +741,6 @@ $.fn.addRequisition = function(pono_id){
   <link rel="stylesheet" href="{{asset('adminlte')}}/plugins/datepicker/datepicker3.css">
   <!-- DataTables -->
   <link rel="stylesheet" href="{{asset('adminlte')}}/plugins/datatables/jquery.dataTables.min.css">
-
   <style type="text/css">
 
 .autocomplete-suggestions { border: 1px solid #999; background: #FFF; overflow: auto; }
