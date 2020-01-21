@@ -18,7 +18,7 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Purchase Request List</h3>
+              <h3 class="box-title">Purchase Request List wtf</h3>
 
               <!-- <button class="btn btn-success pull-right"  onclick="$(this).showAddModal();"><i class="fa fa-plus"></i></button> -->
             </div>
