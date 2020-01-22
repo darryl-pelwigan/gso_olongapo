@@ -8,11 +8,8 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
-use Modules\PurchaseRequest\Entities\PurchaseNo;
-use Modules\PurchaseOrder\Entities\PurchaseOrderNo;
-use Modules\PurchaseOrder\Entities\PurchaseOrderItems;
-use Modules\PurchaseOrder\Entities\PurchaseOrderRequisition;
-use Modules\PurchaseOrder\Entities\PurchaseOrderAcceptance;
+use Modules\PurchaseRequest\Entities\{PurchaseNo,PurchaseOrderNo,PurchaseOrderItems,PurchaseOrderRequisition,PurchaseOrderAcceptance};
+use Modules\Employee\Entities\{Employee};
 
 use PDF;
 use Input;
@@ -545,6 +542,8 @@ class PurchaseOrderController extends Controller
 
 
     public function po_acceptance(){
+
+         $this->data['employee'] = Employee::all();
          return view('purchaseorder::acceptance.index',$this->setup());
     }
 
@@ -720,6 +719,12 @@ class PurchaseOrderController extends Controller
     }
 
     public function acceptance_pdf(Request $request,$id,$aid,$prop){
+
+
+
+        $params = array();
+        parse_str($prop, $params);
+
          $info = DB::table('olongapo_purchase_order_no')
                     ->join('olongapo_purchase_order_acceptance_issuance' ,'olongapo_purchase_order_acceptance_issuance.pono_id','=', 'olongapo_purchase_order_no.id')
                     ->join('olongapo_bac_control_info' ,'olongapo_bac_control_info.id','=', 'olongapo_purchase_order_no.bac_control_id')
@@ -780,7 +785,8 @@ class PurchaseOrderController extends Controller
         $this->data['po_items'] = $items_bac;
         $this->data['info']  = $info;
         $this->data['prop'] =$prop;
-        // dd($this->data['prop']);
+        $this->data['req'] =$params;
+
          $pdf = PDF::loadView('purchaseorder::acceptance.pdf',$this->setup());
        $pdf->setPaper(array(0,0,612.00,936.0));
         //$pdf->setPaper('legal');

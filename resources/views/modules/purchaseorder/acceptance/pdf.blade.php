@@ -130,28 +130,43 @@
                 <div class="header_tbl">
                     <table class="table table-thnormal" width="100%">
                       <tr>
-                        <td id="table_left" width="50%">
+                        <td id="table_left" width="390px">
                           <table>
                              <tr>
                               <td><br></td>
                             </tr>
                              <tr>
-                              <td>Date Received: ________________________________________</td>
+                              <td>Date Received: <u>{{ $req["dtr"]}}</u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                             </tr>
+                            @if($req["status"] == 1)
                             <tr>
-                              <td><input class="inp1" type="checkbox" > &nbsp;Completed</td>
+                              <td><input class="inp1" type="checkbox" checked> &nbsp;Completed</td>
                             </tr>
                             <tr>
                               <td><input class="inp1" type="checkbox" > &nbsp;Partial</td>
                             </tr>
+                            @else
+                             <tr>
+                              <td><input class="inp1" type="checkbox" > &nbsp;Completed</td>
+                            </tr>
+                            <tr>
+                              <td><input class="inp1" type="checkbox" checked> &nbsp;Partial</td>
+                            </tr>
+                            @endif
                             <tr>
                               <td><br></td>
                             </tr>
+                            @if($req["set_property"] == 0)
                             <tr>
-                              <td class="text"><u>{{$prop}}</u></td>
+                              <td class="underline_3" align="center"><b>{{$req["prop_emp1"]}}</b></td>
                             </tr>
+                            @else
                             <tr>
-                              <td class="text">Supply and/or Property Custodian</td>
+                              <td class="underline_3" align="center"><b>{{$req["prop_emp2"]}}</b></td>
+                            </tr>
+                            @endif
+                            <tr>
+                              <td class="text" align="center">Property Officer</td>
                             </tr>
                           </table>
                         </td>
@@ -161,19 +176,31 @@
                               <td><br></td>
                             </tr>
                             <tr>
-                              <td>Date Inspected: ________________________________________</td>
+                              <td class="center">Date Inspected: <u>{{ $req["dti"]}}</u></td>
                             </tr>
+                            @if(isset($req["inspected"]))
                             <tr>
-                              <td><input class="inp2" type="checkbox"> &nbsp;Inspected, verified and found OK <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; As to quantity and specifiactions</td>
+                              <td><input class="inp2" type="checkbox" checked> &nbsp;Inspected, verified and found OK As to quantityand specifiactions</td>
                             </tr>
+                            @else
+                             <tr>
+                              <td><input class="inp2" type="checkbox"> &nbsp;Inspected, verified and found OK As to quantityand specifiactions</td>
+                            </tr>
+                            @endif
                             <tr>
                               <td><br></td>
                             </tr>
+                            @if($req["set_inspector"] == 0)
                             <tr>
-                              <td class="text">_________________________________</td>
+                              <td class="underline_3" align="center"><b>{{ $req["insp_emp1"] }}</b></td>
                             </tr>
+                            @else
                             <tr>
-                              <td class="text">Inspection Officer/Inspection Committee</td>
+                              <td class="underline_3" align="center"><b>{{ $req["insp_emp2"] }}</b></td>
+                            </tr>
+                            @endif
+                            <tr>
+                              <td class="text" align="right">Inspection Officer/Inspection Committee</td>
                             </tr>
 
                           </table>
@@ -283,6 +310,11 @@ html,body{
   font-size: 16px;
   border-bottom: 1px solid;
   width: 25px;
+}
+.underline_3{
+  font-size: 16px;
+  border-bottom: 1px solid;
+  width: 100%;
 }
 /*.table_header tr td{
   padding: 3px;
