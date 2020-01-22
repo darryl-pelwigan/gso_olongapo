@@ -138,7 +138,7 @@ class Bac_datatable
                                     // ->join('olongapo_bac_type','olongapo_bac_type.id','=','olongapo_bac_template.type')
                                     ->select(
                                                 // 'olongapo_bac_type.description as type_desc','olongapo_bac_type.id as type_id',
-                                                'olongapo_bac_template.id as  templ_id','olongapo_bac_template.template_desc as  templ_desc','olongapo_bac_template.code as  templ_code','olongapo_bac_template.updated_at as  templ_date');
+                                            'olongapo_bac_template.id as  templ_id','olongapo_bac_template.template_desc as  templ_desc','olongapo_bac_template.code as  templ_code','olongapo_bac_template.updated_at as  templ_date');
         return $bac_template;
     }
 
