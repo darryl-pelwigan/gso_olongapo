@@ -168,6 +168,112 @@
   </div>
 </div>
 
+<div class="modal fade" id="add_requisition" tabindex="-1" role="dialog" aria-labelledby="add_purchase_order_modalLabel">
+  <div class="modal-dialog modal-md" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="add_purchase_order_modalLabel"> <span>Purchase Request Report</span></h4>
+            </div>
+            <div class="modal-body">
+              <div id="status"></div>
+                <div id="contents-menu">
+                    <form class="form-horizontal" id="set_prop" >
+                      <div class="box-body">
+                        <div id="statusC"></div>
+                          <!-- DATE RECEIVED -->
+                            
+
+                           <div class="form-group">
+                             <label for="pr_no" class="col-sm-2 control-label">Requested By: </label>
+                           <!--    <div class="col-sm-10">
+                                 <label><input type="radio" name="req_receive" value="0">Employee</label>
+                                 <label><input type="radio" name="req_receive" value="1">Outside</label>
+                            </div> -->
+
+                             <!-- <label for="pr_no" class="col-sm-2 control-label"></label> -->
+
+
+                           <!--    <div class="col-sm-4 hidden" id="req1">
+                                <select class="form-control" id="emp_req"  name="emp_req">
+                                   @foreach($employee as $emp)
+                                  <option value="{{$emp->fname}} {{ $emp->mname}} {{ $emp->lname}} {{ $emp->ename}}">{{$emp->lname}}, {{ $emp->fname}} {{ $emp->mname}} {{ $emp->position}}</option>
+                                  @endforeach
+                              </select>
+                            </div> -->
+
+                              <div class="col-sm-4" id="req2">
+                               <input type="text" class="form-control" id="name_req" name="name_req"   placeholder="Name" />
+                               <input type="text" class="form-control" id="designation_req" name="designation_req"   placeholder="Position" />
+                            </div>
+                          </div>
+
+
+                            <div class="form-group">
+                             <label for="pr_no" class="col-sm-2 control-label">Appropriation Availability: </label>
+                           <!--    <div class="col-sm-10">
+                                 <label><input type="radio" name="avail_receive" value="0">Employee</label>
+                                 <label><input type="radio" name="avail_receive" value="1">Outside</label>
+                              </div>
+
+
+
+                              <div class="col-sm-4 hidden" id="avail1">
+                                <select class="form-control" id="emp_req"  name="emp_avail">
+                                   @foreach($employee as $emp)
+                                  <option value="{{$emp->fname}} {{ $emp->mname}} {{ $emp->lname}} {{ $emp->ename}}">{{$emp->lname}}, {{ $emp->fname}} {{ $emp->mname}} {{ $emp->ename}}</option>
+                                  @endforeach
+                              </select>
+                            </div> -->
+
+                              <div class="col-sm-4" id="avail2">
+                               <input type="text" class="form-control" id="emp" name="name_avail"   placeholder="Name" />
+                               <input type="text" class="form-control" id="emp" name="designation_avail"   placeholder="Position" />
+                                </div>
+                          </div>
+
+                          <div class="form-group">
+                             <label for="pr_no" class="col-sm-2 control-label">Approved By: </label>
+                            <!--   <div class="col-sm-10">
+                                 <label><input type="radio" name="app_receive" value="0">Employee</label>
+                                 <label><input type="radio" name="app_receive" value="1">Outside</label>
+                            </div>
+
+                             <label for="pr_no" class="col-sm-2 control-label"></label>
+
+
+                              <div class="col-sm-4 hidden" id="app1">
+                                <select class="form-control" id="emp_req"  name="emp_app">
+                                   @foreach($employee as $emp)
+                                  <option value="{{$emp->fname}} {{ $emp->mname}} {{ $emp->lname}} {{ $emp->ename}}">{{$emp->lname}}, {{ $emp->fname}} {{ $emp->mname}} {{ $emp->ename}}</option>
+                                  @endforeach
+                              </select>
+                            </div> -->
+
+                              <div class="col-sm-4" id="app2">
+                               <input type="text" class="form-control" id="emp" name="name_app"   placeholder="Name" />
+                               <input type="text" class="form-control" id="emp" name="designation_app"   placeholder="Position" />
+                            </div>
+                          </div>
+                          
+
+                      <!-- /.box-body -->
+
+                        <button type="button" class="btn btn-info pull-right" onclick="$(this).sentPdf();">Submit</button>
+
+                      <!-- /.box-footer -->
+
+                      {{csrf_field()}}
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+  </div>
+</div>
+
    @stop
 
 

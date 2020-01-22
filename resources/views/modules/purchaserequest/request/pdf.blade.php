@@ -213,7 +213,7 @@ if($pr->proc_type != 0){
                     <td class="underline"><br></td>
                   </tr>
                   <tr>
-                    <td class="underline">{{ strtoupper($requested_by->fname ?? '') }} {{ strtoupper($requested_by->mname ?? '')  }}  {{ strtoupper($requested_by->lname ?? '')  }}</td>
+                    <td class="underline">{{ $form["name_req"]}}</td>
 
       {{--               @if ($approved_by)
                       @foreach ($approved_by as $element)
@@ -247,23 +247,20 @@ if($pr->proc_type != 0){
                       }
                     @endphp
 
-                    <td>
-                      {{ $treasurer}}
-                    </td>
-                    <td>
-                      {{ $sec_mayor}}
-                    </td>
+                    <td>{{ $form["name_avail"]}}</td>
 
 
+                    <td class="underline">{{ $form["name_app"]}}</td>
 
                     {{-- <td class="underline" style="padding-right: 20px; padding-left:20px;">{{ strtoupper($approved_by[0]->full_name ?? '') }} / {{ strtoupper($approved_by[1]->full_name ?? '') }}</td> --}}
                   </tr>
                    <tr>
-                    <td class="underline">{{ $requested_by->title ?? '' }}</td>
-                    <td class="underline">ICO, City Treasurer's Office</td>
-                    <td class="underline"><br>Secretary to the Mayor / City Mayor</td>
+                    <td class="underline">{{$form["designation_req"]}}</td>
+                    <td>{{ $form["designation_avail"]}}</td>
+                    <td class="underline">{{ $form["designation_app"]}}</td>
                   </tr>
               </table>
+              <div style="page-break-after: always">
               </div>
               <?php
 
@@ -365,6 +362,7 @@ html,body{
 .page-break{
   page-break-before: always;
 }
+
 </style>
 
 
