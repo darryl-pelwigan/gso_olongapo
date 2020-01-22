@@ -14,7 +14,7 @@
             <p class="coo" >General Services Office, 2/F Olongapo City Hall, Olongapo City</p>
             <p class="cntc web">web: www.olongapocity.gov.ph </p>
             <p class="cntc">email: olongapo_gso@yahoo.com </p>
-            <h3 class="res">RESOLUTION  NO. <u>&nbsp;&nbsp;  {{$bac_control_no}}  &nbsp;&nbsp;</u> </h3>
+            <h3 class="res">RESOLUTION NO. <u>&nbsp;&nbsp; {{$bac_control_no}} &nbsp;&nbsp;</u> </h3>
             <p class="res-i"><i>(Series of {{date('Y')}})</i></p>
         </div>
     </div>
@@ -23,26 +23,27 @@
 @stop
 
 @section('content')
-{!! ($bac_template) !!}
+    {!! ($bac_template) !!}
+
     <br>
-    <div class="text-center" style="margin: 0; padding: 0;text-align:center" >
-        <b>BIDS AND AWARDS COMMITTEE</b>
-        <p style="text-align: center;" style="margin: 0; padding: 0;">Requested by: </p>
+    <div class="text-center" style="margin: 0; padding: 0; text-align:center; font-size: 15px;" >
+        <b>BIDS AND AWARDS COMMITTEE</b><br><br>
+        {{-- <p style="text-align: center;" style="margin: 0; padding: 0;">Requested by: </p> --}}
     </div>
     <?php
             $cc = 1;
             $cx = 1;
             $cd = 1;
     ?>
-    <br />
+    <br/>
         @for( $x = 0 ; $x< count($committee) ; $x++)
             @if( $cc%2==1 )
                     <?php $cx=1; $cd=1; ?>
                  <div class="row">
             @endif
-                 <div class="col-xs-4 col-xs-offset-1" style="font-size: 11px;display:inline-block;" >
-                    <p class="text-center" style="padding-left:150px"><strong><u>{{ strtoupper($committee[$x]->employee_name) }}</u></strong></p>
-                    <p class="text-center" style="padding-left:150px">{{$committee[$x]->title}}</p><br><br>
+                <div style="display: inline-block; width: 48%;" >
+                    <p align="center" style="font-size: 13px;"><strong><u>{{ strtoupper($committee[$x]->employee_name) }}</u></strong></p>
+                    <p align="center">{{$committee[$x]->title}}</p><br><br>
                 </div>
 
             @if( $cc%2==0 && $cx==2 )
@@ -53,11 +54,13 @@
                 <?php  $cc++; $cx++; ?>
         @endfor
     @if( $cd!=2 )
-                </div>
+        </div>
     @endif
      <br />
 
-     <p style="text-align: center;">Approved by: </p>
+     {{-- <p style="text-align: center;">Approved by: </p> --}}
+     <p align="right" style="margin: 0 35% 0;">Approved by:</p>
+     <br>
          <?php
             $cc = 1;
             $cx = 1;
@@ -68,13 +71,13 @@
 
 
                  <div class="row">
-                    <div class="col-xs-4"></div>
-                    <div class="col-xs-8" style="font-size: 11px;">
-                        <p class="text-center"><strong><u>{{strtoupper($approved_by[$x]->employee_name)}}</u></strong></p>
-                        <p class="text-center">{{$approved_by[$x]->title}}</p>
+                    <div style="font-size: 11px; margin-right: 50px; width: 30%; float: right">
+                        <p class="text-center" align="center"><strong>{{strtoupper($approved_by[$x]->employee_name)}}</strong></p>
+                        <p class="text-center" align="center">{{$approved_by[$x]->title}}</p>
                     </div>
-                </div><br>
-
+                </div>
+                <br><br><br>
+                <div class="clear"></div>
 
                 <?php  $cc++; $cx++; ?>
         @endfor
@@ -88,6 +91,7 @@
   body{
 
     font-size:12px;
+
   }
 
 </style>

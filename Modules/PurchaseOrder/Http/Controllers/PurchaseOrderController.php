@@ -8,7 +8,8 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
-use Modules\PurchaseRequest\Entities\{PurchaseNo,PurchaseOrderNo,PurchaseOrderItems,PurchaseOrderRequisition,PurchaseOrderAcceptance};
+use Modules\PurchaseRequest\Entities\PurchaseNo;
+use Modules\PurchaseOrder\Entities\{PurchaseOrderNo,PurchaseOrderItems,PurchaseOrderRequisition,PurchaseOrderAcceptance};
 use Modules\Employee\Entities\{Employee};
 
 use PDF;
@@ -41,7 +42,6 @@ class PurchaseOrderController extends Controller
         $this->data['templatex'] = DB::table('olongapo_bac_template')->select('id','template_desc','code')->get();
         return view('purchaseorder::purchase-order.wout-purchase-order',$this->setup());
     }
-
 
     public function anyData()
     {
@@ -437,7 +437,7 @@ class PurchaseOrderController extends Controller
         $info = DB::table('olongapo_purchase_order_no')
                     ->join('olongapo_bac_control_info' ,'olongapo_bac_control_info.id','=', 'olongapo_purchase_order_no.bac_control_id')
                     ->join('olongapo_purchase_request_no' ,'olongapo_bac_control_info.prno_id','=', 'olongapo_purchase_request_no.id')
-                    ->join('olongapo_employee_list', 'olongapo_purchase_request_no.requested_by', '=', 'olongapo_employee_list.id')
+                    // ->join('olongapo_employee_list', 'olongapo_purchase_request_no.requested_by', '=', 'olongapo_employee_list.id')
                     ->leftjoin('olongapo_obr' , 'olongapo_obr.id','=','olongapo_purchase_request_no.obr_id')
                     ->join('olongapo_subdepartment','olongapo_subdepartment.id','=','olongapo_purchase_request_no.dept_id')
                     ->join('olongapo_bac_source_fund','olongapo_bac_source_fund.id','=','olongapo_bac_control_info.sourcefund_id')
@@ -466,14 +466,13 @@ class PurchaseOrderController extends Controller
                                 'olongapo_purchase_order_no.id as pono_id',
                                 'olongapo_purchase_order_no.po_no as po_no',
                                 'olongapo_purchase_order_no.po_date as po_date',
-                                'olongapo_employee_list.fname as fname',
-                                'olongapo_employee_list.lname as lname',
-                                'olongapo_employee_list.mname as mname'
+                                'olongapo_purchase_request_no.requested_by as requested_by',
+                                // 'olongapo_employee_list.fname as fname',
+                                // 'olongapo_employee_list.lname as lname',
+                                // 'olongapo_employee_list.mname as mname'
                             ])
                     ->where('olongapo_purchase_order_no.id', '=', $id)
                     ->first();
-
-
 
         $items_bac = DB::table('olongapo_purchase_order_items as po')
                     ->join('olongapo_purchase_request_items as items','items.id','=','po.pr_item_id')
@@ -491,7 +490,6 @@ class PurchaseOrderController extends Controller
                     ])
                     ->where('po.pono_id','=',$id)
                     ->get();
-
 
         $this->data['po_items'] = $items_bac;
         $this->data['info']  = $info;
@@ -550,8 +548,8 @@ class PurchaseOrderController extends Controller
 
     public function add_acceptance(Request $request){
         $validator = Validator::make($request->all(), [
-                        'po_date' => 'required|date|unique:olongapo_purchase_order_acceptance_issuance,aai_no'
-                    ]);
+            'po_date' => 'required|date|unique:olongapo_purchase_order_acceptance_issuance,aai_no'
+        ]);
 
         if($validator->fails()){
             $data['status'] = 0;
@@ -652,8 +650,6 @@ class PurchaseOrderController extends Controller
                     ])
                     ->where('po.pono_id','=',$info->pono_id)
                     ->get();
-
-
 
         $this->data['po_items'] = $items_bac;
         $this->data['info']  = $info;

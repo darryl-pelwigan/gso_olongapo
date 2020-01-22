@@ -200,8 +200,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => 'C:\\xampp\\htdocs\\gso_olongapo\\storage\\framework/cache/data',
-
+        'path' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\storage\\framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -241,7 +240,7 @@
       'sqlite' => 
       array (
         'driver' => 'sqlite',
-        'database' => 'gso_olongapo',
+        'database' => 'olongapo2',
         'prefix' => '',
       ),
       'mysql' => 
@@ -249,7 +248,7 @@
         'driver' => 'mysql',
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'gso_olongapo',
+        'database' => 'olongapo2',
         'username' => 'root',
         'password' => '',
         'charset' => 'utf8mb4',
@@ -263,7 +262,7 @@
         'driver' => 'pgsql',
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'gso_olongapo',
+        'database' => 'olongapo2',
         'username' => 'root',
         'password' => '',
         'charset' => 'utf8',
@@ -351,10 +350,10 @@
     'orientation' => 'portrait',
     'defines' => 
     array (
-      'DOMPDF_FONT_DIR' => 'C:\\xampp\\htdocs\\gso_olongapo\\storage\\fonts/',
-      'DOMPDF_FONT_CACHE' => 'C:\\xampp\\htdocs\\gso_olongapo\\storage\\fonts/',
-      'DOMPDF_TEMP_DIR' => 'C:\\Users\\Jeannie\\AppData\\Local\\Temp',
-      'DOMPDF_CHROOT' => 'C:\\xampp\\htdocs\\gso_olongapo',
+      'DOMPDF_FONT_DIR' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\storage\\fonts/',
+      'DOMPDF_FONT_CACHE' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\storage\\fonts/',
+      'DOMPDF_TEMP_DIR' => 'C:\\Users\\danalex\\AppData\\Local\\Temp',
+      'DOMPDF_CHROOT' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo',
       'DOMPDF_UNICODE_ENABLED' => true,
       'DOMPDF_ENABLE_FONT_SUBSETTING' => false,
       'DOMPDF_PDF_BACKEND' => 'CPDF',
@@ -390,7 +389,7 @@
         'host' => 'localhost',
         'port' => 11211,
       ),
-      'dir' => 'C:\\xampp\\htdocs\\gso_olongapo\\storage\\cache',
+      'dir' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\storage\\cache',
     ),
     'properties' => 
     array (
@@ -456,7 +455,7 @@
       ),
       'store' => 
       array (
-        'path' => 'C:\\xampp\\htdocs\\gso_olongapo\\storage\\exports',
+        'path' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\storage\\exports',
         'returnInfo' => false,
       ),
       'pdf' => 
@@ -466,15 +465,15 @@
         array (
           'DomPDF' => 
           array (
-            'path' => 'C:\\xampp\\htdocs\\gso_olongapo\\vendor/dompdf/dompdf/',
+            'path' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\vendor/dompdf/dompdf/',
           ),
           'tcPDF' => 
           array (
-            'path' => 'C:\\xampp\\htdocs\\gso_olongapo\\vendor/tecnick.com/tcpdf/',
+            'path' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\vendor/tecnick.com/tcpdf/',
           ),
           'mPDF' => 
           array (
-            'path' => 'C:\\xampp\\htdocs\\gso_olongapo\\vendor/mpdf/mpdf/',
+            'path' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\vendor/mpdf/mpdf/',
           ),
         ),
       ),
@@ -635,201 +634,129 @@
   ),
   'filesystems' => 
   array (
-    'cache' => 
+    'default' => 'local',
+    'cloud' => 's3',
+    'disks' => 
     array (
-      'enable' => true,
-      'driver' => 'memory',
-      'settings' => 
+      'local' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\xampp\\htdocs\\gso_olongapo\\storage\\app',
+        'root' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\storage\\app',
       ),
-      'memcache' => 
+      'public' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\xampp\\htdocs\\gso_olongapo\\storage\\app/public',
+        'root' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\storage\\app/public',
         'url' => 'http://localhost/storage',
         'visibility' => 'public',
       ),
-      'dir' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\storage\\cache',
+      's3' => 
+      array (
+        'driver' => 's3',
+        'key' => NULL,
+        'secret' => NULL,
+        'region' => NULL,
+        'bucket' => NULL,
+      ),
     ),
-    'properties' => 
+  ),
+  'gsoassistant' => 
+  array (
+    'name' => 'GSOassistant',
+  ),
+  'inventory' => 
+  array (
+    'name' => 'Inventory',
+  ),
+  'mail' => 
+  array (
+    'driver' => 'smtp',
+    'host' => 'mailtrap.io',
+    'port' => '2525',
+    'from' => 
     array (
-      'creator' => 'Maatwebsite',
-      'lastModifiedBy' => 'Maatwebsite',
-      'title' => 'Spreadsheet',
-      'description' => 'Default spreadsheet export',
-      'subject' => 'Spreadsheet export',
-      'keywords' => 'maatwebsite, excel, export',
-      'category' => 'Excel',
-      'manager' => 'Maatwebsite',
-      'company' => 'Maatwebsite',
+      'address' => 'hello@example.com',
+      'name' => 'Example',
     ),
-    'sheets' => 
+    'encryption' => NULL,
+    'username' => NULL,
+    'password' => NULL,
+    'markdown' => 
     array (
-      'pageSetup' => 
+      'theme' => 'default',
+      'paths' => 
       array (
-        'orientation' => 'portrait',
-        'paperSize' => '9',
-        'scale' => '100',
-        'fitToPage' => false,
-        'fitToHeight' => true,
-        'fitToWidth' => true,
-        'columnsToRepeatAtLeft' => 
-        array (
-          0 => '',
-          1 => '',
-        ),
-        'rowsToRepeatAtTop' => 
-        array (
-          0 => 0,
-          1 => 0,
-        ),
-        'horizontalCentered' => false,
-        'verticalCentered' => false,
-        'printArea' => NULL,
-        'firstPageNumber' => NULL,
+        0 => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\resources\\views/vendor/mail',
       ),
     ),
-    'creator' => 'Maatwebsite',
-    'csv' => 
-    array (
-      'delimiter' => ',',
-      'enclosure' => '"',
-      'line_ending' => '
-',
-      'use_bom' => false,
-    ),
-    'export' => 
-    array (
-      'autosize' => true,
-      'autosize-method' => 'approx',
-      'generate_heading_by_indices' => true,
-      'merged_cell_alignment' => 'left',
-      'calculate' => false,
-      'includeCharts' => false,
-      'sheets' => 
-      array (
-        'page_margin' => false,
-        'nullValue' => NULL,
-        'startCell' => 'A1',
-        'strictNullComparison' => false,
-      ),
-      'store' => 
-      array (
-        'path' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\storage\\exports',
-        'returnInfo' => false,
-      ),
-      'pdf' => 
-      array (
-        'driver' => 'DomPDF',
-        'drivers' => 
-        array (
-          'DomPDF' => 
-          array (
-            'path' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\vendor/dompdf/dompdf/',
-          ),
-          'tcPDF' => 
-          array (
-            'path' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\vendor/tecnick.com/tcpdf/',
-          ),
-          'mPDF' => 
-          array (
-            'path' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\vendor/mpdf/mpdf/',
-          ),
-        ),
-      ),
-    ),
-    'filters' => 
-    array (
-      'registered' => 
-      array (
-        'chunk' => 'Maatwebsite\\Excel\\Filters\\ChunkReadFilter',
-      ),
-      'enabled' => 
-      array (
-        0 => 'C:\\xampp\\htdocs\\gso_olongapo\\resources\\views/vendor/mail',
-      ),
-    ),
-    'import' => 
+  ),
+  'manager' => 
+  array (
+    'name' => 'Manager',
+  ),
+  'modules' => 
+  array (
+    'namespace' => 'Modules',
+    'stubs' => 
     array (
       'enabled' => false,
-      'path' => 'C:\\xampp\\htdocs\\gso_olongapo/vendor/nwidart/laravel-modules/src/Commands/stubs',
+      'path' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo/vendor/nwidart/laravel-modules/src/Commands/stubs',
       'files' => 
       array (
-        'input' => 'UTF-8',
-        'output' => 'UTF-8',
+        'start' => 'start.php',
+        'routes' => 'Http/routes.php',
+        'json' => 'module.json',
+        'views/index' => 'Resources/views/index.blade.php',
+        'views/master' => 'Resources/views/layouts/master.blade.php',
+        'scaffold/config' => 'Config/config.php',
+        'composer' => 'composer.json',
       ),
-      'calculate' => true,
-      'ignoreEmpty' => false,
-      'force_sheets_collection' => false,
-      'dates' => 
+      'replacements' => 
       array (
-        'enabled' => true,
-        'format' => false,
-        'columns' => 
+        'start' => 
         array (
+          0 => 'LOWER_NAME',
         ),
-      ),
-      'sheets' => 
-      array (
-        'test' => 
+        'routes' => 
         array (
-          'firstname' => 'A2',
+          0 => 'LOWER_NAME',
+          1 => 'STUDLY_NAME',
+          2 => 'MODULE_NAMESPACE',
         ),
-      ),
-    ),
-    'views' => 
-    array (
-      'styles' => 
-      array (
-        'th' => 
+        'json' => 
         array (
-          'font' => 
-          array (
-            'bold' => true,
-            'size' => 12,
-          ),
+          0 => 'LOWER_NAME',
+          1 => 'STUDLY_NAME',
+          2 => 'MODULE_NAMESPACE',
         ),
-        'strong' => 
+        'views/index' => 
         array (
-          'font' => 
-          array (
-            'bold' => true,
-            'size' => 12,
-          ),
+          0 => 'LOWER_NAME',
         ),
-        'b' => 
+        'views/master' => 
         array (
-          'font' => 
-          array (
-            'bold' => true,
-            'size' => 12,
-          ),
+          0 => 'STUDLY_NAME',
         ),
-        'i' => 
+        'scaffold/config' => 
         array (
-          'font' => 
-          array (
-            'italic' => true,
-            'size' => 12,
-          ),
+          0 => 'STUDLY_NAME',
         ),
-        'h1' => 
+        'composer' => 
         array (
-          'font' => 
-          array (
-            'bold' => true,
-            'size' => 24,
-          ),
+          0 => 'LOWER_NAME',
+          1 => 'STUDLY_NAME',
+          2 => 'VENDOR',
+          3 => 'AUTHOR_NAME',
+          4 => 'AUTHOR_EMAIL',
+          5 => 'MODULE_NAMESPACE',
         ),
       ),
     ),
     'paths' => 
     array (
-      'modules' => 'C:\\xampp\\htdocs\\gso_olongapo\\Modules',
-      'assets' => 'C:\\xampp\\htdocs\\gso_olongapo\\public\\modules',
-      'migration' => 'C:\\xampp\\htdocs\\gso_olongapo\\database/migrations',
+      'modules' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\Modules',
+      'assets' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\public\\modules',
+      'migration' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\database/migrations',
       'generator' => 
       array (
         'assets' => 'Assets',
@@ -858,7 +785,7 @@
       'enabled' => false,
       'paths' => 
       array (
-        0 => 'C:\\xampp\\htdocs\\gso_olongapo\\vendor/*/*',
+        0 => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\vendor/*/*',
       ),
     ),
     'composer' => 
@@ -965,7 +892,7 @@
     'lifetime' => 120,
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => 'C:\\xampp\\htdocs\\gso_olongapo\\storage\\framework/sessions',
+    'files' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\storage\\framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -997,8 +924,8 @@
   array (
     'paths' => 
     array (
-      0 => 'C:\\xampp\\htdocs\\gso_olongapo\\resources\\views',
+      0 => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\resources\\views',
     ),
-    'compiled' => 'C:\\xampp\\htdocs\\gso_olongapo\\storage\\framework\\views',
+    'compiled' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\storage\\framework\\views',
   ),
 );
