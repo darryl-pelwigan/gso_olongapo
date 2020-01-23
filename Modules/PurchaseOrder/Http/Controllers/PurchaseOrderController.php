@@ -8,8 +8,9 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
-use Modules\PurchaseRequest\Entities\{PurchaseNo,PurchaseOrderNo,PurchaseOrderItems,PurchaseOrderRequisition,PurchaseOrderAcceptance};
+use Modules\PurchaseRequest\Entities\{PurchaseNo};
 use Modules\Employee\Entities\{Employee};
+use Modules\PurchaseOrder\Entities\{PurchaseOrderNo,PurchaseOrderItems,PurchaseOrderRequisition,PurchaseOrderAcceptance};
 
 use PDF;
 use Input;
@@ -496,6 +497,8 @@ class PurchaseOrderController extends Controller
         $this->data['po_items'] = $items_bac;
         $this->data['info']  = $info;
         $this->data['auth_official'] = $auth;
+
+        // dd($this->data['info']);
 
         $pdf = PDF::loadView('purchaseorder::purchase-order.pdf',$this->setup());
          $pdf->setPaper(array(0,0,612.00,936.0),'portrait');
