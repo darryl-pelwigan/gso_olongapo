@@ -35,6 +35,8 @@ class POPR_datatable
                      $record = array(
                           'olongapo_purchase_request_no.id' => $pr->id,
                           'olongapo_purchase_request_no.pr_no' => $pr->pr_no ? $pr->pr_no : ' ',
+                          'olongapo_purchase_request_no.requested_by' =>  $pr->requested_by ? $pr->requested_by : ' ',
+
                           'dept_id' => $pr->dept_id,
                           'olongapo_subdepartment.dept_desc' => $pr->pr_dept->dept_desc,
                           'olongapo_purchase_request_no.pr_date' => $pr->pr_date,
@@ -72,6 +74,7 @@ class POPR_datatable
                          $record = array(
                                                     'olongapo_purchase_request_no.id' => $pr->id,
                                                      'olongapo_purchase_request_no.pr_no' => $pr->pr_no,
+                                                      'olongapo_purchase_request_no.requested_by' =>  $pr->requested_by ? $pr->requested_by : ' ',
                                                       'dept_id' => $pr->dept_id,
                                                        'olongapo_subdepartment.dept_desc' => $pr->pr_dept->dept_desc,
                                                         'olongapo_purchase_request_no.pr_date' => $pr->pr_date,
