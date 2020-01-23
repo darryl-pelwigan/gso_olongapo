@@ -724,12 +724,12 @@ $(':radio[name=set_property]').change(function() {
 
      //        }
      // });
-     //
-     var route = "{{route('po.po_acceptance_pdf',['change1','change2','change3'])}}";
-      route =route.replace("change1", $('#po_id').val());
-      route =route.replace("change2", $('#acceptance_id').val());
-      route =route.replace("change3", form);
-     window.location.href = route;
+     // //
+     // var route = "{{route('po.po_acceptance_pdf',['change1','change2','change3'])}}";
+     //  route =route.replace("change1", $('#po_id').val());
+     //  route =route.replace("change2", $('#acceptance_id').val());
+     //  route =route.replace("change3", form);
+     // window.location.href = route;
 
   };
 </script>

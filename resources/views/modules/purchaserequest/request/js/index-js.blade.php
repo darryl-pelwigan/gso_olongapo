@@ -41,7 +41,7 @@
                 render : function(data, type, row){
                     var action = '';
                    if(data.pr_status === '' || data.pr_status === null){
-                       action = '<form method="get" action="{{route('pr.pr_edit')}}">{{csrf_field()}}<input type="hidden" name="pr_id" value="'+data.olongapo_purchase_request_no.id+'" /> <input type="submit" class="btn btn-info btn-sm" name="view" value="View" /> <input type="submit" class="btn btn-sm btn-warning" name="edit" value="Edit" /> <input type="submit" class="btn btn-sm btn-default" name="pdf" value="Pdf" /> </form> ';
+                       action = '<form method="get" action="{{route('pr.pr_edit')}}">{{csrf_field()}}<input type="hidden" name="pr_id" id="pr_id" value="'+data.olongapo_purchase_request_no.id+'" /> <input type="submit" class="btn btn-info btn-sm" name="view" value="View" /> <input type="submit" class="btn btn-sm btn-warning" name="edit" value="Edit" /> <button type="button" class="btn btn-success btn-sm" onclick="$(this).add_req(\''+data.olongapo_purchase_request_no.requested_by+'\');">PDF</button></form> ';
                     }else if(data.pr_status === 'done'){
                        action = '<strong>Not yet process</strong>';
                     }
@@ -59,6 +59,20 @@
   };
 
 $.fn.getALL();
+
+$.fn.add_req = function(name){
+
+  if(name.length > 1 )
+  {
+    $('#name_req').val(name);
+    $("#add_requisition").modal('show');
+  }else{
+    $("#add_requisition").modal('show');
+  }
+
+ 
+
+};
 
 $.fn.updatePR = function(item_id){
   $('#add_purchase_request').trigger("reset");
@@ -270,6 +284,7 @@ var has_change = $('#has_change');
   has_change.val(parseInt(has_change.val())+1);
   });
 
+
   $.fn.removeTR = function(id){
     $(this).closest('tr').remove();
     id -= 1;
@@ -336,6 +351,55 @@ var has_change = $('#has_change');
   has_change.val(parseInt(has_change.val())+1);
 });
 
+
+$(':radio[name=req_receive]').change(function() {
+  var stat = $(this).val();
+  if(stat == 0)
+  {
+    $('#req1').removeClass("hidden");
+    $('#req2').addClass("hidden");
+  }else{
+    $('#req1').addClass("hidden");
+    $('#req2').removeClass("hidden");
+  }
+});
+
+$(':radio[name=avail_receive]').change(function() {
+  var stat = $(this).val();
+    if(stat == 0)
+  {
+    $('#avail1').removeClass("hidden");
+    $('#avail2').addClass("hidden");
+  }else{
+    $('#avail2').removeClass("hidden");
+    $('#avail1').addClass("hidden");
+  }
+});
+
+$(':radio[name=app_receive]').change(function() {
+  var stat = $(this).val();
+    if(stat == 0)
+  {
+    $('#app1').removeClass("hidden");
+    $('#app2').addClass("hidden");
+  }else{
+    $('#app2').removeClass("hidden");
+    $('#app1').addClass("hidden");
+  }
+});
+
+
+ $.fn.sentPdf = function(){
+
+    var form = $('#set_prop').serialize();
+    console.log(form);
+   var route = "{{route('pr.pr_pdf',['change1','change2'])}}";
+    // route =route.replace("change1", $('#po_id').val());
+    route =route.replace("change1", $('#pr_id').val());
+    route =route.replace("change2", form);
+   window.location.href = route;
+
+  };
 
 
 

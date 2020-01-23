@@ -17,6 +17,7 @@ Route::group(['middleware' => ['web','auth'], 'prefix' => 'purchaserequest', 'na
     Route::post('/get_pr_counter', 'PurchaseRequestController@get_pr_counter')->name('pr.get_pr_counter');
 
     Route::get('/purchase_request/edit_view/', 'PurchaseRequestController@pr_edit')->name('pr.pr_edit');
+    Route::get('/purchase_request/pdf/{prid}/{form}', 'PurchaseRequestController@pr_pdf')->name('pr.pr_pdf');
     Route::post('/purchase_request/save_edit/', 'PurchaseRequestController@save_edit')->name('pr.pr_edit_save');
       
     Route::post('/get-purchase-request', 'PurchaseRequestController@get_request')->name('pr.get-request');
