@@ -43,7 +43,7 @@ class PurchasePPMPApprovalController extends Controller
      */
     public function create(Request $request)
     {
-        $data['status'] = 1
+        $data['status'] = 1;
         $data['errors'] = 'NO Errors';
 
         $approval_stat = $request->input('approval');

@@ -182,6 +182,11 @@
                       <div class="box-body">
                         <div id="statusC"></div>
                           <!-- DATE RECEIVED -->
+
+
+                               {{-- <input type="hidden" class="form-control" id="prid" name="prid"/> --}}
+
+                            
                            <div class="form-group">
                              <label for="pr_no" class="col-sm-3 control-label">Requested By: </label>
                            <!--    <div class="col-sm-10">

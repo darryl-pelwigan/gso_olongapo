@@ -31,7 +31,7 @@ class PPEController extends Controller
     public function index()
     {
         $this->data['bacs'] = BacControlInfo::all();
-
+        // dd( $this->data['bacs']);
         return view('inventory::inventory/ppe',$this->setup());
     }
 
