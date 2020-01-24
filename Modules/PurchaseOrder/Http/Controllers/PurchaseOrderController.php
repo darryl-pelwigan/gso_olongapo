@@ -617,6 +617,7 @@ class PurchaseOrderController extends Controller
                                 'supplier_info.title as suppl_title',
                                 'supplier_address.details',
                                 'olongapo_purchase_request_no.requested_by',
+                                'olongapo_purchase_request_no.designated',
                                 'olongapo_bac_control_info.id as control_id',
                                 'olongapo_bac_source_fund.description as sourcefund',
                                 'olongapo_procurement_method.proc_title as bac_mode',
@@ -626,9 +627,6 @@ class PurchaseOrderController extends Controller
                                 'olongapo_purchase_order_no.po_date as po_date',
                                 'olongapo_purchase_order_requisition_number.ris_no',
                                 'olongapo_purchase_order_requisition_number.ris_date',
-                                'olongapo_employee_list.fname as fname',
-                                'olongapo_employee_list.lname as lname',
-                                'olongapo_employee_list.mname as mname',
                                 'olongapo_position.title as designation'
                             ])
                     ->where('olongapo_purchase_order_requisition_number.id', '=', $request->input('requisition_id'))
@@ -651,9 +649,14 @@ class PurchaseOrderController extends Controller
                     ->where('po.pono_id','=',$info->pono_id)
                     ->get();
 
+        $request_signee = DB::table('olongapo_purchase_request_signee')->get();
+
         $this->data['po_items'] = $items_bac;
         $this->data['info']  = $info;
+        $this->data['request_signee']  = $request_signee;
 
+        // dd( $request_signee );
+        
         $pdf = PDF::loadView('purchaseorder::requisition.pdf',$this->setup());
         $pdf->setPaper(array(0,0,612.00,936.0));
         //$pdf->setPaper('legal');

@@ -182,10 +182,8 @@
                       <div class="box-body">
                         <div id="statusC"></div>
                           <!-- DATE RECEIVED -->
-                            
-
                            <div class="form-group">
-                             <label for="pr_no" class="col-sm-2 control-label">Requested By: </label>
+                             <label for="pr_no" class="col-sm-3 control-label">Requested By: </label>
                            <!--    <div class="col-sm-10">
                                  <label><input type="radio" name="req_receive" value="0">Employee</label>
                                  <label><input type="radio" name="req_receive" value="1">Outside</label>
@@ -202,7 +200,7 @@
                               </select>
                             </div> -->
 
-                              <div class="col-sm-4" id="req2">
+                              <div class="col-sm-7" id="req2">
                                <input type="text" class="form-control" id="name_req" name="name_req"   placeholder="Name" />
                                <input type="text" class="form-control" id="designation_req" name="designation_req"   placeholder="Position" />
                             </div>
@@ -210,7 +208,7 @@
 
 
                             <div class="form-group">
-                             <label for="pr_no" class="col-sm-2 control-label">Appropriation Availability: </label>
+                             <label for="pr_no" class="col-sm-3 control-label">Appropriation Availability: </label>
                            <!--    <div class="col-sm-10">
                                  <label><input type="radio" name="avail_receive" value="0">Employee</label>
                                  <label><input type="radio" name="avail_receive" value="1">Outside</label>
@@ -226,14 +224,14 @@
                               </select>
                             </div> -->
 
-                              <div class="col-sm-4" id="avail2">
+                              <div class="col-sm-7" id="avail2">
                                <input type="text" class="form-control" id="emp" name="name_avail"   placeholder="Name" />
                                <input type="text" class="form-control" id="emp" name="designation_avail"   placeholder="Position" />
                                 </div>
                           </div>
 
                           <div class="form-group">
-                             <label for="pr_no" class="col-sm-2 control-label">Approved By: </label>
+                             <label for="pr_no" class="col-sm-3 control-label">Approved By: </label>
                             <!--   <div class="col-sm-10">
                                  <label><input type="radio" name="app_receive" value="0">Employee</label>
                                  <label><input type="radio" name="app_receive" value="1">Outside</label>
@@ -250,7 +248,7 @@
                               </select>
                             </div> -->
 
-                              <div class="col-sm-4" id="app2">
+                              <div class="col-sm-7" id="app2">
                                <input type="text" class="form-control" id="emp" name="name_app"   placeholder="Name" />
                                <input type="text" class="form-control" id="emp" name="designation_app"   placeholder="Position" />
                             </div>
