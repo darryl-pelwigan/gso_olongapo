@@ -725,6 +725,18 @@ class PurchaseOrderController extends Controller
         $params = array();
         parse_str($prop, $params);
 
+
+
+
+        
+
+        // PurchaseOrderNo::updateOrCreate([
+        //     'id' => $params['prid']
+        // ],[
+        //     'requested_by' => $params['name_req'],
+        //     'designated' => $params['designation_req']
+        // ]);
+
          $info = DB::table('olongapo_purchase_order_no')
                     ->join('olongapo_purchase_order_acceptance_issuance' ,'olongapo_purchase_order_acceptance_issuance.pono_id','=', 'olongapo_purchase_order_no.id')
                     ->join('olongapo_bac_control_info' ,'olongapo_bac_control_info.id','=', 'olongapo_purchase_order_no.bac_control_id')
@@ -764,6 +776,8 @@ class PurchaseOrderController extends Controller
                             ])
                     ->where('olongapo_purchase_order_acceptance_issuance.id', '=', $aid)
                     ->first();
+
+                    dd($info);
 
         $items_bac = DB::table('olongapo_purchase_order_items as po')
                     ->join('olongapo_purchase_request_items as items','items.id','=','po.pr_item_id')

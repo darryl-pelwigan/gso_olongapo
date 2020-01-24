@@ -103,8 +103,16 @@ class PurchaseRequestController extends Controller
     {
         $params = array();
         parse_str($form, $params);
+
+        PurchaseNo::updateOrCreate([
+            'id' => $params['prid']
+        ],[
+            'requested_by' => $params['name_req'],
+            'designated' => $params['designation_req']
+        ]);
+
         $this->data['form'] = $params;
-        $this->data['pr'] = PurchaseNo::find($prid);
+        $this->data['pr'] = PurchaseNo::find($params['prid']);
         $this->data['approved_by'] = Requestordersignee::where('deleted_at','=',null)->orderBy('position','DESC')->get();
         $this->data['requested_by'] = DB::table('olongapo_purchase_request_no')
                                     ->join('olongapo_employee_list', 'olongapo_purchase_request_no.requested_by', '=', 'olongapo_employee_list.id')
@@ -115,7 +123,7 @@ class PurchaseRequestController extends Controller
                                         'olongapo_employee_list.mname',
                                         'olongapo_position.title'
                                     ])
-                                    ->where('olongapo_purchase_request_no.id', '=', $prid )
+                                    ->where('olongapo_purchase_request_no.id', '=', $params['prid'] )
                                     ->first();
         // dd( $this->data['approved_by'] ); 
         $pdf = PDF::loadView('purchaserequest::request.pdf',$this->setup());
