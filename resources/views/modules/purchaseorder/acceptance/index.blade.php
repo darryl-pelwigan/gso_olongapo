@@ -705,6 +705,21 @@ $(':radio[name=set_property]').change(function() {
 
     var form = $('#set_prop').serialize();
     console.log(form);
+
+    if (!$("input[name='status']:checked").val() || !$("input[name='set_property']:checked").val() || !$("input[name='set_inspector']:checked").val() || ) {
+       alert('Please check your input!');
+    }
+    else {
+      if()
+        var route = "{{route('po.po_acceptance_pdf',['change1','change2','change3'])}}";
+          route =route.replace("change1", $('#po_id').val());
+          route =route.replace("change2", $('#acceptance_id').val());
+          route =route.replace("change3", form);
+         window.location.href = route;
+    }
+    
+
+
      //  $.ajax({
      //        type: "POST",
      //
@@ -725,11 +740,7 @@ $(':radio[name=set_property]').change(function() {
      //        }
      // });
      // //
-     // var route = "{{route('po.po_acceptance_pdf',['change1','change2','change3'])}}";
-     //  route =route.replace("change1", $('#po_id').val());
-     //  route =route.replace("change2", $('#acceptance_id').val());
-     //  route =route.replace("change3", form);
-     // window.location.href = route;
+   
 
   };
 </script>

@@ -182,6 +182,10 @@
                       <div class="box-body">
                         <div id="statusC"></div>
                           <!-- DATE RECEIVED -->
+
+
+                               <input type="hidden" class="form-control" id="prid" name="prid"/>
+
                             
 
                            <div class="form-group">
