@@ -231,8 +231,8 @@
                             </div> -->
 
                               <div class="col-sm-4" id="avail2">
-                               <input type="text" class="form-control" id="emp" name="name_avail"   placeholder="Name" />
-                               <input type="text" class="form-control" id="emp" name="designation_avail"   placeholder="Position" />
+                               <input type="text" class="form-control" id="name_avail" name="name_avail"   placeholder="Name" />
+                               <input type="text" class="form-control" id="designation_avail" name="designation_avail"   placeholder="Position" />
                                 </div>
                           </div>
 
@@ -254,17 +254,25 @@
                               </select>
                             </div> -->
 
-                              <div class="col-sm-4" id="app2">
-                               <input type="text" class="form-control" id="emp" name="name_app"   placeholder="Name" />
-                               <input type="text" class="form-control" id="emp" name="designation_app"   placeholder="Position" />
+                              <div class="col-sm-4">
+                               <input type="text" class="form-control" id="name_app1" name="name_app1"   placeholder="Name" />
+                               <input type="text" class="form-control" id="designation_app1" name="designation_app1"   placeholder="Position" />
                             </div>
-                          </div>
-                          
 
+                               <div class="col-sm-1">
+                               <p>/</p>
+                               <p>/</p>
+                            </div>
+
+                            <div class="col-sm-4">
+                               <input type="text" class="form-control" id="name_app2" name="name_app2"   placeholder="Name" />
+                               <input type="text" class="form-control" id="designation_app2" name="designation_app2"   placeholder="Position" />
+                            </div>
                       <!-- /.box-body -->
-
-                        <button type="button" class="btn btn-info pull-right" onclick="$(this).sentPdf();">Submit</button>
-
+                    </div>
+                      <div class="col-sm-12">
+                              <button type="button" class="btn btn-info pull-right" onclick="$(this).sentPdf();">Submit</button>
+                            </div>
                       <!-- /.box-footer -->
 
                       {{csrf_field()}}

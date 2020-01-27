@@ -104,11 +104,16 @@ class PurchaseRequestController extends Controller
         $params = array();
         parse_str($form, $params);
 
+
         PurchaseNo::updateOrCreate([
             'id' => $params['prid']
         ],[
-            'requested_by' => $params['name_req'],
-            'designated' => $params['designation_req']
+            'name_req' => $params['name_req'],
+            'designated_req' => $params['designation_req'],
+            'name_avail' => $params['name_avail'],
+            'designation_avail ' => $params['designation_avail'],
+            'name_app' => $params['name_app1'].'/'.$params['name_app1'],
+            'designation_app' => $params['designation_app1'].'/'.$params['designation_app2']
         ]);
 
         $this->data['form'] = $params;

@@ -13,7 +13,7 @@ class PurchaseNo extends Model
      */
     use SoftDeletes;
     protected $table = 'olongapo_purchase_request_no';
-    protected $fillable = ['requested_by','designated','pr_no','dept_id','obr_id','sai_no','sai_date','pr_date','pr_date_dept','proc_type','pr_count','remarks','pr_purpose','status','pr_purelyconsumption','added_by','iau_verified','iau_vdate','budget_verified','budget_vdate'];
+    protected $fillable = ['requested_by','designated_req','name_avail','designation_avail','name_app','designation_app','pr_no','dept_id','obr_id','sai_no','sai_date','pr_date','pr_date_dept','proc_type','pr_count','remarks','pr_purpose','status','pr_purelyconsumption','added_by','iau_verified','iau_vdate','budget_verified','budget_vdate'];
 
     public function pr_items(){
         return $this->hasMany('Modules\PurchaseRequest\Entities\PurchaseItems', 'prno_id');
