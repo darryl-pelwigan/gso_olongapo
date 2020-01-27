@@ -56,9 +56,9 @@
                 </tr>
                 <tr>
                   <td class="text_center">SAI No.:</td>
-                  <td class="border_bottom text_center">{{$info->sai_no}}</td>
+                  <td class="border_bottom text_center">{{$info->sai_no ?? ''}}</td>
                   <td class="text_center" width="15%">Date:</td>
-                  <td class="border_bottom text_center">{{ date('F j Y', strtotime($info->sai_date)) }}</td>
+                  <td class="border_bottom text_center">{{ isset($info->sai_date) ?  date('F j Y', strtotime($info->sai_date )) : '' }}</td>
                 </tr>
               </table>
             </td>

@@ -56,7 +56,7 @@
                           </tr>
                           <tr>
                             <td style="text-align: center;">SAI No.: </td>
-                            <td class="underline" style="text-align: center;">{{$info->sai_no}}</td>
+                            <td class="underline" style="text-align: center;">{{$info->sai_no ?? ''}}</td>
                           </tr>
                         </table>
                       </td>
@@ -68,7 +68,7 @@
                           </tr>
                           <tr>
                             <td  style="text-align: center;">Date: </td>
-                            <td class="underline" style="text-align: center;">{{ date('F j Y', strtotime($info->sai_date)) }}</td>
+                            <td class="underline" style="text-align: center;">{{ isset($info->sai_date) ?  date('F j Y', strtotime($info->sai_date)) : '' }}</td>
                           </tr>
                         </table>
                       </td>
@@ -181,7 +181,7 @@
                                 <table class="table_header" width="100%">
                                   <tr>
                                     <td width="9%" style="margin-left: 10px;">Purpose:</td>
-                                    <td width="90%" class="underline" style="margin-right: 5px;">{{$info->pr_purpose}}</td>
+                                    <td width="90%" class="underline" style="margin-right: 5px;">{{$info->pr_purpose ?? ''}}</td>
                                     <td width="0.5%"></td>
                                   </tr>
                                   <tr>
@@ -288,7 +288,7 @@
 
                                     @if ($request_signee)
                                       @foreach ($request_signee as $rs)
-                                        <td class="border_bottom" align="center"> <b> {{ $rs->full_name }}</b> </td>
+                                        <td class="border_bottom" align="center"> <b> {{ $rs->full_name ?? '' }}</b> </td>
                                       @endforeach
                                     @endif
 

@@ -693,8 +693,7 @@ class PurchaseOrderController extends Controller
                 ->where('olongapo_purchase_request_ppmp_approval.status','=','1')
                 ->first();
 
-
-                     $items_bac = DB::table('olongapo_purchase_request_no')
+        $items_bac = DB::table('olongapo_purchase_request_no')
                     ->join('olongapo_purchase_request_ppmp_approval' , 'olongapo_purchase_request_no.id','=','olongapo_purchase_request_ppmp_approval.request_no_id')
                      ->join('olongapo_purchase_request_items as items','items.prno_id','=','olongapo_purchase_request_no.id')
                     ->select([
@@ -713,8 +712,6 @@ class PurchaseOrderController extends Controller
                     ->groupby('items.id')
                     ->get();
 
-       
-
         $this->data['po_items'] = $items_bac;
         $this->data['info']  = $info;
 
@@ -731,16 +728,17 @@ class PurchaseOrderController extends Controller
         $params = array();
         parse_str($prop, $params);
 
-        PurchaseOrderNo::updateOrCreate([
-            'id' => $id
-        ],[
-            'date_receive' => $params['dtr'],
-            'status' => $params['status'],
-            'prop_officer' => $params['prop_emp2'],
-            'date_inspect' => $params['dti'],
-            'insp' => isset($params['inspected']) ?? '',
-            'insp_officer' => $params['insp_emp2']
-        ]);
+
+
+
+        
+
+        // PurchaseOrderNo::updateOrCreate([
+        //     'id' => $params['prid']
+        // ],[
+        //     'requested_by' => $params['name_req'],
+        //     'designated' => $params['designation_req']
+        // ]);
 
          $info = DB::table('olongapo_purchase_order_no')
                     ->join('olongapo_purchase_order_acceptance_issuance' ,'olongapo_purchase_order_acceptance_issuance.pono_id','=', 'olongapo_purchase_order_no.id')
@@ -782,6 +780,7 @@ class PurchaseOrderController extends Controller
                     ->where('olongapo_purchase_order_acceptance_issuance.id', '=', $aid)
                     ->first();
 
+                    dd($info);
 
         $items_bac = DB::table('olongapo_purchase_order_items as po')
                     ->join('olongapo_purchase_request_items as items','items.id','=','po.pr_item_id')
