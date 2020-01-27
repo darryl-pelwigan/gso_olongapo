@@ -200,7 +200,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => 'C:\\xampp\\htdocs\\gso_olongapo\\storage\\framework/cache/data',
+        'path' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\storage\\framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -240,7 +240,7 @@
       'sqlite' => 
       array (
         'driver' => 'sqlite',
-        'database' => 'gso_olongapo',
+        'database' => 'olongapo2',
         'prefix' => '',
       ),
       'mysql' => 
@@ -248,7 +248,7 @@
         'driver' => 'mysql',
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'gso_olongapo',
+        'database' => 'olongapo2',
         'username' => 'root',
         'password' => '',
         'charset' => 'utf8mb4',
@@ -262,7 +262,7 @@
         'driver' => 'pgsql',
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'gso_olongapo',
+        'database' => 'olongapo2',
         'username' => 'root',
         'password' => '',
         'charset' => 'utf8',
@@ -350,10 +350,10 @@
     'orientation' => 'portrait',
     'defines' => 
     array (
-      'DOMPDF_FONT_DIR' => 'C:\\xampp\\htdocs\\gso_olongapo\\storage\\fonts/',
-      'DOMPDF_FONT_CACHE' => 'C:\\xampp\\htdocs\\gso_olongapo\\storage\\fonts/',
-      'DOMPDF_TEMP_DIR' => 'C:\\Users\\Jeannie\\AppData\\Local\\Temp',
-      'DOMPDF_CHROOT' => 'C:\\xampp\\htdocs\\gso_olongapo',
+      'DOMPDF_FONT_DIR' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\storage\\fonts/',
+      'DOMPDF_FONT_CACHE' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\storage\\fonts/',
+      'DOMPDF_TEMP_DIR' => 'C:\\Users\\danalex\\AppData\\Local\\Temp',
+      'DOMPDF_CHROOT' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo',
       'DOMPDF_UNICODE_ENABLED' => true,
       'DOMPDF_ENABLE_FONT_SUBSETTING' => false,
       'DOMPDF_PDF_BACKEND' => 'CPDF',
@@ -389,7 +389,7 @@
         'host' => 'localhost',
         'port' => 11211,
       ),
-      'dir' => 'C:\\xampp\\htdocs\\gso_olongapo\\storage\\cache',
+      'dir' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\storage\\cache',
     ),
     'properties' => 
     array (
@@ -455,7 +455,7 @@
       ),
       'store' => 
       array (
-        'path' => 'C:\\xampp\\htdocs\\gso_olongapo\\storage\\exports',
+        'path' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\storage\\exports',
         'returnInfo' => false,
       ),
       'pdf' => 
@@ -465,15 +465,15 @@
         array (
           'DomPDF' => 
           array (
-            'path' => 'C:\\xampp\\htdocs\\gso_olongapo\\vendor/dompdf/dompdf/',
+            'path' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\vendor/dompdf/dompdf/',
           ),
           'tcPDF' => 
           array (
-            'path' => 'C:\\xampp\\htdocs\\gso_olongapo\\vendor/tecnick.com/tcpdf/',
+            'path' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\vendor/tecnick.com/tcpdf/',
           ),
           'mPDF' => 
           array (
-            'path' => 'C:\\xampp\\htdocs\\gso_olongapo\\vendor/mpdf/mpdf/',
+            'path' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\vendor/mpdf/mpdf/',
           ),
         ),
       ),
@@ -641,12 +641,12 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\xampp\\htdocs\\gso_olongapo\\storage\\app',
+        'root' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\storage\\app',
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\xampp\\htdocs\\gso_olongapo\\storage\\app/public',
+        'root' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\storage\\app/public',
         'url' => 'http://localhost/storage',
         'visibility' => 'public',
       ),
@@ -686,7 +686,7 @@
       'theme' => 'default',
       'paths' => 
       array (
-        0 => 'C:\\xampp\\htdocs\\gso_olongapo\\resources\\views/vendor/mail',
+        0 => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\resources\\views/vendor/mail',
       ),
     ),
   ),
@@ -700,7 +700,7 @@
     'stubs' => 
     array (
       'enabled' => false,
-      'path' => 'C:\\xampp\\htdocs\\gso_olongapo/vendor/nwidart/laravel-modules/src/Commands/stubs',
+      'path' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo/vendor/nwidart/laravel-modules/src/Commands/stubs',
       'files' => 
       array (
         'start' => 'start.php',
@@ -754,9 +754,9 @@
     ),
     'paths' => 
     array (
-      'modules' => 'C:\\xampp\\htdocs\\gso_olongapo\\Modules',
-      'assets' => 'C:\\xampp\\htdocs\\gso_olongapo\\public\\modules',
-      'migration' => 'C:\\xampp\\htdocs\\gso_olongapo\\database/migrations',
+      'modules' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\Modules',
+      'assets' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\public\\modules',
+      'migration' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\database/migrations',
       'generator' => 
       array (
         'assets' => 'Assets',
@@ -785,7 +785,7 @@
       'enabled' => false,
       'paths' => 
       array (
-        0 => 'C:\\xampp\\htdocs\\gso_olongapo\\vendor/*/*',
+        0 => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\vendor/*/*',
       ),
     ),
     'composer' => 
@@ -892,7 +892,7 @@
     'lifetime' => 120,
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => 'C:\\xampp\\htdocs\\gso_olongapo\\storage\\framework/sessions',
+    'files' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\storage\\framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -924,8 +924,8 @@
   array (
     'paths' => 
     array (
-      0 => 'C:\\xampp\\htdocs\\gso_olongapo\\resources\\views',
+      0 => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\resources\\views',
     ),
-    'compiled' => 'C:\\xampp\\htdocs\\gso_olongapo\\storage\\framework\\views',
+    'compiled' => 'C:\\xammp7.1.26\\htdocs\\gso_olongapo\\storage\\framework\\views',
   ),
 );

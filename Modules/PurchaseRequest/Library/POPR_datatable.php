@@ -31,7 +31,6 @@ class POPR_datatable
                       ->get();
 
                 if(count($approval) > 0){
-               
                      $record = array(
                           'olongapo_purchase_request_no.id' => $pr->id,
                           'olongapo_purchase_request_no.pr_no' => $pr->pr_no ? $pr->pr_no : ' ',
@@ -49,14 +48,14 @@ class POPR_datatable
                           'pr_status' => $pr->status,
                           'olongapo_purchase_request_no.pr_date_dept' => $pr->pr_date_dept,
                           'proc_type' =>  $proc_type,
+                          'designated' =>  $pr->designated ? $pr->designated : ' ' ,
                         );
                      array_push($records, $record);
                 }
              }
-
         }
 
-          return collect($records);
+        return collect($records);
 
     }
 

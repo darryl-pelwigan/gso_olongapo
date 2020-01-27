@@ -74,11 +74,8 @@ $.fn.add_req = function(name, des_req, name_avail, des_avail, name_app, des_app,
   var lastVar2 = arrVars2.pop();
   var restVar2 = arrVars2.join("/");
   
-
-
   if(name.length > 1 )
   {
-
 
     $('#name_req').val(name);
     $('#designation_req').val(des_req);
@@ -89,8 +86,6 @@ $.fn.add_req = function(name, des_req, name_avail, des_avail, name_app, des_app,
     $('#name_app2').val(lastVar2);
     $('#designation_app2').val(restVar2);
     $('#prid').val(id);
-
-
 
     $("#add_requisition").modal('show');
   }else{

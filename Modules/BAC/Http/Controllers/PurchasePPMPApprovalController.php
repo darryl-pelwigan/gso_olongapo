@@ -43,7 +43,7 @@ class PurchasePPMPApprovalController extends Controller
      */
     public function create(Request $request)
     {
-        $data['status'] = 1
+        $data['status'] = 1;
         $data['errors'] = 'NO Errors';
 
         $approval_stat = $request->input('approval');
@@ -51,7 +51,6 @@ class PurchasePPMPApprovalController extends Controller
         $remarks = $request->input('remarks');
         $date = date('Y-m-d', strtotime($request->input('date')));
         $ppmp_no = $request->input('ppmp_no');
-
 
         $req = PurchasePPMPApproval::where('request_no_id', '=', $pr_id)->first();
 

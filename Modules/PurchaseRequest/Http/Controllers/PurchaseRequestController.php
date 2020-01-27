@@ -84,6 +84,7 @@ class PurchaseRequestController extends Controller
         }
         $data['remarks'] =$remakrs_msg ;
         return $data;
+        
     }
 
     public function pr_edit( Request $request){
