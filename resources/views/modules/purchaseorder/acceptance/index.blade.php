@@ -254,7 +254,7 @@
                           <input type="text" class="form-control" id="dtr" name="dtr" placeholder="Date" />
                     </div>
                   </div>
-
+                  <input type="hidden" name="type" id="type">
                   <div class="form-group">
                      <label for="pr_no" class="col-sm-2 control-label">Status : </label>
                       <div class="col-sm-4">
@@ -377,15 +377,15 @@ $(function() {
              { data: 'obr_date', name: 'olongapo_obr.obr_date' },
               { data: null, name: 'olongapo_bac_control_info.id' ,
               render : function(data , type , row){
+                var pdf = 1;
+                var excel = 2;
                       if(data.acceptance_id){
                         return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).updateRequisition('+data.pono_id+');" >Update Acceptance</button>\
-                        <button type="button" class="btn  btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).setProp(\''+data.pono_id+'\',\''+data.date_receive+'\',\''+data.status+'\',\''+data.prop_officer+'\',\''+data.date_inspect+'\',\''+data.insp+'\',\''+data.insp_officer+'\');" >PDF</button>  ';
-
-
+                        <button type="button" class="btn  btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).setProp(\''+data.pono_id+'\',\''+data.date_receive+'\',\''+data.status+'\',\''+data.prop_officer+'\',\''+data.date_inspect+'\',\''+data.insp+'\',\''+data.insp_officer+'\');" >PDF</button>\
+                        <button type="button" class="btn  btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).setProp('+data.pono_id+', '+excel+');" >Excel</button>';
                       }else{
                           return '<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).addRequisition('+data.pono_id+');" >Add Acceptance</button> ';
                       }
-
                 }
               },
         ],
@@ -548,12 +548,8 @@ $.fn.addRequisition = function(pono_id){
      });
   };
 
-
-  $.fn.setProp = function(pono_id,A,B,C,D,E,F){
+  $.fn.setProp = function(pono_id,A,B,C,D,E,F,type){
     // $("#add_requisition_number")[0].reset();
-
-
-
     console.log(B);
     $.ajax({
             type: "POST",
@@ -604,6 +600,7 @@ $.fn.addRequisition = function(pono_id){
                   $('#insp_emp2').val(F);
               }
               $('#acceptance_id').val(data['info'].acceptance_id);
+              $('#type').val(type);
               $('#set_prop_modal').modal({
                       backdrop: 'static',
                       keyboard: false
@@ -717,15 +714,13 @@ $(':radio[name=set_property]').change(function() {
        alert('Please check your input!');
     }
     else {
-        var route = "{{route('po.po_acceptance_pdf',['change1','change2','change3'])}}";
+        var route = "{{route('po.po_acceptance_pdf',['change1','change2','change3','change4'])}}";
           route =route.replace("change1", $('#po_id').val());
           route =route.replace("change2", $('#acceptance_id').val());
           route =route.replace("change3", form);
+          route =route.replace("change4", $('#type').val());
          window.location.href = route;
     }
-    
-
-
      //  $.ajax({
      //        type: "POST",
      //
@@ -746,7 +741,6 @@ $(':radio[name=set_property]').change(function() {
      //        }
      // });
      // //
-   
 
   };
 </script>
