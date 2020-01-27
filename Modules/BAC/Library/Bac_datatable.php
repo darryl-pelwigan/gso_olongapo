@@ -58,6 +58,12 @@ class Bac_datatable
                 ->leftjoin('olongapo_purchase_order_acceptance_issuance' , 'olongapo_purchase_order_acceptance_issuance.pono_id','=','olongapo_purchase_order_no.id')
                 ->select([
                             'olongapo_purchase_order_no.id as pono_id',
+                            'olongapo_purchase_order_no.date_receive as date_receive',
+                            'olongapo_purchase_order_no.status as status',
+                            'olongapo_purchase_order_no.prop_officer as prop_officer',
+                            'olongapo_purchase_order_no.date_inspect as date_inspect',
+                            'olongapo_purchase_order_no.insp as insp',
+                            'olongapo_purchase_order_no.insp_officer as insp_officer',
                             'olongapo_purchase_order_no.po_no',
                             'olongapo_purchase_order_no.po_date',
                             'supplier_info.title as sup_title',
@@ -136,9 +142,9 @@ class Bac_datatable
     public function bac_templates($vars = null){
         $bac_template = DB::table('olongapo_bac_template')
                                     // ->join('olongapo_bac_type','olongapo_bac_type.id','=','olongapo_bac_template.type')
-                                    ->select(
-                                                // 'olongapo_bac_type.description as type_desc','olongapo_bac_type.id as type_id',
-                                                'olongapo_bac_template.id as  templ_id','olongapo_bac_template.template_desc as  templ_desc','olongapo_bac_template.code as  templ_code','olongapo_bac_template.updated_at as  templ_date');
+                            ->select(
+                                        // 'olongapo_bac_type.description as type_desc','olongapo_bac_type.id as type_id',
+                                    'olongapo_bac_template.id as  templ_id','olongapo_bac_template.template_desc as  templ_desc','olongapo_bac_template.code as  templ_code','olongapo_bac_template.updated_at as  templ_date');
         return $bac_template;
     }
 

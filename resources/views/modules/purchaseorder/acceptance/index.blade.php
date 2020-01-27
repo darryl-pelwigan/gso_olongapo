@@ -239,7 +239,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="add_purchase_order_modalLabel"> <span>Add Requisition and Issue Slip</span></h4>
+        <h4 class="modal-title" id="add_purchase_order_modalLabel"> <span>Acceptance and Inspection Report</span></h4>
       </div>
       <div class="modal-body">
         <div id="status"></div>
@@ -247,15 +247,57 @@
             <form class="form-horizontal" id="set_prop">
               <div class="box-body">
                 <div id="statusC"></div>
+                  <!-- DATE RECEIVED -->
                    <div class="form-group">
-                     <label for="pr_no" class="col-sm-2 control-label">Supply and/or Property Custodian : </label>
-                      <div class="col-sm-10">
-                        <input type="text" class="form-control" id="prop"   placeholder="Supply and/or Property Custodian" />
-                        <input type="hidden"  id="po_id" name="po_id" />
-                        <input type="hidden"  id="acceptance_id" name="acceptance_id" />
-                        <input type="hidden" name="type" id="type">
+                     <label for="pr_no" class="col-sm-2 control-label">Date Received : </label>
+                      <div class="col-sm-4">
+                          <input type="text" class="form-control" id="dtr" name="dtr" placeholder="Date" />
                     </div>
-                </div>
+                  </div>
+                  <input type="hidden" name="type" id="type">
+                  <div class="form-group">
+                     <label for="pr_no" class="col-sm-2 control-label">Status : </label>
+                      <div class="col-sm-4">
+                         <label><input type="radio"  name="status" value="0">Partial</label>
+                         <label><input type="radio"  name="status" value="1">Complete</label>
+                    </div>
+                  </div>
+
+                   <div class="form-group">
+                     <label for="pr_no" class="col-sm-2 control-label">Property Officer</label>
+                      <div class="col-sm-4" id="property2">
+                       <input type="text" class="form-control" id="prop_emp2" name="prop_emp2"   placeholder="Property Officer" />
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                     <label for="pr_no" class="col-sm-2 control-label">Date Inspected : </label>
+                      <div class="col-sm-4">
+                          <input type="text" class="form-control" id="dti" name="dti" placeholder="Date" />
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                     <label for="pr_no" class="col-sm-2 control-label"></label>
+                      <div class="col-sm-4">
+                        <input type="checkbox" name="inspected">Inspected, verified and found OK As to quantity and specifications<br> 
+                    </div>
+                  </div>
+
+
+                  <div class="form-group">
+                     <label for="pr_no" class="col-sm-2 control-label">Inspector Officer/ <br> Committee</label>
+                      <div class="col-sm-4" id="insp2">
+                       <input type="text" class="form-control" name="insp_emp2"  id="insp_emp2"  placeholder="Supply and/or Property Custodian" />
+                    </div>
+                  </div>
+
+
+
+
+                 
+                  <input type="hidden"  id="po_id" name="po_id" />
+                  <input type="hidden"  id="acceptance_id" name="acceptance_id" />
 
               <!-- /.box-body -->
 
@@ -339,12 +381,11 @@ $(function() {
                 var excel = 2;
                       if(data.acceptance_id){
                         return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).updateRequisition('+data.pono_id+');" >Update Acceptance</button>\
-                        <button type="button" class="btn  btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).setProp('+data.pono_id+', '+pdf+');" >PDF</button>\
+                        <button type="button" class="btn  btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).setProp(\''+data.pono_id+'\',\''+data.date_receive+'\',\''+data.status+'\',\''+data.prop_officer+'\',\''+data.date_inspect+'\',\''+data.insp+'\',\''+data.insp_officer+'\');" >PDF</button>\
                         <button type="button" class="btn  btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).setProp('+data.pono_id+', '+excel+');" >Excel</button>';
                       }else{
                           return '<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).addRequisition('+data.pono_id+');" >Add Acceptance</button> ';
                       }
-
                 }
               },
         ],
@@ -507,9 +548,9 @@ $.fn.addRequisition = function(pono_id){
      });
   };
 
-
-  $.fn.setProp = function(pono_id, type){
+  $.fn.setProp = function(pono_id,A,B,C,D,E,F,type){
     // $("#add_requisition_number")[0].reset();
+    console.log(B);
     $.ajax({
             type: "POST",
              url: "{{route('po.get-po')}}",
@@ -523,6 +564,41 @@ $.fn.addRequisition = function(pono_id){
             },
             success: function(data){
               $('#po_id').val(data['info'].pono_id);
+              if(A == 'null')
+              {
+                  $('#dtr').val('-');
+              }else{
+                  $('#dtr').val(A);
+              }
+              if(B == 1)
+              {
+                  $("input[name=status][value='1']").prop("checked",true);
+              }else if(B == 0){
+                  $("input[name=status][value='0']").prop("checked",true);
+              }
+              if(C == 'null')
+              {
+                  $('#prop_emp2').val('');
+              }else{
+                  $('#prop_emp2').val(C);
+              }
+              if(D == 'null')
+              {
+                  $('#dti').val('-');
+              }else{
+                  $('#dti').val(D);
+              }
+              if(E == 'null')
+              {
+              }else{
+                $("input[name=inspected]").prop("checked",true);
+              }
+              if(F == 'null')
+              {
+                  $('#insp_emp2').val('');
+              }else{
+                  $('#insp_emp2').val(F);
+              }
               $('#acceptance_id').val(data['info'].acceptance_id);
               $('#type').val(type);
               $('#set_prop_modal').modal({
@@ -543,6 +619,42 @@ $.fn.addRequisition = function(pono_id){
       autoclose: true,
        format: 'yyyy-mm-dd',
     });
+
+      $('#dtr, #dti').datepicker({
+      autoclose: true,
+       format: 'yyyy-mm-dd',
+    });
+
+$(':radio[name=set_inspector]').change(function() {
+  var stat = $(this).val();
+
+  if(stat == 0)
+  {
+    $('#insp1').removeClass("hidden");
+    $('#insp2').addClass("hidden");
+  }else{
+    $('#insp1').addClass("hidden");
+    $('#insp2').removeClass("hidden");
+  }
+
+});
+$(':radio[name=set_property]').change(function() {
+  var stat = $(this).val();
+
+    if(stat == 0)
+  {
+    $('#property1').removeClass("hidden");
+    $('#property2').addClass("hidden");
+  }else{
+    $('#property2').removeClass("hidden");
+    $('#property1').addClass("hidden");
+  }
+
+});
+
+
+
+
 
 // $('#po_date').on('change',function(){
 //     $.ajax({
@@ -594,7 +706,21 @@ $.fn.addRequisition = function(pono_id){
   };
 
   $.fn.sentPdf = function(){
-      var form = $('#set_prop').serialize();
+
+    var form = $('#set_prop').serialize();
+    console.log(form);
+
+    if (!$("input[name='status']:checked").val()) {
+       alert('Please check your input!');
+    }
+    else {
+        var route = "{{route('po.po_acceptance_pdf',['change1','change2','change3','change4'])}}";
+          route =route.replace("change1", $('#po_id').val());
+          route =route.replace("change2", $('#acceptance_id').val());
+          route =route.replace("change3", form);
+          route =route.replace("change4", $('#type').val());
+         window.location.href = route;
+    }
      //  $.ajax({
      //        type: "POST",
      //
@@ -614,14 +740,7 @@ $.fn.addRequisition = function(pono_id){
 
      //        }
      // });
-     //
-    var route = "{{route('po.po_acceptance_pdf',['change1','change2','change3','change4'])}}";
-    route =route.replace("change1", $('#po_id').val());
-    route =route.replace("change2", $('#acceptance_id').val());
-    route =route.replace("change3", $('#prop').val());
-    route =route.replace("change4", $('#type').val());
-
-     window.location.href = route;
+     // //
 
   };
 </script>
@@ -633,7 +752,6 @@ $.fn.addRequisition = function(pono_id){
   <link rel="stylesheet" href="{{asset('adminlte')}}/plugins/datepicker/datepicker3.css">
   <!-- DataTables -->
   <link rel="stylesheet" href="{{asset('adminlte')}}/plugins/datatables/jquery.dataTables.min.css">
-
   <style type="text/css">
 
 .autocomplete-suggestions { border: 1px solid #999; background: #FFF; overflow: auto; }

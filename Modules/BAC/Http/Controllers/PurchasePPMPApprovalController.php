@@ -52,7 +52,6 @@ class PurchasePPMPApprovalController extends Controller
         $date = date('Y-m-d', strtotime($request->input('date')));
         $ppmp_no = $request->input('ppmp_no');
 
-
         $req = PurchasePPMPApproval::where('request_no_id', '=', $pr_id)->first();
 
         if(count($req) == 0){

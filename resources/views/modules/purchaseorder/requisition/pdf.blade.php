@@ -12,61 +12,24 @@
           <div class="box">
             <!-- /.box-header -->
            <div class="box-body">
-             <header>
-               <div class="">
-                 <table class="table table-thnormal" >
-                   <tr>
-                     <td width="25%"></td>
-                     <td class="center" align="center" width="50%" height="7%" >
-                       <h3 class="pr_title">REQUISITION AND ISSUE SLIP</h3>
-                       <img src="{{asset('olongapo')}}/img/logo-100.png" alt="" width="30px" height="30px;">
-                       <p>Republic of the Philippines</p>
-                       <p>City of Olongapo</p>
-                     </td>
-                     <td width="25%"></td>
-                   </tr>
-                 </table>
-               </div>
-             </header>
-                <div class="header_tbl">
-                  <table class="table table-thnormal">
-                    <!-- <tr>
-                      <td id="table_left" width="25%">
-                        <table class="table_header" width="100%">
-                          <tr>
-                            <td>Supplier: </td>
-                            <td class="underline"><strong>{{$info->suppl_title}}</strong></td>
-                          </tr>
-                          <tr>
-                            <td>Address: </td>
-                            <td class="underline"><strong>{{$info->details}}</strong></td>
-                          </tr>
-                        </table>
-                      </td>
-                      <td width="25%">
-                        <table class="table_header" width="100%">
-                          <tr>
-                            <td width="40%">PO No.: </td>
-                            <td width="60%" class="underline">{{$info->po_no}}</td>
-                          </tr>
-                          <tr>
-                            <td>Date.:</td>
-                            <td class="underline">{{$info->po_date}}</td>
-                          </tr>
-                          <tr>
-                            <td>Mode of Procurement:  </td>
-                            <td class="underline">{{$info->bac_mode}}</td>
-                          </tr>
-                          <tr>
-                            <td>P.R No:/s :</td>
-                            <td class="underline">{{$info->pr_no}}</td>
-                          </tr>
-                        </table>
-                      </td>
-                    </tr> -->
+             <table width="100%">
+          <tr>
+            <td>
+              <h3 class="pr_title text_center padding_top">REQUISITION AND ISSUE SLIP</h3>
+            </td>
+          </tr>
+          <tr>
+              <td class="text_center"><img src="{{asset('olongapo')}}/img/logo-100.png" alt="" height="25px;"></td>
+          </tr>
+          <tr>
+            <td class="text_center" style="font-size: 10px;"> <p> Republic of the Philippines<br> City of Olongapo </p></td>
+          </tr>
 
+        </table>
+                <div class="header_tbl">
+                  <table class="table table-thnormal" width="100%">
                     <tr>
-                      <td id="table_left" width="30%">
+                      <td id="table_left" width="40%">
                         <table class="table_header" width="100%" >
                           <tr>
                             <td width="20%">Division: </td>
@@ -78,37 +41,34 @@
                           </tr>
                         </table>
                       </td>
-                      <td id="table_left" width="20%">
+                      <td id="table_left" width="25%">
                         <table class="table_header" width="100%">
                           <tr>
-                            <td width="50%">Responsibility Center Code:</td>
+                            <td>Responsibility Center Code: <span>_____________</span></td>
+                          </tr>
+                        </table>
+                      </td>
+                      <td id="" width="40%">
+                        <table class="table_header" width="100%">
+                          <tr>
+                            <td width="30%" style="text-align: center;">RIS No.: </td>
+                            <td width="60%" class="underline" style="text-align: center;"> {{$info->ris_no}} </td>
                           </tr>
                           <tr>
-                            <td width="50%" class="underline">&nbsp;</td>
+                            <td style="text-align: center;">SAI No.: </td>
+                            <td class="underline" style="text-align: center;">{{$info->sai_no ?? ''}}</td>
                           </tr>
                         </table>
                       </td>
                       <td id="" width="30%">
                         <table class="table_header" width="100%">
                           <tr>
-                            <td width="40%">RIS No.: </td>
-                            <td width="60%" class="underline"> {{$info->ris_no}} </td>
+                            <td width="20%" style="text-align: center;">Date: </td>
+                            <td width="60%" class="underline" style="text-align: center;">{{ date('F j Y', strtotime($info->ris_date)) }}</td>
                           </tr>
                           <tr>
-                            <td width="40%">SAI.: </td>
-                            <td width="60%" class="underline">{{$info->sai_no}}</td>
-                          </tr>
-                        </table>
-                      </td>
-                      <td id="" width="30%">
-                        <table class="table_header" width="100%">
-                          <tr>
-                            <td width="40%">Date: </td>
-                            <td width="60%" class="underline">{{ date('F j Y', strtotime($info->ris_date)) }}</td>
-                          </tr>
-                          <tr>
-                            <td width="40%">Date: </td>
-                            <td width="60%" class="underline">{{ date('F j Y', strtotime($info->sai_date)) }}</td>
+                            <td  style="text-align: center;">Date: </td>
+                            <td class="underline" style="text-align: center;">{{ isset($info->sai_date) ?  date('F j Y', strtotime($info->sai_date)) : '' }}</td>
                           </tr>
                         </table>
                       </td>
@@ -159,7 +119,7 @@
                <div >
                   <table class="table1 table-bordered page-break" width="100%">
                       <tr>
-                        <td class="letter-space" colspan="4" align="center" height="2%" style="padding:10px"><b>Requisition</b></td>
+                        <td class="letter-space" colspan="4" align="center" height="2%" style="padding:5px"><b>Requisition</b></td>
                </div>
                         <td class="letter-space" colspan="2" align="center"><b>Issuance</b></td>
                       </tr>
@@ -174,22 +134,22 @@
                       <?php $count=1; $total_price=0; ?>
                         @foreach( $po_items as $data )
                             <tr id="tbl_items">
-                              <td>{{ $count }}</td>
-                              <td>{{ $data->unit }}  </td>
+                              <td style="text-align: center;">{{ $count }}</td>
+                              <td style="text-align: center; font-size: 11px; padding: 0 5px;" >{{ $data->unit }}  </td>
                             <?php
                                   $desc =$data->description;
 
                                   //if (strlen($desc) > 100) { --}}
 
                                   if (strlen($desc) > 88) {
-                                    echo '<td class="text-right2" id="desc_style" style="word-wrap:break-word;">'.$desc.'</td>';
+                                    echo '<td style="text-align: left; padding-left: 10px;" id="desc_style" style="word-wrap:break-word;">'.$desc.'</td>';
                                   } else {
-                                      echo '<td class="text-right2">'.$desc.'</td>';
+                                      echo '<td style="text-align: left; padding-left: 10px;">'.$desc.'</td>';
                                   }
                                 ?>
-                              <td>{{ $data->qty }} </td>
-                              <td class="text-right2"></td>
-                              <td class="text-right2"></td>
+                              <td style="text-align: right; padding-right: 5px;">{{ $data->qty }} </td>
+                              <td style="text-align: right; padding-right: 5px;"></td>
+                              <td style="text-align: left;"></td>
                             </tr>
                           <?php $count++; $total_price += $data->po_total; ?>
                         @endforeach
@@ -221,7 +181,7 @@
                                 <table class="table_header" width="100%">
                                   <tr>
                                     <td width="9%" style="margin-left: 10px;">Purpose:</td>
-                                    <td width="90%" class="underline" style="margin-right: 5px;">{{$info->pr_purpose}}</td>
+                                    <td width="90%" class="underline" style="margin-right: 5px;">{{$info->pr_purpose ?? ''}}</td>
                                     <td width="0.5%"></td>
                                   </tr>
                                   <tr>
@@ -314,35 +274,40 @@
                                     <td class="border" width="15%" align="center"><b>Issued by:</b></td>
                                     <td class="border" width="20%" align="center"><b>Received by:</b></td>
                                   </tr>
-                                  <!--tr>
-                                    <td align="center">&nbsp;</b></td>
-                                    <td class="border" align="center"> &nbsp; </td>
-                                    <td class="border_bottom" align="center"> &nbsp; </td>
-                                    <td class="border_bottom" align="center"> &nbsp; </td>
-                                    <td class="border" align="center"> &nbsp; </td>
-                                    <td class="border" align="center"> &nbsp; </td>
-                                  </tr-->
+                                  <tr>
+                                    <td class="borderZero" align="center" height="2%"><b>Signature:</b></td>
+                                    <td class="border" align="center">&nbsp;</td>
+                                    <td class="border_bottom" align="center"> </td>
+                                    <td class="border_bottom" align="center"> </td>
+                                    <td class="border" align="center">&nbsp;</td>
+                                    <td class="border" align="center">&nbsp;</td>
+                                  </tr>
                                   <tr>
                                     <td align="center"><b>Printed Name:</b></td>
-                                    <td class="border" align="center"> {{ strtoupper($info->fname ?? '') }} {{ strtoupper($info->mname ?? '')  }}  {{ strtoupper($info->lname ?? '')  }}</td>
-                                    <td class="border_bottom" align="center"> <b>ROLEN C. PAULINO</b> </td>
-                                    <td class="border_bottom" align="center"> <b>SHEILA R. PADILLA</b> </td>
+                                    <td class="border" align="center" style="font-size: 9px;"> {{ strtoupper($info->requested_by ?? '') }}</td>
+
+                                    @if ($request_signee)
+                                      @foreach ($request_signee as $rs)
+                                        <td class="border_bottom" align="center"> <b> {{ $rs->full_name ?? '' }}</b> </td>
+                                      @endforeach
+                                    @endif
+
+                                    {{-- <td class="border_bottom" align="center"> <b>SHEILA R. PADILLA</b> </td> --}}
                                     <td class="border" align="center"> &nbsp; </td>
                                     <td class="border" align="center"> &nbsp; </td>
                                   </tr>
-                                  <tr>
-                                    <td class="borderZero" align="center"><b>Signature:</b></td>
-                                    <td class="border" align="center">&nbsp;</td>
-                                    <td class="border_bottom" align="center">  </td>
-                                    <td class="border_bottom" align="center">  </td>
-                                    <td class="border" align="center">&nbsp;</td>
-                                    <td class="border" align="center">&nbsp;</td>
-                                  </tr>
+                                  
                                   <tr>
                                     <td class="borderZero" align="center"><b>Designation:</b></td>
-                                    <td class="border" align="center">{{ strtoupper($info->designation ?? '') }}</td>
-                                    <td class="border_bottom" align="center"><b>City Mayor</b></td>
-                                    <td class="border_bottom" align="center"><b>Secratary to the Mayor</b></td>
+                                    <td class="border" align="center" style="font-size: 10px;">{{ strtoupper($info->designated ?? '') }}</td>
+
+                                    @if ($request_signee)
+                                      @foreach ($request_signee as $rs)
+                                        <td class="border_bottom" align="center"> <b> {{ $rs->position }}</b> </td>
+                                      @endforeach
+                                    @endif
+                          {{--           <td class="border_bottom" align="center"><b>City Mayor</b></td>
+                                    <td class="border_bottom" align="center"><b>Secratary to the Mayor</b></td> --}}
                                     <td class="border" align="center">&nbsp;</td>
                                     <td class="border" align="center">&nbsp;</td>
                                   </tr>
@@ -357,52 +322,6 @@
                                 </table>
                               </td>
                             </tr>
-
-
-{{--                             <tr>
-                              <td align="center" width="20%"></td>
-                              <td align="center" width="20%">Requested by:</td>
-                              <td colspan="2" align="center">Approved by:</td>
-                              <td align="center" width="20%">Issued by:</td>
-                              <td align="center" width="25%">Received by:</td>
-                            </tr>
-
-                            <tr>
-                              <td>Signature:</td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                            </tr>
-
-                            <tr>
-                              <td>Printed Name:</td>
-                              <td></td>
-                              <td width="15%">ROLEN C. PAULINO</td>
-                              <td>SHEILA R. PADILLA</td>
-                              <td></td>
-                              <td></td>
-                            </tr>
-
-                            <tr>
-                              <td>Designation:</td>
-                              <td></td>
-                              <td>City Mayor</td>
-                              <td>Secretary of Mayor</td>
-                              <td></td>
-                              <td></td>
-                            </tr>
-
-                            <tr>
-                              <td>Date:</td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                            </tr>
-                             --}}
                   </table>
 
 
@@ -471,7 +390,7 @@
 <style type="text/css">
 
 html,body{
-  margin: 5px 5px;
+  margin: 15px 15px;
   font-size: 12px;
   padding-bottom: -20px;
 }
@@ -568,6 +487,14 @@ html,body{
 .borderZero{
   border: 0px;
 }
+
+.text_center{
+    text-align: center;
+  }
+
+  .padding_top {
+    padding-top: 10px;
+  }
 
 div {
     /*page-break-after: avoid;*/

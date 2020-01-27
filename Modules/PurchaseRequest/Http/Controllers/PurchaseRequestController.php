@@ -9,19 +9,12 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-
-use Modules\PurchaseRequest\Entities\PurchaseItems;
-use Modules\PurchaseRequest\Entities\PurchaseNo;
+use Modules\PurchaseRequest\Entities\{PurchaseItems,PurchaseNo,OBR,ApproveSupp};
+use Modules\Employee\Entities\{Employee};
+use Modules\GSOassistant\Entities\{Procmethod,Requestordersignee};
 use Carbon\Carbon;
 use Yajra\Datatables\Datatables;
-use Modules\PurchaseRequest\Entities\OBR;
-use Modules\PurchaseRequest\Entities\ApproveSupp;
-
-use Modules\GSOassistant\Entities\Procmethod;
 use PDF;
-
-use Modules\GSOassistant\Entities\Requestordersignee;
-
 
 class PurchaseRequestController extends Controller
 {
@@ -40,10 +33,9 @@ class PurchaseRequestController extends Controller
 
     public function index()
     {
+         $this->data['employee'] = Employee::all();
         return view('purchaserequest::request.index',$this->setup());
     }
-
-
 
     public function get_pr(Request $request){
          $itemsx = DB::table('olongapo_purchase_request_items')
@@ -92,6 +84,7 @@ class PurchaseRequestController extends Controller
         }
         $data['remarks'] =$remakrs_msg ;
         return $data;
+        
     }
 
     public function pr_edit( Request $request){
@@ -102,30 +95,48 @@ class PurchaseRequestController extends Controller
         $purely_consumption   = PurchaseNo::find($request->input('pr_id'));
         $this->data['purely_consumption']   = $purely_consumption->pr_purelyconsumption;
         $this->data['pr'] = PurchaseNo::find($request->input('pr_id'));
+       
+        return view('purchaserequest::request.edit',$this->setup());
+        
+    }
 
-        if($request->input('pdf')){
-            $this->data['approved_by'] = Requestordersignee::where('deleted_at','=',null)->orderBy('position', 'DESC')->get();
+    public function pr_pdf($prid,$form)
+    {
+        $params = array();
+        parse_str($form, $params);
 
-            $this->data['requested_by'] = DB::table('olongapo_purchase_request_no')
-                                        ->join('olongapo_employee_list', 'olongapo_purchase_request_no.requested_by', '=', 'olongapo_employee_list.id')
-                                        ->leftjoin('olongapo_position', 'olongapo_position.id', '=', 'olongapo_employee_list.position_id')
-                                        ->select([
-                                            'olongapo_employee_list.fname',
-                                            'olongapo_employee_list.lname',
-                                            'olongapo_employee_list.mname',
-                                            'olongapo_position.title'
-                                        ])
-                                        ->where('olongapo_purchase_request_no.id', '=', $request->input('pr_id') )
-                                        ->first();
-            // dd( $this->data['approved_by'] ); 
-            $pdf = PDF::loadView('purchaserequest::request.pdf',$this->setup());
-            $pdf->setPaper(array(0,0,612.00,936.0));
 
-            return @$pdf->stream();
+        PurchaseNo::updateOrCreate([
+            'id' => $params['prid']
+        ],[
+            'name_req' => $params['name_req'],
+            'designated_req' => $params['designation_req'],
+            'name_avail' => $params['name_avail'],
+            'designation_avail ' => $params['designation_avail'],
+            'name_app' => $params['name_app1'].'/'.$params['name_app1'],
+            'designation_app' => $params['designation_app1'].'/'.$params['designation_app2']
+        ]);
 
-        }else{
-            return view('purchaserequest::request.edit',$this->setup());
-        }
+        $this->data['form'] = $params;
+        $this->data['pr'] = PurchaseNo::find($params['prid']);
+        $this->data['approved_by'] = Requestordersignee::where('deleted_at','=',null)->orderBy('position','DESC')->get();
+        $this->data['requested_by'] = DB::table('olongapo_purchase_request_no')
+                                    ->join('olongapo_employee_list', 'olongapo_purchase_request_no.requested_by', '=', 'olongapo_employee_list.id')
+                                    ->leftjoin('olongapo_position', 'olongapo_position.id', '=', 'olongapo_employee_list.position_id')
+                                    ->select([
+                                        'olongapo_employee_list.fname',
+                                        'olongapo_employee_list.lname',
+                                        'olongapo_employee_list.mname',
+                                        'olongapo_position.title'
+                                    ])
+                                    ->where('olongapo_purchase_request_no.id', '=', $params['prid'] )
+                                    ->first();
+        // dd( $this->data['approved_by'] ); 
+        $pdf = PDF::loadView('purchaserequest::request.pdf',$this->setup());
+        $pdf->setPaper(array(0,0,612.00,936.0));
+
+        return @$pdf->stream();
+
     }
 
     public function save_edit(Request $request){

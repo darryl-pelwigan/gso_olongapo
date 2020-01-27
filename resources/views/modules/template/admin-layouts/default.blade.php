@@ -49,4 +49,13 @@
             @yield('plugins-script')
 
 </body>
+
+{{-- <script type="text/javascript">
+
+    $(document).ready(function(){
+        alert("FYI: OLD PROGRAMMER NAG CODE NITONG GSO AAH!. hehehehehhe");
+
+    });
+
+</script> --}}
 </html>

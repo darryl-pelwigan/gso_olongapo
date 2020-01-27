@@ -441,17 +441,17 @@ class PPEMonthlyReportController extends Controller
                 $sheet->fromArray(
                     $value,  // The data to set
                     null,    // Top left coordinate of the worksheet range where
-                    'A5'     //    we want to set these values (default is A1)
+                    'A6'     //    we want to set these values (default is A1)
                 );
 
                 $sheet->fromArray(
                     $dataArray[0],  // headers
                     null,
-                    'A4'
+                    'A5'
                 );
 
             // STYLES
-            $excel_rows += 4; // num of rows for heading....
+            $excel_rows += 5; // num of rows for heading....
             $style_array1 = array(
                 'borders' => array(
                     'top' => array(
@@ -510,14 +510,28 @@ class PPEMonthlyReportController extends Controller
                 $sheet->getColumnDimension($col)->setAutoSize(true);
             }
             // header
-            $sheet->mergeCells('D1:G1');
+            if(!empty($request->mon_sort_person)){
+                $person = DB::table('olongapo_employee_list')
+                    ->where('olongapo_employee_list.id', '=', $request->mon_sort_person)
+                    ->get()
+                    ->first();
+                $sheet->setCellValue('A1', 'All items by '.$person->fname.' '.$person->mname.' '.$person->lname);
+            }else if(!empty($request->mon_sort_dept)){
+                $department = DB::table('olongapo_department')
+                    ->where('olongapo_department.id', '=', $request->mon_sort_dept)
+                    ->get()
+                    ->first();
+               $sheet->setCellValue('A1', 'All items by '.$department->dept_desc.' Department');
+            }
+
             $sheet->mergeCells('D2:G2');
-            $sheet->setCellValue('D1', 'PPE MONTHLY REPORT');
-            $sheet->setCellValue('D2', Carbon::parse($key)->startOfMonth()->format('F d').'-'.Carbon::parse($key)->endOfMonth()->format('F d'));
-            $sheet->getStyle('D1:G1')->getFont()->setBold(true);
+            $sheet->mergeCells('D3:G3');
+            $sheet->setCellValue('D2', 'PPE MONTHLY REPORT');
+            $sheet->setCellValue('D3', Carbon::parse($key)->startOfMonth()->format('F d').'-'.Carbon::parse($key)->endOfMonth()->format('F d'));
             $sheet->getStyle('D2:G2')->getFont()->setBold(true);
-            $sheet->getStyle('A4:M4')->getFont()->setBold(true);
-            $sheet->getStyle('A4:M4')->getAlignment()->setHorizontal('center');
+            $sheet->getStyle('D3:G3')->getFont()->setBold(true);
+            $sheet->getStyle('A5:M5')->getFont()->setBold(true);
+            $sheet->getStyle('A5:M5')->getAlignment()->setHorizontal('center');
 
             // signatories
             $sign_row_label = $excel_rows+3;
@@ -543,25 +557,25 @@ class PPEMonthlyReportController extends Controller
 
             $columns = ['A','B','C','D','E','F','G','H','I','J','K','L','M'];
             for($i = 0; $i < count($columns); $i++) {
-                for($j = 4; $j <= $excel_rows; $j++) {
+                for($j = 5; $j <= $excel_rows; $j++) {
                     $sheet->getStyle($columns[$i].$j)->applyFromArray($style_array_gen);
                 }
             }
 
-            $sheet->getStyle('A4:M4')->applyFromArray($style_array4);
-            $sheet->getStyle('A4:M4')->applyFromArray($style_array2);
-            $sheet->getStyle('A4:M4')->applyFromArray($style_array1);
-            $sheet->getStyle('A4:A'.$excel_rows)->applyFromArray($style_array2);
-            $sheet->getStyle('M4:M'.$excel_rows)->applyFromArray($style_array3);
+            $sheet->getStyle('A5:M5')->applyFromArray($style_array4);
+            $sheet->getStyle('A5:M5')->applyFromArray($style_array2);
+            $sheet->getStyle('A5:M5')->applyFromArray($style_array1);
+            $sheet->getStyle('A5:A'.$excel_rows)->applyFromArray($style_array2);
+            $sheet->getStyle('M5:M'.$excel_rows)->applyFromArray($style_array3);
             $sheet->getStyle('A'.$excel_rows.':M'.$excel_rows)->applyFromArray($style_array4);
-            $sheet->getStyle('D1:G1')->getAlignment()->setHorizontal('center');
             $sheet->getStyle('D2:G2')->getAlignment()->setHorizontal('center');
-            $sheet->getStyle('D2:G2')->getAlignment()->setHorizontal('center');
-            $sheet->getStyle('A5:F'.$excel_rows)->getAlignment()->setHorizontal('left');
-            $sheet->getStyle('G5:I'.$excel_rows)->getAlignment()->setHorizontal('right');
-            $sheet->getStyle('A5:F'.$excel_rows)->getAlignment()->setHorizontal('left');
-            $sheet->getStyle('J5:K'.$excel_rows)->getAlignment()->setHorizontal('center');
-            $sheet->getStyle('L5:M'.$excel_rows)->getAlignment()->setHorizontal('left');
+            $sheet->getStyle('D3:G3')->getAlignment()->setHorizontal('center');
+            $sheet->getStyle('D3:G3')->getAlignment()->setHorizontal('center');
+            $sheet->getStyle('A6:F'.$excel_rows)->getAlignment()->setHorizontal('left');
+            $sheet->getStyle('G6:I'.$excel_rows)->getAlignment()->setHorizontal('right');
+            $sheet->getStyle('A6:F'.$excel_rows)->getAlignment()->setHorizontal('left');
+            $sheet->getStyle('J6:K'.$excel_rows)->getAlignment()->setHorizontal('center');
+            $sheet->getStyle('L6:M'.$excel_rows)->getAlignment()->setHorizontal('left');
             // END STYLES
 
             // $sheet->fromArray(
@@ -734,23 +748,37 @@ class PPEMonthlyReportController extends Controller
                     ->fromArray(
                     $headerArray, //header
                     NULL,        // Array values with this value will not be set
-                    'A8'         // Top left coordinate of the worksheet range where
+                    'A9'         // Top left coordinate of the worksheet range where
                      //    we want to set these values (default is A1)
         );
 
-        $spreadsheet->getActiveSheet()->setCellValue('A1', 'INVENTORY OF EQUIPMENT');
-        $spreadsheet->getActiveSheet()->setCellValue('A3', 'Made as of '.Carbon::now()->format('F Y'));
-        $spreadsheet->getActiveSheet()->setCellValue('A5', 'For which');
-        $spreadsheet->getActiveSheet()->setCellValue('B5',  $ao_det->fname.' '.$ao_det->mname.' '.$ao_det->lname);
-        $spreadsheet->getActiveSheet()->setCellValue('C5',  $ao_det->dept_desc);
-        $spreadsheet->getActiveSheet()->setCellValue('D5',  $request->bureau.' is accountable having assumed such acountability on');
-        $spreadsheet->getActiveSheet()->setCellValue('B6', '(Name of Accountable Officer)');
-        $spreadsheet->getActiveSheet()->setCellValue('C6', '(Official designation)');
-        $spreadsheet->getActiveSheet()->setCellValue('D6', '(Bureau office)');
+        if(!empty($request->year_sort_person)){
+            $person = DB::table('olongapo_employee_list')
+                    ->where('olongapo_employee_list.id', '=', $request->year_sort_person)
+                    ->get()
+                    ->first();
+            $spreadsheet->getActiveSheet()->setCellValue('A1', 'All items by '.$person->fname.' '.$person->mname.' '.$person->lname);
+        }else if(!empty($request->year_sort_dept)){
+            $department = DB::table('olongapo_department')
+                    ->where('olongapo_department.id', '=', $request->year_sort_dept)
+                    ->get()
+                    ->first();
+            $spreadsheet->getActiveSheet()->setCellValue('A1', 'All items by '.$department->dept_desc.' Department');
+        }
+
+        $spreadsheet->getActiveSheet()->setCellValue('A2', 'INVENTORY OF EQUIPMENT');
+        $spreadsheet->getActiveSheet()->setCellValue('A4', 'Made as of '.Carbon::now()->format('F Y'));
+        $spreadsheet->getActiveSheet()->setCellValue('A6', 'For which');
+        $spreadsheet->getActiveSheet()->setCellValue('B6',  $ao_det->fname.' '.$ao_det->mname.' '.$ao_det->lname);
+        $spreadsheet->getActiveSheet()->setCellValue('C6',  $ao_det->dept_desc);
+        $spreadsheet->getActiveSheet()->setCellValue('E6',  $request->bureau.' is accountable having assumed such acountability on');
+        $spreadsheet->getActiveSheet()->setCellValue('B7', '(Name of Accountable Officer)');
+        $spreadsheet->getActiveSheet()->setCellValue('C7', '(Official designation)');
+        $spreadsheet->getActiveSheet()->setCellValue('E7', '(Bureau office)');
 
 
         //cell number
-        $i=10;
+        $i=11;
 
         foreach($itemsArray as $items =>$value){
 
@@ -776,16 +804,16 @@ class PPEMonthlyReportController extends Controller
 
         //styles
 
-        $spreadsheet->getActiveSheet()->mergeCells('C8:C9');
-        $spreadsheet->getActiveSheet()->mergeCells('J8:K8');
-        $spreadsheet->getActiveSheet()->mergeCells('L8:M8');
-        $spreadsheet->getActiveSheet()->getStyle('A8:O9')
+        $spreadsheet->getActiveSheet()->mergeCells('C9:C10');
+        $spreadsheet->getActiveSheet()->mergeCells('J9:K9');
+        $spreadsheet->getActiveSheet()->mergeCells('L9:M9');
+        $spreadsheet->getActiveSheet()->getStyle('A9:O10')
                     ->getBorders()->getTop()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK);
-        $spreadsheet->getActiveSheet()->getStyle('A8:O9')
+        $spreadsheet->getActiveSheet()->getStyle('A9:O10')
                     ->getBorders()->getBottom()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK);
-        $spreadsheet->getActiveSheet()->getStyle('A8:O9')
+        $spreadsheet->getActiveSheet()->getStyle('A9:O10')
                     ->getBorders()->getLeft()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK);
-        $spreadsheet->getActiveSheet()->getStyle('A8:O9')
+        $spreadsheet->getActiveSheet()->getStyle('A9:O10')
                     ->getBorders()->getRight()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK);
         // $empty_sheet = $spreadsheet->getIndex($spreadsheet->getSheetByName('Worksheet'));
         // $spreadsheet->removeSheetByIndex($empty_sheet);

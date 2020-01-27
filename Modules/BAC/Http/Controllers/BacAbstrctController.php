@@ -262,7 +262,6 @@ class BacAbstrctController extends Controller
                     ->groupby('olongapo_absctrct_pubbid.supplier_id')
                     ->first();
 
-
         $items_bac = DB::table('olongapo_absctrct_pubbid as pubbid')
                     ->leftjoin('olongapo_absctrct_pubbid_apprved as approved' , 'pubbid.id','=','approved.pubbid')
                     ->leftjoin('olongapo_absctrct_pubbid_item_suppbid as suppbid','suppbid.id','=','approved.suppbid')

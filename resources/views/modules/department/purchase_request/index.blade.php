@@ -34,9 +34,9 @@
   position: absolute;
   top: 0;
   left: 0;
-  height: 25px;
-  width: 25px;
-  background-color: #ec7979;
+  height: 20px;
+  width: 20px;
+  background-color: #00c0ef;
 }
 
 /* On mouse-over, add a grey background color */
@@ -156,13 +156,13 @@
                                 <li class="completed">
                                 <span class="bubble"></span>
                                 <i class="fa fa-check-circle"></i>
-                                PPMP APPROVED
+                                  PPMP APPROVED
                                 </li>
                               @else
                                 <li class="declined">
                                 <span class="bubble"></span>
                                 <i class="fa fa-times-circle"></i>
-                                PPMP DECLINED<br>
+                                PPMP DECLINED <br>
                                 Remarks: <u>{{ $status[$key]['ppmp']->remarks }}</u>
                                 </li>
                                 <?= $currentstatus = "Purchase request has been decline."; ?>
@@ -314,7 +314,7 @@
                   </div>
                 @endif
 
-{{--                 @if(Session::get('olongapo_user')->group_id == 9)
+{{--      @if(Session::get('olongapo_user')->group_id == 9)
                   <div class="form-group">
                        <label for="pr_no" class="col-sm-2 control-label">DEPARTMENT : </label>
                           <div class="col-sm-6">
@@ -346,7 +346,7 @@
                     <label class="control-label col-sm-2" for="id2">Department:</label>
                     <div class="col-sm-6">
                       
-                      <select class="form-control" name="select_dept" id="select_dept">
+                      <select class="form-control input-sm" name="select_dept" id="select_dept">
                           <option value=""></option>
                         @foreach ($department as $dept)
                           <option value="{{$dept->id }}"> {{$dept->dept_desc }} </option>
@@ -355,31 +355,31 @@
                       </select>
                     </div>
 
-                  <label for="pr_no" class=" col-sm-1 control-label">PR DATE: </label>
-                  <div class="col-sm-2">
-                    <input type="text" class="form-control" id="pr_no_date" name="pr_no_date" placeholder="PR DATE" />
-                  </div>
-                  </div>
+                    <label for="pr_no" class=" col-sm-1 control-label">PR DATE: </label>
+                    <div class="col-sm-2">
+                      <input type="text" class="form-control input-sm" id="pr_no_date" name="pr_no_date" placeholder="PR DATE" />
+                    </div>
+                </div>
 
                  <div class="form-group">
                      <label for="purpose" class="col-sm-2 control-label">Purpose : </label>
                       <div class="col-sm-6">
-                        <textarea  class="form-control" id="purpose"  name="purpose"    placeholder="Purpose" > </textarea>
+                        <textarea  class="form-control input-sm" id="purpose"  name="purpose"    placeholder="Purpose" > </textarea>
                     </div>
 
 
                     <label class="container">Purely Consumption 
-                      <input type="checkbox" name="pc" value=1>
-                      <input type="hidden" name="pc" value=0 >
+                      <input class="input-sm" type="checkbox" name="pc" value=1>
+                      <input class="input-sm" type="hidden" name="pc" value=0 >
                       <span class="checkmark"></span>
                     </label>
                 </div>
 
                 <div class="form-group">
-                     <label for="requested_by" class="col-sm-2 control-label">Requested By: </label>
-                      <div class="col-sm-6">
-                        <input type="text" class="form-control" id="requested_by" name="requested_by" placeholder="" />
-                    </div>
+                    <label for="requested_by" class="col-sm-2 control-label">Requested By: </label>
+                    <div class="col-sm-6">
+                      <input type="text" class="form-control" id="requested_by" name="requested_by" placeholder="" />
+                    </div>        
                 </div>
 
                 <button type="button" class="btn btn-success btn-sm pull-right" id="add_items"><i class="fa fa-plus"></i></button>
@@ -409,7 +409,7 @@
               <!-- /.box-body -->
               
               <div class="box-footer">
-                <button type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>
+                <button type="button" data-dismiss="modal" class="btn btn-warning">Cancel</button>
                 <button type="button" class="btn btn-info pull-right" id="submit_butts" onclick="$(this).sentPurchaseRequest();">Submit</button>
               </div>
               <!-- /.box-footer -->
