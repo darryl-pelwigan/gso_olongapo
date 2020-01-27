@@ -253,6 +253,7 @@
                         <input type="text" class="form-control" id="prop"   placeholder="Supply and/or Property Custodian" />
                         <input type="hidden"  id="po_id" name="po_id" />
                         <input type="hidden"  id="acceptance_id" name="acceptance_id" />
+                        <input type="hidden" name="type" id="type">
                     </div>
                 </div>
 
@@ -334,9 +335,12 @@ $(function() {
              { data: 'obr_date', name: 'olongapo_obr.obr_date' },
               { data: null, name: 'olongapo_bac_control_info.id' ,
               render : function(data , type , row){
+                var pdf = 1;
+                var excel = 2;
                       if(data.acceptance_id){
                         return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).updateRequisition('+data.pono_id+');" >Update Acceptance</button>\
-                        <button type="button" class="btn  btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).setProp('+data.pono_id+');" >PDF</button>  ';
+                        <button type="button" class="btn  btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).setProp('+data.pono_id+', '+pdf+');" >PDF</button>\
+                        <button type="button" class="btn  btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).setProp('+data.pono_id+', '+excel+');" >Excel</button>';
                       }else{
                           return '<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).addRequisition('+data.pono_id+');" >Add Acceptance</button> ';
                       }
@@ -504,7 +508,7 @@ $.fn.addRequisition = function(pono_id){
   };
 
 
-  $.fn.setProp = function(pono_id){
+  $.fn.setProp = function(pono_id, type){
     // $("#add_requisition_number")[0].reset();
     $.ajax({
             type: "POST",
@@ -520,6 +524,7 @@ $.fn.addRequisition = function(pono_id){
             success: function(data){
               $('#po_id').val(data['info'].pono_id);
               $('#acceptance_id').val(data['info'].acceptance_id);
+              $('#type').val(type);
               $('#set_prop_modal').modal({
                       backdrop: 'static',
                       keyboard: false
@@ -610,10 +615,12 @@ $.fn.addRequisition = function(pono_id){
      //        }
      // });
      //
-     var route = "{{route('po.po_acceptance_pdf',['change1','change2','change3'])}}";
-     route =route.replace("change1", $('#po_id').val());
-      route =route.replace("change2", $('#acceptance_id').val());
-     route =route.replace("change3", $('#prop').val());
+    var route = "{{route('po.po_acceptance_pdf',['change1','change2','change3','change4'])}}";
+    route =route.replace("change1", $('#po_id').val());
+    route =route.replace("change2", $('#acceptance_id').val());
+    route =route.replace("change3", $('#prop').val());
+    route =route.replace("change4", $('#type').val());
+
      window.location.href = route;
 
   };
