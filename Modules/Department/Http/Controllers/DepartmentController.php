@@ -81,9 +81,7 @@ class DepartmentController extends Controller
                 );
         }
         $this->data['status'] = $status;
-
         $this->data['department'] = DEPTsubcode::all();
-
         $this->data['employee'] = DB::table('olongapo_employee_list')->select('id','fname','mname','lname')->get();
 
         return view('department::purchase_request.index',$this->setup());

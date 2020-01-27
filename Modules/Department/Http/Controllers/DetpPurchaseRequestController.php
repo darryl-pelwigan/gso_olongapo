@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Input;
 
 use Modules\PurchaseRequest\Entities\PurchaseNo;
 use Modules\PurchaseRequest\Entities\PurchaseItems;
+use Modules\Administrator\Entities\DEPTsubcode;
 
 use Excel;
 use Maatwebsite\Excel\HeadingRowImport;
@@ -70,10 +71,13 @@ class DetpPurchaseRequestController extends Controller
                     ->get()
                     ->first();
 
-            // $department = $employee_dept->dept_id ?? session::get('olongapo_emp_depts')->dept_id;
+            // $department_name = $employee_dept->dept_id ?? session::get('olongapo_emp_depts')->dept_id;
+
             $department = $request->input('select_dept');
+            $dept_desciption = DEPTsubcode::where('dept_id', $department)->first();
 
             $PurchaseNo->requested_by =  $request->input('requested_by');
+            $PurchaseNo->designated =  $dept_desciption->dept_desc ?? ' ';
             $PurchaseNo->dept_id =  $department;
             $PurchaseNo->pr_date_dept =  $request->input('pr_no_date');
             $PurchaseNo->pr_purpose =  $request->input('purpose');
@@ -202,8 +206,12 @@ class DetpPurchaseRequestController extends Controller
 
         $data['status'] = 0;
         $data['errors'] = 'Successfully Save PUrchase Request';
+
+        $dept_desciption = DEPTsubcode::where('dept_id', $request->input('import_select_dept'))->first();
+
         $PurchaseNo =new PurchaseNo;
         $PurchaseNo->requested_by =  $request->input('import_requested_by');
+        $PurchaseNo->designated =  $dept_desciption->dept_desc ?? '';
         $PurchaseNo->dept_id =  $request->input('import_select_dept');
         $PurchaseNo->pr_date_dept =  $request->input('import_pr_no_date');
         $PurchaseNo->pr_purpose =  $request->input('import_purpose');
@@ -216,15 +224,18 @@ class DetpPurchaseRequestController extends Controller
 
         if (count($result) > 0) {
             foreach ($result as $key => $value) {
-                $datax[] = [
-                    'prno_id' => $PurchaseNo->id,
-                    'description' => $value->item_description,
-                    'remarks' => '',
-                    'unit' => $value->unit_of_issue,
-                    'qty' => $value->quantity,
-                    'unit_price' => $value->estimated_unit_cost,
-                    'total_price' => $value->estimated_costs,
-                ];
+
+                if ($value->item_description != '') {
+                    $datax[] = [
+                        'prno_id' => $PurchaseNo->id,
+                        'description' => $value->item_description,
+                        'remarks' => '',
+                        'unit' => $value->unit_of_issue,
+                        'qty' => $value->quantity,
+                        'unit_price' => $value->estimated_unit_cost,
+                        'total_price' => $value->estimated_costs,
+                    ];
+                }
 
             }
 

@@ -182,10 +182,7 @@
                       <div class="box-body">
                         <div id="statusC"></div>
                           <!-- DATE RECEIVED -->
-
-
-                               {{-- <input type="hidden" class="form-control" id="prid" name="prid"/> --}}
-
+                         <input type="hidden" class="form-control" id="prid" name="prid"/>
                             
                            <div class="form-group">
                              <label for="pr_no" class="col-sm-3 control-label">Requested By: </label>
@@ -203,11 +200,11 @@
                                   <option value="{{$emp->fname}} {{ $emp->mname}} {{ $emp->lname}} {{ $emp->ename}}">{{$emp->lname}}, {{ $emp->fname}} {{ $emp->mname}} {{ $emp->position}}</option>
                                   @endforeach
                               </select>
-                            </div> -->
+                            </div>  -->
 
                               <div class="col-sm-7" id="req2">
                                <input type="text" class="form-control" id="name_req" name="name_req"   placeholder="Name" />
-                               <input type="text" class="form-control" id="designation_req" name="designation_req"   placeholder="Position" />
+                               <input type="text" class="form-control" id="designation_req" name="designation_req"   placeholder="Designation" />
                             </div>
                           </div>
 
