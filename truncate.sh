@@ -2,10 +2,13 @@ TRUNCATE TABLE olongapo_purchase_order_no;
 TRUNCATE TABLE olongapo_bac_control_info;
 TRUNCATE TABLE olongapo_purchase_request_no;
 TRUNCATE TABLE olongapo_obr;
-TRUNCATE TABLE olongapo_absctrct_pubbid_apprved;
-TRUNCATE TABLE olongapo_absctrct_pubbid;
 TRUNCATE TABLE olongapo_absctrct;
+TRUNCATE TABLE olongapo_absctrct_pubbid;
+TRUNCATE TABLE olongapo_absctrct_pubbid_apprved;
 TRUNCATE TABLE olongapo_purchase_order_items;
 TRUNCATE TABLE olongapo_purchase_request_items;
 TRUNCATE TABLE olongapo_absctrct_pubbid_item_suppbid;
 TRUNCATE TABLE olongapo_purchase_request_ppmp_approval;
+
+olongapo_purchase_order_requisition_number
+olongapo_purchase_order_acceptance_issuance
