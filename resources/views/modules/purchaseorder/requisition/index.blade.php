@@ -317,16 +317,18 @@
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title" id="add_purchase_order_modalLabel"> <span>Purchase Request Report</span></h4>
+              <h4 class="modal-title" id="add_purchase_order_modalLabel"> <span>Requisition and Issue Slip
+              </span></h4>
             </div>
             <div class="modal-body">
               <div id="status"></div>
                 <div id="contents-menu">
-                    <form class="form-horizontal" id="set_prop" >
+                    <form class="form-horizontal" id="set_prop" method="post" action="{{route('po.po_requisition_pc_pdf')}}">
                       <div class="box-body">
                         <div id="statusC"></div>
                           <!-- DATE RECEIVED -->
                          <input type="hidden" class="form-control" id="prid" name="prid"/>
+                         <input type="hidden" name="requisition_id" id="requisition_id" />
                             
                             <div class="form-group">
                               <label for="pr_no" class="col-sm-2 control-label">Requested By: </label>
@@ -338,35 +340,45 @@
 
 
                             <div class="form-group">
-                              <label for="pr_no" class="col-sm-2 control-label">Appropriation Availability: </label>
-                                <div class="col-sm-4" id="avail2">
-                                 <input type="text" class="form-control" id="name_avail" name="name_avail"   placeholder="Name" />
-                                 <input type="text" class="form-control" id="designation_avail" name="designation_avail"   placeholder="Position" />
-                                </div>
-                            </div>
+                               <label for="pr_no" class="col-sm-2 control-label">Approved By: </label>
+                                  <div class="col-sm-4">
+                                   <input type="text" class="form-control" id="name_app1" name="name_app1"   placeholder="Name" />
+                                   <input type="text" class="form-control" id="designation_app1" name="designation_app1"   placeholder="Position" />
+                                  </div>
 
-                          <div class="form-group">
-                             <label for="pr_no" class="col-sm-2 control-label">Approved By: </label>
-                              <div class="col-sm-4">
-                               <input type="text" class="form-control" id="name_app1" name="name_app1"   placeholder="Name" />
-                               <input type="text" class="form-control" id="designation_app1" name="designation_app1"   placeholder="Position" />
+                                  <div class="col-sm-1">
+                                     <p>/</p>
+                                     <p>/</p>
+                                  </div>  
 
-                               
-                            </div>
-
-                              <div class="col-sm-1">
-                                   <p>/</p>
-                                   <p>/</p>
-                                </div>  
-
-                                <div class="col-sm-4">
-                                   <input type="text" class="form-control" id="name_app2" name="name_app2"   placeholder="Name" />
-                                   <input type="text" class="form-control" id="designation_app2" name="designation_app2"   placeholder="Position" />
-                                </div>
+                                  <div class="col-sm-4">
+                                     <input type="text" class="form-control" id="name_app2" name="name_app2"   placeholder="Name" />
+                                     <input type="text" class="form-control" id="designation_app2" name="designation_app2"   placeholder="Position" />
+                                  </div>
                               </div>
-                                <div class="col-sm-12">
-                                  <button type="button" class="btn btn-info pull-right" onclick="$(this).sentPdf();">Submit</button>
+
+
+                            <div class="form-group">
+                              <label for="pr_no" class="col-sm-2 control-label">Issued By: </label>
+                                <div class="col-sm-4" id="avail2">
+                                 <input type="text" class="form-control" id="issued_by" name="issued_by"   placeholder="Name" />
+                                 <input type="text" class="form-control" id="issued_by_des" name="issued_by_des"   placeholder="Position" />
                                 </div>
+                            </div>
+
+
+                            <div class="form-group">
+                              <label for="pr_no" class="col-sm-2 control-label">Received By: </label>
+                                <div class="col-sm-4" id="avail2">
+                                 <input type="text" class="form-control" id="received_by" name="received_by"   placeholder="Name" />
+                                 <input type="text" class="form-control" id="received_by_des" name="received_by_des"   placeholder="Position" />
+                                </div>
+                            </div>
+
+
+                              <div class="col-sm-12">
+                                <button type="submit" class="btn btn-info pull-right">Submit</button>
+                              </div>
                       <!-- /.box-footer -->
 
                       {{csrf_field()}}
@@ -493,7 +505,7 @@ $(function() {
               render : function(data , type , row){
                       if(data.requisition_id){
                         return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add_requisition_pc_modal" onclick="$(this).updateRequisition_pc('+data.prno_id+');" >Update RIS</button>\
-                        <form method="post" action="{{route('po.po_requisition_pc_pdf')}}">{{csrf_field()}}<input type="hidden" name="requisition_id" value="'+data.requisition_id+'" /><input type="submit" class="btn btn-sm btn-default" name="pdf" value="Pdf" /> </form>  ';
+                        <button type="button" class="btn  btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).setReq(\''+data.requested_by+'\',\''+data.designated_req+'\',\''+data.name_app+'\',\''+data.designation_app+'\',\''+data.requisition_id+'\',\''+data.issued_by+'\',\''+data.issued_des+'\',\''+data.received_by+'\',\''+data.received_des+'\');" >PDF</button>';
                       }else{
                          return '<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#add_requisition_pc_modal" onclick="$(this).addRequisition_pc('+data.prno_id+');">Add RIS</button>\ ';
                       }
@@ -511,6 +523,74 @@ $(function() {
 
 
   });
+
+$.fn.setReq = function(requested_by,designated_req,name_app,designation_app,req_id,issued,issued_des,receive,receive_des){
+
+
+    var vars = name_app;
+    var arrVars = vars.split("/");
+    var lastVar = arrVars.pop();
+    var restVar = arrVars.join("/");
+
+    var vars2 = designation_app;
+    var arrVars2 = vars2.split("/");
+    var lastVar2 = arrVars2.pop();
+    var restVar2 = arrVars2.join("/");
+    $('#name_app1').val(restVar);
+    $('#designation_app1').val(restVar2);
+    $('#name_app2').val(lastVar);
+    $('#designation_app2').val(lastVar2);
+
+    $('#requisition_id').val(req_id);
+
+
+    if(requested_by == 'null')
+    {
+        $('#name_req').val('-');
+    }else{
+        $('#name_req').val(requested_by);
+    }
+
+    if(designated_req == 'null')
+    {
+        $('#designated_req').val('-');
+    }else{
+        $('#designated_req').val(designated_req);
+    }
+
+    if(issued == 'null')
+    {
+        $('#issued_by').val('-');
+    }else{
+        $('#issued_by').val(issued);
+    }
+
+    if(issued_des == 'null')
+    {
+        $('#issued_des').val('-');
+    }else{
+        $('#issued_des').val(issued_des);
+    }
+
+
+    if(receive == 'null')
+    {
+        $('#received_by').val('-');
+    }else{
+        $('#received_by').val(receive);
+    }
+
+
+    if(receive_des == 'null')
+    {
+        $('#receive_des').val('-');
+    }else{
+        $('#receive_des').val(receive_des);
+    }
+  };
+
+
+
 
 $.fn.addRequisition = function(pono_id){
    $("#add_requisition_number")[0].reset();

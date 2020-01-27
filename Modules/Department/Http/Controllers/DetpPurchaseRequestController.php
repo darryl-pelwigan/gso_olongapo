@@ -35,6 +35,8 @@ class DetpPurchaseRequestController extends Controller
     public function add_purchase_request( Request $request)
     {
 
+        dd($request->input('pc'));
+
         $validator = Validator::make($request->all(), [
         'pr_no_date'    => 'required|date',
         'purpose'       => 'required|min:5',
@@ -77,7 +79,7 @@ class DetpPurchaseRequestController extends Controller
             $dept_desciption = DEPTsubcode::where('dept_id', $department)->first();
 
             $PurchaseNo->requested_by =  $request->input('requested_by');
-            $PurchaseNo->designated =  $dept_desciption->dept_desc ?? ' ';
+            $PurchaseNo->designated_req =  $dept_desciption->dept_desc ?? ' ';
             $PurchaseNo->dept_id =  $department;
             $PurchaseNo->pr_date_dept =  $request->input('pr_no_date');
             $PurchaseNo->pr_purpose =  $request->input('purpose');

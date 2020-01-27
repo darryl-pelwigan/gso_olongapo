@@ -92,7 +92,15 @@ class Bac_datatable
                             'olongapo_subdepartment.dept_desc',
                             'olongapo_subdepartment.dept_id',
                             'olongapo_purchase_request_no.pr_date',
-                            'olongapo_purchase_order_requisition_number.id as requisition_id'
+                            'olongapo_purchase_request_no.requested_by as requested_by',
+                            'olongapo_purchase_request_no.designated_req as designated_req',
+                            'olongapo_purchase_request_no.name_app as name_app',
+                            'olongapo_purchase_request_no.designation_app as designation_app',
+                            'olongapo_purchase_order_requisition_number.id as requisition_id',
+                            'olongapo_purchase_order_requisition_number.issued_by as issued_by',
+                            'olongapo_purchase_order_requisition_number.issued_des as issued_des',
+                            'olongapo_purchase_order_requisition_number.received_by as received_by',
+                            'olongapo_purchase_order_requisition_number.received_des as received_des'
                 ])
                 ->where('olongapo_purchase_request_no.pr_purelyconsumption','=','1')
                 ->where('olongapo_purchase_request_ppmp_approval.status','=','1')

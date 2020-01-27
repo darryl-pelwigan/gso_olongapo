@@ -81,10 +81,10 @@ $.fn.add_req = function(name, des_req, name_avail, des_avail, name_app, des_app,
     $('#designation_req').val(des_req);
     $('#name_avail').val(name_avail);
     $('#designation_avail').val(des_avail);
-    $('#name_app1').val(lastVar);
-    $('#designation_app1').val(restVar);
-    $('#name_app2').val(lastVar2);
-    $('#designation_app2').val(restVar2);
+    $('#name_app1').val(restVar);
+    $('#designation_app1').val(restVar2);
+    $('#name_app2').val(lastVar);
+    $('#designation_app2').val(lastVar2);
     $('#prid').val(id);
 
     $("#add_requisition").modal('show');

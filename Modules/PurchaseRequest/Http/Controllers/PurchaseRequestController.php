@@ -113,7 +113,7 @@ class PurchaseRequestController extends Controller
             'designated_req' => $params['designation_req'],
             'name_avail' => $params['name_avail'],
             'designation_avail ' => $params['designation_avail'],
-            'name_app' => $params['name_app1'].'/'.$params['name_app1'],
+            'name_app' => $params['name_app1'].'/'.$params['name_app2'],
             'designation_app' => $params['designation_app1'].'/'.$params['designation_app2']
         ]);
 
