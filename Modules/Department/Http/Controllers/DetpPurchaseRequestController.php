@@ -72,7 +72,6 @@ class DetpPurchaseRequestController extends Controller
                     ->first();
 
             // $department_name = $employee_dept->dept_id ?? session::get('olongapo_emp_depts')->dept_id;
-
             $department = $request->input('select_dept');
             $dept_desciption = DEPTsubcode::where('dept_id', $department)->first();
 
@@ -81,19 +80,19 @@ class DetpPurchaseRequestController extends Controller
             $PurchaseNo->dept_id =  $department;
             $PurchaseNo->pr_date_dept =  $request->input('pr_no_date');
             $PurchaseNo->pr_purpose =  $request->input('purpose');
-            $PurchaseNo->pr_purelyconsumption =  $request->input('pc');
+            $PurchaseNo->pr_purelyconsumption =  $request->input('pc') ? $request->input('pc') : 0 ;
             $PurchaseNo->added_by =  $request->input('employee') ?? $employee_id = Session::get('olongapo_user')->employee_id;
             $PurchaseNo->save();
             for($x = 0 ; $x< count($request->input('item_desc'));$x++){
                 $datax[] = [
-                                'prno_id' => $PurchaseNo->id,
-                                 'description' => $request->input('item_desc.'.$x),
-                                  'remarks' => $request->input('item_remarks.'.$x),
-                                   'unit' => $request->input('item_unit.'.$x),
-                                   'qty' => $request->input('item_qty.'.$x),
-                                    'unit_price' => $request->input('item_price.'.$x),
-                                    'total_price' => $request->input('item_qty.'.$x)*$request->input('item_price.'.$x),
-                                ];
+                        'prno_id' => $PurchaseNo->id,
+                        'description' => $request->input('item_desc.'.$x),
+                        'remarks' => $request->input('item_remarks.'.$x),
+                        'unit' => $request->input('item_unit.'.$x),
+                        'qty' => $request->input('item_qty.'.$x),
+                        'unit_price' => $request->input('item_price.'.$x),
+                        'total_price' => $request->input('item_qty.'.$x)*$request->input('item_price.'.$x),
+                    ];
             }
             $PurchaseNo->pr_items()->insert( $datax );
             return $datax;
