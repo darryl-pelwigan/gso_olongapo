@@ -169,7 +169,7 @@
 </div>
 
 <div class="modal fade" id="add_requisition" tabindex="-1" role="dialog" aria-labelledby="add_purchase_order_modalLabel">
-  <div class="modal-dialog modal-md" role="document">
+  <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -184,45 +184,45 @@
                           <!-- DATE RECEIVED -->
                          <input type="hidden" class="form-control" id="prid" name="prid"/>
                             
-                           <div class="form-group">
-                             <label for="pr_no" class="col-sm-3 control-label">Requested By: </label>
-
-                              <div class="col-sm-7" id="req2">
-                               <input type="text" class="form-control" id="name_req" name="name_req"   placeholder="Name" />
-                               <input type="text" class="form-control" id="designation_req" name="designation_req"   placeholder="Designation" />
+                            <div class="form-group">
+                              <label for="pr_no" class="col-sm-2 control-label">Requested By: </label>
+                              <div class="col-sm-4" id="req2">
+                                 <input type="text" class="form-control" id="name_req" name="name_req"   placeholder="Name" />
+                                 <input type="text" class="form-control" id="designation_req" name="designation_req"   placeholder="Designation" />
+                              </div>
                             </div>
-                          </div>
 
 
                             <div class="form-group">
-                             <label for="pr_no" class="col-sm-3 control-label">Appropriation Availability: </label>
-                              <div class="col-sm-4" id="avail2">
-                               <input type="text" class="form-control" id="name_avail" name="name_avail"   placeholder="Name" />
-                               <input type="text" class="form-control" id="designation_avail" name="designation_avail"   placeholder="Position" />
+                              <label for="pr_no" class="col-sm-2 control-label">Appropriation Availability: </label>
+                                <div class="col-sm-4" id="avail2">
+                                 <input type="text" class="form-control" id="name_avail" name="name_avail"   placeholder="Name" />
+                                 <input type="text" class="form-control" id="designation_avail" name="designation_avail"   placeholder="Position" />
                                 </div>
-                          </div>
+                            </div>
 
                           <div class="form-group">
-                             <label for="pr_no" class="col-sm-3 control-label">Approved By: </label>
-                            
+                             <label for="pr_no" class="col-sm-2 control-label">Approved By: </label>
                               <div class="col-sm-4">
                                <input type="text" class="form-control" id="name_app1" name="name_app1"   placeholder="Name" />
                                <input type="text" class="form-control" id="designation_app1" name="designation_app1"   placeholder="Position" />
 
-                               <div class="col-sm-1">
-                               <p>/</p>
-                               <p>/</p>
+                               
                             </div>
 
-                            <div class="col-sm-4">
-                               <input type="text" class="form-control" id="name_app2" name="name_app2"   placeholder="Name" />
-                               <input type="text" class="form-control" id="designation_app2" name="designation_app2"   placeholder="Position" />
-                            </div>
-                      <!-- /.box-body -->
-                    </div>
-                      <div class="col-sm-12">
-                              <button type="button" class="btn btn-info pull-right" onclick="$(this).sentPdf();">Submit</button>
-                            </div>
+                              <div class="col-sm-1">
+                                   <p>/</p>
+                                   <p>/</p>
+                                </div>  
+
+                                <div class="col-sm-4">
+                                   <input type="text" class="form-control" id="name_app2" name="name_app2"   placeholder="Name" />
+                                   <input type="text" class="form-control" id="designation_app2" name="designation_app2"   placeholder="Position" />
+                                </div>
+                              </div>
+                                <div class="col-sm-12">
+                                  <button type="button" class="btn btn-info pull-right" onclick="$(this).sentPdf();">Submit</button>
+                                </div>
                       <!-- /.box-footer -->
 
                       {{csrf_field()}}

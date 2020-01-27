@@ -370,16 +370,16 @@ $(function() {
              },
              { data: 'obr_no', name: 'olongapo_obr.obr_no' },
              { data: 'obr_date', name: 'olongapo_obr.obr_date' },
-              { data: null, name: 'olongapo_bac_control_info.id' ,
+             { data: null, name: 'olongapo_bac_control_info.id' ,
               render : function(data , type , row){
-                      if(data.requisition_id){
-                        return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).updateRequisition('+data.pono_id+');" >Update RIS</button>\
-                          ';
-                      }else{
-                         return '<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).addRequisition('+data.pono_id+');" >Add RIS</button>\ ';
-                      }
+                  if(data.requisition_id){
+                    return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).updateRequisition('+data.pono_id+');" >Update RIS</button>\
+                       <form method="post" action="{{route('po.po_requisition_pc_pdf')}}">{{csrf_field()}}<input type="hidden" name="requisition_id" value="'+data.requisition_id+'" /><input type="submit" class="btn btn-sm btn-default" name="pdf" value="PDF" /> </form> ';
+                  }else{
+                     return '<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).addRequisition('+data.pono_id+');" >Add RIS</button>\ ';
+                  }
                 }
-              },
+            },
         ],
         columnDefs: [
           {
@@ -424,7 +424,7 @@ $(function() {
               render : function(data , type , row){
                       if(data.requisition_id){
                         return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add_requisition_pc_modal" onclick="$(this).updateRequisition_pc('+data.prno_id+');" >Update RIS</button>\
-                        <form method="post" action="{{route('po.po_requisition_pc_pdf')}}">{{csrf_field()}}<input type="hidden" name="requisition_id" value="'+data.requisition_id+'" /><input type="submit" class="btn btn-sm btn-default" name="pdf" value="Pdf" /> </form>  ';
+                        ';
                       }else{
                          return '<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#add_requisition_pc_modal" onclick="$(this).addRequisition_pc('+data.prno_id+');">Add RIS</button>\ ';
                       }

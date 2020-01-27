@@ -693,7 +693,8 @@ class PurchaseOrderController extends Controller
                 ->where('olongapo_purchase_request_ppmp_approval.status','=','1')
                 ->first();
 
-        $items_bac = DB::table('olongapo_purchase_request_no')
+
+                     $items_bac = DB::table('olongapo_purchase_request_no')
                     ->join('olongapo_purchase_request_ppmp_approval' , 'olongapo_purchase_request_no.id','=','olongapo_purchase_request_ppmp_approval.request_no_id')
                      ->join('olongapo_purchase_request_items as items','items.prno_id','=','olongapo_purchase_request_no.id')
                     ->select([
@@ -711,6 +712,8 @@ class PurchaseOrderController extends Controller
                      ->where('olongapo_purchase_request_no.id', '=',$info->prno_id)
                     ->groupby('items.id')
                     ->get();
+
+       
 
         $this->data['po_items'] = $items_bac;
         $this->data['info']  = $info;
