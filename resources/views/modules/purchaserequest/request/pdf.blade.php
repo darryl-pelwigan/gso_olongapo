@@ -262,14 +262,14 @@ if($pr->proc_type != 0){
                     <td>{{ $form["name_avail"]}}</td>
 
 
-                    <td class="underline">{{ $form["name_app"]}}</td>
+                    <td class="underline">{{ $form["name_app1"]}} / {{ $form["name_app2"]}} </td>
 
                     {{-- <td class="underline" style="padding-right: 20px; padding-left:20px;">{{ strtoupper($approved_by[0]->full_name ?? '') }} / {{ strtoupper($approved_by[1]->full_name ?? '') }}</td> --}}
                   </tr>
                    <tr>
                     <td class="underline">{{$form["designation_req"]}}</td>
                     <td>{{ $form["designation_avail"]}}</td>
-                    <td class="underline">{{ $form["designation_app"]}}</td>
+                    <td class="underline">{{ $form["designation_app1"] }} / {{ $form["designation_app2"] }}</td>
                   </tr>
               </table>
               <div style="page-break-after: always">

@@ -41,7 +41,7 @@
                 render : function(data, type, row){
                     var action = '';
                    if(data.pr_status === '' || data.pr_status === null){
-                       action = '<form method="get" action="{{route('pr.pr_edit')}}">{{csrf_field()}}<input type="hidden" name="pr_id" id="pr_id" value="'+data.olongapo_purchase_request_no.id+'" /> <input type="submit" class="btn btn-info btn-sm" name="view" value="View" /> <input type="submit" class="btn btn-sm btn-warning" name="edit" value="Edit" /> <button type="button" class="btn btn-success btn-sm" onclick="$(this).add_req(\''+data.olongapo_purchase_request_no.requested_by+'\',\''+data.olongapo_purchase_request_no.id+'\',\''+data.designated+'\');">PDF</button></form> ';
+                       action = '<form method="get" action="{{route('pr.pr_edit')}}">{{csrf_field()}}<input type="hidden" name="pr_id" id="pr_id" value="'+data.olongapo_purchase_request_no.id+'" /> <input type="submit" class="btn btn-info btn-sm" name="view" value="View" /> <input type="submit" class="btn btn-sm btn-warning" name="edit" value="Edit" /> <button type="button" class="btn btn-success btn-sm" onclick="$(this).add_req(\''+data.olongapo_purchase_request_no.requested_by+'\',\''+data.olongapo_purchase_request_no.designated_req+'\',\''+data.olongapo_purchase_request_no.name_avail+'\',\''+data.olongapo_purchase_request_no.designation_avail+'\',\''+data.olongapo_purchase_request_no.name_app+'\',\''+data.olongapo_purchase_request_no.designation_app+'\',\''+data.olongapo_purchase_request_no.id+'\');">PDF</button> </form> ';
                     }else if(data.pr_status === 'done'){
                        action = '<strong>Not yet process</strong>';
                     }
@@ -60,13 +60,33 @@
 
 $.fn.getALL();
 
-$.fn.add_req = function(name, id, designated){
+$.fn.add_req = function(name, des_req, name_avail, des_avail, name_app, des_app,  id){
 
+  console.log(name_avail);
+
+  var vars = name_app;
+  var arrVars = vars.split("/");
+  var lastVar = arrVars.pop();
+  var restVar = arrVars.join("/");
+
+  var vars2 = des_app;
+  var arrVars2 = vars2.split("/");
+  var lastVar2 = arrVars2.pop();
+  var restVar2 = arrVars2.join("/");
+  
   if(name.length > 1 )
   {
+
     $('#name_req').val(name);
+    $('#designation_req').val(des_req);
+    $('#name_avail').val(name_avail);
+    $('#designation_avail').val(des_avail);
+    $('#name_app1').val(lastVar);
+    $('#designation_app1').val(restVar);
+    $('#name_app2').val(lastVar2);
+    $('#designation_app2').val(restVar2);
     $('#prid').val(id);
-    $('#designation_req').val(designated);
+
     $("#add_requisition").modal('show');
   }else{
     $('#prid').val(id);

@@ -58,6 +58,12 @@ class Bac_datatable
                 ->leftjoin('olongapo_purchase_order_acceptance_issuance' , 'olongapo_purchase_order_acceptance_issuance.pono_id','=','olongapo_purchase_order_no.id')
                 ->select([
                             'olongapo_purchase_order_no.id as pono_id',
+                            'olongapo_purchase_order_no.date_receive as date_receive',
+                            'olongapo_purchase_order_no.status as status',
+                            'olongapo_purchase_order_no.prop_officer as prop_officer',
+                            'olongapo_purchase_order_no.date_inspect as date_inspect',
+                            'olongapo_purchase_order_no.insp as insp',
+                            'olongapo_purchase_order_no.insp_officer as insp_officer',
                             'olongapo_purchase_order_no.po_no',
                             'olongapo_purchase_order_no.po_date',
                             'supplier_info.title as sup_title',

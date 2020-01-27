@@ -258,35 +258,17 @@
                   <div class="form-group">
                      <label for="pr_no" class="col-sm-2 control-label">Status : </label>
                       <div class="col-sm-4">
-                         <label><input type="radio" name="status" value="0">Partial</label>
-                         <label><input type="radio" name="status" value="1">Complete</label>
+                         <label><input type="radio"  name="status" value="0">Partial</label>
+                         <label><input type="radio"  name="status" value="1">Complete</label>
                     </div>
                   </div>
 
                    <div class="form-group">
                      <label for="pr_no" class="col-sm-2 control-label">Property Officer</label>
-                      <div class="col-sm-10">
-                         <label><input type="radio" name="set_property" value="0">Employee</label>
-                         <label><input type="radio" name="set_property" value="1">Outside</label>
-                    </div>
-
-                     <label for="pr_no" class="col-sm-2 control-label"></label>
-
-
-                      <div class="col-sm-4 hidden" id="property1">
-                        <select class="form-control" id="emp"  name="prop_emp1">
-                           @foreach($employee as $emp)
-                          <option value="{{$emp->fname}} {{ $emp->mname}} {{ $emp->lname}} {{ $emp->ename}}">{{$emp->lname}}, {{ $emp->fname}} {{ $emp->mname}} {{ $emp->ename}}</option>
-                          @endforeach
-                      </select>
-                    </div>
-
-                      <div class="col-sm-4 hidden" id="property2">
-                       <input type="text" class="form-control" id="emp" name="prop_emp2"   placeholder="Property Officer" />
+                      <div class="col-sm-4" id="property2">
+                       <input type="text" class="form-control" id="prop_emp2" name="prop_emp2"   placeholder="Property Officer" />
                     </div>
                   </div>
-
-
 
                   <div class="form-group">
                      <label for="pr_no" class="col-sm-2 control-label">Date Inspected : </label>
@@ -305,22 +287,8 @@
 
                   <div class="form-group">
                      <label for="pr_no" class="col-sm-2 control-label">Inspector Officer/ <br> Committee</label>
-                      <div class="col-sm-10">
-                         <label><input type="radio" name="set_inspector" value="0">Employee</label>
-                         <label><input type="radio" name="set_inspector" value="1">Outside</label>
-                    </div>
-
-
-                    <div class="col-sm-4 hidden" id="insp1">
-                        <select class="form-control" id="insp_emp"  name="insp_emp1">
-                           @foreach($employee as $emp)
-                          <option value="{{$emp->fname}} {{ $emp->mname}} {{ $emp->lname}} {{ $emp->ename}}">{{$emp->lname}}, {{ $emp->fname}} {{ $emp->mname}} {{ $emp->ename}}</option>
-                          @endforeach
-                      </select>
-                    </div>
-
-                      <div class="col-sm-4 hidden" id="insp2">
-                       <input type="text" class="form-control" name="insp_emp2"   placeholder="Supply and/or Property Custodian" />
+                      <div class="col-sm-4" id="insp2">
+                       <input type="text" class="form-control" name="insp_emp2"  id="insp_emp2"  placeholder="Supply and/or Property Custodian" />
                     </div>
                   </div>
 
@@ -411,7 +379,7 @@ $(function() {
               render : function(data , type , row){
                       if(data.acceptance_id){
                         return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).updateRequisition('+data.pono_id+');" >Update Acceptance</button>\
-                        <button type="button" class="btn  btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).setProp('+data.pono_id+');" >PDF</button>  ';
+                        <button type="button" class="btn  btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).setProp(\''+data.pono_id+'\',\''+data.date_receive+'\',\''+data.status+'\',\''+data.prop_officer+'\',\''+data.date_inspect+'\',\''+data.insp+'\',\''+data.insp_officer+'\');" >PDF</button>  ';
 
 
                       }else{
@@ -581,8 +549,12 @@ $.fn.addRequisition = function(pono_id){
   };
 
 
-  $.fn.setProp = function(pono_id){
+  $.fn.setProp = function(pono_id,A,B,C,D,E,F){
     // $("#add_requisition_number")[0].reset();
+
+
+
+    console.log(B);
     $.ajax({
             type: "POST",
              url: "{{route('po.get-po')}}",
@@ -596,6 +568,41 @@ $.fn.addRequisition = function(pono_id){
             },
             success: function(data){
               $('#po_id').val(data['info'].pono_id);
+              if(A == 'null')
+              {
+                  $('#dtr').val('-');
+              }else{
+                  $('#dtr').val(A);
+              }
+              if(B == 1)
+              {
+                  $("input[name=status][value='1']").prop("checked",true);
+              }else if(B == 0){
+                  $("input[name=status][value='0']").prop("checked",true);
+              }
+              if(C == 'null')
+              {
+                  $('#prop_emp2').val('');
+              }else{
+                  $('#prop_emp2').val(C);
+              }
+              if(D == 'null')
+              {
+                  $('#dti').val('-');
+              }else{
+                  $('#dti').val(D);
+              }
+              if(E == 'null')
+              {
+              }else{
+                $("input[name=inspected]").prop("checked",true);
+              }
+              if(F == 'null')
+              {
+                  $('#insp_emp2').val('');
+              }else{
+                  $('#insp_emp2').val(F);
+              }
               $('#acceptance_id').val(data['info'].acceptance_id);
               $('#set_prop_modal').modal({
                       backdrop: 'static',
@@ -706,11 +713,10 @@ $(':radio[name=set_property]').change(function() {
     var form = $('#set_prop').serialize();
     console.log(form);
 
-    if (!$("input[name='status']:checked").val() || !$("input[name='set_property']:checked").val() || !$("input[name='set_inspector']:checked").val() || ) {
+    if (!$("input[name='status']:checked").val()) {
        alert('Please check your input!');
     }
     else {
-      if()
         var route = "{{route('po.po_acceptance_pdf',['change1','change2','change3'])}}";
           route =route.replace("change1", $('#po_id').val());
           route =route.replace("change2", $('#acceptance_id').val());

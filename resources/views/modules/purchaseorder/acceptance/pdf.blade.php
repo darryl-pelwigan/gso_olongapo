@@ -156,15 +156,9 @@
                             <tr>
                               <td><br></td>
                             </tr>
-                            @if($req["set_property"] == 0)
-                            <tr>
-                              <td class="underline_3" align="center"><b>{{$req["prop_emp1"]}}</b></td>
-                            </tr>
-                            @else
                             <tr>
                               <td class="underline_3" align="center"><b>{{$req["prop_emp2"]}}</b></td>
                             </tr>
-                            @endif
                             <tr>
                               <td class="text" align="center">Property Officer</td>
                             </tr>
@@ -189,16 +183,9 @@
                             @endif
                             <tr>
                               <td><br></td>
-                            </tr>
-                            @if($req["set_inspector"] == 0)
-                            <tr>
-                              <td class="underline_3" align="center"><b>{{ $req["insp_emp1"] }}</b></td>
-                            </tr>
-                            @else
-                            <tr>
+                            </tr><tr>
                               <td class="underline_3" align="center"><b>{{ $req["insp_emp2"] }}</b></td>
                             </tr>
-                            @endif
                             <tr>
                               <td class="text" align="right">Inspection Officer/Inspection Committee</td>
                             </tr>
