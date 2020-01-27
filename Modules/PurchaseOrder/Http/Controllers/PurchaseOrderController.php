@@ -159,8 +159,8 @@ class PurchaseOrderController extends Controller
     public function update_po_records(Request $request){
 
         $validator = Validator::make($request->all(), [
-                        'po_date' => 'required|date|unique:olongapo_purchase_order_no,po_no'
-                    ]);
+            'po_date' => 'required|date|unique:olongapo_purchase_order_no,po_no'
+        ]);
 
         $check_unique = PurchaseOrderNo::find($request->input('po_id'));
 
