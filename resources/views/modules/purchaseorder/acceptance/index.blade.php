@@ -32,8 +32,8 @@
                           <th>PO NO</th>
                           <th>PO DATE</th>
                           <th>PR Total</th>
-                          <th>OBR DATE</th>
-                          <th>OBR Control No.</th>
+          {{--                 <th>OBR DATE</th>
+                          <th>OBR Control No.</th> --}}
                           <th></th>
                         </tr>
 
@@ -357,7 +357,7 @@ $(function() {
             { data: 'po_no', name: 'olongapo_purchase_order_no.po_no' },
             { data: null, name: 'olongapo_purchase_order_no.po_date',
               render: function(data, type, row){
-                var po_date = moment(data.po_date).format("YY-MM-DD");
+                var po_date = moment(data.po_date).format("MMM DD, YYYY");
                   return po_date;
               }
             },
@@ -367,8 +367,8 @@ $(function() {
                 return accounting.formatMoney(data.amount,'Php ');
               }
              },
-             { data: 'obr_no', name: 'olongapo_obr.obr_no' },
-             { data: 'obr_date', name: 'olongapo_obr.obr_date' },
+             // { data: 'obr_no', name: 'olongapo_obr.obr_no' },
+             // { data: 'obr_date', name: 'olongapo_obr.obr_date' },
               { data: null, name: 'olongapo_bac_control_info.id' ,
               render : function(data , type , row){
                 var pdf = 1;
@@ -410,7 +410,6 @@ $.fn.addRequisition = function(pono_id){
               console.log('error');
             },
             success: function(data){
-
                 $('#pr_dept_desc').val(data['info'].dept_desc);
                 $('#pr_dept_id').val(data['info'].dept_id);
                 $('#prno').val(data['info'].pr_no);
@@ -432,14 +431,14 @@ $.fn.addRequisition = function(pono_id){
                 $('#po_no').val(data['info'].po_no);
                 $('#po_date').val(data['info'].po_date);
                 $('#po_id').val(data['info'].pono_id);
+                $('#new_po_id').val(data['info'].pono_id);
 
 
-                 var total_amount = 0;
+                var total_amount = 0;
                 var count = 1;
                 var appvd_id = 0;
                 var fintotal = 0;
                 var tr = "";
-                console.log(data.itemsx);
                  for(var x = 0; x<data.itemsx.length;x++){
                   total_amount = total_amount + parseInt(data.itemsx[x].abs_total_price);
                   tr +=  '   <tr>'+
@@ -504,7 +503,7 @@ $.fn.addRequisition = function(pono_id){
                 $('#po_id').val(data['info'].pono_id);
 
 
-                 var total_amount = 0;
+                var total_amount = 0;
                 var count = 1;
                 var appvd_id = 0;
                 var fintotal = 0;

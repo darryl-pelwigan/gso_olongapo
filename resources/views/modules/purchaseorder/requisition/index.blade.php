@@ -32,8 +32,8 @@
                           <th>PO NO</th>
                           <th>PO DATE</th>
                           <th>PR Total</th>
-                          <th>OBR DATE</th>
-                          <th>OBR Control No.</th>
+                          {{-- <th>OBR DATE</th> --}}
+                          {{-- <th>OBR Control No.</th> --}}
                           <th></th>
                         </tr>
 
@@ -432,14 +432,14 @@ $(function() {
             data: null,
               name: 'olongapo_purchase_request_no.pr_date',
               render: function(data, type, row){
-                var prno_date = moment(data.pr_date).format("YY-MM-DD");
+                var prno_date = moment(data.pr_date).format("MMM DD, YYYY");
                   return prno_date;
               }
             },
             { data: 'po_no', name: 'olongapo_purchase_order_no.po_no' },
             { data: null, name: 'olongapo_purchase_order_no.po_date',
               render: function(data, type, row){
-                var po_date = moment(data.po_date).format("YY-MM-DD");
+                var po_date = moment(data.po_date).format("MMM DD, YYYY");
                   return po_date;
               }
             },
@@ -449,8 +449,8 @@ $(function() {
                 return accounting.formatMoney(data.amount,'Php ');
               }
              },
-             { data: 'obr_no', name: 'olongapo_obr.obr_no' },
-             { data: 'obr_date', name: 'olongapo_obr.obr_date' },
+             // { data: 'obr_no', name: 'olongapo_obr.obr_no' },
+             // { data: 'obr_date', name: 'olongapo_obr.obr_date' },
              { data: null, name: 'olongapo_bac_control_info.id' ,
               render : function(data , type , row){
                   if(data.requisition_id){
@@ -502,7 +502,7 @@ $(function() {
             data: null,
               name: 'olongapo_purchase_request_no.pr_date',
               render: function(data, type, row){
-                var prno_date = moment(data.pr_date).format("YY-MM-DD");
+                var prno_date = moment(data.pr_date).format("MMM DD, YYYY");
                   return prno_date;
               }
             },
