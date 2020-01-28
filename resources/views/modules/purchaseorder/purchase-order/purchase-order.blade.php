@@ -289,7 +289,7 @@ $(function() {
             data: null,
               name: 'olongapo_purchase_request_no.pr_date',
               render: function(data, type, row){
-                var prno_date = moment(data.pr_date).format("YY-MM-DD");
+                var prno_date = moment(data.pr_date).format("MMM DD, YYYY");
                   return prno_date;
               }
             },
@@ -311,7 +311,7 @@ $(function() {
               { data: null, name: 'olongapo_bac_control_info.id' ,
               render : function(data , type , row){
                       return '<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#add_purchase_order_modal" onclick="$(this).addPOnumber('+data.pono_id+');" >Update</button>\
-                        <button type="button" class="btn  btn-sm" data-toggle="modal" data-target="#pdf" onclick="$(this).pdf('+data.pono_id+');" >PDF</button> ';
+                        <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#pdf" onclick="$(this).pdf('+data.pono_id+');" >PDF</button> ';
                 }
               },
         ],

@@ -374,9 +374,9 @@ $(function() {
                 var pdf = 1;
                 var excel = 2;
                       if(data.acceptance_id){
-                        return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).updateRequisition('+data.pono_id+');" >Update Acceptance</button>\
-                        <button type="button" class="btn  btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).setProp(\''+data.pono_id+'\',\''+data.date_receive+'\',\''+data.status+'\',\''+data.prop_officer+'\',\''+data.date_inspect+'\',\''+data.insp+'\',\''+data.insp_officer+'\', '+pdf+');" >PDF</button>\
-                        <button type="button" class="btn  btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).setProp(\''+data.pono_id+'\',\''+data.date_receive+'\',\''+data.status+'\',\''+data.prop_officer+'\',\''+data.date_inspect+'\',\''+data.insp+'\',\''+data.insp_officer+'\', '+excel+');" >Excel</button>';
+                        return '<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).updateRequisition('+data.pono_id+');" >Update Acceptance</button>\
+                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#add_requisition" onclick="$(this).setProp(\''+data.pono_id+'\',\''+data.date_receive+'\',\''+data.status+'\',\''+data.prop_officer+'\',\''+data.date_inspect+'\',\''+data.insp+'\',\''+data.insp_officer+'\', '+pdf+');" >PDF</button>\
+                        <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#add_requisition" onclick="$(this).setProp(\''+data.pono_id+'\',\''+data.date_receive+'\',\''+data.status+'\',\''+data.prop_officer+'\',\''+data.date_inspect+'\',\''+data.insp+'\',\''+data.insp_officer+'\', '+excel+');" >Excel</button>';
                       }else{
                           return '<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).addRequisition('+data.pono_id+');" >Add Acceptance</button> ';
                       }

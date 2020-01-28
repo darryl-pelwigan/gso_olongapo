@@ -21,7 +21,7 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                 <table id="purchase_order_list" class="table table-striped table-bordered table-hover">
+                 <table id="purchase_order_list" class="table table-striped table-bordered table-hover responsive" width="100%">
                       <thead>
 
                         <tr>
@@ -45,10 +45,10 @@
                 </table>
             </div>
              <div class="box-header">
-              <h3 class="box-title">PURCHASE ORDER LIST (ADD REQUISITION AND ISSUE SLIP) PURELY CONSUMPTION</h3>
+              <h3 class="box-title">PURCHASE ORDER LIST (ADD REQUISITION AND ISSUE SLIP) PURELY CONSUMPTION)</h3>
             </div>
              <div class="box-body">
-                 <table id ="purchase_request_list"class="table table-striped table-bordered table-hover">
+                 <table id ="purchase_request_list"class="table table-striped table-bordered table-hover responsive" width="100%">
                       <thead>
 
                         <tr>
