@@ -248,7 +248,7 @@
 
 ?> --}}
 html,body{
-  margin: 5px 5px;
+  margin: 15px 15px;
   font-size: 13px;
 }
 .table-thnormal>thead>tr>th{

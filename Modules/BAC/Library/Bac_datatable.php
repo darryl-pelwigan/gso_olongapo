@@ -78,8 +78,11 @@ class Bac_datatable
                             'olongapo_obr.obr_no','olongapo_obr.obr_date','olongapo_purchase_order_requisition_number.id as requisition_id','olongapo_purchase_order_acceptance_issuance.id as acceptance_id'
                 ])
                 ->groupBy('olongapo_purchase_order_no.id');
-        // dd($items);
+
+
+                //xxxxx
         return $items;
+
     }
 
         public function bac_list_po_pc($vars = null){
@@ -244,7 +247,7 @@ class Bac_datatable
                      ->join('olongapo_purchase_request_ppmp_approval' , 'olongapo_purchase_request_ppmp_approval.request_no_id','=','olongapo_purchase_request_no.id')
                      ->leftjoin('olongapo_absctrct' , 'olongapo_absctrct.prno_id','=','olongapo_purchase_request_no.id')
                       ->leftjoin('olongapo_bac_control_info' , 'olongapo_bac_control_info.prno_id','=','olongapo_purchase_request_no.id')
-                     ->leftjoin('olongapo_purchase_order_no' , 'olongapo_purchase_order_no.prno_id','=','olongapo_purchase_request_no.pr_no')
+                     ->leftjoin('olongapo_purchase_order_no' , 'olongapo_purchase_order_no.prno_id','=','olongapo_purchase_request_no.id')
                      ->select([
                         'olongapo_purchase_request_no.id',
                         'olongapo_purchase_request_no.pr_no',

@@ -1044,6 +1044,7 @@ class PurchaseOrderController extends Controller
             $pdf->setPaper(array(0,0,612.00,936.0));
             //$pdf->setPaper('legal');
             return @$pdf->stream();
+
         } elseif($type == 2) {
             $excel = Excel::create('PurchaseOrderAcceptance.xlsx', function($excel) {
                 $excel->sheet('AIR', function($sheet) {
