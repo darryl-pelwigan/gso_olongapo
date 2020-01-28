@@ -15,6 +15,8 @@ use Modules\GSOassistant\Entities\{Procmethod,Requestordersignee};
 use Carbon\Carbon;
 use Yajra\Datatables\Datatables;
 use PDF;
+use Excel;
+use PHPExcel_Worksheet_Drawing;
 
 class PurchaseRequestController extends Controller
 {
@@ -94,9 +96,9 @@ class PurchaseRequestController extends Controller
         $purely_consumption   = PurchaseNo::find($request->input('pr_id'));
         $this->data['purely_consumption']   = $purely_consumption->pr_purelyconsumption;
         $this->data['pr'] = PurchaseNo::find($request->input('pr_id'));
-       
+
         return view('purchaserequest::request.edit',$this->setup());
-        
+
     }
 
     public function pr_pdf($prid,$form)
@@ -125,7 +127,7 @@ class PurchaseRequestController extends Controller
                                     ])
                                     ->where('olongapo_purchase_request_no.id', '=', $params['prid'] )
                                     ->first();
-        // dd( $this->data['approved_by'] ); 
+        // dd( $this->data['approved_by'] );
         $pdf = PDF::loadView('purchaserequest::request.pdf',$this->setup());
         $pdf->setPaper(array(0,0,612.00,936.0));
 
@@ -364,6 +366,342 @@ class PurchaseRequestController extends Controller
         $data['info']  = $info;
 
         return $data;
+    }
+
+    public function pr_excel($prid,$form){
+        // dd($prid);
+        // $params = array();
+        // parse_str($form, $params);
+
+        // PurchaseNo::updateOrCreate([
+        //     'id' => $prid
+        // ],[
+        //     'requested_by' => $params['name_req'],
+        //     'designated' => $params['designation_req']
+        // ]);
+
+
+        // $pr = PurchaseNo::find($prid);
+        // $approved_by = Requestordersignee::where('deleted_at','=',null)->orderBy('position','DESC')->get();
+        // $requested_by = DB::table('olongapo_purchase_request_no')
+        //                             ->join('olongapo_employee_list', 'olongapo_purchase_request_no.requested_by', '=', 'olongapo_employee_list.id')
+        //                             ->leftjoin('olongapo_position', 'olongapo_position.id', '=', 'olongapo_employee_list.position_id')
+        //                             ->select([
+        //                                 'olongapo_employee_list.fname',
+        //                                 'olongapo_employee_list.lname',
+        //                                 'olongapo_employee_list.mname',
+        //                                 'olongapo_position.title'
+        //                             ])
+        //                             ->where('olongapo_purchase_request_no.id', '=', $prid )
+        //                             ->first();
+
+
+
+
+
+        // dd($items_array);
+        Excel::create('Purchase Request', function($excel)  use($prid,$form){
+
+            $excel->sheet('Purchase Request', function($sheet) use($prid,$form){
+                $objDrawing = new PHPExcel_Worksheet_Drawing;
+                $objDrawing->setPath(public_path('olongapo/img/logo-100.png')); //your image path
+                $objDrawing->setCoordinates('C1');
+                $objDrawing->setResizeProportional();
+                $objDrawing->setOffsetX(1);
+                $objDrawing->setOffsetY(1);
+                $objDrawing->setWidth(75);
+                $objDrawing->setWorksheet($sheet);
+                $sheet->row(10, array(
+                    'Item No.', 'Quantity', 'Unit of Issue', 'Item Description', 'Estimated Unit Cost', 'Estimated Cost'
+                ));
+                $count = 1;
+
+                $params = array();
+                parse_str($form, $params);
+
+                PurchaseNo::updateOrCreate([
+                    'id' => $prid
+                ],[
+                    'requested_by' => $params['name_req'],
+                    'designated' => $params['designation_req']
+                ]);
+
+
+                $pr = PurchaseNo::find($prid);
+                $approved_by = Requestordersignee::where('deleted_at','=',null)->orderBy('position','DESC')->get();
+                $requested_by = DB::table('olongapo_purchase_request_no')
+                                    ->join('olongapo_employee_list', 'olongapo_purchase_request_no.requested_by', '=', 'olongapo_employee_list.id')
+                                    ->leftjoin('olongapo_position', 'olongapo_position.id', '=', 'olongapo_employee_list.position_id')
+                                    ->select([
+                                        'olongapo_employee_list.fname',
+                                        'olongapo_employee_list.lname',
+                                        'olongapo_employee_list.mname',
+                                        'olongapo_position.title'
+                                    ])
+                                    ->where('olongapo_purchase_request_no.id', '=', $prid )
+                                    ->first();
+
+                $dept = $pr->pr_dept->dept_desc;
+                $prno = $pr->pr_no;
+                $sai = $pr->sai_no;
+                $ppmp = $pr->ppmp->ppmp_no;
+
+                $items_array = array();
+                $pr_items = $pr->pr_items;
+
+                $x=1;
+                foreach ($pr_items as $items){
+                    $items_array[$x] = array($x,$items->qty,
+                    $items->unit,
+                    $items->description,
+                    $items->unit_price,
+                    $items->total_price);
+                    $x++;
+                }
+
+                foreach($items_array as $items){
+                    $sheet->row(10+$count, $items);
+                    $count++;
+                }
+
+                $sheet->mergeCells('A1:G1');
+                $sheet->mergeCells('A2:G2');
+                $sheet->mergeCells('A3:G3');
+                $sheet->mergeCells('A4:G5');
+                $sheet->mergeCells('A7:B7');
+                $sheet->mergeCells('A8:B8');
+                $sheet->mergeCells('A9:B9');
+                $sheet->mergeCells('A36:C39');
+                $sheet->mergeCells('D36:G39');
+                for ($x = 6; $x<=35; $x++){
+                    $sheet->mergeCells('F'.$x.':G'.$x);
+                }
+                for ($x = 6; $x<=9; $x++){
+                    $sheet->mergeCells('C'.$x.':D'.$x);
+                }
+                for ($x = 40; $x<=43; $x++){
+                    $sheet->mergeCells('A'.$x.':C'.$x);
+                    $sheet->mergeCells('E'.$x.':G'.$x);
+                }
+
+                $sheet->setSize('A10', 6,30);
+                $sheet->setSize('C10', 10,30);
+                $sheet->setSize('D10', 50,30);
+                $sheet->setSize('E10', 20,30);
+
+                 $sheet->setSize('A1', 10,60);
+
+                $sheet->cell('A1', function($cell) {
+                    $cell->setValue('Purchase Request');
+                    $cell->setFontSize(22);
+                    $cell->setFontFamily('Arial Black');
+                    $cell->setAlignment('center');
+                    $cell->setValignment('center');
+                });
+
+                $sheet->cell('A2', function($cell) {
+                    $cell->setValue('Republic of the Philippines');
+                    $cell->setFontSize(10);
+                    $cell->setAlignment('center');
+                    $cell->setValignment('center');
+                });
+
+                $sheet->cell('A3', function($cell) {
+                    $cell->setValue('City of Olongapo');
+                    $cell->setFontSize(10);
+                    $cell->setAlignment('center');
+                    $cell->setValignment('center');
+                });
+
+                $sheet->cell('C6', function($cell) use($dept){
+                    $cell->setValue($dept);
+                    $cell->setFontSize(10);
+                    $cell->setAlignment('center');
+                    $cell->setValignment('center');
+                    $cell->setFontWeight('bold');
+                });
+
+                $sheet->cell('F6', function($cell) use($prno){
+                    $cell->setValue($prno);
+                    $cell->setFontSize(10);
+                    $cell->setAlignment('center');
+                    $cell->setValignment('center');
+                    $cell->setFontWeight('bold');
+                });
+
+                $sheet->cell('F7', function($cell) use($sai){
+                    $cell->setValue($sai);
+                    $cell->setFontSize(10);
+                    $cell->setAlignment('center');
+                    $cell->setValignment('center');
+                    $cell->setFontWeight('bold');
+                });
+
+                $sheet->cell('F9', function($cell) use($ppmp){
+                    $cell->setValue($ppmp);
+                    $cell->setFontSize(10);
+                    $cell->setAlignment('center');
+                    $cell->setValignment('center');
+                    $cell->setFontWeight('bold');
+                });
+
+
+                $sheet->cells('A10:F10', function($cells) {
+                    $cells->setAlignment('center');
+                    $cells->setValignment('center');
+                    $cells->setFontSize(10);
+                    $cells->setFontFamily('Century Schoolbook');
+                    $cells->setFontWeight('bold');
+                });
+
+
+                $sheet->cell('A6', function($cell) {
+                    $cell->setValue('Department: ');
+                    $cell->setFontSize(10);
+                    $cell->setFontFamily('Arial');
+                    $cell->setFontWeight('bold');
+                });
+
+                $sheet->cell('A8', function($cell) {
+                    $cell->setValue('Section: ');
+                    $cell->setFontSize(10);
+                    $cell->setFontFamily('Arial');
+                    $cell->setFontWeight('bold');
+                });
+
+                $sheet->cell('E6', function($cell) {
+                    $cell->setValue('PR No.: ');
+                    $cell->setFontSize(10);
+                    $cell->setFontFamily('Arial');
+                    $cell->setFontWeight('bold');
+                });
+
+                $sheet->cell('E7', function($cell) {
+                    $cell->setValue('SAI No.: ');
+                    $cell->setFontSize(10);
+                    $cell->setFontFamily('Arial');
+                    $cell->setFontWeight('bold');
+                });
+
+                $sheet->cell('E8', function($cell) {
+                    $cell->setValue('ALOBS No.: ');
+                    $cell->setFontSize(10);
+                    $cell->setFontFamily('Arial');
+                    $cell->setFontWeight('bold');
+                });
+
+                $sheet->cell('E9', function($cell) {
+                    $cell->setValue('APP / PPMP No.: ');
+                    $cell->setFontSize(10);
+                    $cell->setFontFamily('Arial');
+                    $cell->setFontWeight('bold');
+                });
+
+                $sheet->cell('G6:G8', function($cell) {
+                    $cell->setValue('Date: ');
+                    $cell->setFontSize(10);
+                    $cell->setFontFamily('Arial');
+                    $cell->setFontWeight('bold');
+                });
+
+                $sheet->cell('A36', function($cell) {
+                    $cell->setValue('Purpose: ');
+                    $cell->setFontSize(10);
+                    $cell->setFontFamily('Arial');
+                    $cell->setFontWeight('bold');
+                });
+
+                $sheet->cell('D36', function($cell)use($pr) {
+
+                    $cell->setValue($pr->pr_purpose);
+                    $cell->setFontSize(10);
+                    $cell->setFontFamily('Arial');
+                    $cell->setFontWeight('bold');
+                });
+
+                $sheet->cell('A41', function($cell) {
+                    $cell->setValue('Signature: ');
+                    $cell->setFontSize(10);
+                    $cell->setFontFamily('Arial');
+                    $cell->setFontWeight('bold');
+                });
+
+                $sheet->cell('A42', function($cell) {
+                    $cell->setValue('Printed Name: ');
+                    $cell->setFontSize(10);
+                    $cell->setFontFamily('Arial');
+                    $cell->setFontWeight('bold');
+                });
+
+                $sheet->cell('A43', function($cell) {
+                    $cell->setValue('Designation: ');
+                    $cell->setFontSize(10);
+                    $cell->setFontFamily('Arial');
+                    $cell->setFontWeight('bold');
+                });
+
+                $sheet->cell('D40', function($cell) {
+                    $cell->setValue('Requested By: ');
+                    $cell->setFontSize(10);
+                    $cell->setFontFamily('Arial');
+                    $cell->setFontWeight('bold');
+                });
+
+                $sheet->cell('D42', function($cell) use($requested_by,$params){
+                    if(!empty($requested_by)){
+                        $cell->setValue($requested_by->fname." ".$requested_by->mname." ".$requested_by->lname);
+                    }else if(!empty($params->name_req)){
+                        $cell->setValue($params->name_req);
+                    }
+
+                    $cell->setFontSize(10);
+                    $cell->setFontFamily('Arial');
+                    $cell->setFontWeight('bold');
+                });
+
+                $sheet->cell('D43', function($cell) use($requested_by,$params){
+                    // dd($params);
+                    if(!empty($requested_by)){
+                        $cell->setValue($requested_by->title);
+                    }else if(!empty($params->name_req)){
+                        $cell->setValue($params->designation_req);
+                    }
+
+                    $cell->setFontSize(10);
+                    $cell->setFontFamily('Arial');
+                    $cell->setFontWeight('bold');
+                });
+
+                $sheet->cell('E40', function($cell) {
+                    $cell->setValue('Approved By: ');
+                    $cell->setFontSize(10);
+                    $cell->setFontFamily('Arial');
+                    $cell->setFontWeight('bold');
+                });
+
+                $sheet->setStyle(array(
+                    'font' => array(
+                    'name'      =>  'Century Schoolbook',
+                    'size'      =>  10,
+                    'bold'      =>  true
+                    )
+                ));
+                $sheet->getStyle('A10')->getAlignment()->setWrapText(true);
+                $sheet->getStyle('C10')->getAlignment()->setWrapText(true);
+                $sheet->getStyle('E10')->getAlignment()->setWrapText(true);
+
+                $styleArray = array(
+                    'borders' => array(
+                        'allborders' => array(
+                            'style' => 'thin'
+                        )
+                    )
+                );
+                $sheet->getStyle('A1:F43')->applyFromArray($styleArray);
+            });
+
+        })->download('xlsx');
+
     }
 
 }

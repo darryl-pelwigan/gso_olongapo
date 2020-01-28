@@ -186,7 +186,7 @@
 
                                {{-- <input type="hidden" class="form-control" id="prid" name="prid"/> --}}
 
-                            
+
                            <div class="form-group">
                              <label for="pr_no" class="col-sm-3 control-label">Requested By: </label>
                            <!--    <div class="col-sm-10">
@@ -258,11 +258,11 @@
                                <input type="text" class="form-control" id="emp" name="designation_app"   placeholder="Position" />
                             </div>
                           </div>
-                          
+
 
                       <!-- /.box-body -->
 
-                        <button type="button" class="btn btn-info pull-right" onclick="$(this).sentPdf();">Submit</button>
+                        <button type="button" class="btn btn-info pull-right" id="modal_submit"  onclick="$(this).sentPdf();">Submit</button>
 
                       <!-- /.box-footer -->
 

@@ -160,7 +160,7 @@
                 </div>
 
                 <div class="form-group">
-                     <label for="pr_no" class="col-sm-2 control-label">Suplier : </label>
+                     <label for="pr_no" class="col-sm-2 control-label">Supplier : </label>
                       <div class="col-sm-10">
                         <input type="text" class="form-control" id="supplier_desc"  disabled="disabled"  placeholder="Suuplier" />
                     </div>

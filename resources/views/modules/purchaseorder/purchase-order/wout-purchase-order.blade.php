@@ -132,7 +132,7 @@
                  <div class="form-group">
                   <label for="obr_date" class="col-sm-2 control-label">OBR Date : </label>
                   <div class="col-sm-3">
-                    <input type="text" class="form-control" id="obr_date"  disabled="disabled"  name="obr_date" placeholder="OBR Date">
+                    <input type="text" class="form-control" id="obr_date"    name="obr_date" placeholder="OBR Date">
                   </div>
 
                    <label for="obr_no" class="col-sm-2 control-label">OBR No. : </label>
@@ -158,7 +158,7 @@
                 </div>
 
                 <div class="form-group">
-                     <label for="pr_no" class="col-sm-2 control-label">Suplier : </label>
+                     <label for="pr_no" class="col-sm-2 control-label">Supplier : </label>
                       <div class="col-sm-10">
                         <input type="text" class="form-control" id="supplier_desc"  disabled="disabled"  placeholder="Suuplier" />
                     </div>
