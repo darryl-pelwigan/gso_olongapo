@@ -364,13 +364,13 @@
                  <div class="form-group">
                      <label for="purpose" class="col-sm-2 control-label">Purpose : </label>
                       <div class="col-sm-6">
-                        <textarea  class="form-control input-sm" id="purpose"  name="purpose"    placeholder="Purpose" > </textarea>
+                        <textarea  class="form-control input-sm" id="purpose"  name="purpose" placeholder="Purpose" > </textarea>
                     </div>
 
 
                     <label class="container">Purely Consumption 
                       <input class="input-sm" type="checkbox" name="pc" value=1>
-                      <input class="input-sm" type="hidden" name="pc" value=0 >
+                      {{-- <input class="input-sm" type="hidden" name="pc" value=0 > --}}
                       <span class="checkmark"></span>
                     </label>
                 </div>
@@ -468,7 +468,7 @@
 
                     <label class="container">Purely Consumption 
                       <input type="checkbox" name="import_pc" value=1>
-                      <input type="hidden" name="import_pc" value=0 >
+                      {{-- <input type="hidden" name="import_pc" value=0 > --}}
                       <span class="checkmark"></span>
                     </label>
                 </div>

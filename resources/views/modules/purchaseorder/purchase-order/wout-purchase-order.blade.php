@@ -189,8 +189,6 @@
                   </tbody>
                 </table>
 
-
-
               </div>
               <!-- /.box-body -->
               <div class="box-footer">
@@ -211,10 +209,6 @@
 
 
    @stop
-
-
-
-
 
 @section('plugins-script')
 <script src="{{asset('adminlte/plugins/autocomplete/')}}/jquery.autocomplete.min.js"></script>
@@ -374,24 +368,22 @@ $('#po_date').on('change',function(){
       $.ajax({
             type: "POST",
             url: "{{route('po.add_po_records')}}",
-
-              data : form,
+            data : form,
             dataType: "json",
             error: function(){
               console.log('error');
             },
             success: function(data){
                var errors = '';
-                    if(data['status']==0){
-                       for(var key in data['errors']){
-                           errors += data['errors'][key]+'<br />';
-                        }
-                      $('#statusC').html('<div class="alert alert-danger alert-dismissible"><h4><i class="icon fa fa-ban"></i> Alert!</h4>'+errors+'</div>').fadeIn().delay(5000).fadeOut();
-                    }else{
-                      $('#statusC').html('<div class="alert alert-success alert-dismissible"><h4><i class="icon fa fa-ban"></i> Success!</h4>'+errors+'</div>').fadeIn().delay(5000).fadeOut();
-                       location.reload();
-                    }
-
+                  if(data['status']==0){
+                     for(var key in data['errors']){
+                         errors += data['errors'][key]+'<br />';
+                      }
+                    $('#statusC').html('<div class="alert alert-danger alert-dismissible"><h4><i class="icon fa fa-ban"></i> Alert!</h4>'+errors+'</div>').fadeIn().delay(5000).fadeOut();
+                  }else{
+                    $('#statusC').html('<div class="alert alert-success alert-dismissible"><h4><i class="icon fa fa-ban"></i> Success!</h4>'+errors+'</div>').fadeIn().delay(5000).fadeOut();
+                     location.reload();
+                  }
             }
      });
   };
