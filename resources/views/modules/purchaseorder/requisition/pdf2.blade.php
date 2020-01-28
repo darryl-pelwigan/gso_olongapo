@@ -65,23 +65,164 @@
           </tr>
         </table>
 
-        <table width="100%" class="table">
-          <tr>
-            <td colspan="4" class="text_center bold" height="2%" style="padding:5px; border-right: 1px solid black; font-size: 14px;"> <i> Requisition</i></td>
-            <td colspan="2" class="text_center bold" style="border-left: 1px solid black; font-size: 14px;"> <i>Issuance</i></td>
-          </tr>
+       <div >
+                  <table class="table1 table-bordered page-break" width="100%">
+                      <tr>
+                        <td class="letter-space" colspan="4" align="center" height="2%" style="padding:5px"><b>Requisition</b></td>
+               </div>
+                        <td class="letter-space" colspan="2" align="center"><b>Issuance</b></td>
+                      </tr>
+                      <tr>
+                        <td class="gray" width="10%" align="center" height="1%" style="padding:10px"><b>Stock No.</b></td>
+                        <td class="gray" width="5%" align="center"><b>Unit</b></td>
+                        <td class="gray" width="51%" align="center"><b>Description</b></td>
+                        <td class="gray" width="10%" align="center"><b>Quantity</b></td>
+                        <td class="gray" width="12%" align="center"><b>Quantity</td>
+                        <td class="gray" width="12%" align="center"><b>Remarks</b></td>
+                      </tr>
+                      <?php $count=1; $total_price=0; ?>
+                        @foreach( $po_items as $data )
+                            <tr id="tbl_items">
+                              <td style="text-align: center;">{{ $count }}</td>
+                              <td style="text-align: center; font-size: 11px; padding: 0 5px;" >{{ $data->unit }}  </td>
+                            <?php
+                                  $desc =$data->description;
 
-          <tr>
-            <td>Stock No.</td>
-            <td>Unit</td>
-            <td>Description</td>
-            <td>Quantity</td>
-            <td>Quantity</td>
-            <td>Remarks</td>
-            
-          </tr>
+                                  //if (strlen($desc) > 100) { --}}
 
-        </table>
+                                  if (strlen($desc) > 88) {
+                                    echo '<td style="text-align: left; padding-left: 10px;" id="desc_style" style="word-wrap:break-word;">'.$desc.'</td>';
+                                  } else {
+                                      echo '<td style="text-align: left; padding-left: 10px;">'.$desc.'</td>';
+                                  }
+                                ?>
+                              <td style="text-align: right; padding-right: 5px;">{{ $data->qty }} </td>
+                              <td style="text-align: right; padding-right: 5px;"></td>
+                              <td style="text-align: left;"></td>
+                            </tr>
+                          <?php $count++; $total_price += $data->total_price; ?>
+                        @endforeach
+
+                        <?php
+                          $totaltr = 34;
+                          $loop = $totaltr - $count;
+                          if($loop > 0){
+                            for ($i=0; $i < $loop; $i++) {
+                        ?>
+                            <tr>
+                              <td><br></td>
+                              <td><br></td>
+                              <td><br></td>
+                              <td><br></td>
+                              <td><br></td>
+                              <td><br></td>
+                            </tr>
+                        <?php
+                            }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                           }
+                        ?>
+                            <tr>
+                             <td colspan="5" class="total" style="font-size: 12px;" height="1%">Total</td>
+                             <td class="text-right2 total" style="font-size: 12px;">{{ number_format($total_price,2) }}</td>
+                            </tr>
+                            <tr>
+                              <td colspan="6">
+                                <table class="table_header" width="100%">
+                                  <tr>
+                                    <td width="9%" style="margin-left: 10px;">Purpose:</td>
+                                    <td width="90%" class="underline" style="margin-right: 5px;">{{$info->pr_purpose ?? ''}}</td>
+                                    <td width="0.5%"></td>
+                                  </tr>
+                                  <tr>
+                                    <td colspan="2" class="underline">&nbsp;</td>
+                                  </tr>
+
+                                </table>
+                              </td>
+                            </tr>
+
+                            {{-- <tr>
+                              <td colspan="6">
+                                <div style="padding: 15px;"><span>(In case of Negotiated Purchase pursuant to Section 369 (a) of RA 7160, this portion must be accomplished.)</span>
+                                </div>
+                                <div style="padding: 15px;">
+                                  <span>Approved per Sanggunian Resolution No. ____________________________________________________
+                                  </span>
+                                </div>
+                                <br>
+                                <div>
+                                    <table style="width: 100%;">
+                                       <tr>
+                                        <td style="" width="60%"><p style="padding-left: 15px;">Certified Correct: ________________________________</p></td>
+                                        <td style="" width="25%">Date: __________________________</td>
+                                      </tr>
+                                       <tr>
+                                        <td><p style="padding-left: 150px;">Secretary to the Sanggunian<br></p></td>
+                                        <td></td>
+                                      </tr>
+                                    </table>
+                                  </div>
+                              </td>
+                            </tr> --}}
+
+                            <tr>
+                              <td colspan="6">
+                                <table class="table1 page-break" width="100%">
+                                  <tr>
+                                    <td class="borderZero" width="10%" align="center">&nbsp;</td>
+                                    <td class="border" width="15%" align="center"><b>Requested by:</b></td>
+                                    <td class="border" width="40%" align="center" colspan="2"><b>Approved by:</b></td>
+                                    <td class="border" width="15%" align="center"><b>Issued by:</b></td>
+                                    <td class="border" width="20%" align="center"><b>Received by:</b></td>
+                                  </tr>
+                                  <tr>
+                                    <td class="borderZero" align="center" height="2%"><b>Signature:</b></td>
+                                    <td class="border" align="center">&nbsp;</td>
+                                    <td class="border_bottom" align="center"> </td>
+                                    <td class="border_bottom" align="center"> </td>
+                                    <td class="border" align="center">&nbsp;</td>
+                                    <td class="border" align="center">&nbsp;</td>
+                                  </tr>
+                                    @php
+                                      $name = explode('/', $info->name_app);
+                                    @endphp
+                                  <tr>
+                                    <td align="center"><b>Printed Name:</b></td>
+                                    <td class="border" align="center" style="font-size: 9px;"> {{ strtoupper($info->requested_by ?? '') }}</td>
+
+                                        <td class="border_bottom" align="center"> <b>{{ $name[0]}}</b> </td>
+                                        <td class="border_bottom" align="center"> <b>{{ $name[1]}}</b> </td>
+
+                                        <td class="border" align="center">{{$info->issued_by}} </td>
+                                        <td class="border" align="center">{{$info->received_by}}  </td>
+                                  </tr>
+                                  @php
+                                      $des = explode('/', $info->designation_app);
+                                  @endphp
+                                  
+                                  <tr>
+                                    <td class="borderZero" align="center"><b>Designation:</b></td>
+                                    <td class="border" align="center" style="font-size: 10px;">{{ strtoupper($info->designated_req ?? '') }}</td>
+
+                                  
+
+                                        <td class="border_bottom" align="center"> <b>{{$des[0]}}</b> </td>
+                                        <td class="border_bottom" align="center"> <b>{{$des[1]}} </b> </td>
+                                        <td class="border" align="center">{{ $info->issued_des}}</td>
+                                        <td class="border" align="center">{{ $info->received_des}}</td>
+                                  </tr>
+                                  <tr>
+                                    <td align="center"><b>Date:</b></td>
+                                    <td class="border" align="center">&nbsp;</td>
+                                    <td class="border_bottom" align="center">&nbsp;</td>
+                                    <td class="border_bottom" align="center">&nbsp;</td>
+                                    <td class="border" align="center">&nbsp;</td>
+                                    <td class="border" align="center">&nbsp;</td>
+                                  </tr>
+                                </table>
+                              </td>
+                            </tr>
+                  </table>
 
 
     </section>
@@ -92,23 +233,108 @@
    @stop
 
 @section('plugins-css')
-  <style type="text/css">
+ <style type="text/css">
 
-  html,body{
-    margin: 15px 15px;
-    font-size: 12px;
-    padding-bottom: -20px;
-    border: 2px solid black;
+html,body{
+  margin: 15px 15px;
+  font-size: 12px;
+  padding-bottom: -20px;
+}
+.table-thnormal>thead>tr>th{
+
+}
+.table-thnormal {
+  margin-bottom: -2px !important;
+}
+
+.table-bordered>tbody>tr>td,.table-bordered>thead>tr>th{
+  border:1px solid #000;
+  word-break: break-all;
+  padding: 1px;
+  text-indent: 0;
+
+}
+
+.table-bordered>thead>tr>th{
+  text-align: center;
+
+}
+.content{
+  border: 1px;
+}
+.total{
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.text-right2{
+  text-align: center;
+}
+.pr_title{
+  font-family:  "arial-black" !important;
+  font-weight: 900;
+  padding: 5px;
+  font-size: 22px;
+}
+.header_tbl{
+  border: 1px solid #000 !important;
+  /*margin-bottom: -20px;*/
+}
+.underline{
+  border-bottom: 1px solid;
+}
+.table_header tr td{
+  /*padding: 3px;*/
+  text-align: left;
+}
+#table_left{
+  border-right: 1px solid #000;
+}
+.table1{
+  border-right: 1px solid #000;
+   border-collapse: collapse;
+}
+
+.table1 td{
+  padding:0;
+  margin:0;
+}
+
+.table_footer tr td{
+  text-align: center;
+}
+
+.border {
+  border: 1px solid black;
+}
+
+.border_bottom {
+  border-bottom: 1px solid black;
+}
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
   }
+.main-border{
+  border-style: solid;
+  border-width: 2px;
+}
 
-  .pr_title{
-    font-family:  "arial-black" !important;
-    font-weight: 900;
-    padding: 5px;
-    font-size: 22px;
-  }
+.gray{
+  background: lightgray;
+}
+.letter-space{
+  letter-spacing: 2px;
+  font-style: italic;
+  font-weight: bold;
+  font-family:   sans-serif !important;
+}
+.borderZero{
+  border: 0px;
+}
 
-  .text_center{
+.text_center{
     text-align: center;
   }
 
@@ -116,46 +342,13 @@
     padding-top: 10px;
   }
 
-  .padding_top_bottom {
-    padding-top: 5px;
-    padding-bottom: 5px;
-  }
+div {
+    /*page-break-after: avoid;*/
+}
 
-  .padding_bottom_5{
-    padding-bottom: 5px;
-  }
 
-  .border_top_bottom {
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
-  }
+</style>
 
-  .border {
-    border: 1px solid black;
-  }
 
-  .border_bottom {
-    border-bottom: 1px solid;
-  }
-
-  .font_size_11{
-    font-size: 11px;
-  }
-
-  .bold {
-    font-weight: bold;
-  }
-
-  .table {
-    border-collapse: collapse;
-  }
-
-  .table, .table th, .table td {
-    border: 1px solid black;
-  }
-
-  
-
-  </style>
 
 @stop
