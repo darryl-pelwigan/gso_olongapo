@@ -670,14 +670,15 @@ class PurchaseOrderController extends Controller
  public function requisition_pc_pdf(Request $request){
 
 
-        PurchaseOrderRequisition::updateOrCreate([
+       PurchaseOrderRequisition::updateOrCreate([
             'id' =>  $request->input('requisition_id')
         ],[
             'issued_by' => $request->input('issued_by'),
             'issued_des' => $request->input('issued_by_des'),
-            'received_by ' => $request->input('received_by'),
+            'received_by' => $request->input('received_by'),
             'received_des' => $request->input('received_by_des')
         ]);
+
 
          $info = DB::table('olongapo_purchase_request_no')
                 ->join('olongapo_purchase_order_requisition_number' ,'olongapo_purchase_order_requisition_number.pono_id','=', 'olongapo_purchase_request_no.id')
@@ -732,7 +733,6 @@ class PurchaseOrderController extends Controller
 
         $this->data['po_items'] = $items_bac;
         $this->data['info']  = $info;
-        $this->data['request']  = $request->all();
 
 
 

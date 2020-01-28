@@ -333,7 +333,7 @@
                             <div class="form-group">
                               <label for="pr_no" class="col-sm-2 control-label">Requested By: </label>
                               <div class="col-sm-4" id="req2">
-                                 <input type="text" class="form-control" id="name_req" name="name_req"   placeholder="Name" />
+                                 <input type="text" class="form-control" id="name_req" name="name_req" placeholder="Name" />
                                  <input type="text" class="form-control" id="designation_req" name="designation_req"   placeholder="Designation" />
                               </div>
                             </div>
@@ -526,6 +526,8 @@ $(function() {
 
 $.fn.setReq = function(requested_by,designated_req,name_app,designation_app,req_id,issued,issued_des,receive,receive_des){
 
+  console.log(designated_req);
+
 
     var vars = name_app;
     var arrVars = vars.split("/");
@@ -553,9 +555,9 @@ $.fn.setReq = function(requested_by,designated_req,name_app,designation_app,req_
 
     if(designated_req == 'null')
     {
-        $('#designated_req').val('-');
+        $('#designation_req').val('-');
     }else{
-        $('#designated_req').val(designated_req);
+        $('#designation_req').val(designated_req);
     }
 
     if(issued == 'null')
@@ -567,9 +569,9 @@ $.fn.setReq = function(requested_by,designated_req,name_app,designation_app,req_
 
     if(issued_des == 'null')
     {
-        $('#issued_des').val('-');
+        $('#issued_by_des').val('-');
     }else{
-        $('#issued_des').val(issued_des);
+        $('#issued_by_des').val(issued_des);
     }
 
 
@@ -583,9 +585,9 @@ $.fn.setReq = function(requested_by,designated_req,name_app,designation_app,req_
 
     if(receive_des == 'null')
     {
-        $('#receive_des').val('-');
+        $('#received_by_des').val('-');
     }else{
-        $('#receive_des').val(receive_des);
+        $('#received_by_des').val(receive_des);
     }
   };
 
