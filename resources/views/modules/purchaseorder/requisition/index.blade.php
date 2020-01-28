@@ -17,7 +17,7 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title"><b>PURCHASE ORDER LIST ( <i>ADD REQUISITION AND ISSUE SLIP</i>)</b></h3>
+              <h3 class="box-title">PURCHASE ORDER LIST (ADD REQUISITION AND ISSUE SLIP)</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -32,8 +32,8 @@
                           <th>PO NO</th>
                           <th>PO DATE</th>
                           <th>PR Total</th>
-                          {{-- <th>OBR DATE</th> --}}
-                          {{-- <th>OBR Control No.</th> --}}
+                          <th>OBR DATE</th>
+                          <th>OBR Control No.</th>
                           <th></th>
                         </tr>
 
@@ -45,7 +45,7 @@
                 </table>
             </div>
              <div class="box-header">
-              <h3 class="box-title"> <b>PURCHASE ORDER LIST ( <i>ADD REQUISITION AND ISSUE SLIP </i>) PURELY CONSUMPTION </b></h3>
+              <h3 class="box-title">PURCHASE ORDER LIST (ADD REQUISITION AND ISSUE SLIP) PURELY CONSUMPTION</h3>
             </div>
              <div class="box-body">
                  <table id ="purchase_request_list"class="table table-striped table-bordered table-hover">
@@ -98,6 +98,8 @@
                         <div class="col-sm-4">
                         <input type="text" class="form-control" id="ris_date" name="ris_date" placeholder="DATE" />
                         <input type="hidden"  id="po_id" name="po_id" />
+
+
                     </div>
                 </div>
 
@@ -134,6 +136,7 @@
                     </div>
                 </div>
 
+
                 <!-- BAC INFO -->
                 <div class="form-group">
                   <label for="obr_date" class="col-sm-2 control-label">BAC No. : </label>
@@ -160,6 +163,7 @@
                     </div>
                 </div>
 
+
                  <!-- OBR INFO -->
                  <div class="form-group">
                   <label for="obr_date" class="col-sm-2 control-label">OBR Date : </label>
@@ -172,6 +176,10 @@
                     <input type="text" class="form-control" id="obr_no"  disabled="disabled"    name="obr_no" placeholder="OBR No.">
                   </div>
                 </div>
+
+
+
+
 
                 <!-- ABSTRACT INFO -->
                 <div class="form-group">
@@ -424,14 +432,14 @@ $(function() {
             data: null,
               name: 'olongapo_purchase_request_no.pr_date',
               render: function(data, type, row){
-                var prno_date = moment(data.pr_date).format("MMM DD, YYYY");
+                var prno_date = moment(data.pr_date).format("YY-MM-DD");
                   return prno_date;
               }
             },
             { data: 'po_no', name: 'olongapo_purchase_order_no.po_no' },
             { data: null, name: 'olongapo_purchase_order_no.po_date',
               render: function(data, type, row){
-                var po_date = moment(data.po_date).format("MMM DD, YYYY");
+                var po_date = moment(data.po_date).format("YY-MM-DD");
                   return po_date;
               }
             },
@@ -441,8 +449,8 @@ $(function() {
                 return accounting.formatMoney(data.amount,'Php ');
               }
              },
-             // { data: 'obr_no', name: 'olongapo_obr.obr_no' },
-             // { data: 'obr_date', name: 'olongapo_obr.obr_date' },
+             { data: 'obr_no', name: 'olongapo_obr.obr_no' },
+             { data: 'obr_date', name: 'olongapo_obr.obr_date' },
              { data: null, name: 'olongapo_bac_control_info.id' ,
               render : function(data , type , row){
                   if(data.requisition_id){
@@ -494,7 +502,7 @@ $(function() {
             data: null,
               name: 'olongapo_purchase_request_no.pr_date',
               render: function(data, type, row){
-                var prno_date = moment(data.pr_date).format("MMM DD, YYYY");
+                var prno_date = moment(data.pr_date).format("YY-MM-DD");
                   return prno_date;
               }
             },

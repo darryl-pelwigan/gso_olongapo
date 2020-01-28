@@ -17,7 +17,7 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Purchase Order</h3>
+              <h3 class="box-title">BAC LIST</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -32,8 +32,8 @@
                           <th>PO NO</th>
                           <th>PO DATE</th>
                           <th>PR Total</th>
-                          {{-- <th>OBR DATE</th> --}}
-                          {{-- <th>OBR Control No.</th> --}}
+                          <th>OBR DATE</th>
+                          <th>OBR Control No.</th>
                           <th></th>
                         </tr>
 
@@ -289,14 +289,14 @@ $(function() {
             data: null,
               name: 'olongapo_purchase_request_no.pr_date',
               render: function(data, type, row){
-                var prno_date = moment(data.pr_date).format("MMM DD, YYYY");
+                var prno_date = moment(data.pr_date).format("YY-MM-DD");
                   return prno_date;
               }
             },
             { data: 'po_no', name: 'olongapo_purchase_order_no.po_no' },
             { data: null, name: 'olongapo_purchase_order_no.po_date',
               render: function(data, type, row){
-                var po_date = moment(data.po_date).format("MMM DD, YYYY");
+                var po_date = moment(data.po_date).format("YY-MM-DD");
                   return po_date;
               }
             },
@@ -306,8 +306,8 @@ $(function() {
                 return accounting.formatMoney(data.amount,'Php ');
               }
              },
-             // { data: 'obr_no', name: 'olongapo_obr.obr_no' },
-             // { data: 'obr_date', name: 'olongapo_obr.obr_date' },
+             { data: 'obr_no', name: 'olongapo_obr.obr_no' },
+             { data: 'obr_date', name: 'olongapo_obr.obr_date' },
               { data: null, name: 'olongapo_bac_control_info.id' ,
               render : function(data , type , row){
                       return '<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#add_purchase_order_modal" onclick="$(this).addPOnumber('+data.pono_id+');" >Update</button>\

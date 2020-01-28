@@ -31,7 +31,7 @@
                           <tr>
                             <td class="label_name">Supplier: </td>
                             <td class="underline" style='padding-right:300px'><strong>{{$info->suppl_title}}</strong></td>
-                            <td>AAI No.: </td>
+                            <td>AIR No.: </td>
                             <td class="underline_2">{{$info->aai_no}}</td>
                           </tr>
                         </table>
@@ -40,7 +40,8 @@
                             <td class="label_name">PO No.: </td>
                             <td  class="underline_2"><strong>{{$info->po_no}}</strong></td>
                             <td class="label_name">&nbsp;&nbsp;&nbsp;Date : </td>
-                            <td class="underline_2">{{$info->aai_date}}</td>
+                            <!-- <td class="underline_2">{{--$info->aai_date--}}</td> -->
+                            <td class="underline_2">{{$info->po_date}}</td>
                             <td class="label_name" >&nbsp;&nbsp;&nbsp;Invoice No.: </td>
                             <td class="underline_2" style="padding-right: 40px">{{$info->invoice_no}}</td>
                             <td class="label_name">&nbsp;&nbsp;&nbsp;Date : </td>
@@ -70,8 +71,8 @@
                       <?php $count=1; $total_price=0; ?>
                         @foreach( $po_items as $data )
                             <tr id= "tbl_items">
-                              <td class="output_txt" align="center">{{ $data->unit }}</td>
                               <td class="output_txt" align="center">{{ $count }}</td>
+                              <td class="output_txt" align="center">{{ $data->unit }}</td>
 
                               <?php
                               $descript = $data->description;
@@ -136,7 +137,7 @@
                               <td><br></td>
                             </tr>
                              <tr>
-                              <td>Date Received: <u>{{ $req["dtr"]}}</u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                              <td>Date Received: <u>{{ \Carbon\Carbon::parse($req["dtr"])->format('F d, Y') }}</u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                             </tr>
                             @if($req["status"] == 1)
                             <tr>
@@ -170,15 +171,15 @@
                               <td><br></td>
                             </tr>
                             <tr>
-                              <td class="center">Date Inspected: <u>{{ $req["dti"]}}</u></td>
+                              <td class="center">Date Inspected: <u>{{ \Carbon\Carbon::parse($req["dti"])->format('F d, Y') }}</u></td>
                             </tr>
                             @if(isset($req["inspected"]))
                             <tr>
-                              <td><input class="inp2" type="checkbox" checked> &nbsp;Inspected, verified and found OK As to quantityand specifiactions</td>
+                              <td><input class="inp2" type="checkbox" checked> &nbsp;Inspected, verified and found OK As to quantity and specifications</td>
                             </tr>
                             @else
                              <tr>
-                              <td><input class="inp2" type="checkbox"> &nbsp;Inspected, verified and found OK As to quantityand specifiactions</td>
+                              <td><input class="inp2" type="checkbox"> &nbsp;Inspected, verified and found OK As to quantity and specifications</td>
                             </tr>
                             @endif
                             <tr>
