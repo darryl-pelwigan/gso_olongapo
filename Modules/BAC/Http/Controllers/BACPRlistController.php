@@ -31,7 +31,6 @@ class BACPRlistController extends Controller
         return $this->data;
     }
 
-
     public function index()
     {
         $holiday = Holiday::all();

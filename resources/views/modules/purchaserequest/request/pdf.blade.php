@@ -138,12 +138,12 @@ if($pr->proc_type != 0){
                           <?php if(isset($prs[$x]['qty'] )){?>
                             <?php $total_price = $prs[$x]['unit_price'] * $prs[$x]['qty'];  ?>
                               <tr id="tbl_items">
-                                <td class="text-right2" style='padding:5px; text-align: left'>{{ ($x+1) }}</td>
-                                <td class="text-right2" style='text-align: right'>{{ $prs[$x]['qty'] }}</td>
-                                <td class="text-right2" style='text-align: left'>{{ $prs[$x]['unit'] }}</td>
-                                <td class="text-right2" style='word-wrap: break-word; text-align: left' >{{ $prs[$x]['description'] }}</td>
-                                <td class="text-right2"  style='text-align: right'>{{ number_format($prs[$x]['unit_price'],2) }} </td>
-                                <td class="text-right2"  style='text-align: right'>{{ number_format($prs[$x]['total_price'],2) }} </td>
+                                <td class="text-right2" style='padding:5px; text-align: center;'>{{ ($x+1) }}</td>
+                                <td class="text-right2" style='text-align: center;'>{{ $prs[$x]['qty'] }}</td>
+                                <td class="text-right2" style='text-align: center;'>{{ $prs[$x]['unit'] }}</td>
+                                <td class="text-right2" style='word-wrap: break-word; text-align: left; padding-left: 5px;'>{{ $prs[$x]['description'] }}</td>
+                                <td class="text-right2"  style='text-align: right; padding-right: 5px;'>{{ number_format($prs[$x]['unit_price'],2) }} </td>
+                                <td class="text-right2"  style='text-align: right; padding-right: 5px;'>{{ number_format($prs[$x]['total_price'],2) }} </td>
                               </tr>
                             <?php $count++;  $unit_price_total += $prs[$x]['unit_price'] ; $sum_price_total +=$total_price;  ?>
                         <?php
@@ -193,10 +193,22 @@ if($pr->proc_type != 0){
                     </tbody>
               </table>
               @if($i == round($pageloop) || $pageloop == 1)
-                <table class="table  table-bordered tbl_purpose" style="margin-left:-1px;">
-                   <tr>
-                       <td colspan="6" rowspan="4" style="padding-right:6px;">PURPOSE :  <span><u>{{$pr->pr_purpose}}</u></span><br>___________________________________________________________________________________________________________________</td>
-                     </tr>
+                <table class="tbl_purpose" width="100%" style="border-left: 1px solid; border-right: 1px solid; border-collapse: collapse;">
+                  <tr>
+                    <td width="5%"> &nbsp; </td>
+                    <td width="8%"> Purpose: </td>
+                    <td style="border-bottom: 1px solid black;"> {{$pr->pr_purpose}} </td>
+
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+
+             {{--       <tr>
+                       <td colspan="6" rowspan="4" style="padding-right:6px;">PURPOSE : <span><u>{{$pr->pr_purpose}}</u></span></td>
+                    </tr> --}}
                 </table>
               @endif
               <table class="table  table-bordered table_footer" border="1" style="border-collapse: collapse;"  width="100%">
@@ -250,14 +262,14 @@ if($pr->proc_type != 0){
                     <td>{{ $form["name_avail"]}}</td>
 
 
-                    <td class="underline">{{ $form["name_app"]}}</td>
+                    <td class="underline">{{ $form["name_app1"]}} / {{ $form["name_app2"]}} </td>
 
                     {{-- <td class="underline" style="padding-right: 20px; padding-left:20px;">{{ strtoupper($approved_by[0]->full_name ?? '') }} / {{ strtoupper($approved_by[1]->full_name ?? '') }}</td> --}}
                   </tr>
                    <tr>
                     <td class="underline">{{$form["designation_req"]}}</td>
                     <td>{{ $form["designation_avail"]}}</td>
-                    <td class="underline">{{ $form["designation_app"]}}</td>
+                    <td class="underline">{{ $form["designation_app1"] }} / {{ $form["designation_app2"] }}</td>
                   </tr>
               </table>
               <div style="page-break-after: always">
@@ -284,7 +296,7 @@ if($pr->proc_type != 0){
 <style type="text/css">
 
 html,body{
-  margin: 0px 5px;
+  margin: 10px 10px;
 }
 
 .table-thnormal>tr>td, {

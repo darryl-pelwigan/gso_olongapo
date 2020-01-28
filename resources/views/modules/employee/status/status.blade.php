@@ -82,7 +82,13 @@ $(function() {
               }
             },
             { data: 'pr_no', name: 'olongapo_purchase_request_no.pr_no' },
-            { data: 'pr_date', name: 'olongapo_purchase_request_no.pr_date' },
+            { data: null, name: 'olongapo_purchase_request_no.pr_date',
+              render: function(data, type, row){
+                var pr_date = moment(data.pr_date).format("MMM DD, YYYY");
+                  return pr_date;
+              }
+
+            },
             // { data: 'po_no', name: 'olongapo_purchase_order_no.po_no' }
             // { data: 'sup_title', name: 'supplier_info.title' },
 

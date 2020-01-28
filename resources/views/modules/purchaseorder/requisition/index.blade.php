@@ -21,7 +21,7 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                 <table id="purchase_order_list" class="table table-striped table-bordered table-hover">
+                 <table id="purchase_order_list" class="table table-striped table-bordered table-hover responsive" width="100%">
                       <thead>
 
                         <tr>
@@ -32,8 +32,8 @@
                           <th>PO NO</th>
                           <th>PO DATE</th>
                           <th>PR Total</th>
-                          <th>OBR DATE</th>
-                          <th>OBR Control No.</th>
+                          {{-- <th>OBR DATE</th> --}}
+                          {{-- <th>OBR Control No.</th> --}}
                           <th></th>
                         </tr>
 
@@ -45,10 +45,10 @@
                 </table>
             </div>
              <div class="box-header">
-              <h3 class="box-title">PURCHASE ORDER LIST (ADD REQUISITION AND ISSUE SLIP) PURELY CONSUMPTION</h3>
+              <h3 class="box-title">PURCHASE ORDER LIST (ADD REQUISITION AND ISSUE SLIP) PURELY CONSUMPTION)</h3>
             </div>
              <div class="box-body">
-                 <table id ="purchase_request_list"class="table table-striped table-bordered table-hover">
+                 <table id ="purchase_request_list"class="table table-striped table-bordered table-hover responsive" width="100%">
                       <thead>
 
                         <tr>
@@ -309,6 +309,170 @@
 
     </div>
   </div>
+
+
+   <div class="modal fade" id="add_requisition_2" tabindex="-1" role="dialog" aria-labelledby="add_purchase_order_modalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="add_purchase_order_modalLabel"> <span>Requisition and Issue Slip
+              </span></h4>
+            </div>
+            <div class="modal-body">
+              <div id="status"></div>
+                <div id="contents-menu">
+                    <form class="form-horizontal" id="set_prop_2" method="post" action="{{route('po.po_requisition_pdf')}}">
+                      <div class="box-body">
+                        <div id="statusC"></div>
+                          <!-- DATE RECEIVED -->
+                         <input type="hidden" class="form-control" id="prid" name="prid"/>
+                         <input type="hidden" name="requisition_id" id="requisition_id_2" />
+
+                            <div class="form-group">
+                              <label for="pr_no" class="col-sm-2 control-label">Requested By: </label>
+                              <div class="col-sm-4" id="req2">
+                                 <input type="text" class="form-control" id="name_req_1" name="name_req" placeholder="Name" />
+                                 <input type="text" class="form-control" id="designation_req_1" name="designation_req"   placeholder="Designation" />
+                              </div>
+                            </div>
+
+
+                            <div class="form-group">
+                               <label for="pr_no" class="col-sm-2 control-label">Approved By: </label>
+                                  <div class="col-sm-4">
+                                   <input type="text" class="form-control" id="name_app" name="name_app1"   placeholder="Name" />
+                                   <input type="text" class="form-control" id="designation_app" name="designation_app1"   placeholder="Position" />
+                                  </div>
+
+                                  <div class="col-sm-1">
+                                     <p>/</p>
+                                     <p>/</p>
+                                  </div>
+
+                                  <div class="col-sm-4">
+                                     <input type="text" class="form-control" id="name_app4" name="name_app2"   placeholder="Name" />
+                                     <input type="text" class="form-control" id="designation_app4" name="designation_app2"   placeholder="Position" />
+                                  </div>
+                              </div>
+
+
+                            <div class="form-group">
+                              <label for="pr_no" class="col-sm-2 control-label">Issued By: </label>
+                                <div class="col-sm-4" id="avail2">
+                                 <input type="text" class="form-control" id="issued_by_2" name="issued_by"   placeholder="Name" />
+                                 <input type="text" class="form-control" id="issued_by_des_2" name="issued_by_des"   placeholder="Position" />
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                              <label for="pr_no" class="col-sm-2 control-label">Received By: </label>
+                                <div class="col-sm-4" id="avail2">
+                                 <input type="text" class="form-control" id="received_by_2" name="received_by"   placeholder="Name" />
+                                 <input type="text" class="form-control" id="received_by_des_2" name="received_by_des"   placeholder="Position" />
+                                </div>
+                            </div>
+
+
+
+                              <div class="col-sm-12">
+                                <button type="submit" class="btn btn-info pull-right">Submit</button>
+                              </div>
+                      <!-- /.box-footer -->
+
+                      {{csrf_field()}}
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+  <div class="modal fade" id="add_requisition_1" tabindex="-1" role="dialog" aria-labelledby="add_purchase_order_modalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="add_purchase_order_modalLabel"> <span>Requisition and Issue Slip
+              </span></h4>
+            </div>
+            <div class="modal-body">
+              <div id="status"></div>
+                <div id="contents-menu">
+                    <form class="form-horizontal" id="set_prop" method="post" action="{{route('po.po_requisition_pc_pdf')}}">
+                      <div class="box-body">
+                        <div id="statusC"></div>
+                          <!-- DATE RECEIVED -->
+                         <input type="hidden" name="requisition_id" id="requisition_id" />
+
+                            <div class="form-group">
+                              <label for="pr_no" class="col-sm-2 control-label">Requested By: </label>
+                              <div class="col-sm-4" id="req2">
+                                 <input type="text" class="form-control" id="name_req" name="name_req" placeholder="Name" />
+                                 <input type="text" class="form-control" id="designation_req" name="designation_req"   placeholder="Designation" />
+                              </div>
+                            </div>
+
+
+                            <div class="form-group">
+                               <label for="pr_no" class="col-sm-2 control-label">Approved By: </label>
+                                  <div class="col-sm-4">
+                                   <input type="text" class="form-control" id="name_app1" name="name_app1"   placeholder="Name" />
+                                   <input type="text" class="form-control" id="designation_app1" name="designation_app1"   placeholder="Position" />
+                                  </div>
+
+                                  <div class="col-sm-1">
+                                     <p>/</p>
+                                     <p>/</p>
+                                  </div>
+
+                                  <div class="col-sm-4">
+                                     <input type="text" class="form-control" id="name_app2" name="name_app2"   placeholder="Name" />
+                                     <input type="text" class="form-control" id="designation_app2" name="designation_app2"   placeholder="Position" />
+                                  </div>
+                              </div>
+
+
+                            <div class="form-group">
+                              <label for="pr_no" class="col-sm-2 control-label">Issued By: </label>
+                                <div class="col-sm-4" id="avail2">
+                                 <input type="text" class="form-control" id="issued_by" name="issued_by"   placeholder="Name" />
+                                 <input type="text" class="form-control" id="issued_by_des" name="issued_by_des"   placeholder="Position" />
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                              <label for="pr_no" class="col-sm-2 control-label">Received By: </label>
+                                <div class="col-sm-4" id="avail2">
+                                 <input type="text" class="form-control" id="received_by" name="received_by"   placeholder="Name" />
+                                 <input type="text" class="form-control" id="received_by_des" name="received_by_des"   placeholder="Position" />
+                                </div>
+                            </div>
+
+
+                              <div class="col-sm-12">
+                                <button type="submit" class="btn btn-info pull-right">Submit</button>
+                              </div>
+                      <!-- /.box-footer -->
+
+                      {{csrf_field()}}
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+  </div>
+
+
 </div>
 
    @stop
@@ -351,14 +515,14 @@ $(function() {
             data: null,
               name: 'olongapo_purchase_request_no.pr_date',
               render: function(data, type, row){
-                var prno_date = moment(data.pr_date).format("YY-MM-DD");
+                var prno_date = moment(data.pr_date).format("MMM DD, YYYY");
                   return prno_date;
               }
             },
             { data: 'po_no', name: 'olongapo_purchase_order_no.po_no' },
             { data: null, name: 'olongapo_purchase_order_no.po_date',
               render: function(data, type, row){
-                var po_date = moment(data.po_date).format("YY-MM-DD");
+                var po_date = moment(data.po_date).format("MMM DD, YYYY");
                   return po_date;
               }
             },
@@ -368,16 +532,24 @@ $(function() {
                 return accounting.formatMoney(data.amount,'Php ');
               }
              },
-             { data: 'obr_no', name: 'olongapo_obr.obr_no' },
-             { data: 'obr_date', name: 'olongapo_obr.obr_date' },
-              { data: null, name: 'olongapo_bac_control_info.id' ,
+             // { data: 'obr_no', name: 'olongapo_obr.obr_no' },
+             // { data: 'obr_date', name: 'olongapo_obr.obr_date' },
+             { data: null, name: 'olongapo_bac_control_info.id' ,
               render : function(data , type , row){
-                      if(data.requisition_id){
-                        return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).updateRequisition('+data.pono_id+');" >Update RIS</button>\
-                          <form method="post" action="{{route('po.po_requisition_pdf')}}">{{csrf_field()}}<input type="hidden" name="requisition_id" value="'+data.requisition_id+'" /><input type="submit" class="btn btn-sm btn-default" name="pdf" value="Pdf" /> </form>';
-                      }else{
-                         return '<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).addRequisition('+data.pono_id+');" >Add RIS</button>\ ';
-                      }
+// <<<<<<< HEAD
+//                       if(data.requisition_id){
+//                         return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).updateRequisition('+data.pono_id+');" >Update RIS</button>\
+//                           <form method="post" action="{{route('po.po_requisition_pdf')}}">{{csrf_field()}}<input type="hidden" name="requisition_id" value="'+data.requisition_id+'" /><input type="submit" class="btn btn-sm btn-default" name="pdf" value="Pdf" /> </form>';
+//                       }else{
+//                          return '<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).addRequisition('+data.pono_id+');" >Add RIS</button>\ ';
+//                       }
+// =======
+                  if(data.requisition_id){
+                    return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).updateRequisition('+data.pono_id+');" >Update RIS</button>\
+                      <button type="button" class="btn  btn-sm" data-toggle="modal" data-target="#add_requisition_2" onclick="$(this).setReq2(\''+data.requested_by+'\',\''+data.designated_req+'\',\''+data.name_app+'\',\''+data.designation_app+'\',\''+data.requisition_id+'\',\''+data.issued_by+'\',\''+data.issued_des+'\',\''+data.received_by+'\',\''+data.received_des+'\');" >PDF</button>';
+                  }else{
+                     return '<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).addRequisition('+data.pono_id+');" >Add RIS</button>\ ';
+                  }
                 }
               },
         ],
@@ -416,7 +588,7 @@ $(function() {
             data: null,
               name: 'olongapo_purchase_request_no.pr_date',
               render: function(data, type, row){
-                var prno_date = moment(data.pr_date).format("YY-MM-DD");
+                var prno_date = moment(data.pr_date).format("MMM DD, YYYY");
                   return prno_date;
               }
             },
@@ -424,7 +596,7 @@ $(function() {
               render : function(data , type , row){
                       if(data.requisition_id){
                         return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add_requisition_pc_modal" onclick="$(this).updateRequisition_pc('+data.prno_id+');" >Update RIS</button>\
-                        <form method="post" action="{{route('po.po_requisition_pc_pdf')}}">{{csrf_field()}}<input type="hidden" name="requisition_id" value="'+data.requisition_id+'" /><input type="submit" class="btn btn-sm btn-default" name="pdf" value="Pdf" /> </form>  ';
+                        <button type="button" class="btn  btn-sm" data-toggle="modal" data-target="#add_requisition_1" onclick="$(this).setReq(\''+data.requested_by+'\',\''+data.designated_req+'\',\''+data.name_app+'\',\''+data.designation_app+'\',\''+data.requisition_id+'\',\''+data.issued_by+'\',\''+data.issued_des+'\',\''+data.received_by+'\',\''+data.received_des+'\');" >PDF</button>';
                       }else{
                          return '<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#add_requisition_pc_modal" onclick="$(this).addRequisition_pc('+data.prno_id+');">Add RIS</button>\ ';
                       }
@@ -442,6 +614,138 @@ $(function() {
 
 
   });
+
+$.fn.setReq = function(requested_by,designated_req,name_app,designation_app,req_id,issued,issued_des,receive,receive_des)
+{
+    var vars = name_app;
+    var arrVars = vars.split("/");
+    var lastVar = arrVars.pop();
+    var restVar = arrVars.join("/");
+
+    var vars2 = designation_app;
+    var arrVars2 = vars2.split("/");
+    var lastVar2 = arrVars2.pop();
+    var restVar2 = arrVars2.join("/");
+    $('#name_app1').val(restVar);
+    $('#designation_app1').val(restVar2);
+    $('#name_app2').val(lastVar);
+    $('#designation_app2').val(lastVar2);
+
+    $('#requisition_id').val(req_id);
+
+
+    if(requested_by == 'null')
+    {
+        $('#name_req').val('-');
+    }else{
+        $('#name_req').val(requested_by);
+    }
+
+    if(designated_req == 'null')
+    {
+        $('#designation_req').val('-');
+    }else{
+        $('#designation_req').val(designated_req);
+    }
+
+    if(issued == 'null')
+    {
+        $('#issued_by').val('-');
+    }else{
+        $('#issued_by').val(issued);
+    }
+
+    if(issued_des == 'null')
+    {
+        $('#issued_by_des').val('-');
+    }else{
+        $('#issued_by_des').val(issued_des);
+    }
+
+
+    if(receive == 'null')
+    {
+        $('#received_by').val('-');
+    }else{
+        $('#received_by').val(receive);
+    }
+
+
+    if(receive_des == 'null')
+    {
+        $('#received_by_des').val('-');
+    }else{
+        $('#received_by_des').val(receive_des);
+    }
+
+
+  };
+
+$.fn.setReq2 = function(requested_by,designated_req,name_app,designation_app,req_id,issued,issued_des,receive,receive_des)
+{
+    var vars = name_app;
+    var arrVars = vars.split("/");
+    var lastVar = arrVars.pop();
+    var restVar = arrVars.join("/");
+
+    var vars2 = designation_app;
+    var arrVars2 = vars2.split("/");
+    var lastVar2 = arrVars2.pop();
+    var restVar2 = arrVars2.join("/");
+    $('#name_app').val(restVar);
+    $('#designation_app').val(restVar2);
+    $('#name_app4').val(lastVar);
+    $('#designation_app4').val(lastVar2);
+
+    $('#requisition_id_2').val(req_id);
+
+
+    if(requested_by == 'null')
+    {
+        $('#name_req_2').val('-');
+    }else{
+        $('#name_req_2').val(requested_by);
+    }
+
+    if(designated_req == 'null')
+    {
+        $('#designation_req_2').val('-');
+    }else{
+        $('#designation_req_2').val(designated_req);
+    }
+
+    if(issued == 'null')
+    {
+        $('#issued_by_2').val('-');
+    }else{
+        $('#issued_by_2').val(issued);
+    }
+
+    if(issued_des == 'null')
+    {
+        $('#issued_by_des_2').val('-');
+    }else{
+        $('#issued_by_des_2').val(issued_des);
+    }
+
+
+    if(receive == 'null')
+    {
+        $('#received_by_2').val('-');
+    }else{
+        $('#received_by_2').val(receive);
+    }
+
+
+    if(receive_des == 'null')
+    {
+        $('#received_by_des_2').val('-');
+    }else{
+        $('#received_by_des_2').val(receive_des);
+    }
+
+  };
+
 
 $.fn.addRequisition = function(pono_id){
    $("#add_requisition_number")[0].reset();

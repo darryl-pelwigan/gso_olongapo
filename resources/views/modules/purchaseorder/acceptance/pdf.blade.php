@@ -31,7 +31,7 @@
                           <tr>
                             <td class="label_name">Supplier: </td>
                             <td class="underline" style='padding-right:300px'><strong>{{$info->suppl_title}}</strong></td>
-                            <td>AAI No.: </td>
+                            <td>AIR No.: </td>
                             <td class="underline_2">{{$info->aai_no}}</td>
                           </tr>
                         </table>
@@ -40,7 +40,8 @@
                             <td class="label_name">PO No.: </td>
                             <td  class="underline_2"><strong>{{$info->po_no}}</strong></td>
                             <td class="label_name">&nbsp;&nbsp;&nbsp;Date : </td>
-                            <td class="underline_2">{{$info->aai_date}}</td>
+                            <!-- <td class="underline_2">{{--$info->aai_date--}}</td> -->
+                            <td class="underline_2">{{$info->po_date}}</td>
                             <td class="label_name" >&nbsp;&nbsp;&nbsp;Invoice No.: </td>
                             <td class="underline_2" style="padding-right: 40px">{{$info->invoice_no}}</td>
                             <td class="label_name">&nbsp;&nbsp;&nbsp;Date : </td>
@@ -70,8 +71,8 @@
                       <?php $count=1; $total_price=0; ?>
                         @foreach( $po_items as $data )
                             <tr id= "tbl_items">
-                              <td class="output_txt" align="center">{{ $data->unit }}</td>
                               <td class="output_txt" align="center">{{ $count }}</td>
+                              <td class="output_txt" align="center">{{ $data->unit }}</td>
 
                               <?php
                               $descript = $data->description;
@@ -136,7 +137,7 @@
                               <td><br></td>
                             </tr>
                              <tr>
-                              <td>Date Received: <u>{{ $req["dtr"]}}</u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                              <td>Date Received: <u>{{ \Carbon\Carbon::parse($req["dtr"])->format('F d, Y') }}</u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                             </tr>
                             @if($req["status"] == 1)
                             <tr>
@@ -156,15 +157,9 @@
                             <tr>
                               <td><br></td>
                             </tr>
-                            @if($req["set_property"] == 0)
-                            <tr>
-                              <td class="underline_3" align="center"><b>{{$req["prop_emp1"]}}</b></td>
-                            </tr>
-                            @else
                             <tr>
                               <td class="underline_3" align="center"><b>{{$req["prop_emp2"]}}</b></td>
                             </tr>
-                            @endif
                             <tr>
                               <td class="text" align="center">Property Officer</td>
                             </tr>
@@ -176,29 +171,22 @@
                               <td><br></td>
                             </tr>
                             <tr>
-                              <td class="center">Date Inspected: <u>{{ $req["dti"]}}</u></td>
+                              <td class="center">Date Inspected: <u>{{ \Carbon\Carbon::parse($req["dti"])->format('F d, Y') }}</u></td>
                             </tr>
                             @if(isset($req["inspected"]))
                             <tr>
-                              <td><input class="inp2" type="checkbox" checked> &nbsp;Inspected, verified and found OK As to quantityand specifiactions</td>
+                              <td><input class="inp2" type="checkbox" checked> &nbsp;Inspected, verified and found OK As to quantity and specifications</td>
                             </tr>
                             @else
                              <tr>
-                              <td><input class="inp2" type="checkbox"> &nbsp;Inspected, verified and found OK As to quantityand specifiactions</td>
+                              <td><input class="inp2" type="checkbox"> &nbsp;Inspected, verified and found OK As to quantity and specifications</td>
                             </tr>
                             @endif
                             <tr>
                               <td><br></td>
-                            </tr>
-                            @if($req["set_inspector"] == 0)
-                            <tr>
-                              <td class="underline_3" align="center"><b>{{ $req["insp_emp1"] }}</b></td>
-                            </tr>
-                            @else
-                            <tr>
+                            </tr><tr>
                               <td class="underline_3" align="center"><b>{{ $req["insp_emp2"] }}</b></td>
                             </tr>
-                            @endif
                             <tr>
                               <td class="text" align="right">Inspection Officer/Inspection Committee</td>
                             </tr>
@@ -260,7 +248,7 @@
 
 ?> --}}
 html,body{
-  margin: 5px 5px;
+  margin: 15px 15px;
   font-size: 13px;
 }
 .table-thnormal>thead>tr>th{

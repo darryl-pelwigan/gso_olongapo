@@ -90,6 +90,7 @@ class AbstrctController extends Controller
                         'item_price.*.*.required'    => 'Item Price is Required'
                     ]);
 
+
         if($validator->fails()){
             $data['status'] = 0;
             $data['errors'] = $validator->messages();

@@ -56,7 +56,7 @@
                           </tr>
                           <tr>
                             <td style="text-align: center;">SAI No.: </td>
-                            <td class="underline" style="text-align: center;">{{$info->sai_no}}</td>
+                            <td class="underline" style="text-align: center;">{{$info->sai_no ?? ''}}</td>
                           </tr>
                         </table>
                       </td>
@@ -68,7 +68,7 @@
                           </tr>
                           <tr>
                             <td  style="text-align: center;">Date: </td>
-                            <td class="underline" style="text-align: center;">{{ date('F j Y', strtotime($info->sai_date)) }}</td>
+                            <td class="underline" style="text-align: center;">{{ isset($info->sai_date) ?  date('F j Y', strtotime($info->sai_date)) : '' }}</td>
                           </tr>
                         </table>
                       </td>
@@ -181,7 +181,7 @@
                                 <table class="table_header" width="100%">
                                   <tr>
                                     <td width="9%" style="margin-left: 10px;">Purpose:</td>
-                                    <td width="90%" class="underline" style="margin-right: 5px;">{{$info->pr_purpose}}</td>
+                                    <td width="90%" class="underline" style="margin-right: 5px;">{{$info->pr_purpose ?? ''}}</td>
                                     <td width="0.5%"></td>
                                   </tr>
                                   <tr>
@@ -282,34 +282,33 @@
                                     <td class="border" align="center">&nbsp;</td>
                                     <td class="border" align="center">&nbsp;</td>
                                   </tr>
-                                  <tr>
+                                     @php
+                                      $name = explode('/', $info->name_app);
+                                    @endphp
+                                      <tr>
                                     <td align="center"><b>Printed Name:</b></td>
                                     <td class="border" align="center" style="font-size: 9px;"> {{ strtoupper($info->requested_by ?? '') }}</td>
 
-                                    @if ($request_signee)
-                                      @foreach ($request_signee as $rs)
-                                        <td class="border_bottom" align="center"> <b> {{ $rs->full_name }}</b> </td>
-                                      @endforeach
-                                    @endif
+                                        <td class="border_bottom" align="center"> <b>{{ $name[0]}}</b> </td>
+                                        <td class="border_bottom" align="center"> <b>{{ $name[1]}}</b> </td>
 
-                                    {{-- <td class="border_bottom" align="center"> <b>SHEILA R. PADILLA</b> </td> --}}
-                                    <td class="border" align="center"> &nbsp; </td>
-                                    <td class="border" align="center"> &nbsp; </td>
+                                        <td class="border" align="center">{{$info->issued_by}} </td>
+                                        <td class="border" align="center">{{$info->received_by}}  </td>
                                   </tr>
+                                  @php
+                                      $des = explode('/', $info->designation_app);
+                                  @endphp
                                   
-                                  <tr>
+                                    <tr>
                                     <td class="borderZero" align="center"><b>Designation:</b></td>
-                                    <td class="border" align="center" style="font-size: 10px;">{{ strtoupper($info->designated ?? '') }}</td>
+                                    <td class="border" align="center" style="font-size: 10px;">{{ strtoupper($info->designated_req ?? '') }}</td>
 
-                                    @if ($request_signee)
-                                      @foreach ($request_signee as $rs)
-                                        <td class="border_bottom" align="center"> <b> {{ $rs->position }}</b> </td>
-                                      @endforeach
-                                    @endif
-                          {{--           <td class="border_bottom" align="center"><b>City Mayor</b></td>
-                                    <td class="border_bottom" align="center"><b>Secratary to the Mayor</b></td> --}}
-                                    <td class="border" align="center">&nbsp;</td>
-                                    <td class="border" align="center">&nbsp;</td>
+                                  
+
+                                        <td class="border_bottom" align="center"> <b>{{$des[0]}}</b> </td>
+                                        <td class="border_bottom" align="center"> <b>{{$des[1]}} </b> </td>
+                                        <td class="border" align="center">{{ $info->issued_des}}</td>
+                                        <td class="border" align="center">{{ $info->received_des}}</td>
                                   </tr>
                                   <tr>
                                     <td align="center"><b>Date:</b></td>

@@ -156,13 +156,13 @@
                                 <li class="completed">
                                 <span class="bubble"></span>
                                 <i class="fa fa-check-circle"></i>
-                                PPMP APPROVED
+                                  PPMP APPROVED
                                 </li>
                               @else
                                 <li class="declined">
                                 <span class="bubble"></span>
                                 <i class="fa fa-times-circle"></i>
-                                PPMP DECLINED<br>
+                                PPMP DECLINED <br>
                                 Remarks: <u>{{ $status[$key]['ppmp']->remarks }}</u>
                                 </li>
                                 <?= $currentstatus = "Purchase request has been decline."; ?>
@@ -364,46 +364,23 @@
                  <div class="form-group">
                      <label for="purpose" class="col-sm-2 control-label">Purpose : </label>
                       <div class="col-sm-6">
-                        <textarea  class="form-control input-sm" id="purpose"  name="purpose"    placeholder="Purpose" > </textarea>
+                        <textarea  class="form-control input-sm" id="purpose"  name="purpose" placeholder="Purpose" > </textarea>
                     </div>
 
 
                     <label class="container">Purely Consumption 
                       <input class="input-sm" type="checkbox" name="pc" value=1>
-                      <input class="input-sm" type="hidden" name="pc" value=0 >
+                      {{-- <input class="input-sm" type="hidden" name="pc" value=0 > --}}
                       <span class="checkmark"></span>
                     </label>
                 </div>
 
                 <div class="form-group">
-                     <label for="requested_by" class="col-sm-2 control-label">Requested By: </label>
-                      <div class="col-sm-6">
-                        <input type="text" class="form-control" id="requested_by" name="requested_by" placeholder="" />
-                    </div>                   
+                    <label for="requested_by" class="col-sm-2 control-label">Requested By: </label>
+                    <div class="col-sm-6">
+                      <input type="text" class="form-control" id="requested_by" name="requested_by" placeholder="" />
+                    </div>        
                 </div>
-
-{{-- 
-                <div class="alert alert-danger" id="ppmp_alert">
-                  <h5 style="margin: 0;"><i class="icon fa fa-ban"></i> Set PPMP No:</h5>
-                </div>
-
-                <div class="form-group">
-                  <label for="employee_name" class="col-sm-1 control-label">Date: </label>
-                  <div class="col-sm-2">
-                        <input type="text" name="date" class="form-control datepicker input-sm" />
-                  </div>
-
-                  <label for="employee_name" class="col-sm-1 control-label">PPMP No: </label>
-                  <div class="col-sm-2">
-                        <input type="text" name="ppmp_no" id="remarks" class="form-control input-sm" />
-                  </div>
-
-                  <label for="employee_name" class="col-sm-1 control-label">Remarks : </label>
-                  <div class="col-sm-3">
-                        <input type="text" name="remarks" id="remarks" class="form-control input-sm" />
-                        <input type="hidden" name="approval" id="approval" class="form-control" />
-                  </div>
-                </div> --}}
 
                 <button type="button" class="btn btn-success btn-sm pull-right" id="add_items"><i class="fa fa-plus"></i></button>
 
@@ -491,7 +468,7 @@
 
                     <label class="container">Purely Consumption 
                       <input type="checkbox" name="import_pc" value=1>
-                      <input type="hidden" name="import_pc" value=0 >
+                      {{-- <input type="hidden" name="import_pc" value=0 > --}}
                       <span class="checkmark"></span>
                     </label>
                 </div>
