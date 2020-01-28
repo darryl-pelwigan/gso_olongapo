@@ -13,7 +13,7 @@ use Modules\PurchaseRequest\Entities\PurchaseNo;
 use Modules\PurchaseOrder\Entities\{PurchaseOrderNo,PurchaseOrderItems,PurchaseOrderRequisition,PurchaseOrderAcceptance};
 use Modules\Employee\Entities\{Employee};
 
-
+use Illuminate\Support\Facades\Crypt;
 use PDF, Excel;
 use PHPExcel_Worksheet_Drawing;
 use Input;
@@ -975,8 +975,8 @@ class PurchaseOrderController extends Controller
     }
 
     public function acceptance_pdf(Request $request,$id,$aid,$prop, $type){
-        // $params = array();
-        // parse_str($prop, $params);
+        $params = array();
+        parse_str($prop, $params);
          $info = DB::table('olongapo_purchase_order_no')
                     ->join('olongapo_purchase_order_acceptance_issuance' ,'olongapo_purchase_order_acceptance_issuance.pono_id','=', 'olongapo_purchase_order_no.id')
                     ->join('olongapo_bac_control_info' ,'olongapo_bac_control_info.id','=', 'olongapo_purchase_order_no.bac_control_id')
@@ -1017,8 +1017,6 @@ class PurchaseOrderController extends Controller
                     ->where('olongapo_purchase_order_acceptance_issuance.id', '=', $aid)
                     ->first();
 
-                    dd($info);
-
         $items_bac = DB::table('olongapo_purchase_order_items as po')
                     ->join('olongapo_purchase_request_items as items','items.id','=','po.pr_item_id')
                     ->select([
@@ -1039,7 +1037,6 @@ class PurchaseOrderController extends Controller
         $this->data['po_items'] = $items_bac;
         $this->data['info']  = $info;
         $this->data['prop'] =$prop;
-
         $this->data['req'] =$params;
 
         if($type == 1) {
@@ -1166,21 +1163,27 @@ class PurchaseOrderController extends Controller
                         $cell->setFontFamily('Georgia');
                         $cell->setFontSize('16');
                     });
-                    $sheet->cell('A1:B1', function($cell) {
-                        $cell->setFontFamily('Georgia');
-                        $cell->setFontSize('16');
-                    });
                     $sheet->cell('B4:B7', function($cell) {
                         $cell->setFont(array(
                             'underline' => true,
                         ));
                     });
-                    $sheet->cell('D4:D6', function($cell) {
+                    $sheet->cell('D4:D7', function($cell) {
                         $cell->setFont(array(
                             'underline' => true,
                         ));
                     });
-                    $sheet->cell('A41', function($cell) {
+                    $sheet->cell('B38', function($cell) {
+                        $cell->setFont(array(
+                            'underline' => true,
+                        ));
+                    });
+                    $sheet->cell('D38', function($cell) {
+                        $cell->setFont(array(
+                            'underline' => true,
+                        ));
+                    });
+                    $sheet->cell('A41:D41', function($cell) {
                         $cell->setFont(array(
                             'underline' => true,
                         ));

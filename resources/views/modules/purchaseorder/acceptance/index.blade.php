@@ -76,8 +76,8 @@
                    <label for="pr_no" class="col-sm-2 control-label">Date : </label>
                         <div class="col-sm-4">
                         <input type="text" class="form-control" id="ris_date" name="aai_date" placeholder="DATE" />
-                        <input type="hidden"  id="po_id" name="po_id" />
-                        <input type="hidden"  id="acceptance_id" name="acceptance_id" />
+                        <input type="hidden"  id="new_po_id" name="po_id" />
+                        <input type="hidden"  id="new_acceptance_id" name="acceptance_id" />
 
                     </div>
                 </div>
@@ -245,6 +245,7 @@
         <div id="status"></div>
         <div id="contents-menu">
             <form class="form-horizontal" id="set_prop">
+              {{csrf_field()}}
               <div class="box-body">
                 <div id="statusC"></div>
                   <!-- DATE RECEIVED -->
@@ -254,7 +255,6 @@
                           <input type="text" class="form-control" id="dtr" name="dtr" placeholder="Date" />
                     </div>
                   </div>
-                  <input type="hidden" name="type" id="type">
                   <div class="form-group">
                      <label for="pr_no" class="col-sm-2 control-label">Status : </label>
                       <div class="col-sm-4">
@@ -263,7 +263,7 @@
                     </div>
                   </div>
 
-                   <div class="form-group">
+                  <div class="form-group">
                      <label for="pr_no" class="col-sm-2 control-label">Property Officer</label>
                       <div class="col-sm-4" id="property2">
                        <input type="text" class="form-control" id="prop_emp2" name="prop_emp2"   placeholder="Property Officer" />
@@ -291,21 +291,15 @@
                        <input type="text" class="form-control" name="insp_emp2"  id="insp_emp2"  placeholder="Supply and/or Property Custodian" />
                     </div>
                   </div>
-
-
-
-
                  
+                  <input type="hidden" name="type" id="type" />
                   <input type="hidden"  id="po_id" name="po_id" />
                   <input type="hidden"  id="acceptance_id" name="acceptance_id" />
-
               <!-- /.box-body -->
 
                 <button type="button" class="btn btn-info pull-right" onclick="$(this).sentPdf();">Submit</button>
 
               <!-- /.box-footer -->
-
-              {{csrf_field()}}
             </form>
 
         </div>
@@ -381,8 +375,8 @@ $(function() {
                 var excel = 2;
                       if(data.acceptance_id){
                         return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).updateRequisition('+data.pono_id+');" >Update Acceptance</button>\
-                        <button type="button" class="btn  btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).setProp(\''+data.pono_id+'\',\''+data.date_receive+'\',\''+data.status+'\',\''+data.prop_officer+'\',\''+data.date_inspect+'\',\''+data.insp+'\',\''+data.insp_officer+'\');" >PDF</button>\
-                        <button type="button" class="btn  btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).setProp('+data.pono_id+', '+excel+');" >Excel</button>';
+                        <button type="button" class="btn  btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).setProp(\''+data.pono_id+'\',\''+data.date_receive+'\',\''+data.status+'\',\''+data.prop_officer+'\',\''+data.date_inspect+'\',\''+data.insp+'\',\''+data.insp_officer+'\', '+pdf+');" >PDF</button>\
+                        <button type="button" class="btn  btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).setProp(\''+data.pono_id+'\',\''+data.date_receive+'\',\''+data.status+'\',\''+data.prop_officer+'\',\''+data.date_inspect+'\',\''+data.insp+'\',\''+data.insp_officer+'\', '+excel+');" >Excel</button>';
                       }else{
                           return '<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).addRequisition('+data.pono_id+');" >Add Acceptance</button> ';
                       }
@@ -550,7 +544,7 @@ $.fn.addRequisition = function(pono_id){
 
   $.fn.setProp = function(pono_id,A,B,C,D,E,F,type){
     // $("#add_requisition_number")[0].reset();
-    console.log(B);
+    // console.log(B);
     $.ajax({
             type: "POST",
              url: "{{route('po.get-po')}}",
@@ -605,7 +599,6 @@ $.fn.addRequisition = function(pono_id){
                       backdrop: 'static',
                       keyboard: false
               });
-
             }
      });
   };
@@ -706,7 +699,6 @@ $(':radio[name=set_property]').change(function() {
   };
 
   $.fn.sentPdf = function(){
-
     var form = $('#set_prop').serialize();
     console.log(form);
 
@@ -714,12 +706,12 @@ $(':radio[name=set_property]').change(function() {
        alert('Please check your input!');
     }
     else {
-        var route = "{{route('po.po_acceptance_pdf',['change1','change2','change3','change4'])}}";
-          route =route.replace("change1", $('#po_id').val());
-          route =route.replace("change2", $('#acceptance_id').val());
-          route =route.replace("change3", form);
-          route =route.replace("change4", $('#type').val());
-         window.location.href = route;
+      var route = "{{route('po.po_acceptance_pdf',['change1','change2','change3','change4'])}}";
+      route =route.replace("change1", $('#po_id').val());
+      route =route.replace("change2", $('#acceptance_id').val());
+      route =route.replace("change3", form);
+      route =route.replace("change4", $('#type').val());
+      window.location.href = route;
     }
      //  $.ajax({
      //        type: "POST",
