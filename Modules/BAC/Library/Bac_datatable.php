@@ -75,7 +75,15 @@ class Bac_datatable
                             'olongapo_purchase_request_no.id as prno_id',
                             'olongapo_purchase_request_no.pr_no','olongapo_purchase_request_no.obr_id','olongapo_purchase_request_no.pr_date',
                             'olongapo_bac_control_info.id as bac_id' ,'olongapo_bac_control_info.bac_control_no as bac_cono' , 'olongapo_bac_control_info.amount' , 'olongapo_bac_control_info.bac_date' , 'olongapo_bac_control_info.sourcefund_id' , 'olongapo_bac_control_info.category_id', 'olongapo_bac_control_info.bac_type_id' , 'olongapo_bac_control_info.apprved_pubbid_id',
-                            'olongapo_obr.obr_no','olongapo_obr.obr_date','olongapo_purchase_order_requisition_number.id as requisition_id','olongapo_purchase_order_acceptance_issuance.id as acceptance_id'
+                            'olongapo_obr.obr_no','olongapo_obr.obr_date','olongapo_purchase_order_requisition_number.id as requisition_id','olongapo_purchase_order_acceptance_issuance.id as acceptance_id',
+                             'olongapo_purchase_request_no.requested_by as requested_by',
+                            'olongapo_purchase_request_no.designated_req as designated_req',
+                            'olongapo_purchase_request_no.name_app as name_app',
+                            'olongapo_purchase_request_no.designation_app as designation_app',
+                            'olongapo_purchase_order_requisition_number.issued_by as issued_by',
+                            'olongapo_purchase_order_requisition_number.issued_des as issued_des',
+                            'olongapo_purchase_order_requisition_number.received_by as received_by',
+                            'olongapo_purchase_order_requisition_number.received_des as received_des'
                 ])
                 ->groupBy('olongapo_purchase_order_no.id');
 

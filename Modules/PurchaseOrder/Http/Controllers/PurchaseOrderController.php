@@ -586,6 +586,19 @@ class PurchaseOrderController extends Controller
     }
 
     public function requisition_pdf(Request $request){
+
+
+        PurchaseOrderRequisition::updateOrCreate([
+            'id' =>  $request->input('requisition_id')
+        ],[
+            'issued_by' => $request->input('issued_by'),
+            'issued_des' => $request->input('issued_by_des'),
+            'received_by' => $request->input('received_by'),
+            'received_des' => $request->input('received_by_des')
+        ]);
+
+
+
          $info = DB::table('olongapo_purchase_order_no')
                     ->join('olongapo_purchase_order_requisition_number' ,'olongapo_purchase_order_requisition_number.pono_id','=', 'olongapo_purchase_order_no.id')
                     ->join('olongapo_bac_control_info' ,'olongapo_bac_control_info.id','=', 'olongapo_purchase_order_no.bac_control_id')
@@ -620,7 +633,7 @@ class PurchaseOrderController extends Controller
                                 'supplier_info.title as suppl_title',
                                 'supplier_address.details',
                                 'olongapo_purchase_request_no.requested_by',
-                                'olongapo_purchase_request_no.designated',
+                                'olongapo_purchase_request_no.designated_req',
                                 'olongapo_bac_control_info.id as control_id',
                                 'olongapo_bac_source_fund.description as sourcefund',
                                 'olongapo_procurement_method.proc_title as bac_mode',
@@ -630,7 +643,15 @@ class PurchaseOrderController extends Controller
                                 'olongapo_purchase_order_no.po_date as po_date',
                                 'olongapo_purchase_order_requisition_number.ris_no',
                                 'olongapo_purchase_order_requisition_number.ris_date',
-                                'olongapo_position.title as designation'
+                                'olongapo_position.title as designation',
+                                'olongapo_purchase_request_no.requested_by as requested_by',
+                                'olongapo_purchase_request_no.designated_req as designated_req',
+                                'olongapo_purchase_request_no.name_app as name_app',
+                                'olongapo_purchase_request_no.designation_app as designation_app',
+                                'olongapo_purchase_order_requisition_number.issued_by as issued_by',
+                                'olongapo_purchase_order_requisition_number.issued_des as issued_des',
+                                'olongapo_purchase_order_requisition_number.received_by as received_by',
+                                'olongapo_purchase_order_requisition_number.received_des as received_des'
                             ])
                     ->where('olongapo_purchase_order_requisition_number.id', '=', $request->input('requisition_id'))
                     ->first();
