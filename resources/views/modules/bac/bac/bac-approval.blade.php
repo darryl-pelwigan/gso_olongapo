@@ -114,7 +114,7 @@
               </div>
               <!-- /.box-footer -->
               {{csrf_field()}}
-              <input type="hidden" name="control_id" id="control_id"  />
+              <input type="hidden" name="control_id" id="control_id"/>
             </form>
 
         </div>

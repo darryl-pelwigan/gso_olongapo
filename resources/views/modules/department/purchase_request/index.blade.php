@@ -370,7 +370,7 @@
 
                     <label class="container">Purely Consumption 
                       <input class="input-sm" type="checkbox" name="pc" value=1>
-                      <input class="input-sm" type="hidden" name="pc" value=0 >
+                      {{-- <input class="input-sm" type="hidden" name="pc" value=0 > --}}
                       <span class="checkmark"></span>
                     </label>
                 </div>

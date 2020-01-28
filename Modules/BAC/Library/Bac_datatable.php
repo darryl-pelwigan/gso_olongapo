@@ -78,7 +78,6 @@ class Bac_datatable
                             'olongapo_obr.obr_no','olongapo_obr.obr_date','olongapo_purchase_order_requisition_number.id as requisition_id','olongapo_purchase_order_acceptance_issuance.id as acceptance_id'
                 ])
                 ->groupBy('olongapo_purchase_order_no.id');
-        // dd($items);
         return $items;
     }
 

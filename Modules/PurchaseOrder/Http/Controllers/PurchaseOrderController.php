@@ -14,7 +14,8 @@ use Modules\PurchaseOrder\Entities\{PurchaseOrderNo,PurchaseOrderItems,PurchaseO
 use Modules\Employee\Entities\{Employee};
 
 
-use PDF;
+use PDF, Excel;
+use PHPExcel_Worksheet_Drawing;
 use Input;
 use Carbon\Carbon;
 use Yajra\Datatables\Datatables;
@@ -430,8 +431,6 @@ class PurchaseOrderController extends Controller
         $data['info']  = $info[0];
 
         return $data;
-
-
     }
 
     public function po_pdf(Request $request,$id,$auth){
@@ -659,12 +658,266 @@ class PurchaseOrderController extends Controller
         $this->data['info']  = $info;
         $this->data['request_signee']  = $request_signee;
 
-        // dd( $request_signee );
-        
-        $pdf = PDF::loadView('purchaseorder::requisition.pdf',$this->setup());
-        $pdf->setPaper(array(0,0,612.00,936.0));
+        if(isset($request->pdf)) {
+            $pdf = PDF::loadView('purchaseorder::requisition.pdf',$this->setup());
+            $pdf->setPaper(array(0,0,612.00,936.0));
+            //$pdf->setPaper('legal');
+            return @$pdf->stream();
+        } elseif(isset($request->excel)) {
+            Excel::create('RequisitionAndIssueSlip.xlsx', function($excel) {
+                $excel->sheet('RIS', function($sheet) {
+                    $sheet->loadView('purchaseorder::requisition.excel', $this->data);
+
+                    // styles
+                    $sheet->setWidth(array(
+                        'A' => 20,
+                        'B' => 15,
+                        'C' => 15,
+                        'D' => 15,
+                        'E' => 15,
+                        'F' => 15,
+                        'G' => 15,
+                        'H' => 15,
+                        'I' => 15,
+                    ));
+                    $sheet->mergeCells('A1:G1');
+                    $sheet->mergeCells('A2:G2');
+                    $sheet->mergeCells('A3:G3');
+                    $sheet->mergeCells('A4:G4');
+                    $sheet->mergeCells('A7:E7');
+                    $sheet->mergeCells('F7:G7');
+                    $sheet->mergeCells('C8:D8');
+                    for($i = 9; $i <= 41; $i++){
+                        $sheet->mergeCells('C'.$i.':D'.$i);
+                    }
+                    $sheet->mergeCells('A42:F42');
+                    $sheet->mergeCells('B43:G43');
+                    $sheet->mergeCells('B44:C44');
+                    $sheet->mergeCells('B45:C45');
+                    $sheet->mergeCells('B46:C46');
+                    $sheet->mergeCells('B47:C47');
+                    $sheet->mergeCells('B48:C48');
+                    $sheet->mergeCells('D44:E44');
+
+                    $sheet->getStyle('A1:G48')->getAlignment()->setWrapText(true);
+                    $sheet->getStyle('A1:G1')->getAlignment()->setHorizontal('center');
+                    $sheet->getStyle('A2:G2')->getAlignment()->setHorizontal('center');
+                    $sheet->getStyle('A3:G3')->getAlignment()->setHorizontal('center');
+                    $sheet->getStyle('A4:G4')->getAlignment()->setHorizontal('center');
+                    $sheet->getStyle('A5:G6')->getAlignment()->setHorizontal('center');
+                    $sheet->getStyle('A7:E7')->getAlignment()->setHorizontal('center');
+                    $sheet->getStyle('F7:G7')->getAlignment()->setHorizontal('center');
+                    $sheet->getStyle('C8:D8')->getAlignment()->setHorizontal('center');
+                    $sheet->getStyle('A9:G41')->getAlignment()->setHorizontal('center');
+                    $sheet->getStyle('A42:F42')->getAlignment()->setHorizontal('center');
+                    $sheet->getStyle('B43:G43')->getAlignment()->setHorizontal('center');
+                    $sheet->getStyle('B44:C44')->getAlignment()->setHorizontal('center');
+                    $sheet->getStyle('B45:C45')->getAlignment()->setHorizontal('center');
+                    $sheet->getStyle('B46:C46')->getAlignment()->setHorizontal('center');
+                    $sheet->getStyle('B47:C47')->getAlignment()->setHorizontal('center');
+                    $sheet->getStyle('B48:C48')->getAlignment()->setHorizontal('center');
+                    $sheet->getStyle('D44:E44')->getAlignment()->setHorizontal('center');
+                    $sheet->getStyle('D45:E48')->getAlignment()->setHorizontal('center');
+
+                    // borders
+                    // setBorder(top,right,bottom,left)
+                    $columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+                    $last_item_cell = 41;
+                    for($col = 0; $col < count($columns); $col++) {
+                        for($cell = 8; $cell <= $last_item_cell; $cell++) {
+                            if($cell == 8) {
+                                if($columns[$col] == 'A') {
+                                    $sheet->cell($columns[$col].$cell , function($cell) {
+                                        $cell->setBorder('thin', 'thin', 'thin', 'thick');
+                                    });
+                                } elseif($columns[$col] == 'G') {
+                                    $sheet->cell($columns[$col].$cell , function($cell) {
+                                        $cell->setBorder('thin', 'thick', 'thin', 'thin');
+                                    });
+                                } elseif($columns[$col] == 'E') {
+                                    $sheet->cell($columns[$col].$cell , function($cell) {
+                                        $cell->setBorder('thin', 'double', 'thin', 'thin');
+                                    });
+                                } else {
+                                    $sheet->cell($columns[$col].$cell , function($cell) {
+                                        $cell->setBorder('thin', 'thin', 'thin', 'thin');
+                                    });
+                                }
+                            } elseif($cell == $last_item_cell) {
+                                if($columns[$col] == 'A') {
+                                    $sheet->cell($columns[$col].$cell , function($cell) {
+                                        $cell->setBorder('thin', 'thin', 'thin', 'thick');
+                                    });
+                                } elseif($columns[$col] == 'G') {
+                                    $sheet->cell($columns[$col].$cell , function($cell) {
+                                        $cell->setBorder('thin', 'thick', 'thin', 'thin');
+                                    });
+                                } elseif($columns[$col] == 'E') {
+                                    $sheet->cell($columns[$col].$cell , function($cell) {
+                                        $cell->setBorder('thin', 'double', 'thin', 'thin');
+                                    });
+                                } else {
+                                    $sheet->cell($columns[$col].$cell , function($cell) {
+                                        $cell->setBorder('thin', 'thin', 'thin', 'thin');
+                                    });
+                                }
+                            } else {
+                                if($columns[$col] == 'A') {
+                                    $sheet->cell($columns[$col].$cell , function($cell) {
+                                        $cell->setBorder('thin', 'thin', 'thin', 'thick');
+                                    });
+                                } elseif($columns[$col] == 'G') {
+                                    $sheet->cell($columns[$col].$cell , function($cell) {
+                                        $cell->setBorder('thin', 'thick', 'thin', 'thin');
+                                    });
+                                } elseif($columns[$col] == 'E') {
+                                    $sheet->cell($columns[$col].$cell , function($cell) {
+                                        $cell->setBorder('thin', 'double', 'thin', 'thin');
+                                    });
+                                } else {
+                                    $sheet->cell($columns[$col].$cell , function($cell) {
+                                        $cell->setBorder('thin', 'thin', 'thin', 'thin');
+                                    });
+                                }
+                            }
+                        }
+                    }
+                    $sheet->cell('A1:A4', function($cell) {
+                        $cell->setBorder('thick', 'thick', 'none', 'thick');
+                    });
+                    $sheet->cell('A5:B6', function($cell) {
+                        $cell->setBorder('double', 'double', 'double', 'thick');
+                    });
+                    $sheet->cell('C5:C6', function($cell) {
+                        $cell->setBorder('double', 'double', 'double', 'double');
+                    });
+                    $sheet->cell('D5:G6', function($cell) {
+                        $cell->setBorder('double', 'thick', 'double', 'double');
+                    });
+                    $sheet->cell('A7', function($cell) {
+                        $cell->setBorder('double', 'double', 'thin', 'thick');
+                    });
+                    $sheet->cell('F7', function($cell) {
+                        $cell->setBorder('double', 'thick', 'thin', 'double');
+                    });
+                    $sheet->cell('A42', function($cell) {
+                        $cell->setBorder('double', 'thin', 'double', 'thick');
+                    });
+                    $sheet->cell('A42', function($cell) {
+                        $cell->setBorder('thin', 'thin', 'double', 'thick');
+                    });
+                    $sheet->cell('G42', function($cell) {
+                        $cell->setBorder('thin', 'thick', 'double', 'thin');
+                    });
+                    $sheet->cell('A43', function($cell) {
+                        $cell->setBorder('double', 'none', 'double', 'thick');
+                    });
+                    $sheet->cell('B43', function($cell) {
+                        $cell->setBorder('double', 'thick', 'double', 'none');
+                    });
+
+                    $sheet->cell('A44:A48', function($cell) {
+                        $cell->setBorder('double', 'thin', 'thick', 'thick');
+                    });
+                    $sheet->cell('B44:C48', function($cell) {
+                        $cell->setBorder('double', 'thin', 'thick', 'thin');
+                    });
+                    $sheet->cell('D44', function($cell) {
+                        $cell->setBorder('double', 'thin', 'thin', 'thin');
+                    });
+                    $sheet->cell('D45:E48', function($cell) {
+                        $cell->setBorder('thin', 'thin', 'thick', 'thin');
+                    });
+                    $sheet->cell('F44:F48', function($cell) {
+                        $cell->setBorder('double', 'thin', 'thick', 'thin');
+                    });
+                    $sheet->cell('G44:G48', function($cell) {
+                        $cell->setBorder('double', 'thick', 'thick', 'thin');
+                    });
+                    $sheet->cell('A44:G44', function($cell) {
+                        $cell->setBorder('double', 'thick', 'thin', 'thick');
+                    });
+                    $sheet->cell('A45:G45', function($cell) {
+                        $cell->setBorder('thin', 'thick', 'thin', 'thick');
+                    });
+                    $sheet->cell('A46:G46', function($cell) {
+                        $cell->setBorder('thin', 'thick', 'thin', 'thick');
+                    });
+                    $sheet->cell('A47:G47', function($cell) {
+                        $cell->setBorder('thin', 'thick', 'thin', 'thick');
+                    });
+                    $sheet->cell('A48:G48', function($cell) {
+                        $cell->setBorder('thin', 'thick', 'thick', 'thick');
+                    });
+                    // fonts
+                    $sheet->cell('A1:G1', function($cell) {
+                        $cell->setFontFamily('Arial Black');
+                        $cell->setFontSize('14');
+                        $cell->setFont(array(
+                            'bold' => true,
+                        ));
+                    });
+                    $sheet->cell('A3:G4', function($cell) {
+                        $cell->setFontFamily('Arial');
+                        $cell->setFontSize('10');
+                    });
+                    $sheet->cell('A3:G48', function($cell) {
+                        $cell->setFontFamily('Arial');
+                        $cell->setFontSize('11');
+                    });
+                    $sheet->cell('A3:G4', function($cell) {
+                        $cell->setFontSize('10');
+                    });
+                    $sheet->cell('A5:G6', function($cell) {
+                        $cell->setFontSize('11');
+                    });
+                    $sheet->cell('A7:F7', function($cell) {
+                        $cell->setFont(array(
+                            'bold' => true,
+                            'italic' => true,
+                        ));
+                    });
+                    $sheet->cell('A8:G8', function($cell) {
+                        $cell->setBackground('#e7e6e6');
+                    });
+                    $sheet->cell('A8:G41', function($cell) {
+                        $cell->setFontSize('11');
+                    });
+                    $sheet->cell('A44:G48', function($cell) {
+                        $cell->setFontSize('11');
+                    });
+                    $sheet->cell('B5:B6', function($cell) {
+                        $cell->setFont(array(
+                            'underline' => true,
+                        ));
+                    });
+                    $sheet->cell('E5:E6', function($cell) {
+                        $cell->setFont(array(
+                            'underline' => true,
+                        ));
+                    });
+                    $sheet->cell('G5:G6', function($cell) {
+                        $cell->setFont(array(
+                            'underline' => true,
+                        ));
+                    });
+                    // image //here
+                    $logo = new PHPExcel_Worksheet_Drawing;
+                    $logo->setPath(public_path().'\olongapo\img\logo-100.png');
+                    $logo->setCoordinates('D2');
+                    $sheet->setHeight('2', '25');
+                    $logo->setHeight(34);
+                    $logo->setWidth(37);
+                    $sheet->getStyle('D2')->getAlignment()->setHorizontal('center');
+                    $logo->setWorksheet($sheet);
+                    // end styles
+                });
+            })->download();
+        }
+        // $pdf = PDF::loadView('purchaseorder::requisition.pdf',$this->setup());
+        // $pdf->setPaper(array(0,0,612.00,936.0));
         //$pdf->setPaper('legal');
-        return @$pdf->stream();
+        // return @$pdf->stream();
     }
 
  public function requisition_pc_pdf(Request $request){
@@ -742,25 +995,9 @@ class PurchaseOrderController extends Controller
         return @$pdf->stream();
     }
 
-    public function acceptance_pdf(Request $request,$id,$aid,$prop){
-
-
-
-        $params = array();
-        parse_str($prop, $params);
-
-
-
-
-        
-
-        // PurchaseOrderNo::updateOrCreate([
-        //     'id' => $params['prid']
-        // ],[
-        //     'requested_by' => $params['name_req'],
-        //     'designated' => $params['designation_req']
-        // ]);
-
+    public function acceptance_pdf(Request $request,$id,$aid,$prop, $type){
+        // $params = array();
+        // parse_str($prop, $params);
          $info = DB::table('olongapo_purchase_order_no')
                     ->join('olongapo_purchase_order_acceptance_issuance' ,'olongapo_purchase_order_acceptance_issuance.pono_id','=', 'olongapo_purchase_order_no.id')
                     ->join('olongapo_bac_control_info' ,'olongapo_bac_control_info.id','=', 'olongapo_purchase_order_no.bac_control_id')
@@ -823,15 +1060,156 @@ class PurchaseOrderController extends Controller
         $this->data['po_items'] = $items_bac;
         $this->data['info']  = $info;
         $this->data['prop'] =$prop;
+
         $this->data['req'] =$params;
 
-         $pdf = PDF::loadView('purchaseorder::acceptance.pdf',$this->setup());
-       $pdf->setPaper(array(0,0,612.00,936.0));
-        //$pdf->setPaper('legal');
-        return @$pdf->stream();
+        if($type == 1) {
+            $pdf = PDF::loadView('purchaseorder::acceptance.pdf',$this->setup());
+            $pdf->setPaper(array(0,0,612.00,936.0));
+            //$pdf->setPaper('legal');
+            return @$pdf->stream();
+        } elseif($type == 2) {
+            $excel = Excel::create('PurchaseOrderAcceptance.xlsx', function($excel) {
+                $excel->sheet('AIR', function($sheet) {
+                    // split array into groups w/ 35 items each, each group one sheet..
+                    // limit 35 items in one sheet..
+                    $sheet->loadView('purchaseorder::acceptance.excel', $this->data);
+
+                    // styles
+                    $sheet->mergeCells('A1:D1');
+                    $sheet->mergeCells('A2:D2');
+                    $sheet->mergeCells('A3:D3');
+                    $sheet->mergeCells('A37:B37');
+                    $sheet->mergeCells('C37:D37');
+                    $sheet->mergeCells('A39:B39');
+                    $sheet->mergeCells('A40:B40');
+                    $sheet->mergeCells('C39:D40');
+                    $sheet->mergeCells('A41:B41');
+                    $sheet->mergeCells('C41:D41');
+                    $sheet->mergeCells('A42:B42');
+                    $sheet->mergeCells('C42:D42');
+                    $sheet->setWidth(array(
+                        'A' => 25,
+                        'B' => 25,
+                        'C' => 25,
+                        'D' => 25,
+                    ));
+                    $sheet->getStyle('A1:D49')->getAlignment()->setWrapText(true);
+                    $sheet->getStyle('A1:D1')->getAlignment()->setHorizontal('center');
+                    $sheet->getStyle('A2:D2')->getAlignment()->setHorizontal('center');
+                    $sheet->getStyle('A3:D3')->getAlignment()->setHorizontal('center');
+                    $sheet->getStyle('B4:B7')->getAlignment()->setHorizontal('center');
+                    $sheet->getStyle('D4:D7')->getAlignment()->setHorizontal('center');  
+                    $sheet->getStyle('A8:D43')->getAlignment()->setHorizontal('center');
+                    $sheet->getStyle('A37:B37')->getAlignment()->setHorizontal('center');
+                    $sheet->getStyle('C37:D37')->getAlignment()->setHorizontal('center');
+                    $sheet->getStyle('A39:B39')->getAlignment()->setHorizontal('center');
+                    $sheet->getStyle('A40:B40')->getAlignment()->setHorizontal('center');
+                    $sheet->getStyle('C39:D40')->getAlignment()->setHorizontal('center');
+                    $sheet->getStyle('A41:B41')->getAlignment()->setHorizontal('center');
+                    $sheet->getStyle('C41:D41')->getAlignment()->setHorizontal('center');
+                    $sheet->getStyle('A42:B42')->getAlignment()->setHorizontal('center');
+                    $sheet->getStyle('C42:D42')->getAlignment()->setHorizontal('center');
+
+                    // border 
+                    // setBorder(top,right,bottom,left)
+                    $sheet->cell('A8:A36', function($cell) {
+                        $cell->setBorder('double', 'thin', 'double', 'thick');
+                    });
+                    $sheet->cell('B8:B36', function($cell) {
+                        $cell->setBorder('double', 'thin', 'double', 'thin');
+                    });
+                    $sheet->cell('C8:C36', function($cell) {
+                        $cell->setBorder('double', 'thin', 'double', 'thin');
+                    });
+                    $sheet->cell('D8:D36', function($cell) {
+                        $cell->setBorder('double', 'thick', 'double', 'thin');
+                    });
+                    // for items cells...
+                    for($i = 8; $i <= 36; $i++) {
+                        if($i == 8) {
+                            $sheet->cell('A'.$i.':D'.$i, function($cell) {
+                                $cell->setBorder('double', 'thick', 'thin', 'thick');
+                            });
+                        } elseif($i == 36) {
+                            $sheet->cell('A'.$i.':D'.$i, function($cell) {
+                                $cell->setBorder('thin', 'thick', 'double', 'thick');
+                            });
+                        } else {
+                            $sheet->cell('A'.$i.':D'.$i, function($cell) {
+                                $cell->setBorder('thin', 'thick', 'thin', 'thick');
+                            });
+                        }
+                    }
+                    $sheet->cell('A1:A3', function($cell) {
+                        $cell->setBorder('thick', 'thick', 'double', 'thick');
+                    });
+                    $sheet->cell('A4:D42', function($cell) {
+                        $cell->setBorder('none', 'thick', 'none', 'thick');
+                    });
+                    $sheet->cell('A7:D7', function($cell) {
+                        $cell->setBorder('none', 'thick', 'double', 'thick');
+                    });
+                    $sheet->cell('A37', function($cell) {
+                        $cell->setBorder('double', 'thin', 'thin', 'thick');
+                    });
+                    $sheet->cell('C37', function($cell) {
+                        $cell->setBorder('double', 'thick', 'thin', 'thin');
+                    });
+                    $sheet->cell('A38:B38', function($cell) {
+                        $cell->setBorder('thin', 'thin', 'none', 'thick');
+                    });
+                    $sheet->cell('A39:B42', function($cell) {
+                        $cell->setBorder('none', 'thin', 'thick', 'thick');
+                    });
+                    $sheet->cell('C39', function($cell) {
+                        $cell->setBorder('none', 'thick', 'thick', 'thin');
+                    });
+                    $sheet->cell('C41:C42', function($cell) {
+                        $cell->setBorder('none', 'thick', 'thick', 'thin');
+                    });
+                    $sheet->cell('C39', function($cell) {
+                        $cell->setBorder('none', 'thick', 'none', 'thin');
+                    });
+                    // fonts
+                    $sheet->getStyle('A37:C37')->getFont()->setBold(true);
+                    $sheet->cell('A2:D42', function($cell) {
+                        $cell->setFontFamily('Arial');
+                        $cell->setFontSize('11');
+                    });
+                    $sheet->cell('A8:D8', function($cell) {
+                        $cell->setFontSize('12');
+                    });
+                    $sheet->cell('A37:D37', function($cell) {
+                        $cell->setFontSize('12');
+                    });
+                    $sheet->cell('A1:B1', function($cell) {
+                        $cell->setFontFamily('Georgia');
+                        $cell->setFontSize('16');
+                    });
+                    $sheet->cell('A1:B1', function($cell) {
+                        $cell->setFontFamily('Georgia');
+                        $cell->setFontSize('16');
+                    });
+                    $sheet->cell('B4:B7', function($cell) {
+                        $cell->setFont(array(
+                            'underline' => true,
+                        ));
+                    });
+                    $sheet->cell('D4:D6', function($cell) {
+                        $cell->setFont(array(
+                            'underline' => true,
+                        ));
+                    });
+                    $sheet->cell('A41', function($cell) {
+                        $cell->setFont(array(
+                            'underline' => true,
+                        ));
+                    });
+                    // end styles
+                });
+            })->download();
+        }
+        
     }
-
-
-
-
 }
