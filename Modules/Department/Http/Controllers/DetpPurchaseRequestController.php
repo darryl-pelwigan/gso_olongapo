@@ -81,7 +81,7 @@ class DetpPurchaseRequestController extends Controller
             $PurchaseNo->dept_id =  $department;
             $PurchaseNo->pr_date_dept =  $request->input('pr_no_date');
             $PurchaseNo->pr_purpose =  $request->input('purpose');
-            $PurchaseNo->pr_purelyconsumption =  $request->input('pc') ? $request->input('pc') : 0;
+            $PurchaseNo->pr_purelyconsumption =  $request->input('pc');
             $PurchaseNo->added_by =  $request->input('employee') ?? $employee_id = Session::get('olongapo_user')->employee_id;
             $PurchaseNo->save();
             for($x = 0 ; $x< count($request->input('item_desc'));$x++){
@@ -215,7 +215,7 @@ class DetpPurchaseRequestController extends Controller
         $PurchaseNo->dept_id =  $request->input('import_select_dept');
         $PurchaseNo->pr_date_dept =  $request->input('import_pr_no_date');
         $PurchaseNo->pr_purpose =  $request->input('import_purpose');
-        $PurchaseNo->pr_purelyconsumption =  $request->input('import_pc') ? $request->input('import_pc') : 0 ;
+        $PurchaseNo->pr_purelyconsumption =  $request->input('import_pc');
         $PurchaseNo->added_by =  $request->input('employee') ?? $employee_id = Session::get('olongapo_user')->employee_id;
         $PurchaseNo->save();
 

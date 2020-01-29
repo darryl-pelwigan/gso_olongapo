@@ -441,7 +441,6 @@
                                 </div>
                             </div>
 
-
                             <div class="form-group">
                               <label for="pr_no" class="col-sm-2 control-label">Received By: </label>
                                 <div class="col-sm-4" id="avail2">
@@ -449,7 +448,8 @@
                                  <input type="text" class="form-control" id="received_by_des" name="received_by_des"   placeholder="Position" />
                                 </div>
                             </div>
-
+    
+                            <input type="hidden" name="type1" id="type1">
 
                               <div class="col-sm-12">
                                 <button type="submit" class="btn btn-info pull-right">Submit</button>
@@ -600,7 +600,8 @@ $(function() {
               render : function(data , type , row){
                       if(data.requisition_id){
                         return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add_requisition_pc_modal" onclick="$(this).updateRequisition_pc('+data.prno_id+');" >Update RIS</button>\
-                        <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#add_requisition_1" onclick="$(this).setReq(\''+data.requested_by+'\',\''+data.designated_req+'\',\''+data.name_app+'\',\''+data.designation_app+'\',\''+data.requisition_id+'\',\''+data.issued_by+'\',\''+data.issued_des+'\',\''+data.received_by+'\',\''+data.received_des+'\');" >PDF</button>';
+                        <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#add_requisition_1" onclick="$(this).setReq(\''+data.requested_by+'\',\''+data.designated_req+'\',\''+data.name_app+'\',\''+data.designation_app+'\',\''+data.requisition_id+'\',\''+data.issued_by+'\',\''+data.issued_des+'\',\''+data.received_by+'\',\''+data.received_des+'\','+1+');" >PDF</button>\
+                        <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#add_requisition_1" onclick="$(this).setReq(\''+data.requested_by+'\',\''+data.designated_req+'\',\''+data.name_app+'\',\''+data.designation_app+'\',\''+data.requisition_id+'\',\''+data.issued_by+'\',\''+data.issued_des+'\',\''+data.received_by+'\',\''+data.received_des+'\','+2+');" >Excel</button>';
                       }else{
                          return '<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#add_requisition_pc_modal" onclick="$(this).addRequisition_pc('+data.prno_id+');">Add RIS</button>\ ';
                       }
@@ -619,7 +620,7 @@ $(function() {
 
   });
 
-$.fn.setReq = function(requested_by,designated_req,name_app,designation_app,req_id,issued,issued_des,receive,receive_des)
+$.fn.setReq = function(requested_by,designated_req,name_app,designation_app,req_id,issued,issued_des,receive,receive_des,type)
 {
     var vars = name_app;
     var arrVars = vars.split("/");
@@ -682,6 +683,7 @@ $.fn.setReq = function(requested_by,designated_req,name_app,designation_app,req_
         $('#received_by_des').val(receive_des);
     }
 
+    $('#type1').val(type);
 
   };
 
