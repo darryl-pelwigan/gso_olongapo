@@ -182,8 +182,10 @@
                       <div class="box-body">
                         <div id="statusC"></div>
                           <!-- DATE RECEIVED -->
+
                          <input type="hidden" class="form-control" id="prid" name="prid"/>
-                            
+
+
                             <div class="form-group">
                               <label for="pr_no" class="col-sm-2 control-label">Requested By: </label>
                               <div class="col-sm-4" id="req2">
@@ -207,13 +209,15 @@
                                <input type="text" class="form-control" id="name_app1" name="name_app1"   placeholder="Name" />
                                <input type="text" class="form-control" id="designation_app1" name="designation_app1"   placeholder="Position" />
 
-                               
+
                             </div>
+
 
                               <div class="col-sm-1">
                                    <p>/</p>
                                    <p>/</p>
-                                </div>  
+                                </div>
+
 
                                 <div class="col-sm-4">
                                    <input type="text" class="form-control" id="name_app2" name="name_app2"   placeholder="Name" />
