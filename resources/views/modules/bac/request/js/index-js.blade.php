@@ -9,6 +9,7 @@ $.fn.getALL = function(){
     $('#purchase_request_list').dataTable({
         processing: true,
         serverSide: true,
+        // searching: false,
         ajax:{
           "type": 'POST',
           "url" : '{!! route('popr.set_datatables') !!}',
@@ -26,7 +27,7 @@ $.fn.getALL = function(){
           },
           { data: 'olongapo_subdepartment.dept_desc', name: 'olongapo_subdepartment.dept_desc'},
           { data: 'olongapo_purchase_request_no.pr_purpose', name: 'olongapo_purchase_request_no.pr_purpose'},
-          { data: 'olongapo_purchase_request_no.pr_no', name: 'olongapo_purchase_request_no.pr_no'},
+          // { data: 'olongapo_purchase_request_no.pr_no', name: 'olongapo_purchase_request_no.pr_no'},
           { data: 'olongapo_purchase_request_no.pr_no', name: 'olongapo_purchase_request_no.pr_date'},
           { data: 'olongapo_purchase_request_no.pr_date', name: 'olongapo_purchase_request_no.pr_date'},
           { data: null, name: 'olongapo_purchase_request_no.approval_status',
@@ -61,7 +62,7 @@ $.fn.getALL = function(){
           orderable: false, targets: [-1]
         },
       ],
-      "order": [[ 0, 'asc' ]],
+      "order": [[ 4, 'asc' ]],
   }).dataTableSearch(500);
 
 };

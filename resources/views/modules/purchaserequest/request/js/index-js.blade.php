@@ -42,7 +42,7 @@
                     var action = '';
                    if(data.pr_status === '' || data.pr_status === null){
 
-                       action = '<form method="get" action="{{route('pr.pr_edit')}}">{{csrf_field()}}<input type="hidden" name="pr_id" id="pr_id" value="'+data.olongapo_purchase_request_no.id+'" /> <input type="submit" class="btn btn-info btn-sm" name="view" value="View" /> <input type="submit" class="btn btn-sm btn-warning" name="edit" value="Edit" /> <button type="button" class="btn btn-success btn-sm" onclick="$(this).add_req(\''+data.olongapo_purchase_request_no.requested_by+'\',\''+data.olongapo_purchase_request_no.designated_req+'\',\''+data.olongapo_purchase_request_no.name_avail+'\',\''+data.olongapo_purchase_request_no.designation_avail+'\',\''+data.olongapo_purchase_request_no.name_app+'\',\''+data.olongapo_purchase_request_no.designation_app+'\',\''+data.olongapo_purchase_request_no.id+'\');">PDF</button> <button type="button" class="btn btn-success btn-sm" onclick="$(this).excel_show(\''+data.olongapo_purchase_request_no.requested_by+'\',\''+data.olongapo_purchase_request_no.id+'\');">XLS</button></form></form> ';
+                       action = '<form method="get" action="{{route('pr.pr_edit')}}">{{csrf_field()}}<input type="hidden" name="pr_id" id="pr_id" value="'+data.olongapo_purchase_request_no.id+'" /> <input type="submit" class="btn btn-info btn-sm" name="view" value="View" /> <input type="submit" class="btn btn-sm btn-warning" name="edit" value="Edit" /> <button type="button" class="btn btn-success btn-sm" onclick="$(this).add_req(\''+data.olongapo_purchase_request_no.requested_by+'\',\''+data.olongapo_purchase_request_no.designated_req+'\',\''+data.olongapo_purchase_request_no.name_avail+'\',\''+data.olongapo_purchase_request_no.designation_avail+'\',\''+data.olongapo_purchase_request_no.name_app+'\',\''+data.olongapo_purchase_request_no.designation_app+'\',\''+data.olongapo_purchase_request_no.id+'\');">PDF</button> <button type="button" class="btn btn-primary btn-sm" onclick="$(this).excel_show(\''+data.olongapo_purchase_request_no.requested_by+'\',\''+data.olongapo_purchase_request_no.id+'\');">XLS</button></form></form> ';
 
                     }else if(data.pr_status === 'done'){
                        action = '<strong>Not yet process</strong>';
@@ -56,7 +56,7 @@
               orderable: false, targets: [-1]
             },
         ],
-        "order": [[ 0, 'desc' ]],
+        "order": [[ 3, 'asc' ]],
     }).dataTableSearch(500);;
   };
 

@@ -210,42 +210,65 @@
   </div>
 </div>
 
-      <div class="modal fade" id="pdf" tabindex="-1" role="dialog" aria-labelledby="add_purchase_order_modalLabel">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="add_purchase_order_modalLabel"> <span>Set Authorized Official</span></h4>
-      </div>
-      <div class="modal-body">
-        <div id="status"></div>
-        <div id="contents-menu">
-            <form class="form-horizontal" id="auth_official_form">
-              <div class="box-body">
-                <div id="statusC"></div>
-
-                <div class="form-group">
-                  <label for="obr_date" class="col-sm-2 control-label">Authorized Official: </label>
-                  <div class="col-sm-3">
-                    <input type="text" class="form-control" id="auth_official"  name="auth_official" placeholder="Authorized Official">
-                   <input type="hidden"  name="pono_id" id="pono_id" />
-                  </div>
-
-
-                <button type="button" class="btn btn-info" onclick="$(this).sentPdf();">Submit</button>
+    <div class="modal fade" id="pdf" tabindex="-1" role="dialog" aria-labelledby="add_purchase_order_modalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="add_purchase_order_modalLabel"> <span>Set Authorized Official</span></h4>
                 </div>
-              <!-- /.box-footer -->
-
-              {{csrf_field()}}
-            </form>
-
+                <div class="modal-body">
+                    <div id="status"></div>
+                    <div id="contents-menu">
+                        <form class="form-horizontal" id="auth_official_form">
+                            <div class="box-body">
+                                <div id="statusC"></div>
+                                <div class="form-group">
+                                    <label for="obr_date" class="col-sm-2 control-label">Authorized Official: </label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" id="auth_official"  name="auth_official" placeholder="Authorized Official" required>
+                                        <input type="hidden"  name="pono_id" id="pono_id" />
+                                    </div>
+                                    <button type="button" class="btn btn-info" id="submit_pdf" onclick="$(this).sentPdf();" disabled>Submit</button>
+                                </div>
+                                {{csrf_field()}}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-</div>
-</div>
-</div>
+
+      <div class="modal fade" id="excel" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="add_purchase_order_modalLabel"> <span>Set Authorized Official</span></h4>
+                </div>
+                <div class="modal-body">
+                    <div id="status"></div>
+                    <div id="contents-menu">
+                        <form class="form-horizontal" id="auth_official_form_excel">
+                            <div class="box-body">
+                                <div id="statusC"></div>
+                                <div class="form-group">
+                                    <label for="obr_date" class="col-sm-2 control-label">Authorized Official: </label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" id="auth_official_excel"  name="auth_official" placeholder="Authorized Official" required>
+                                        <input type="hidden"  name="pono_id" id="pono_id_excel" />
+                                    </div>
+                                    <button type="button" class="btn btn-info" id="submit_excel" onclick="$(this).sentExcel();" disabled>Submit</button>
+                                </div>
+                                {{csrf_field()}}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 
@@ -311,7 +334,8 @@ $(function() {
               { data: null, name: 'olongapo_bac_control_info.id' ,
               render : function(data , type , row){
                       return '<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#add_purchase_order_modal" onclick="$(this).addPOnumber('+data.pono_id+');" >Update</button>\
-                        <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#pdf" onclick="$(this).pdf('+data.pono_id+');" >PDF</button> ';
+                        <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#pdf" onclick="$(this).pdf('+data.pono_id+');" >PDF</button>\
+                        <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#excel" onclick="$(this).excel('+data.pono_id+');" >EXCEL</button> ';
                 }
               },
         ],
@@ -416,10 +440,42 @@ $.fn.pdf = function(pono_id){
                       backdrop: 'static',
                       keyboard: false
               });
+              var input = $('#auth_official').val();
+              var btn =  document.getElementById('submit_pdf');
+              if(input != ''){
+                  btn.removeAttribute("disabled");
+              }else{
+                  btn.setAttribute("disabled","");
+              }
 
             }
      });
   };
+
+   $.fn.excel = function(pono_id){
+        $.ajax({
+                type: "POST",
+                 url: "{{route('po.get-po')}}",
+                data : {
+                  pono_id : pono_id,
+                  _token : '{{csrf_token()}}'
+                },
+                dataType: "json",
+                error: function(){
+                  console.log('error');
+                },
+                success: function(data){
+                    $('#pono_id_excel').val(data['info'].pono_id);
+                    var input = document.getElementById('auth_official_excel').value;
+                    var btn =  document.getElementById('submit_excel');
+                    if(input != ''){
+                        btn.removeAttribute("disabled");
+                    }else{
+                        btn.setAttribute("disabled","");
+                    }
+                }
+         });
+      };
 
   //Date picker
     $('#po_date').datepicker({
@@ -504,6 +560,40 @@ $('#po_date').on('change',function(){
      window.location.href = route;
 
   };
+   $.fn.sentExcel = function(){
+
+        var form = $('#auth_official_form_excel').serialize();
+
+         var route = "{{route('po.po_excel',['change1','change2'])}}";
+
+         route =route.replace("change1", $('#pono_id_excel').val());
+
+         route =route.replace("change2", $('#auth_official_excel').val());
+
+         window.location.href = route;
+    
+    };
+
+    $("#auth_official_excel").on("change", function(){
+        var input = document.getElementById('auth_official_excel').value;
+        var btn =  document.getElementById('submit_excel');
+
+        if(input != ''){
+            btn.removeAttribute("disabled");
+        }else{
+            btn.setAttribute("disabled","");
+        }
+    });
+
+     $("#auth_official").on("change", function(){
+        var input = $('#auth_official').val();
+        var btn =  document.getElementById('submit_pdf');
+        if(input != ''){
+            btn.removeAttribute("disabled");
+        }else{
+            btn.setAttribute("disabled","");
+        }
+    });
 </script>
 @stop
 

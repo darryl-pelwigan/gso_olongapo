@@ -9,21 +9,18 @@
       </h1>
     </section>
 
-
-
     <!-- Main content -->
     <section class="content">
       <div class="row">
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">PURCHASE ORDER LIST (ADD REQUISITION AND ISSUE SLIP)</h3>
+              <h3 class="box-title"><b>PURCHASE ORDER LIST (<i>ADD REQUISITION AND ISSUE SLIP</i>)</b></h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
                  <table id="purchase_order_list" class="table table-striped table-bordered table-hover responsive" width="100%">
                       <thead>
-
                         <tr>
                           <th>No</th>
                           <th>PR NO</th>
@@ -45,7 +42,7 @@
                 </table>
             </div>
              <div class="box-header">
-              <h3 class="box-title">PURCHASE ORDER LIST (ADD REQUISITION AND ISSUE SLIP) PURELY CONSUMPTION)</h3>
+              <h3 class="box-title"> <b>PURCHASE ORDER LIST ( <i>ADD REQUISITION AND ISSUE SLIP </i>)</b> - PURELY CONSUMPTION</h3>
             </div>
              <div class="box-body">
                  <table id ="purchase_request_list"class="table table-striped table-bordered table-hover responsive" width="100%">
@@ -337,7 +334,6 @@
                               </div>
                             </div>
 
-
                             <div class="form-group">
                                <label for="pr_no" class="col-sm-2 control-label">Approved By: </label>
                                   <div class="col-sm-4">
@@ -373,9 +369,7 @@
                                  <input type="text" class="form-control" id="received_by_des_2" name="received_by_des"   placeholder="Position" />
                                 </div>
                             </div>
-
-
-
+                            <input type="hidden" name="type" id="type">
                               <div class="col-sm-12">
                                 <button type="submit" class="btn btn-info pull-right">Submit</button>
                               </div>
@@ -545,8 +539,18 @@ $(function() {
 //                       }
 // =======
                   if(data.requisition_id){
+
+                    // return '<button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#add_requisition" onclick="$(this).updateRequisition('+data.pono_id+');" >Update RIS</button>\
+                    //    <form method="post" action="{{route('po.po_requisition_pdf')}}">\
+                    //    {{csrf_field()}}\
+                    //     <input type="hidden" name="requisition_id" value="'+data.requisition_id+'" />\
+                    //     <input type="submit" class="btn btn-xs btn-success" name="pdf" value="PDF" />\
+                    //     <input type="submit" class="btn btn-xs btn-info" name="excel" value="Excel" />\
+                    //    </form> ';
+
                     return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).updateRequisition('+data.pono_id+');" >Update RIS</button>\
-                      <button type="button" class="btn  btn-sm" data-toggle="modal" data-target="#add_requisition_2" onclick="$(this).setReq2(\''+data.requested_by+'\',\''+data.designated_req+'\',\''+data.name_app+'\',\''+data.designation_app+'\',\''+data.requisition_id+'\',\''+data.issued_by+'\',\''+data.issued_des+'\',\''+data.received_by+'\',\''+data.received_des+'\');" >PDF</button>';
+                      <button type="button" class="btn  btn-sm" data-toggle="modal" data-target="#add_requisition_2" onclick="$(this).setReq2(\''+data.requested_by+'\',\''+data.designated_req+'\',\''+data.name_app+'\',\''+data.designation_app+'\',\''+data.requisition_id+'\',\''+data.issued_by+'\',\''+data.issued_des+'\',\''+data.received_by+'\',\''+data.received_des+'\','+1+');" >PDF</button>\
+                      <button type="button" class="btn  btn-sm" data-toggle="modal" data-target="#add_requisition_2" onclick="$(this).setReq2(\''+data.requested_by+'\',\''+data.designated_req+'\',\''+data.name_app+'\',\''+data.designation_app+'\',\''+data.requisition_id+'\',\''+data.issued_by+'\',\''+data.issued_des+'\',\''+data.received_by+'\',\''+data.received_des+'\','+2+');" >Excel</button>';
                   }else{
                      return '<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).addRequisition('+data.pono_id+');" >Add RIS</button>\ ';
                   }
@@ -596,7 +600,7 @@ $(function() {
               render : function(data , type , row){
                       if(data.requisition_id){
                         return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add_requisition_pc_modal" onclick="$(this).updateRequisition_pc('+data.prno_id+');" >Update RIS</button>\
-                        <button type="button" class="btn  btn-sm" data-toggle="modal" data-target="#add_requisition_1" onclick="$(this).setReq(\''+data.requested_by+'\',\''+data.designated_req+'\',\''+data.name_app+'\',\''+data.designation_app+'\',\''+data.requisition_id+'\',\''+data.issued_by+'\',\''+data.issued_des+'\',\''+data.received_by+'\',\''+data.received_des+'\');" >PDF</button>';
+                        <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#add_requisition_1" onclick="$(this).setReq(\''+data.requested_by+'\',\''+data.designated_req+'\',\''+data.name_app+'\',\''+data.designation_app+'\',\''+data.requisition_id+'\',\''+data.issued_by+'\',\''+data.issued_des+'\',\''+data.received_by+'\',\''+data.received_des+'\');" >PDF</button>';
                       }else{
                          return '<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#add_requisition_pc_modal" onclick="$(this).addRequisition_pc('+data.prno_id+');">Add RIS</button>\ ';
                       }
@@ -604,9 +608,9 @@ $(function() {
               },
         ],
         columnDefs: [
-          {
-              orderable: false, targets: [0,-1]
-           }
+        {
+          orderable: false, targets: [0,-1]
+        }
         ],
         "order": [[ 0, 'asc' ]],
 
@@ -681,7 +685,7 @@ $.fn.setReq = function(requested_by,designated_req,name_app,designation_app,req_
 
   };
 
-$.fn.setReq2 = function(requested_by,designated_req,name_app,designation_app,req_id,issued,issued_des,receive,receive_des)
+$.fn.setReq2 = function(requested_by,designated_req,name_app,designation_app,req_id,issued,issued_des,receive,receive_des,type)
 {
     var vars = name_app;
     var arrVars = vars.split("/");
@@ -743,6 +747,8 @@ $.fn.setReq2 = function(requested_by,designated_req,name_app,designation_app,req
     }else{
         $('#received_by_des_2').val(receive_des);
     }
+
+    $('#type').val(type);
 
   };
 

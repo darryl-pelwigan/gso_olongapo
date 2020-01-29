@@ -32,17 +32,17 @@
                               <td><input type="text" class="form-control" /></td>
                               <td><input type="text" class="form-control" /></td>
                               <td><input type="text" class="form-control" /></td>
-                              <td><input type="text" class="form-control" /></td>
+                              {{-- <td><input type="text" class="form-control" /></td> --}}
                               <td><input type="text" class="form-control" /></td>
                               <td></td>
                         </tr>
                             <tr>
                               <th>No</th>
-                               <th>Department</th>
+                              <th>Department</th>
                               <th>Purpose</th>
                               <th>PR NO</th>
                               <th>PR Date.</th>
-                              <th>REQUEST DATE.</th>
+                              {{-- <th>REQUEST DATE.</th> --}}
                               <th>Status</th>
                               <th>Action</th>
                             </tr>
