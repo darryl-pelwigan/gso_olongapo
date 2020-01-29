@@ -337,7 +337,6 @@
                               </div>
                             </div>
 
-
                             <div class="form-group">
                                <label for="pr_no" class="col-sm-2 control-label">Approved By: </label>
                                   <div class="col-sm-4">
@@ -373,9 +372,7 @@
                                  <input type="text" class="form-control" id="received_by_des_2" name="received_by_des"   placeholder="Position" />
                                 </div>
                             </div>
-
-
-
+                            <input type="hidden" name="type" id="type">
                               <div class="col-sm-12">
                                 <button type="submit" class="btn btn-info pull-right">Submit</button>
                               </div>
@@ -546,7 +543,8 @@ $(function() {
 // =======
                   if(data.requisition_id){
                     return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).updateRequisition('+data.pono_id+');" >Update RIS</button>\
-                      <button type="button" class="btn  btn-sm" data-toggle="modal" data-target="#add_requisition_2" onclick="$(this).setReq2(\''+data.requested_by+'\',\''+data.designated_req+'\',\''+data.name_app+'\',\''+data.designation_app+'\',\''+data.requisition_id+'\',\''+data.issued_by+'\',\''+data.issued_des+'\',\''+data.received_by+'\',\''+data.received_des+'\');" >PDF</button>';
+                      <button type="button" class="btn  btn-sm" data-toggle="modal" data-target="#add_requisition_2" onclick="$(this).setReq2(\''+data.requested_by+'\',\''+data.designated_req+'\',\''+data.name_app+'\',\''+data.designation_app+'\',\''+data.requisition_id+'\',\''+data.issued_by+'\',\''+data.issued_des+'\',\''+data.received_by+'\',\''+data.received_des+'\','+1+');" >PDF</button>\
+                      <button type="button" class="btn  btn-sm" data-toggle="modal" data-target="#add_requisition_2" onclick="$(this).setReq2(\''+data.requested_by+'\',\''+data.designated_req+'\',\''+data.name_app+'\',\''+data.designation_app+'\',\''+data.requisition_id+'\',\''+data.issued_by+'\',\''+data.issued_des+'\',\''+data.received_by+'\',\''+data.received_des+'\','+2+');" >Excel</button>';
                   }else{
                      return '<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#add_requisition" onclick="$(this).addRequisition('+data.pono_id+');" >Add RIS</button>\ ';
                   }
@@ -681,7 +679,7 @@ $.fn.setReq = function(requested_by,designated_req,name_app,designation_app,req_
 
   };
 
-$.fn.setReq2 = function(requested_by,designated_req,name_app,designation_app,req_id,issued,issued_des,receive,receive_des)
+$.fn.setReq2 = function(requested_by,designated_req,name_app,designation_app,req_id,issued,issued_des,receive,receive_des,type)
 {
     var vars = name_app;
     var arrVars = vars.split("/");
@@ -743,6 +741,8 @@ $.fn.setReq2 = function(requested_by,designated_req,name_app,designation_app,req
     }else{
         $('#received_by_des_2').val(receive_des);
     }
+
+    $('#type').val(type);
 
   };
 

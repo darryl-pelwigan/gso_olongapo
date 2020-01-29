@@ -13,7 +13,7 @@
   </tr>
   <tr>
     <td><b>Division: </b></td>
-    <td>{{ $info->_main_dept_desc}}</td>
+    <td>{{ $info->_main_dept_desc }}</td>
     <td><b>Responsibility Center Code: </b></td>
     <td><b>RIS No.: </b></td>
     <td>{{ $info->ris_no }}</td>
@@ -82,7 +82,7 @@
   </tbody>
   <tr>
     <td>Purpose: </td>
-    <td></td>
+    <td>{{ $info->pr_purpose ?? '' }}</td>
     <td></td>
   </tr>
   <thead>
@@ -106,23 +106,29 @@
       <td></td>
       <td></td>
     </tr>
+    <?php
+      $name = explode('/', $info->name_app);
+    ?>
     <tr>
       <td>Printed Name: </td>
-      <td>{{ strtoupper($info->fname ?? '') }} {{ strtoupper($info->mname ?? '')  }}  {{ strtoupper($info->lname ?? '')  }}</td>
+      <td>{{ strtoupper($info->requested_by ?? '') }}</td>
       <td></td>
-      <td>ROLEN C. PAULINO</td>
-      <td>SHEILA R. PADILLA</td>
-      <td></td>
-      <td></td>
+      <td>{{ $name[0] }}</td>
+      <td>{{ $name[1] }}</td>
+      <td>{{ $info->issued_by }}</td>
+      <td>{{ $info->received_by }}</td>
     </tr>
+    <?php
+      $des = explode('/', $info->designation_app);
+    ?>
     <tr>
       <td>Designation: </td>
-      <td>{{ strtoupper($info->designation ?? '') }}</td>
+      <td>{{ strtoupper($info->designated_req ?? '') }}</td>
       <td></td>
-      <td>City Mayor</td>
-      <td>Secretary to the Mayor</td>
-      <td></td>
-      <td></td>
+      <td>{{ $des[0] }}</td>
+      <td>{{ $des[1] }}</td>
+      <td>{{ $info->issued_des }}</td>
+      <td>{{ $info->received_des }}</td>
     </tr>
     <tr>
       <td>Date: </td>

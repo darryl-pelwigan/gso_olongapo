@@ -586,8 +586,6 @@ class PurchaseOrderController extends Controller
     }
 
     public function requisition_pdf(Request $request){
-
-
         PurchaseOrderRequisition::updateOrCreate([
             'id' =>  $request->input('requisition_id')
         ],[
@@ -597,9 +595,7 @@ class PurchaseOrderController extends Controller
             'received_des' => $request->input('received_by_des')
         ]);
 
-
-
-         $info = DB::table('olongapo_purchase_order_no')
+        $info = DB::table('olongapo_purchase_order_no')
                     ->join('olongapo_purchase_order_requisition_number' ,'olongapo_purchase_order_requisition_number.pono_id','=', 'olongapo_purchase_order_no.id')
                     ->join('olongapo_bac_control_info' ,'olongapo_bac_control_info.id','=', 'olongapo_purchase_order_no.bac_control_id')
                     ->join('olongapo_purchase_request_no' ,'olongapo_bac_control_info.prno_id','=', 'olongapo_purchase_request_no.id')
@@ -679,12 +675,12 @@ class PurchaseOrderController extends Controller
         $this->data['info']  = $info;
         $this->data['request_signee']  = $request_signee;
 
-        if(isset($request->pdf)) {
+        if($request->type == 1) {
             $pdf = PDF::loadView('purchaseorder::requisition.pdf',$this->setup());
             $pdf->setPaper(array(0,0,612.00,936.0));
             //$pdf->setPaper('legal');
             return @$pdf->stream();
-        } elseif(isset($request->excel)) {
+        } elseif($request->type == 2) {
             Excel::create('RequisitionAndIssueSlip.xlsx', function($excel) {
                 $excel->sheet('RIS', function($sheet) {
                     $sheet->loadView('purchaseorder::requisition.excel', $this->data);
@@ -738,7 +734,7 @@ class PurchaseOrderController extends Controller
                     $sheet->getStyle('B47:C47')->getAlignment()->setHorizontal('center');
                     $sheet->getStyle('B48:C48')->getAlignment()->setHorizontal('center');
                     $sheet->getStyle('D44:E44')->getAlignment()->setHorizontal('center');
-                    $sheet->getStyle('D45:E48')->getAlignment()->setHorizontal('center');
+                    $sheet->getStyle('D45:G48')->getAlignment()->setHorizontal('center');
 
                     // borders
                     // setBorder(top,right,bottom,left)
