@@ -13,8 +13,6 @@ use Modules\PurchaseRequest\Entities\PurchaseItems;
 */
 class POPR_datatable
 {
-
-
     public function dept_pr_list($vars = null){
         $PurchaseNo = PurchaseNo::get();
         $records = [];
