@@ -22,7 +22,7 @@
 
               <!-- <button class="btn btn-success pull-right"  onclick="$(this).showAddModal();"><i class="fa fa-plus"></i></button> -->
             </div>
-            <!-- /.box-header -->
+            <!-- /.box-header --> 
             <div class="box-body">
                  <table id="purchase_request_list" class="table table-striped table-bordered table-hover">
                       <thead>

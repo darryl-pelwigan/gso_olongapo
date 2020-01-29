@@ -185,7 +185,6 @@
 
                          <input type="hidden" class="form-control" id="prid" name="prid"/>
 
-
                             <div class="form-group">
                               <label for="pr_no" class="col-sm-2 control-label">Requested By: </label>
                               <div class="col-sm-4" id="req2">
@@ -193,7 +192,6 @@
                                  <input type="text" class="form-control" id="designation_req" name="designation_req"   placeholder="Designation" />
                               </div>
                             </div>
-
 
                             <div class="form-group">
                               <label for="pr_no" class="col-sm-2 control-label">Appropriation Availability: </label>

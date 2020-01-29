@@ -612,7 +612,7 @@ $(function() {
           orderable: false, targets: [0,-1]
         }
         ],
-        "order": [[ 0, 'asc' ]],
+        "order": [[ 2, 'asc' ]],
 
     });
 

@@ -82,7 +82,7 @@
   </div>
 
   <div class="">
-    <table class="table" id="main_tbl" border="1" style="border-collapse: collapse; padding-top: 30px;">
+    <table class="table" id="main_tbl" border="1" style="border-collapse: collapse; padding-top: 30px;" width="100%">
         <tr>
           <th rowspan="3" class="tg-9hbo" style="text-align: center; vertical-align: middle;padding:7px;" width="3%">Item<br>No.</th>
           <th rowspan="3" class="tg-9hbo" style="text-align: center; vertical-align: middle;padding-right:150px;padding-left:150px" width="40%">Item Description</th>

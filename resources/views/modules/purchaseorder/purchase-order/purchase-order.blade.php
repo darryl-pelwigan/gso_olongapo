@@ -21,7 +21,7 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                 <table id="purchase_order_list" class="table table-striped table-bordered table-hover">
+                 <table id="purchase_order_list" class="table table-striped table-bordered table-hover responsive" width="100%">
                       <thead>
 
                         <tr>
@@ -334,8 +334,8 @@ $(function() {
               { data: null, name: 'olongapo_bac_control_info.id' ,
               render : function(data , type , row){
                       return '<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#add_purchase_order_modal" onclick="$(this).addPOnumber('+data.pono_id+');" >Update</button>\
-                        <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#pdf" onclick="$(this).pdf('+data.pono_id+');" >PDF</button>\
-                        <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#excel" onclick="$(this).excel('+data.pono_id+');" >EXCEL</button> ';
+                      <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#pdf" onclick="$(this).pdf('+data.pono_id+');" >PDF</button>\
+                      <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#excel" onclick="$(this).excel('+data.pono_id+');" >EXCEL</button> ';
                 }
               },
         ],
@@ -440,7 +440,7 @@ $.fn.pdf = function(pono_id){
                       backdrop: 'static',
                       keyboard: false
               });
-              var input = $('#auth_official').val();
+              var input = $('#auth_official').val(' ');
               var btn =  document.getElementById('submit_pdf');
               if(input != ''){
                   btn.removeAttribute("disabled");

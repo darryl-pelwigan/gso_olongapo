@@ -6,7 +6,7 @@
   }
     $('#purchase_request_list').dataTable({
               processing: true,
-              serverSide: false,
+              serverSide: true,
               ajax:{
                 "type": 'POST',
                 "url" : '{!! route('popr.set_datatables') !!}',
@@ -78,6 +78,16 @@ $.fn.add_req = function(name, des_req, name_avail, des_avail, name_app, des_app,
   var arrVars2 = vars2.split("/");
   var lastVar2 = arrVars2.pop();
   var restVar2 = arrVars2.join("/");
+
+  $('#name_req').val('');
+  $('#designation_req').val('');
+  $('#name_avail').val('');
+  $('#designation_avail').val('');
+  $('#name_app1').val('');
+  $('#designation_app1').val('');
+  $('#name_app2').val('');
+  $('#designation_app2').val('');
+  $('#prid').val('');
 
 
   if(name.length > 1 )
