@@ -25,9 +25,17 @@
     <td>____________</td>
     <td>____________</td>
     <td><b>SAI No.: </b></td>
-    <td>{{ $info->sai_no }}</td>
+    <td>
+      @if(!isset($purely_consump))
+        {{ $info->sai_no }}
+      @endif
+    </td>
     <td><b>Date: </b></td>
-    <td>{{ date('F j Y', strtotime($info->sai_date)) }}</td>
+    <td>
+      @if(!isset($purely_consump))
+        {{ date('F j Y', strtotime($info->sai_date)) }}
+      @endif
+    </td>
   </tr>
   <thead>
     <tr>
@@ -60,7 +68,8 @@
       </tr>
       <?php 
         $count++; 
-        $grand_po_total += $item->po_total;
+        if(isset($item->po_total))
+          $grand_po_total += $item->po_total;
       ?>
     @endforeach
     @if($count < 33)

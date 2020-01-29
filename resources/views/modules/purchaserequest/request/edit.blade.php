@@ -150,9 +150,9 @@
 
                       <label>ON </label>
                       @if(!is_null($pr->iau_vdate) && $pr->iau_vdate != "")
-                      <input type="text" class="form-control datepicker" name="verify_iau_date" id="verify_iau_date" placeholder="{{ \Carbon\Carbon::parse($pr->iau_vdate)->format('Y-m-d') }}" value="{{ \Carbon\Carbon::parse($pr->iau_vdate)->format('Y-m-d') }}">
+                      <input type="text" class="form-control datepicker" name="verify_iau_date" id="verify_iau_date" placeholder="{{ \Carbon\Carbon::parse($pr->iau_vdate)->format('Y-m-d') }}" value="{{ \Carbon\Carbon::parse($pr->iau_vdate)->format('Y-m-d') }}" required>
                       @else
-                      <input type="text" class="form-control datepicker" name="verify_iau_date" id="verify_iau_date" placeholder="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
+                      <input type="text" class="form-control datepicker" name="verify_iau_date" id="verify_iau_date" placeholder="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" required>
                       @endif
                     </div>
                     
@@ -168,9 +168,9 @@
 
                       <label>ON </label>
                       @if(!is_null($pr->budget_vdate) && $pr->budget_vdate != "")
-                      <input type="text" class="form-control datepicker" name="verify_bo_date" id="verify_bo_date" placeholder="{{ \Carbon\Carbon::parse($pr->budget_vdate)->format('Y-m-d') }}" value="{{ \Carbon\Carbon::parse($pr->budget_vdate)->format('Y-m-d') }}">
+                      <input type="text" class="form-control datepicker" name="verify_bo_date" id="verify_bo_date" placeholder="{{ \Carbon\Carbon::parse($pr->budget_vdate)->format('Y-m-d') }}" value="{{ \Carbon\Carbon::parse($pr->budget_vdate)->format('Y-m-d') }}" required>
                       @else
-                      <input type="text" class="form-control datepicker" name="verify_bo_date" id="verify_bo_date" placeholder="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
+                      <input type="text" class="form-control datepicker" name="verify_bo_date" id="verify_bo_date" placeholder="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" required>
                       @endif
                     </div>
                     
@@ -301,6 +301,10 @@
       $('#update_btn').removeAttr('disabled');
     }
   });
+  var now = new Date();
+  var now_format = now.getFullYear() + '/' + now.getMonth() + '/' + now.getDate();
+  $('#verify_iau_date').datepicker('setDate', now_format);
+  $('#verify_bo_date').datepicker('setDate', now_format);
 </script>
 @stop
 
