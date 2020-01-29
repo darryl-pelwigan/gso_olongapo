@@ -44,9 +44,9 @@
                             <label for="payment_price" class="col-sm-3 control-label">Type </label>
                             <div class="col-sm-6">
                             <select class="form-control" name="type" id="type">
-
+                                <option value="Out"> Out</option>
                                 <option value="In">In</option>
-                                 <option value="Out"> Out</option>
+
                           </select>
                             </div>
                     </div>
@@ -64,7 +64,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="control_no" class="col-sm-3 control-label">Requested By: </label>
+                        <label for="control_no" class="col-sm-3 control-label" id="label" name="label">Requested By: </label>
                         <div class="col-sm-6">
                           <select class="form-control" name="requested" id="requested">
                               <option></option>
@@ -119,14 +119,16 @@ $('.date').datepicker({
 
 $(document).ready(function(){
 
-    $('#type').keyup(function(){
+    $('#type').click(function(){
         if(document.getElementById("type").value == "In"){
-                $('#amount').val( rates1 + ($('#days').val() - 1) * 120);
+                $('#label').hide();
+                $('#requested').hide();
 
 
         }else if(document.getElementById("type").value == "Out"){
 
-            $('#amount').val( rates2 + ($('#days').val() - 1) * 120);
+            $('#label').show();
+            $('#requested').show();
 
         }
 
