@@ -620,7 +620,7 @@ class PurchaseOrderController extends Controller
                                 'supplier_info.title as suppl_title',
                                 'supplier_address.details',
                                 'olongapo_purchase_request_no.requested_by',
-                                'olongapo_purchase_request_no.designated',
+                                'olongapo_purchase_request_no.designated_req as designated',
                                 'olongapo_bac_control_info.id as control_id',
                                 'olongapo_bac_source_fund.description as sourcefund',
                                 'olongapo_procurement_method.proc_title as bac_mode',
