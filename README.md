@@ -1,20 +1,3 @@
-Guide:
-
--clone
-
--delete vendor folder (probably best to ignore so that it won't be included)
-
--composer install
-
--create olongapo/storage/framework/sessions
-
--create olongapo/storage/framework/cache
-
--create olongapo/storage/framework/views
-
--migrate
-
-
 <p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
 
 <p align="center">
